@@ -1,0 +1,77 @@
+<Window x:Name="MainWindow" x:Class="R07_AboutAuthor.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        
+        Title="R07_AboutAuthor" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="True" 
+        WindowStartupLocation="CenterScreen"
+        Height="330" Width="500"
+        Topmost="False"
+        Background="Gainsboro"
+        WindowStyle="None"
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
+
+  <StackPanel Margin="0">
+        <StackPanel Height="90" Background="White">
+            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="About DSP Rebar"></TextBlock>
+            <Grid Height="35"></Grid>
+            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="DSP Rebar" FontSize="25" Foreground="Blue" ></TextBlock>
+        </StackPanel>
+        <Grid Margin="5" Background="White" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+               
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Version"></TextBlock>
+           
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Support"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Contact Us"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Version}" FontWeight="Bold"></TextBlock>
+            
+            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}"  FontWeight="Bold">
+                <Span>
+                    <Hyperlink 
+                               Command="{Binding YoutubeCommand}"
+                               CommandParameter="{Binding ElementName=MainWindow}"
+                               >On Youtube</Hyperlink>
+                </Span>
+                
+            </TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding ContactUs}" FontWeight="Bold"></TextBlock>
+        </Grid>
+        <TextBlock Margin="5 0 0 0" Style="{StaticResource DataGridTextBlockStyle}" Text="Donation" FontSize="15" FontWeight="Bold" Foreground="Blue"></TextBlock>
+        <Grid Margin="5" Background="White" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Bank"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Infomation"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateBank}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateInfo}"></TextBlock>
+           
+        </Grid>
+        <DockPanel Height="30" Margin="5" Background="White" LastChildFill="False">
+            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding CopyRight}"></TextBlock>
+            <Button Style="{StaticResource ButtonStyle}" DockPanel.Dock="Right" Content="OK"
+                    Command="{Binding OKCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+        </DockPanel>
+  </StackPanel>
+</Window>

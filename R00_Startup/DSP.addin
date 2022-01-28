@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>DSP REBAR SOLUTIONS</Name>
+    <Assembly>R00_Startup.dll</Assembly>
+    <FullClassName>R00_Startup.DSPApp</FullClassName>
+    <ClientId>{8B3DD2C9-6535-40BD-8A14-E70C49BC4496}</ClientId>
+    <VendorId>ryuzaki2005@gmail.com</VendorId>
+    <VendorDescription>DSP ryuzaki2005</VendorDescription>
+  </AddIn>
+</RevitAddIns>

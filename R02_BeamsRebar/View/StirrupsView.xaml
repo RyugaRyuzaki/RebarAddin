@@ -1,0 +1,301 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.StirrupsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             x:Name="StirrupsUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadStirrupViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </FrameworkElement.Resources>
+    <Grid >
+        <Grid Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition Width="0.65*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="5 0 5 5">
+                    <GroupBox Header="Stirrup of Span">
+                        <StackPanel Orientation="Horizontal">
+                            <ListView ItemsSource="{Binding BeamsModel.InfoModels}" 
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <ListView.View>
+                                    <GridView >
+                                        <GridViewColumn Width="30" Header="Span" DisplayMemberBinding="{Binding NumberSpan}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <ListView x:Name="StirrupListView"  ItemsSource="{Binding BeamsModel.StirrupModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedStirrupModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedBeamsModelCommand}" CommandParameter="{Binding ElementName= MainWindow}" ></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListView.View>
+                                    <GridView >
+                                        <GridViewColumn Width="30" Header="Type" DisplayMemberBinding="{Binding Type}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding BarS.Type}"></GridViewColumn>
+                                        <GridViewColumn Width="30" Header="Øs" DisplayMemberBinding="{Binding BarS.Diameter}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="Cover" DisplayMemberBinding="{Binding c,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Width="30" Header="a" DisplayMemberBinding="{Binding a}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="Anti" DisplayMemberBinding="{Binding Anti}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding BarA.Type}"></GridViewColumn>
+                                        <GridViewColumn Width="30" Header="Øa" DisplayMemberBinding="{Binding BarA.Diameter}"></GridViewColumn>
+                                        <GridViewColumn Width="30" Header="Na" DisplayMemberBinding="{Binding Na}"></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="Sa" DisplayMemberBinding="{Binding Sa}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <ListView  ItemsSource="{Binding BeamsModel.DistributeStirrups}" 
+                                  SelectedItem="{Binding SelectedDistribute,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedBeamsModelCommand}" CommandParameter="{Binding ElementName= MainWindow}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListView.View>
+                                    <GridView >
+                                        <GridViewColumn Width="30" Header="Type" DisplayMemberBinding="{Binding Type}"></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="S1" DisplayMemberBinding="{Binding S1}"></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="S2" DisplayMemberBinding="{Binding S2}"></GridViewColumn>
+                                        <GridViewColumn Width="55" Header="L1" DisplayMemberBinding="{Binding L1}"></GridViewColumn>
+                                        <GridViewColumn Width="55" Header="L2" DisplayMemberBinding="{Binding L2}"></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="S" DisplayMemberBinding="{Binding S}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                        
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid Margin="5 5 5 0" Grid.Column="0">
+                        <GroupBox FontSize="13" Header="Distribution Stirrup" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="0.4*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Distribution of Main Stirrup" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                                <TextBlock Text="Distribution Type" Grid.Row="0" Grid.Column="6"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                                <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"  x:Name="DisType"></Canvas>
+                                <ComboBox x:Name="SelectDisType" Grid.Column="6" Grid.Row="1"  Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedDistribute.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionChangedDistributeTypeCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <ComboBoxItem >
+                                        <Image  x:Name="DisType1" Source="./../Icons/DisType1.png" Height="50" ></Image>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Image  x:Name="DisType2" Height="50" Source="./../Icons/DisType2.png" ></Image>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Grid.Column="0" Grid.Row="2" Text="S1 = "></TextBlock>
+                                <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Grid.Column="0" Grid.Row="3" Text="S2 = "></TextBlock>
+                                <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Grid.Column="0" Grid.Row="4" Text="S = "></TextBlock>
+                                <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Grid.Column="3" Grid.Row="2" Text="L1 = "></TextBlock>
+                                <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Grid.Column="3" Grid.Row="3" Text="L2 = "></TextBlock>
+                                <TextBox IsEnabled="{Binding IsTypeDistribute}" x:Name="DisS1" Style="{StaticResource TextBoxStyle}" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedDistribute.S1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding S1TextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBox IsEnabled="{Binding IsTypeDistribute}" x:Name="DisS2" Style="{StaticResource TextBoxStyle}" Grid.Row="3" Grid.Column="1" Text="{Binding SelectedDistribute.S2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding S2TextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBox  x:Name="DisS"  Style="{StaticResource TextBoxStyle}" Grid.Row="4" Grid.Column="1" Text="{Binding SelectedDistribute.S,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding STextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBlock x:Name="DisL1"  Style="{StaticResource DataGridTextBlockCenter}" Grid.Row="2" Grid.Column="4" Text="{Binding SelectedDistribute.L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                                <TextBlock  x:Name="DisL2" Style="{StaticResource DataGridTextBlockCenter}" Grid.Row="3" Grid.Column="4" Text="{Binding SelectedDistribute.L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockUnit}" Grid.Column="2" Grid.Row="2" ></TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockUnit}" Grid.Column="2" Grid.Row="3" ></TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockUnit}" Grid.Column="2" Grid.Row="4" ></TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockUnit}" Grid.Column="5" Grid.Row="2" ></TextBlock>
+                                <TextBlock Style="{StaticResource TextBlockUnit}" Grid.Column="5" Grid.Row="3" ></TextBlock>
+
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="5 0 5 0">
+                    <GroupBox FontSize="13" Header="Detail Stirrup"  Grid.Column="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="0.5*" ></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Span" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Span}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <ComboBox x:Name="StirrupBarName" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}" 
+                                      ItemsSource="{Binding BeamsModel.AllBars}" DisplayMemberPath="Type" 
+                                      SelectedItem="{Binding SelectedStirrupModel.BarS,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                      >
+                            </ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="2"  Text="Ø ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock   Grid.Column="1" Grid.Row="2" Text="{Binding SelectedStirrupModel.BarS.Diameter, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                            
+                            <TextBlock Grid.Column="0" Grid.Row="4"  Text="Cover c ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <ComboBox x:Name="RebarCoverTypes" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}" 
+                                      ItemsSource="{Binding BeamsModel.RebarCoverTypes}" DisplayMemberPath="Name" 
+                                      SelectedItem="{Binding BeamsModel.RebarCoverType,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                      SelectedIndex="{Binding BeamsModel.SelectedIndexModel.SelectedCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedCoverCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5"  Text="a ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBox IsEnabled="{Binding IsTypeStirrup}" x:Name="StirrupBarA" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedStirrupModel.a, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding StirrupBarATextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <TextBlock Grid.Column="2" Grid.Row="5"   Style="{StaticResource TextBlockUnit}"></TextBlock>
+                            <CheckBox x:Name="chxAnti" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}"  Content="Anti-Shinkage" 
+                                      IsChecked="{Binding SelectedStirrupModel.Anti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                      Command="{Binding AntiClickCommand }" CommandParameter="{Binding ElementName=MainWindow}"
+                                      >
+
+                            </CheckBox>
+
+                            <TextBlock Grid.Column="0" Grid.Row="7" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <ComboBox IsEnabled="{Binding SelectedStirrupModel.Anti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="cbxBarAnti" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}" 
+                                      ItemsSource="{Binding BeamsModel.AllBars}" DisplayMemberPath="Type" 
+                                      SelectedItem="{Binding  SelectedStirrupModel.BarA,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ></ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8"  Text="Ø ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="8" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedStirrupModel.BarA.Diameter, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                            <TextBlock Grid.Column="0" Grid.Row="10"  Text="Na ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <ComboBox IsEnabled="{Binding SelectedStirrupModel.Anti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                      ItemsSource="{Binding AllNa}" Grid.Column="1" Grid.Row="10" Style="{StaticResource ComboBoxStyle}" 
+                                      SelectedItem="{Binding SelectedStirrupModel.Na,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedNaCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+                            <TextBlock Grid.Column="0" Grid.Row="11"  Text="Sa ="  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBox IsEnabled="{Binding SelectedStirrupModel.Anti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="AntiSa" Grid.Column="1" Grid.Row="11" Style="{StaticResource TextBoxStyle}" 
+                                     Text="{Binding SelectedStirrupModel.Sa, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            </TextBox>
+                            <TextBlock Grid.Column="2" Grid.Row="11"   Style="{StaticResource TextBlockUnit}"></TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="12"  Text="Hook"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Text="{Binding BeamsModel.SettingModel.SelectedHook.Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="3"   Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+
+                        </Grid>
+
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="1"  Margin="5 0 0 0">
+                    <GroupBox FontSize="13" Header="Type" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.7*"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0">
+
+                                <ComboBox x:Name="StirrupType" Style="{StaticResource ComboBoxStyle}" Height="150" SelectedIndex="{Binding SelectedStirrupModel.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionChangedStirrupTypeCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <ComboBoxItem>
+                                        <Image Source="./../Icons/SType1.png"  Height="120"></Image>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Image Source="./../Icons/SType2.png"  Height="120"></Image>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <Canvas x:Name="canStirrupType" Grid.Row="1">
+
+                            </Canvas>
+                        </Grid>
+                    </GroupBox>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

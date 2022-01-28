@@ -1,0 +1,160 @@
+﻿<UserControl x:Class="R01_ColumnsRebar.View.BarsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="BarsUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadBarsViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="285"></RowDefinition>
+                    <RowDefinition Height="360"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!--#region Bars Property-->
+                <GroupBox Grid.Row="0" Header="Bars Property" Margin="5">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!--<DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" LastChildFill="False">
+                           
+                        </DockPanel>-->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Column No"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"   Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding ColumnsModel.BarMainModels}" DisplayMemberPath="NumberColumn"
+                                  SelectedItem="{Binding SelectedColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding ColumnsModel.SelectedIndexModel.SelectedColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionColumnsChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <!--<Button Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="130" Content="Apply All Columns" x:Name="ApplyAllButton"
+                        Command="{Binding ApplyAllColumnCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>-->
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="BarXTextBlock" Style="{StaticResource DataGridTextBlockCenter}" Text="n">
+                            <Run BaselineAlignment="Subscript">x</Run>
+                        </TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="BarXComboBox" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding ColumnsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedColumn.nx,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="3" x:Name="BarYTextBlock" Style="{StaticResource DataGridTextBlockCenter}" Text="n">
+                            <Run BaselineAlignment="Subscript">y</Run>
+                        </TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="4" x:Name="BarYComboBox" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding ColumnsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedColumn.ny,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="BarDTextBlock" Style="{StaticResource DataGridTextBlockCenter}" Text="n">
+                            <Run BaselineAlignment="Subscript">D</Run>
+                        </TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="BarDComboBox" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding ColumnsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedColumn.nd,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Bar">
+                        </TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding ColumnsModel.AllBars}" DisplayMemberPath="Type"
+                                  SelectedItem="{Binding SelectedColumn.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                   SelectedIndex="{Binding SelectedColumn.SelectedBarType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="3"  Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = ">
+                        </TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedColumn.Bar.Diameter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Split Overlap"></TextBlock>
+                        <ComboBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding SplitOverlap}" 
+                                  SelectedItem="{Binding SelectedColumn.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                        </ComboBox>
+                        <TextBlock Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="%*Area Reinforcement"></TextBlock>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Overlap"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedColumn.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 x:Name="OverlapTextBox">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput">
+                                    <i:InvokeCommandAction Command="{Binding PreviewTextInputCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="4"  Style="{StaticResource DataGridTextBlockStyle}" Text="*Ø"></TextBlock>
+                        <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Apply"
+                                Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                        <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource ButtonStyle}" Content="Modify"
+                                 Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                        
+                    </Grid>
+                    
+                </GroupBox>
+                <!--#endregion-->
+                
+                <GroupBox Grid.Row="1" Header="Bars information" Margin="5">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <ListView  ItemsSource="{Binding SelectedColumn.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding ColumnsModel.SelectedIndexModel.SelectedMainBar}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionBarChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView  >
+                                    <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding Bar.Diameter}"></GridViewColumn>
+                                    <GridViewColumn Width="110" Header="X" DisplayMemberBinding="{Binding X0}"></GridViewColumn>
+                                    <GridViewColumn Width="110" Header="Y" DisplayMemberBinding="{Binding Y0}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </GroupBox>
+                <Canvas Grid.Row="3"  Margin="5" x:Name="CanvasSection">
+                    
+                </Canvas>
+            </Grid>
+            
+        </ScrollViewer>
+        
+    </Grid>
+</UserControl>

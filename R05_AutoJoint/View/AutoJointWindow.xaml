@@ -1,0 +1,82 @@
+<Window x:Name="MainWindow" x:Class="R05_AutoJoint.AutoJointWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="R05_AutoJoint" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="True" 
+        WindowStartupLocation="CenterScreen"
+        Height="415" Width="330"
+        Topmost="False"
+        WindowStyle="None"
+        Background="Gainsboro"
+        
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Margin="0">
+        <Grid Height="40" Background="White" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Add Rule"
+                    Command="{Binding AddRuleCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Delete Rule"
+                    Command="{Binding DeleteRuleCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+        </Grid>
+        <Grid Height="200" Background="White"  Margin="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Margin="0" >
+                    <Grid Height="30" Background="#85aff2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Join" FontSize="13" ></TextBlock>
+                        <TextBlock Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="Be Joined" FontSize="13"></TextBlock>
+                    </Grid>
+                    <Grid x:Name="GridCombobox" Margin="0 5 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                    </Grid>
+                </StackPanel>
+                
+            </ScrollViewer>
+        </Grid>
+        <Grid Height="40" Background="White" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <RadioButton Grid.Column="0" Style="{StaticResource RadioButtonStyle}" Content="Current View" IsChecked="{Binding IsCurrenView,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+            <RadioButton Grid.Column="1" Style="{StaticResource RadioButtonStyle}" Content="Project" IsChecked="{Binding IsProject,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+            
+        </Grid>
+        <Grid Height="40" Background="White" Margin="5">
+            <ProgressBar Background="Transparent" x:Name="ProgressBar" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
+            <TextBlock Text="{Binding Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+        </Grid>
+        <Grid Height="40" Background="White" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Join"
+                    Command="{Binding JointCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="UnJoin"
+                    Command="{Binding UnJointCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Cancel"
+                    Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+        </Grid>
+        <Canvas x:Name="Bitmap" Width="50" Height="50"></Canvas>
+    </StackPanel>
+</Window>

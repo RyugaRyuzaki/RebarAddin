@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="R11_FoundationPile.View.PileDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="PileDetailUC"
+             >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadPileDetailViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="240"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="360"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--#region Rule -->
+        <GroupBox Grid.Row="0" Header="Rule Detail" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Foundation Rule"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="Pile Rule on Foundation"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="0" Style="{StaticResource ComboBoxStyle}" MaxDropDownHeight="Auto" IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding FoundationPileModel.RuleFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas0" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas1"  Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas2" Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas3" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas4" Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas5" Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas6" Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="FoundationRuleCanvas7" Height="120" Width="120" SnapsToDevicePixels="True"></Canvas>
+                    </ComboBoxItem>
+                </ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" MaxDropDownHeight="Auto"  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         SelectedIndex="{Binding FoundationPileModel.RulePile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                          >
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas0" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas1" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas2" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas3" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas4" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas5" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas6" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Canvas x:Name="PileRuleCanvas7" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
+                    </ComboBoxItem>
+                </ComboBox>
+                <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Apply Rule" Width="100"
+                        Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Modify Rule" Width="100"
+                        Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            </Grid>
+        </GroupBox>
+        <!--#endregion-->
+        <GroupBox Grid.Row="1" Header="All Foundation" Margin="5">
+            
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <ListView Grid.Column="0" ItemsSource="{Binding FoundationPileModel.AllFoundationModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           SelectedItem="{Binding SelectedFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <ListView.View>
+                                <GridView  >
+                                    <GridViewColumn  Width="50" Header=" No" DisplayMemberBinding="{Binding FoundationNumber}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="Location" DisplayMemberBinding="{Binding LocationName}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView Grid.Column="1" ItemsSource="{Binding SelectedFoundationModel.PileModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           SelectedItem="{Binding SelectedPileModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexAllPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <ListView.View>
+                                <GridView  >
+                                    <GridViewColumn  Width="60" Header=" Pile No" DisplayMemberBinding="{Binding PileNumber}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="X" DisplayMemberBinding="{Binding Location.X}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="Y" DisplayMemberBinding="{Binding Location.Y}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="Z" DisplayMemberBinding="{Binding Location.Z}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                    <Grid Height="40"  >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Texting Pile" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding SelectedPileModel.PileNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockCenter}" Foreground="Red" FontWeight="Bold"></TextBlock>
+                        <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Apply" Width="80"
+                                Command="{Binding ApplyTestPileCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                    </Grid>
+                </StackPanel>
+                
+               
+            </ScrollViewer>
+        </GroupBox>
+        <Canvas Grid.Row="2" Margin="5" x:Name="PileDetailCanvas"></Canvas>
+    </Grid>
+</UserControl>

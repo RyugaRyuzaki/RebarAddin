@@ -1,0 +1,279 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.SpecialBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             Background="White"
+             x:Name="SpecialBarUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSpecialPointViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid Margin="5 0 0 0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.31*"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" Margin="5 0 0 0">
+                <GroupBox Header="Special Point Beams" x:Name="GbSpecial">
+                    <Grid x:Name="GrSpecial">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.54*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.7*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewSpecial" FontSize="11" Grid.Row="0" Grid.Column="0"
+                                  ItemsSource="{Binding BeamsModel.SpecialBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.SpecialBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedSpecialBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedSpecialCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="40" Header="Point" DisplayMemberBinding="{Binding NumberNode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Span" DisplayMemberBinding="{Binding Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Special" DisplayMemberBinding="{Binding IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding BarSP.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Øsp" DisplayMemberBinding="{Binding BarSP.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="nsp" DisplayMemberBinding="{Binding NumberSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="L1" DisplayMemberBinding="{Binding L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="L2" DisplayMemberBinding="{Binding L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="L3" DisplayMemberBinding="{Binding L3,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Stirrup" DisplayMemberBinding="{Binding IsST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding BarST.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Øst" DisplayMemberBinding="{Binding BarST.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="nst" DisplayMemberBinding="{Binding NumberST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="a" DisplayMemberBinding="{Binding a,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="5" >
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="6*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Content="Using Special Reinforcemnet" Style="{StaticResource CheckBoxStyle}"
+                                          IsChecked="{Binding SelectedSpecialBarModel.IsSP}"
+                                          Command="{Binding IsCheckSpecialBarCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+
+                                </CheckBox>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar :"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="n = "></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="L1 = "></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="L2 = "></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="L3 = "></TextBlock>
+                                <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Style="{StaticResource ComboBoxStyle}"
+                                          IsEnabled="{Binding  SelectedSpecialBarModel.IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                          ItemsSource="{Binding BeamsModel.AllBars}" DisplayMemberPath="Type"
+                                          SelectedItem="{Binding SelectedSpecialBarModel.BarSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                                </ComboBox>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}"
+                                           Text="{Binding SelectedSpecialBarModel.BarSP.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                                </TextBlock>
+                                <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Style="{StaticResource ComboBoxStyle}"
+                                          IsEnabled="{Binding  SelectedSpecialBarModel.IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                          ItemsSource="{Binding AllNumberSpecial}"
+                                          SelectedItem="{Binding SelectedSpecialBarModel.NumberSP, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                                </ComboBox>
+                                <TextBox Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                         IsEnabled="{Binding  SelectedSpecialBarModel.IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                         Text="{Binding SelectedSpecialBarModel.L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding L1SpecialTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBox Grid.Row="2" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                         Text="{Binding SelectedSpecialBarModel.L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                         IsEnabled="{Binding  SelectedSpecialBarModel.IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding L2SpecialTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBox Grid.Row="3" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                         Text="{Binding SelectedSpecialBarModel.L3,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                         IsEnabled="{Binding  SelectedSpecialBarModel.IsSP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding L3SpecialTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Content="Using Stirrup" Style="{StaticResource CheckBoxStyle}"
+                                          IsChecked="{Binding SelectedSpecialBarModel.IsST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                          Command="{Binding IsCheckStirrupBarCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+
+                                </CheckBox>
+                                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar :"></TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
+                                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="n = "></TextBlock>
+                                <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Style="{StaticResource ComboBoxStyle}"
+                                          IsEnabled="{Binding  SelectedSpecialBarModel.IsST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                          ItemsSource="{Binding BeamsModel.AllBars}" DisplayMemberPath="Type"
+                                          SelectedItem="{Binding SelectedSpecialBarModel.BarST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                                </ComboBox>
+                                <TextBlock Grid.Row="5" Grid.Column="4" Style="{StaticResource DataGridTextBlockCenter}"
+                                           Text="{Binding SelectedSpecialBarModel.BarST.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                                <ComboBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Style="{StaticResource ComboBoxStyle}"
+                                          IsEnabled="{Binding  SelectedSpecialBarModel.IsST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                          ItemsSource="{Binding AllNumberStirrup}"
+                                          SelectedItem="{Binding SelectedSpecialBarModel.NumberST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionChangedNumberBarStirrupCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                                <TextBlock Grid.Row="6" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="a = "></TextBlock>
+                                <TextBox Grid.Row="6" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                         IsEnabled="{Binding  SelectedSpecialBarModel.IsST,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                         Text="{Binding SelectedSpecialBarModel.a,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding StirrupBarTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <!--#region Unit-->
+                                <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                                <TextBlock Grid.Row="6" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                                <!--#endregion-->
+                                <Canvas x:Name="canvas3" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="8"></Canvas>
+                            </Grid>
+                        </Border>
+                        <Canvas x:Name="canvas2" Grid.Row="1" Grid.Column="0">
+
+                        </Canvas>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Column="0" Margin="0 0 5 0">
+                <GroupBox Header="Side Bar">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.15*"></RowDefinition>
+                            <RowDefinition Height="0.15*"></RowDefinition>
+                            <RowDefinition Height="0.15*"></RowDefinition>
+                            <RowDefinition Height="0.7*"></RowDefinition>
+                            <RowDefinition Height="1.1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Side Bar" Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding SelectedSideBarModel.IsSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                  Command="{Binding IsCheckSideBarCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+
+                        </CheckBox>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="n = "></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="4" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedSideBarModel.NumberBar}"></TextBlock>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar :"></TextBlock>
+                        <ComboBox x:Name="BarSide" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding SelectedSideBarModel.IsSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding BeamsModel.AllBars}" DisplayMemberPath="Type"
+                                  SelectedItem="{Binding SelectedSideBarModel.Bar, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="ExLeft"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="ExRight"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding SelectedSideBarModel.IsSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 Text="{Binding SelectedSideBarModel.ExLeft,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding ExLeftMidTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox Grid.Row="2" Grid.Column="4" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding SelectedSideBarModel.IsSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 Text="{Binding SelectedSideBarModel.ExRight,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding ExLeftMidTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="4" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedSideBarModel.Bar.Diameter}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                        <ListView FontSize="11" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
+                                  ItemsSource="{Binding BeamsModel.SideBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedSideBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.SideBar, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedSideBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="40" Header="Span" DisplayMemberBinding="{Binding Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Side" DisplayMemberBinding="{Binding IsSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="Øsi" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="ExLeft" DisplayMemberBinding="{Binding ExLeft,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="ExRight" DisplayMemberBinding="{Binding ExRight,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Canvas x:Name="canvas1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"></Canvas>
+
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7650147C-EB1C-48E7-8FA2-B6ED592B79C5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>R02_BeamsRebar</RootNamespace>
+    <AssemblyName>R02_BeamsRebar</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Confused\2021\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2020\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2020\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAPI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Management" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Command\BeamsRebarCmd.cs" />
+    <Compile Include="Library\Category\BeamsBoundBox.cs" />
+    <Compile Include="Library\Compare\DistictPlanarFace.cs" />
+    <Compile Include="Library\Compare\DistinctID.cs" />
+    <Compile Include="Library\Compare\DistinctSpecialNode.cs" />
+    <Compile Include="Library\Create\CreateDetailShop.cs" />
+    <Compile Include="Library\Create\CreateImage.cs" />
+    <Compile Include="Library\Create\CreateRebar.cs" />
+    <Compile Include="Library\Create\CreateRebarDetailtem.cs" />
+    <Compile Include="Library\Create\CreateViewDimension.cs" />
+    <Compile Include="Library\Create\DetailBeamView.cs" />
+    <Compile Include="Library\Create\DetailShopView.cs" />
+    <Compile Include="Library\Create\DimensionView.cs" />
+    <Compile Include="Library\Create\SectionBeamView.cs" />
+    <Compile Include="Library\DetailItem\DetailItem.cs" />
+    <Compile Include="Library\DetailItem\ItemDivision.cs" />
+    <Compile Include="Library\DetailItem\ProcessBarsDivision.cs" />
+    <Compile Include="Library\DetailItem\ProcessDetailItem.cs" />
+    <Compile Include="Library\Draw\CanvasDetailItem.cs" />
+    <Compile Include="Library\Draw\DrawDivisionShop.cs" />
+    <Compile Include="Library\Draw\DrawIcon.cs" />
+    <Compile Include="Library\Draw\DrawImage.cs" />
+    <Compile Include="Library\Draw\DrawImageRebar.cs" />
+    <Compile Include="Library\Draw\DrawItem.cs" />
+    <Compile Include="Library\Draw\DrawMainCanvas.cs" />
+    <Compile Include="Library\Draw\MainBarImage.cs" />
+    <Compile Include="Library\Error\ErrorBeams.cs" />
+    <Compile Include="Library\Filter\BeamSelectionFilter.cs" />
+    <Compile Include="Library\Orther\LineProcess.cs" />
+    <Compile Include="Library\Orther\PointModel.cs" />
+    <Compile Include="Library\Orther\ProcessInfoBeamRebar.cs" />
+    <Compile Include="Library\Orther\SolidFace.cs" />
+    <Compile Include="Library\Unit\UnitProject.cs" />
+    <Compile Include="Library\Warning\DeleteWarningSuper.cs" />
+    <Compile Include="Model\AddBottomBarModel.cs" />
+    <Compile Include="Model\AddTopBarModel.cs" />
+    <Compile Include="Model\BarsDivisionModel.cs" />
+    <Compile Include="Model\BeamsModel.cs" />
+    <Compile Include="Model\DetailItemModel.cs" />
+    <Compile Include="Model\DistributeStirrup.cs" />
+    <Compile Include="Model\DrawModel.cs" />
+    <Compile Include="Model\InfoModel.cs" />
+    <Compile Include="Model\LayerModel.cs" />
+    <Compile Include="Model\ListLayerModel.cs" />
+    <Compile Include="Model\LocationBarModel.cs" />
+    <Compile Include="Model\MainBottomBarModel.cs" />
+    <Compile Include="Model\MainTopBarModel.cs" />
+    <Compile Include="Model\NodeModel.cs" />
+    <Compile Include="Model\RebarBarModel.cs" />
+    <Compile Include="Model\SectionAreaModel.cs" />
+    <Compile Include="Model\SectionModel.cs" />
+    <Compile Include="Model\SelectedBottomModel.cs" />
+    <Compile Include="Model\SelectedIndexModel.cs" />
+    <Compile Include="Model\SettingModel.cs" />
+    <Compile Include="Model\SideBarModel.cs" />
+    <Compile Include="Model\SingleMainTopBarModel.cs" />
+    <Compile Include="Model\SpecialBarModel.cs" />
+    <Compile Include="Model\SpecialNodeModel.cs" />
+    <Compile Include="Model\StirrupModel.cs" />
+    <Compile Include="ViewModel\AddBottomBarViewModel.cs" />
+    <Compile Include="ViewModel\AddTopBarViewModel.cs" />
+    <Compile Include="ViewModel\BarsDivisionViewModel.cs" />
+    <Compile Include="ViewModel\BarsMainViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BeamsViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\GeometryViewModel.cs" />
+    <Compile Include="ViewModel\SectionAreaViewModel.cs" />
+    <Compile Include="ViewModel\SettingViewModel.cs" />
+    <Compile Include="ViewModel\SpecialBarViewModel.cs" />
+    <Compile Include="ViewModel\StirrupsViewModel.cs" />
+    <Compile Include="View\AddBottomBarView.xaml.cs">
+      <DependentUpon>AddBottomBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddTopBarView.xaml.cs">
+      <DependentUpon>AddTopBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BarsDivisionView.xaml.cs">
+      <DependentUpon>BarsDivisionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BarsMainView.xaml.cs">
+      <DependentUpon>BarsMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BeamsWindow.xaml.cs">
+      <DependentUpon>BeamsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GeometryView.xaml.cs">
+      <DependentUpon>GeometryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SectionAreaView.xaml.cs">
+      <DependentUpon>SectionAreaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecialBarView.xaml.cs">
+      <DependentUpon>SpecialBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StirrupsView.xaml.cs">
+      <DependentUpon>StirrupsView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Library\Resource\Canvas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\CheckBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\ComboBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\DataGridStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\ProgressBarStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\RadiobuttonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\TextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\TreeViewStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Library\Resource\WrapPanelStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AddBottomBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddTopBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BarsDivisionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BarsMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BeamsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\GeometryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SectionAreaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpecialBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StirrupsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AddBottom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\AddTop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\BarDivision.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\BarsMain.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\DisType1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\DisType2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Geometry.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ReinforcementArea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\SpecialPoint.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Stirrup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\StirrupDistribute.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\SType1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\SType2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Account.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

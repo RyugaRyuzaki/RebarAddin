@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="R10_WallShear.View.GeometryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="GeometryUC"
+             >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadGeometryViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="5 0 5 0">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90"></RowDefinition>
+                    <RowDefinition Height="240"></RowDefinition>
+                    <RowDefinition Height="90"></RowDefinition>
+                    <RowDefinition  ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <GroupBox Header="Identification" BorderBrush="Black">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Family Name"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding WallsModel.FamilyType}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Type Name"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding WallsModel.AllType}"></TextBlock>
+                            
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="1" >
+                    <GroupBox Header="Walls Dimension" BorderBrush="Black">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Wall No" Style="{StaticResource DataGridTextBlockCenter}" x:Name="WallNumberTextBlock"></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox"
+                                      ItemsSource="{Binding WallsModel.InfoModels}" DisplayMemberPath="NumberWall"
+                                      SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                      SelectedIndex="{Binding WallsModel.SelectedIndexModel.SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionWallChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Thickness" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedWall.T}" ></TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+
+                            <TextBlock Grid.Row="1" Grid.Column="3" Text="Length" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.L}" ></TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="h" Style="{StaticResource DataGridTextBlockCenter}">
+                                <Run BaselineAlignment="Subscript">c</Run>
+                            </TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.hc}"></TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="h" Style="{StaticResource DataGridTextBlockCenter}">
+                                    <Run BaselineAlignment="Subscript">b</Run>
+                            </TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.hb}"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="3" Text="Z" Style="{StaticResource DataGridTextBlockCenter}">
+                                <Run BaselineAlignment="Subscript">b</Run>
+                            </TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="3" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.zb}"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Top Level" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="4" Grid.Column="1"  Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.TopLevel.Name}"></TextBox>
+
+                            <TextBlock Grid.Row="4" Grid.Column="3" Text="e" Style="{StaticResource DataGridTextBlockCenter}">
+                                <Run BaselineAlignment="Subscript">T</Run>
+                            </TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="4" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.eT}"></TextBox>
+                            <TextBlock Grid.Row="4" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Base Level" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="5" Grid.Column="1"  Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.BottomLevel.Name}"></TextBox>
+                            <TextBlock Grid.Row="5" Grid.Column="3" Text="e" Style="{StaticResource DataGridTextBlockCenter}">
+                                <Run BaselineAlignment="Subscript">B</Run>
+                            </TextBlock>
+                            <TextBox IsEnabled="False" Grid.Row="5" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.eB}"></TextBox>
+                            <TextBlock Grid.Row="5" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+                <GroupBox Grid.Row="2" Header="Corner Property">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Corner" Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding SelectedWall.IsCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  Command="{Binding CheckCornerCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                  ></CheckBox>
+                        <Button Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="120" Content="Apply All Walls"
+                                Command="{Binding ApplyAllWallsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="L1"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding SelectedWall.IsCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                 Text="{Binding SelectedWall.L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="L1TextBox">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding L1TextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="L2"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}" IsEnabled="False" 
+                                 Text="{Binding SelectedWall.L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="L2TextBox">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding L2TextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                    </Grid>
+                </GroupBox>
+                <Grid Grid.Row="3">
+                    <GroupBox Header="Wall Property" BorderBrush="Black">
+                        <Grid>
+                            
+                            <Canvas Grid.Row="1" x:Name="canvasProperty"></Canvas>
+                        </Grid>
+
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

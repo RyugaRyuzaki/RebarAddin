@@ -1,0 +1,230 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.BarsDivisionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             Background="White"
+             x:Name="BarsDivisionUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadBarsDivisionCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid Margin="5 0 0 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Margin="5 0 0 5" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.6*" ></ColumnDefinition>
+                        <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition Width="0.8*" ></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Number Beams "></TextBlock>
+                    <ComboBox IsEnabled="{Binding IsApply}" Grid.Column="1" Height="30" Style="{StaticResource ComboBoxStyle}" 
+                              ItemsSource="{Binding BeamsModel.DivisionBar.ManyBeams}"
+                              SelectedItem="{Binding BeamsModel.DivisionBar.NumberBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    </ComboBox>
+                    <TextBlock Grid.Column="2" Style="{StaticResource DataGridTextBlockCenter}" Text="Lmax = " ></TextBlock>
+                    <TextBox IsEnabled="{Binding IsApply}" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding BeamsModel.DivisionBar.Lmax,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    </TextBox>
+                    <TextBlock Grid.Column="4" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                    <TextBlock Grid.Column="5" Text="Overlap S =" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                    <TextBox IsEnabled="{Binding IsApply}" Grid.Column="6" Style="{StaticResource TextBoxStyle}" Text="{Binding BeamsModel.DivisionBar.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBox>
+                    <TextBlock Grid.Column="7" Style="{StaticResource DataGridTextBlockStyle}" Text="* Ø = "></TextBlock>
+                    
+                    <Button x:Name="ButtonApply" Grid.Column="8" Width="80" Height="30" Style="{StaticResource ButtonStyle}" Content="Apply"
+                                Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Button x:Name="ButtonModiFy" Grid.Column="9" Width="80" Height="30" Style="{StaticResource ButtonStyle}" Content="Modify"
+                                Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+
+                </Grid>
+            </Grid>
+            <Grid Margin="5 0 0 0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="Division Main-Top Bars" Grid.Row="0" >
+                        <DataGrid x:Name="MainTopDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                    <GroupBox Header="Division Main-Bottom Bars" Grid.Row="1" >
+                        <DataGrid x:Name="MainBottomnDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+                <!--#region Image-->
+                <Grid Margin="5 0 0 0" Grid.Column="1">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="scrollViewer">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                
+                                <RowDefinition Height="20"></RowDefinition>
+                                <RowDefinition Height="120"></RowDefinition>
+                                <RowDefinition Height="120"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Canvas x:Name="TopCanvas">
+                                   
+                                </Canvas>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="5">
+                                <Canvas x:Name="BottomCanvas"></Canvas>
+                            </Grid>
+                            <Grid Grid.Row="0">
+                                <TextBlock Style="{StaticResource DataGridTextBlockStyle}" FontStyle="Italic" Text="{Binding AttentionDetailItem}" TextWrapping="WrapWithOverflow" Foreground="Red"></TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3" Height="240" x:Name="GridCanvas" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                
+                                <Canvas Grid.Row="3" Grid.Column="3" x:Name="CanvasRebarImage" Style="{StaticResource CanvasRebar}"> 
+                                </Canvas>
+                            </Grid>
+                            <!--<Grid Grid.Row="4" Height="240"   >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Canvas Grid.Row="0" Grid.Column="0" x:Name="DS00" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="0" Grid.Column="1" x:Name="DS01" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="0" Grid.Column="2" x:Name="DS02" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="0" Grid.Column="3" x:Name="DS03" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="1" Grid.Column="0" x:Name="DS04" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="1" Grid.Column="1" x:Name="DS05" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="1" Grid.Column="2" x:Name="DS06" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="1" Grid.Column="3" x:Name="DS07" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="2" Grid.Column="0" x:Name="DS08" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="2" Grid.Column="1" x:Name="DS09" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="2" Grid.Column="2" x:Name="DS10" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="2" Grid.Column="3" x:Name="DS11" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="3" Grid.Column="0" x:Name="DS12" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                                <Canvas Grid.Row="3" Grid.Column="1" x:Name="DS13" Style="{StaticResource CanvasRebar}">
+                                    <Line Style="{StaticResource Up}"></Line>
+                                </Canvas>
+                            </Grid>-->
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="5 0 0 0" >
+                    <GroupBox  Header="Division of Additional Top Bar">
+                        <DataGrid x:Name="AddTopDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="1" Margin="5 0 0 0" >
+                    <GroupBox  Header="Division of Additional Bottom Bar">
+                        <DataGrid x:Name="AddBottomnDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="2" Margin="5 0 0 0" x:Name="SideBarGroupBox" >
+                    <GroupBox  Header="Division of Side Bar" >
+                        <DataGrid x:Name="SideDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="5 0 0 0"  >
+                    <GroupBox  Header="Division of Stirrup Bar" >
+                        <DataGrid x:Name="StirrupDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="1" Margin="5 0 0 0" x:Name="AntiBarGroupBox" >
+                    <GroupBox  Header="Division of Anti-Stirrup Bar" >
+                        <DataGrid x:Name="AntiStirrupDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="2" Margin="5 0 0 0" x:Name="SpecialBarGroupBox" >
+                    <GroupBox  Header="Division of Special Bar" >
+                        <DataGrid x:Name="SpecialDataGrid" Style="{StaticResource DataGridStyle}"></DataGrid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

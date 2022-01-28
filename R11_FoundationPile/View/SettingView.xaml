@@ -1,0 +1,406 @@
+﻿<UserControl x:Class="R11_FoundationPile.View.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="SettingUC"
+             >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="Pipe Setting" Margin="5" x:Name="PileSettingGroupBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition  Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition  Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition  Width="0.6*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="155" ></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            
+
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"   Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Category" ></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ItemsSource="{Binding FoundationPileModel.SettingModel.CategoryPiles}"
+                  SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedCategoyryPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexPileCategory,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCategoryPileCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Family"></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ItemsSource="{Binding FoundationPileModel.SettingModel.FamilyPiles}" DisplayMemberPath="Name"
+                  SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedPileFamily,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexPileFamily,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedPileFamilyCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockStyle}" Text="Pile FamilyType"></TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ItemsSource="{Binding FoundationPileModel.SettingModel.FamilySymbolPiles}" DisplayMemberPath="Name"
+                  SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedPileFamilyType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexPileFamilyType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedPileFamilyTypeCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Dp"></TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.DiameterPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                
+                                 ></TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Apply"
+                                Command="{Binding ApplyPilePropertyCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Modify"
+                                Command="{Binding ModifyPilePropertyCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                        </Grid>
+                       
+                        <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Dp_p"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.DistancePP,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="dppTextBox"
+                                 ></TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource DataGridTextBlockCenter}" Text="*Dp" ></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="3"  Style="{StaticResource DataGridTextBlockCenter}" Text="Dp-s"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="4"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.DistancePS,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="dpsTextBox"
+                                 ></TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Over"></TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  x:Name="OverlapTextBox"
+                                 ></TextBox>
+                        <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource TextBlockUnit}"  ></TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="3"  Style="{StaticResource DataGridTextBlockCenter}" Text="Length"></TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="4"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.LengthPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="LengthTextBox"
+                                 ></TextBox>
+                        <TextBlock Grid.Row="5" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                        <Canvas Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" x:Name="CanvasOverlapPile">
+                            <!--<Rectangle Width="170" Height="155"></Rectangle>-->
+                        </Canvas>
+                        <Canvas Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3" x:Name="CanvasLengthPile"></Canvas>
+
+                        <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Plan Template" ></TextBlock>
+                        <ComboBox Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.ViewTemplates}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedPilePlanTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <!--<TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Parameter" ></TextBlock>
+                        <ComboBox Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.PileParameters}" DisplayMemberPath="Definition.Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedPileParameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>-->
+                        <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Prefix" ></TextBlock>
+                        <TextBox Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.PileNamePrefix,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 ></TextBox>
+                        <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="SpotDimension" ></TextBlock>
+                        <ComboBox Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" 
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding FoundationPileModel.SettingModel.SpotDimensionTypes}" DisplayMemberPath="Name"
+                                  SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedSpotDimensionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 ></ComboBox>
+                        
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Foundation Setting" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Category" ></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.CategoryFoundations}" 
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedCategoyryFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexFoundationCategory,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCategoryFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Type" ></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.FoundationTypes}" DisplayMemberPath="Name" 
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFoundationType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexFoundationType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedFoundationTypeCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Height Foundation" ></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" 
+                                 x:Name="HeightFoundationTextBox"
+                                 Text="{Binding FoundationPileModel.SettingModel.HeightFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="4"   Style="{StaticResource TextBlockUnit}" ></TextBlock>
+
+                       
+                        <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="Create Formwork"
+                                  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  IsChecked="{Binding FoundationPileModel.SettingModel.IsCreateFormWork,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  Command="{Binding IscreateFormWorkCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                  ></CheckBox>
+                        <!--#region FormWork-->
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" x:Name="FormWorkGrid" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="FormWork Type" 
+                                    
+                                   ></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.FoundationTypes}" DisplayMemberPath="Name" 
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFormWorkType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Height FormWork" ></TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" 
+                                  x:Name="HeightFormWorkTextBox"
+                                 Text="{Binding FoundationPileModel.SettingModel.HeightFormWork,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="4"   Style="{StaticResource TextBlockUnit}"  ></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Offset FormWork" ></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" 
+                                   x:Name="OffsetFormWorkTextBox"
+                                 Text="{Binding FoundationPileModel.SettingModel.OffsetFormWork,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="4"   Style="{StaticResource TextBlockUnit}"  ></TextBlock>
+                        </Grid>
+                        <!--#endregion-->
+                        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Plan TP" 
+                                    
+                                   ></TextBlock>
+                        <ComboBox Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.ViewTemplates}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFoundationPlanTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Section TP" ></TextBlock>
+                        <ComboBox Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.ViewTemplates}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFoundationSectionTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Detail TP" ></TextBlock>
+                        <ComboBox Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.ViewTemplates}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFoundationDetailTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        
+                        <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Plan Name" ></TextBlock>
+                        <TextBox Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource TextBoxStyle}"  Text="{Binding FoundationPileModel.SettingModel.FoundationPlaneName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </TextBox>
+                        <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Name Prefix" ></TextBlock>
+                        <TextBox Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.FoundationNamePrefix,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </TextBox>
+                        <TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Set Parameter" ></TextBlock>
+                        <TextBlock Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource DataGridTextBlockCenter}" Text="Comments"
+                                    >
+                        </TextBlock>
+                        
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="2" Header="Layout" Margin="5">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Dimension Type" ></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.DimensionTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedDimensionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Text Type" ></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.TextNotes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedTextNote,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Content="Use Tag" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.SettingModel.CheckedText,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  Command="{Binding CheckedTextCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                  ></CheckBox>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Visibility="Collapsed" x:Name="TagGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="0.7*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Foundation Tag" ></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.TagFoundations}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedFoundationTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="Pile Tag" ></TextBlock>
+                            <ComboBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.TagPiles}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedPileTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                            </ComboBox>
+                           
+                        </Grid>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Offset"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding FoundationPileModel.SettingModel.OffsetDim,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                     IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                     ></TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                        <Canvas Grid.Row="4" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3" x:Name="OffsetCanvas"></Canvas>
+                    </Grid>
+
+                </GroupBox>
+                <GroupBox Grid.Row="3" Header="Cover Property" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="Top Rebar Cover" ></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedTopCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Side Rebar Cover" ></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedSideCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="Bottom Rebar Cover" ></TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedBotomCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="HookType" ></TextBlock>
+                        <ComboBox Grid.Row="3" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarHookTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                    </Grid>
+
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+
+
+    </Grid>
+</UserControl>

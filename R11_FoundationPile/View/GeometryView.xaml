@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="R11_FoundationPile.View.GeometryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="GeometryUC"
+             
+             >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadGeometryViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="360"></RowDefinition>
+                <RowDefinition Height="260"></RowDefinition>
+                <RowDefinition Height="260"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Foudation Design" Margin="5" x:Name="FoundationDesignGroupBox">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="Foundation Type"></TextBlock>
+                    <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding FoundationPileModel.GroupFoundationModels}"  DisplayMemberPath="Type"
+                                  SelectedItem="{Binding SelectedGroupFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexGroupFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedGroupFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <TextBlock Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedGroupFoundationModel.SectionStyle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+
+                    <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Image"></TextBlock>
+                    <ComboBox Grid.Row="2" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="3" Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding SelectedGroupFoundationModel.Image, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedImageFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBoxItem>
+                            <Canvas Width="140" Height="160" x:Name="FoundationImageCanvas0" ></Canvas>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <Canvas Width="140" Height="160" x:Name="FoundationImageCanvas1"  ></Canvas>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <Canvas Width="140" Height="160" x:Name="FoundationImageCanvas2"  ></Canvas>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <Canvas Width="140" Height="160" x:Name="FoundationImageCanvas3"  ></Canvas>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    
+                    <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="L1" x:Name="L1TextBlock"></TextBlock>
+                    <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedGroupFoundationModel.L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="L1TextBox"
+                                    IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 >
+                        
+                    </TextBox>
+                    <TextBlock Grid.Row="7" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="L1TextBlockUnit"></TextBlock>
+                    <TextBlock Grid.Row="7" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="L2" x:Name="L2TextBlock"></TextBlock>
+                    <TextBox Grid.Row="7" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedGroupFoundationModel.L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="L2TextBox"
+                                  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 ></TextBox>
+                    <TextBlock Grid.Row="7" Grid.Column="5" Style="{StaticResource TextBlockUnit}" x:Name="L2TextBlockUnit"></TextBlock>
+
+                    <!--#region LayerPile -->
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="3" x:Name="LayerPileGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Number Pile"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding AllNumberPile}"
+                                  SelectedItem="{Binding SelectedNumberPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                        </ComboBox>
+                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Add"
+                                    Command="{Binding AddLayerPileCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                    ></Button>
+                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Delete"
+                                    Command="{Binding DeleteLayerPileCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                    ></Button>
+                        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <ListView  ItemsSource="{Binding SelectedGroupFoundationModel.LayerPileModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedLayerPileModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                                <ListView.View>
+                                    <GridView  >
+                                        <GridViewColumn  Width="60" Header="No Layer" DisplayMemberBinding="{Binding NumberLayer}"></GridViewColumn>
+                                        <GridViewColumn Width="60" Header="No Pile" DisplayMemberBinding="{Binding NumberPile}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+
+                    </Grid>
+                    <!--#endregion-->
+
+                   
+                    <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="Generate"
+                                  Command="{Binding GenerateFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                    <Button Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="Modify"
+                                  Command="{Binding ModifyFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                    <Button Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="Reverse"
+                                  Command="{Binding ReverseFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                   
+                    
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Foudation Property" Margin="5">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <ListView  ItemsSource="{Binding SelectedGroupFoundationModel.FoundationModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                     SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView   >
+                                    <GridViewColumn  Width="40" Header=" No" DisplayMemberBinding="{Binding FoundationNumber}"></GridViewColumn>
+                                    <GridViewColumn Width="60" Header="Location" DisplayMemberBinding="{Binding LocationName}"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="Length" DisplayMemberBinding="{Binding Length}" x:Name="LengthGridViewColumn"></GridViewColumn>
+                                    <GridViewColumn Width="50" Header="Width" DisplayMemberBinding="{Binding Width}" x:Name="WidthGridViewColumn"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="b" DisplayMemberBinding="{Binding ColumnModel.b}" x:Name="bGridViewColumn" ></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="h" DisplayMemberBinding="{Binding ColumnModel.h}" x:Name="hGridViewColumn"></GridViewColumn>
+                                    <GridViewColumn Width="40" Header="D" DisplayMemberBinding="{Binding ColumnModel.D}" x:Name="DGridViewColumn"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Foundation Representative"></TextBlock>
+                        <TextBlock  Grid.Column="1"  Style="{StaticResource DataGridTextBlockCenter}" FontWeight="Bold" Foreground="Red" FontSize="13" Text="{Binding SelectedFoundationModel.FoundationNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock  Grid.Column="2" Style="{StaticResource DataGridTextBlockCenter}" FontWeight="Bold" Foreground="Red" FontSize="13" Text="{Binding SelectedFoundationModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <Button Grid.Column="3" Style="{StaticResource ButtonStyle}" Width="60" Content="Apply"
+                                 Command="{Binding ApplyRepresentativeCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                ></Button>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="Piles Property" Margin="5">
+                <Grid >
+                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <ListView  ItemsSource="{Binding SelectedFoundationModel.PileModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedPileModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedPileCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView >
+                                    <GridViewColumn  Width="50" Header=" Pile No" DisplayMemberBinding="{Binding PileNumber}"></GridViewColumn>
+                                    <GridViewColumn Width="60" Header="X" DisplayMemberBinding="{Binding Location.X}"></GridViewColumn>
+                                    <GridViewColumn Width="60" Header="Y" DisplayMemberBinding="{Binding Location.Y}"></GridViewColumn>
+                                    <GridViewColumn Width="60" Header="Z" DisplayMemberBinding="{Binding Location.Z}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        
+
+
+    </Grid>
+</UserControl>

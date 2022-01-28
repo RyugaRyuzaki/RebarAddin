@@ -1,0 +1,383 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.AddBottomBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             Background="White"
+             x:Name="AddBottomBarUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadAddBottomBarsViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid Margin="5 0 0 0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--#region Add Bottom San-->
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <GroupBox Header="Additional Bottom Bar">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Span :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <ComboBox Grid.Column="1" Height="30" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding BeamsModel.SelectedBottomModels}" DisplayMemberPath="Span"
+                                  SelectedItem="{Binding BottomModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBlock Grid.Column="3" Text="Length :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="4" Text="{Binding BottomModels.Length}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <DockPanel Grid.Column="5" LastChildFill="False">
+                            <Button DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Width="120" Content="Fixed To Span"
+                                    Command="{Binding FixedToSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                                    ></Button>
+                        </DockPanel>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <!--#endregion-->
+            <!--#region Start Card-->
+            <Grid Grid.Column="0" Grid.Row="1" Margin="0 5 5 0">
+                <GroupBox x:Name="GStart" Header="Start" >
+                    <Grid x:Name="Start">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="95"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerStart.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding AddStartCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding DeleteStartCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" >
+                            <CheckBox  Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding BottomModels.StartBottomChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                        Command="{Binding StartClickCommand }" CommandParameter="{Binding ElementName=MainWindow}" >
+
+                            </CheckBox>
+                            <Canvas x:Name="CanvasStart"></Canvas>
+                        </DockPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerStart.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="L = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="La =" Style="{StaticResource DataGridTextBlockCenter}">
+                        </TextBlock>
+                        <ComboBox x:Name="BarStart" IsEnabled="{Binding BottomModels.StartBottomChecked}" Height="30" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  SelectedItem="{Binding SelectedLayerStart.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding BeamsModel.AllBars}"
+                                  DisplayMemberPath="Type">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedBarStartCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <ComboBox x:Name="NStart" IsEnabled="{Binding BottomModels.StartBottomChecked}" Height="30" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding BeamsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedLayerStart.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedNumberStartCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                        <TextBox x:Name="LStart" IsEnabled="{Binding BottomModels.StartBottomChecked}" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerStart.L, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LStartTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox x:Name="LaStart" IsEnabled="{Binding BottomModels.StartBottomChecked}" Grid.Row="4" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerStart.La, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LaStartTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <ListView x:Name="ListViewStart" FontSize="13" Grid.Row="6" Grid.ColumnSpan="6" Margin="0 5 0 0"
+                                  SelectedItem="{Binding SelectedLayerStart, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BottomModels.SelectedLayerAddBottomStart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedLayerStartCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="La" DisplayMemberBinding="{Binding La,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <!--#endregion-->
+            <!--#region Mid Card-->
+            <Grid Grid.Column="1" Grid.Row="1" Margin="5 5 5 0">
+                <GroupBox x:Name="GMid" Header="Start" >
+                    <Grid x:Name="Mid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="95"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerMid.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding AddMidCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding DeleteMidCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
+
+                            <Canvas x:Name="CanvasMid"></Canvas>
+                        </DockPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerMid.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="L1 = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="L2 =" Style="{StaticResource DataGridTextBlockCenter}">
+                        </TextBlock>
+                        <ComboBox x:Name="BarMid"  Height="30" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  SelectedItem="{Binding SelectedLayerMid.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding BeamsModel.AllBars}"
+                                  DisplayMemberPath="Type">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedBarMidCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <ComboBox x:Name="NMid"  Height="30" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding BeamsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedLayerMid.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedNumberMidCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                        <TextBox x:Name="LMid"  Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerMid.L, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LMidTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox x:Name="LaMid"  Grid.Row="4" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerMid.La, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LaMidTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <ListView x:Name="ListViewMid" FontSize="13" Grid.Row="6" Grid.ColumnSpan="6" Margin="0 5 0 0"
+                                  SelectedItem="{Binding SelectedLayerMid, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BottomModels.SelectedLayerAddBottomMid,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedLayerMidCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="La" DisplayMemberBinding="{Binding La,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <!--#endregion-->
+            <!--#region Start Card-->
+            <Grid Grid.Column="2" Grid.Row="1" Margin="0 5 0 0">
+                <GroupBox x:Name="GEnd" Header="Start" >
+                    <Grid x:Name="End">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="95"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerEnd.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding AddEndCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                                Command="{Binding DeleteEndCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" LastChildFill="False">
+                            <Canvas x:Name="CanvasEnd" ></Canvas>
+                            <CheckBox DockPanel.Dock="Right"  Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding BottomModels.EndBottomChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                        Command="{Binding EndClickCommand }" CommandParameter="{Binding ElementName=MainWindow}" >
+
+                            </CheckBox>
+
+                        </DockPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedLayerEnd.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="L = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="La =" Style="{StaticResource DataGridTextBlockCenter}">
+                        </TextBlock>
+                        <ComboBox x:Name="BarEnd" IsEnabled="{Binding BottomModels.EndBottomChecked}" Height="30" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  SelectedItem="{Binding SelectedLayerEnd.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  ItemsSource="{Binding BeamsModel.AllBars}"
+                                  DisplayMemberPath="Type">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedBarEndCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <ComboBox x:Name="NEnd" IsEnabled="{Binding BottomModels.EndBottomChecked}" Height="30" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding BeamsModel.AllNumberBar}"
+                                  SelectedItem="{Binding SelectedLayerEnd.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedNumberEndCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                        <TextBox x:Name="LEnd" IsEnabled="{Binding BottomModels.EndBottomChecked}" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerEnd.L, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LEndTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox x:Name="LaEnd" IsEnabled="{Binding BottomModels.EndBottomChecked}" Grid.Row="4" Grid.Column="4" Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SelectedLayerEnd.La, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LaEndTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
+                        <ListView x:Name="ListViewEnd" FontSize="13" Grid.Row="6" Grid.ColumnSpan="6" Margin="0 5 0 0"
+                                  SelectedItem="{Binding SelectedLayerEnd, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding BottomModels.SelectedLayerAddBottomMid,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedLayerEndCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="La" DisplayMemberBinding="{Binding La,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <!--#endregion-->
+        </Grid>
+    </Grid>
+</UserControl>

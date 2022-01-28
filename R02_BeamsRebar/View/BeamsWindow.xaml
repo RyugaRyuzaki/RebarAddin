@@ -1,0 +1,182 @@
+<Window x:Name="MainWindow" x:Class="R02_BeamsRebar.BeamsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:view="clr-namespace:R02_BeamsRebar.View"
+        xmlns:viewModel="clr-namespace:R02_BeamsRebar.ViewModel"
+        mc:Ignorable="d"
+        Title="Beams Rebar" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="True" 
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Height="935" Width="1400"
+        Topmost="false"
+        Background="#f0ebeb"
+        FontFamily="Tahoma"
+        >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadWindowCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/R02_BeamsRebar;component/Library/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <DataTemplate x:Name="settingBeamsViewModel" DataType="{x:Type viewModel:SettingViewModel}">
+                        <view:SettingView></view:SettingView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="geometryBeamsViewModel" DataType="{x:Type viewModel:GeometryViewModel}">
+                        <view:GeometryView></view:GeometryView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="stirrupsBeamsViewModel" DataType="{x:Type viewModel:StirrupsViewModel}">
+                        <view:StirrupsView></view:StirrupsView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="barsMainBeamsViewModel" DataType="{x:Type viewModel:BarsMainViewModel}">
+                        <view:BarsMainView></view:BarsMainView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="addTopBarBeamsViewModel" DataType="{x:Type viewModel:AddTopBarViewModel}">
+                        <view:AddTopBarView></view:AddTopBarView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="addBottomBarBeamsViewModel" DataType="{x:Type viewModel:AddBottomBarViewModel}">
+                        <view:AddBottomBarView></view:AddBottomBarView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="specialBarBeamsViewModel" DataType="{x:Type viewModel:SpecialBarViewModel}">
+                        <view:SpecialBarView></view:SpecialBarView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="barsDivisionBeamsViewModel" DataType="{x:Type viewModel:BarsDivisionViewModel}">
+                        <view:BarsDivisionView></view:BarsDivisionView>
+                    </DataTemplate>
+                    <DataTemplate x:Name="sectionAreaViewModel" DataType="{x:Type viewModel:SectionAreaViewModel}">
+                        <view:SectionAreaView></view:SectionAreaView>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+  <StackPanel >
+        <Grid Height="560">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--#region Menu-->
+            <Border Grid.Column="0" >
+                <Grid Style="{StaticResource BorderGrid}">
+                    <ListView x:Name="Menu">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionMenuCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Setting" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem >
+                            <DockPanel>
+                                <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Geometry" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="StirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Stirrups" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="BarsMainCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Bars Main" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="AddTopBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Add-Top Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="AddBottomBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Add-Bottom Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="SpecialBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Special Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="SectionAreaCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Section Area" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <DockPanel>
+                                <Canvas x:Name="BarsDivisionCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                <TextBlock Text="Bars Division" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                            </DockPanel>
+                        </ListViewItem>
+                    </ListView>
+                </Grid>
+            </Border>
+            <!--#endregion-->
+            <!--#region UserControl-->
+            <Grid Grid.Column="1" Margin="5 0 0 0">
+                <ContentControl Content="{Binding SelectedViewModel}"></ContentControl>
+            </Grid>
+            <!--#endregion-->
+            
+        </Grid>
+        <!--#region  Canvas-->
+        <Grid Height="320" Margin="0 5" Background="White">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="scrollViewer" >
+                <Grid >
+                    <TextBlock Margin="5 5 0 0" FontWeight="Bold" Text="{Binding BeamsModel.SettingModel.DetailViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                    <Canvas x:Name="canvas" Grid.Row="1" Grid.Column="0">
+                        
+                    </Canvas>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <!--#endregion-->
+      <!--#region Button-->
+        <Grid Height="40"  Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="0.85*"></ColumnDefinition>
+                <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0" LastChildFill="False" >
+                <RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding BeamsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="DetailItem"  Style="{StaticResource RadioButtonStyle}" Content="Detail-Item" 
+                             ></RadioButton>
+                <RadioButton IsChecked="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="Rebar" Style="{StaticResource RadioButtonStyle}"  Content="Rebar" ></RadioButton>
+            </DockPanel>
+            <Grid Grid.Column="1">
+                <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
+                <TextBlock Text="{Binding BeamsModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+            </Grid>
+            <TextBlock Grid.Column="2" Text="{Binding BeamsModel.SelectedAction,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}" Margin="10 0 0 0" FontStyle="Italic" FontSize="11" FontWeight="Bold" ></TextBlock>
+            <Button Grid.Column="3" Content="OK" Style="{StaticResource ButtonStyle}" 
+                            Command="{Binding OKCommand}" 
+                            CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            <Button Grid.Column="4" Content="Cancel" Style="{StaticResource ButtonStyle}" 
+                            Command="{Binding CancelCommand}" 
+                            CommandParameter="{Binding ElementName=MainWindow}"></Button>
+        </Grid>
+        <!--#endregion-->
+    </StackPanel>
+</Window>

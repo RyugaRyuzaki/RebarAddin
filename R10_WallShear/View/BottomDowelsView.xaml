@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="R10_WallShear.View.BottomDowelsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="BottomDowelsUC"
+             >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadBottomDowelsViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="270"></RowDefinition>
+                    <RowDefinition Height="205"></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
+                    <RowDefinition Height="205"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Margin="5" Header="Walls Property">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid  Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Wall No" x:Name="WallNumberTextBlock"></TextBlock>
+                                <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox" 
+                          ItemsSource="{Binding WallsModel.BarMainModels}" DisplayMemberPath="NumberWall"
+                          SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding WallsModel.SelectedIndexModel.SelectedWall}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionColumnDowelsChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                                <Button Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Width="120" Content="Apply All Bar"
+                            Command="{Binding ApplyAllBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                            ></Button>
+                            </Grid>
+                            <Grid >
+                                <ListView  ItemsSource="{Binding SelectedWall.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding WallsModel.SelectedIndexModel.SelectedMainBar}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionBarChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <ListView.View>
+                                        <GridView  >
+                                            <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="Bottom" DisplayMemberBinding="{Binding IsBottomDowels}" ></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="Type" DisplayMemberBinding="{Binding BottomDowels}"></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="La" DisplayMemberBinding="{Binding LaBottomDowels}" ></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="Lb" DisplayMemberBinding="{Binding LbBottomDowels}" ></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="Lc" DisplayMemberBinding="{Binding LcBottomDowels}" ></GridViewColumn>
+
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Margin="5" Header="Bottom Dowels Property">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Content="Fixed To Top" Width="100" x:Name="FixedUpButton" Visibility="Collapsed"></Button>-->
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Bottom Dowels" x:Name="BottomDowelsCheckbox"
+                          IsEnabled="{Binding IsEnabledBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          IsChecked="{Binding SelectedBar.IsBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           Command="{Binding CheckBottomDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></CheckBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="La" x:Name="BottomDowelsLaTextBlock"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LaBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsLaTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLaTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsLaTextBlockUnit"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Lb" x:Name="BottomDowelsLbTextBlock"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LbBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsLbTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLbTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsLbTextBlockUnit"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Lc" x:Name="BottomDowelsLcTextBlock"></TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LcBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsLcTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLcTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsLcTextBlockUnit"></TextBlock>
+                        <!--<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Content="Fixed To Bottom" Width="100" x:Name="FixedDownButton" Visibility="Collapsed"></Button>-->
+                        <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Bottom Type" x:Name="BottomDowelsTypeTextBlock"></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Style="{StaticResource ComboBoxStyle}" x:Name="BottomDowelsTypeComboBox"
+                          IsEnabled="{Binding IsEnabledBottomTypeDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedBar.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionBottomTypeDowelsChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ComboBoxItem>
+                                <Canvas Width="140" Height="90" x:Name="BottomDowelsTypeCanvas0"></Canvas>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <Canvas Width="140" Height="90" x:Name="BottomDowelsTypeCanvas1"></Canvas>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Fixed to Down Column"
+                           x:Name="FixedDown"  
+                           Visibility="Collapsed" 
+                          Command="{Binding FixedBottomBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></Button>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="2" Margin="5" Header="Corner Bar Property">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <Grid >
+                            <ListView  ItemsSource="{Binding SelectedWall.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedIndex="{Binding WallsModel.SelectedIndexModel.SelectedMainBar}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionBarChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListView.View>
+                                    <GridView  >
+                                        <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                        <GridViewColumn Width="50" Header="Bottom" DisplayMemberBinding="{Binding IsBottomDowels}" ></GridViewColumn>
+                                        <GridViewColumn Width="50" Header="Type" DisplayMemberBinding="{Binding BottomDowels}"></GridViewColumn>
+                                        <GridViewColumn Width="50" Header="La" DisplayMemberBinding="{Binding LaBottomDowels}" ></GridViewColumn>
+                                        <GridViewColumn Width="50" Header="Lb" DisplayMemberBinding="{Binding LbBottomDowels}" ></GridViewColumn>
+                                        <GridViewColumn Width="50" Header="Lc" DisplayMemberBinding="{Binding LcBottomDowels}" ></GridViewColumn>
+
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </ScrollViewer>
+                </GroupBox>
+                <GroupBox Grid.Row="3" Margin="5" Header="Corner Bottom Dowels Property">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Content="Fixed To Top" Width="100" x:Name="FixedUpButton" Visibility="Collapsed"></Button>-->
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Corner Bottom Dowels" x:Name="BottomDowelsCornerCheckbox"
+                          IsEnabled="{Binding IsEnabledBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          IsChecked="{Binding SelectedBar.IsBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                           Command="{Binding CheckBottomDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></CheckBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="La" x:Name="BottomDowelsCornerLaTextBlock"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LaBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsCornerLaTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLaTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsCornerLaTextBlockUnit"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Lb" x:Name="BottomDowelsCornerLbTextBlock"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LbBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsCornerLbTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLbTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsCornerLbTextBlockUnit"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Lc" x:Name="BottomDowelsCornerLcTextBlock"></TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBar.LcBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         x:Name="BottomDowelsCornerLcTextBox"
+                         >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding BottomDowelsLcTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="BottomDowelsCornerLcTextBlockUnit"></TextBlock>
+                        <!--<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Content="Fixed To Bottom" Width="100" x:Name="FixedDownButton" Visibility="Collapsed"></Button>-->
+                        <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Bottom Type" x:Name="BottomDowelsCornerTypeTextBlock"></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Style="{StaticResource ComboBoxStyle}" x:Name="BottomDowelsCornerTypeComboBox"
+                          IsEnabled="{Binding IsEnabledBottomTypeDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedBar.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionBottomTypeDowelsChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ComboBoxItem>
+                                <Canvas Width="140" Height="90" x:Name="BottomDowelsCornerTypeCanvas0"></Canvas>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <Canvas Width="140" Height="90" x:Name="BottomDowelsCornerTypeCanvas1"></Canvas>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Fixed to Down Column"
+                           x:Name="FixedDownCorner"  
+                           Visibility="Collapsed" 
+                          Command="{Binding FixedBottomBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></Button>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

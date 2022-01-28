@@ -1,0 +1,278 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.GeometryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             Background="White"
+             x:Name="GeometryUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadGeometryViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid Margin="5 0 0 0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition Width="1.55*"></ColumnDefinition>
+                <ColumnDefinition Width="420"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="0.45*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="2" Grid.RowSpan="3" Margin="5 0 5 0">
+                <Canvas x:Name="canvas"></Canvas>
+            </Grid>
+            <Grid Grid.Column="0" Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.6*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="5 0 0 5" >
+                    <GroupBox Header="Rebar Shape and Hook">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Stirrup Shape" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                      ItemsSource="{Binding BeamsModel.SettingModel.RebarShapes}"
+                                       DisplayMemberPath="Name"
+                                      SelectedItem="{Binding BeamsModel.SettingModel.SelectedShapeStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            </ComboBox>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Anti-Shinkage " Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                      ItemsSource="{Binding BeamsModel.SettingModel.RebarShapes}"
+                                       DisplayMemberPath="Name"
+                                      SelectedItem="{Binding BeamsModel.SettingModel.SelectedShapeAnti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                            </ComboBox>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Hook " Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{StaticResource ComboBoxStyle}" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                       ItemsSource="{Binding BeamsModel.SettingModel.RebarHookTypes}"
+                                       DisplayMemberPath="Name"
+                                      SelectedItem="{Binding BeamsModel.SettingModel.SelectedHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedHookCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            <Canvas Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="canvas2"></Canvas>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="1" Margin="5 0 0 0">
+                    <GroupBox Header="View property">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.65*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0"   Text="Detail Template"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
+                               ItemsSource="{Binding BeamsModel.SettingModel.ViewTemplate}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedDetailTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0"  Text="Section Template" Grid.ColumnSpan="6"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" Grid.ColumnSpan="3"
+                               ItemsSource="{Binding BeamsModel.SettingModel.ViewTemplate}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedSectionTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+                            <TextBlock Grid.Row="2" Grid.Column="0"  Text="DetailShop Template" Grid.ColumnSpan="6"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="2" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" Grid.ColumnSpan="3"
+                               ItemsSource="{Binding BeamsModel.SettingModel.ViewTemplate}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedDetailShopTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+                            
+                            
+                            
+                            
+                            
+                            
+
+                            <TextBlock Grid.Row="3" Grid.Column="0"  Text="Parameter Beams" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <ComboBox Grid.Row="3" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
+                              ItemsSource="{Binding BeamsModel.SettingModel.Parameters}"
+                              DisplayMemberPath="Definition.Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedParameters}">
+                            </ComboBox>
+                            <TextBlock Grid.Row="4" Grid.Column="0"  Text="Beams Name"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <TextBox Grid.Row="4" Grid.Column="1"  Style="{StaticResource TextBoxStyle}" Text="{Binding BeamsModel.SettingModel.BeamsName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding BeamNameTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <TextBlock Grid.Row="5" Grid.Column="0"  Text="Detail ViewName"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding BeamsModel.SettingModel.DetailViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                            <CheckBox Grid.Row="6" Grid.Column="0"  IsChecked="{Binding BeamsModel.SettingModel.IsPrefixDetail}"  Content="Prefix Level" Style="{StaticResource CheckBoxStyle}"
+                              Command="{Binding PrefixLevelCommand}"
+                              CommandParameter="{Binding ElementName=MainWindow}">
+                            </CheckBox>
+                            <DockPanel Grid.Row="6" Grid.Column="1" LastChildFill="False">
+                                <TextBlock Text="Prefix Section"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                                <TextBox  Width="100" HorizontalAlignment="Left" Style="{StaticResource TextBoxStyle}" Text="{Binding BeamsModel.SettingModel.PrefixSection,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding PrefixSectionTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+                            <TextBlock Grid.Row="7" Grid.Column="0"  Text="Section ViewName"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="7" Grid.Column="1"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding BeamsModel.SettingModel.SectionViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                           
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1" Margin="5 0 5 5">
+                <GroupBox Header="Identification" >
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                                <ColumnDefinition ></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0 5 0 0" Style="{StaticResource DataGridTextBlockStyle}" Text="Family Type :" Grid.Column="0" Grid.Row="0"></TextBlock>
+                            <TextBlock Margin="0 5 0 0" Style="{StaticResource DataGridTextBlockStyle}" Text="Types :" Grid.Column="0" Grid.Row="1"></TextBlock>
+                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding BeamsModel.FamilyType}" Grid.Column="1"  Grid.Row="0" Margin="20 5 0 0"></TextBlock>
+                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding BeamsModel.AllTypes}" Grid.Column="1" Grid.Row="1" Margin="20 5 0 0"></TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+            <!--ListView-->
+            <Grid Grid.Row="1" Grid.Column="1" Margin="5 5 5 0">
+                <GroupBox Header="Elements Parameter" >
+                    <Grid>
+                        <ListView x:Name="ListViewBeamsModel"  ItemsSource="{Binding BeamsModel.InfoModels}"  
+                                  SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedBeamsModelCommand}" CommandParameter="{Binding ElementName= MainWindow}" >
+
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn   Header="Spans" Width="50" DisplayMemberBinding="{Binding NumberSpan}"></GridViewColumn>
+                                    <GridViewColumn Header="Start" Width="50" DisplayMemberBinding="{Binding startPosition}"></GridViewColumn>
+                                    <GridViewColumn Header="End" Width="50" DisplayMemberBinding="{Binding endPosition}"></GridViewColumn>
+                                    <GridViewColumn Header="b" Width="40" DisplayMemberBinding="{Binding b}"></GridViewColumn>
+                                    <GridViewColumn Header="h" Width="40" DisplayMemberBinding="{Binding h}"></GridViewColumn>
+                                    <GridViewColumn Header="Length" Width="55" DisplayMemberBinding="{Binding Length}"></GridViewColumn>
+                                    <GridViewColumn Header="Z Offset" Width="55" DisplayMemberBinding="{Binding zOffset}"></GridViewColumn>
+                                    <GridViewColumn Header="e0" Width="40" DisplayMemberBinding="{Binding startOffset}"></GridViewColumn>
+                                    <GridViewColumn Header="e1" Width="40" DisplayMemberBinding="{Binding endtOffset}">
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1" Margin="5 5 5 0">
+                <GroupBox Header="Anotation Property" >
+                    <Grid Margin="0 5 0 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Text="Dimension Style" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" 
+                               ItemsSource="{Binding BeamsModel.SettingModel.AllDimensionType}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedDimensionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0"  Text="Main Rebar Tags" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
+                               ItemsSource="{Binding BeamsModel.SettingModel.AllRebarTag}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedRebarTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+
+                        <TextBlock Grid.Row="0" Grid.Column="2"  Text="Multi-Rebar Tags" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="3" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}"
+                               ItemsSource="{Binding BeamsModel.SettingModel.MultiReferenceAnnotationType}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedMultiType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="2"  Text="Stirrup Rebar Tags" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="3" IsEnabled="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
+                               ItemsSource="{Binding BeamsModel.SettingModel.AllRebarTag}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedStirrupTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Text="Detail Item Tags" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsEnabled="{Binding BeamsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
+                               ItemsSource="{Binding BeamsModel.SettingModel.AllDetailItemTag}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedDetailItemTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="2"  Text="Detail Distance Tags" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="3" IsEnabled="{Binding BeamsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
+                               ItemsSource="{Binding BeamsModel.SettingModel.AllDetailItemTag}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding BeamsModel.SettingModel.SelectedDetailDistanceTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></ComboBox>
+                    </Grid>
+                    
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

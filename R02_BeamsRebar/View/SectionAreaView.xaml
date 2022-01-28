@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="R02_BeamsRebar.View.SectionAreaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1220"
+             Background="White"
+             x:Name="SectionAreaUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSectionAreaCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid Margin="5 0 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--#region Draw-->
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0 5 5 0">
+            <GroupBox Header="{Binding SelectedSectionAreaModel.NameStart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <Canvas x:Name="canvasStart">
+                </Canvas>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5 5 5 0">
+            <GroupBox Header="{Binding SelectedSectionAreaModel.NameMiddle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <Canvas x:Name="canvasMid">
+                    
+                </Canvas>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5 5 0 0">
+            <GroupBox Header="{Binding SelectedSectionAreaModel.NamelEnd,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <Canvas x:Name="canvasEnd"></Canvas>
+            </GroupBox>
+        </Grid>
+        <!--#endregion-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 5">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Span" FontSize="20"></TextBlock>
+                <ComboBox Grid.Column="1" Height="30" Style="{StaticResource ComboBoxStyle}"
+                          ItemsSource="{Binding BeamsModel.SectionAreaModels}" DisplayMemberPath="NumberSpan"
+                          SelectedItem="{Binding SelectedSectionAreaModel, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding BeamsModel.SelectedIndexModel.SectionSpan}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <TextBlock Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Start" FontSize="20"></TextBlock>
+                <TextBlock Grid.Column="4" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedSectionAreaModel.DetailStart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" TextWrapping="WrapWithOverflow"></TextBlock>
+                <TextBlock Grid.Column="5" Style="{StaticResource DataGridTextBlockCenter}" Text="Middle" FontSize="20"></TextBlock>
+                <TextBlock Grid.Column="6" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedSectionAreaModel.DetailMiddle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" TextWrapping="WrapWithOverflow"></TextBlock>
+                <TextBlock Grid.Column="7" Style="{StaticResource DataGridTextBlockCenter}" Text="End" FontSize="20"></TextBlock>
+                <TextBlock Grid.Column="8" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedSectionAreaModel.DetailEnd,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" TextWrapping="WrapWithOverflow"></TextBlock>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

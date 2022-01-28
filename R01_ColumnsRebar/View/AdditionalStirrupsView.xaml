@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="R01_ColumnsRebar.View.AdditionalStirrupsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="890" d:DesignWidth="360"
+             Background="White"
+             x:Name="AdditionalUC">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadAdditionalStirrupsViewCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="360"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Margin="5" Header="Additional property">
+            <Grid Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Column No"></TextBlock>
+                <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
+                          ItemsSource="{Binding ColumnsModel.StirrupModels}" DisplayMemberPath="NumberColumn"
+                          SelectedItem="{Binding SelectedStirrupModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding ColumnsModel.SelectedIndexModel.SelectedColumn}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionAdditionalStirrupsChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <!--<Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Width="130" Content="Apply All Columns" x:Name="ApplyAllButton"
+                        Command="{Binding ApplyAllColumnCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Margin="5" Header="Additional Horizontal">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Horizontal"
+                          IsChecked="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          Command="{Binding HorizontalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></CheckBox>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
+                          IsEnabled="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          ItemsSource="{Binding ColumnsModel.AllBars}" DisplayMemberPath="Type"
+                          SelectedItem="{Binding SelectedStirrupModel.BarH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BarHorizontalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedStirrupModel.BarH.Diameter}"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="No Bar" x:Name="nHTextBlock"></TextBlock>
+                <ComboBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" x:Name="nHComboBox"
+                          IsEnabled="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          ItemsSource="{Binding NumberAdditional}" 
+                          SelectedItem="{Binding SelectedStirrupModel.nH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding NumberBarHorizontalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="a" x:Name="aHTextBlocka"></TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" x:Name="aHTextBoxa"
+                          IsEnabled="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Text="{Binding SelectedStirrupModel.aH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding HorizontalaTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="aHTextBlockUnit"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Type"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="5"  Style="{StaticResource ComboBoxStyle}" 
+                          IsEnabled="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedStirrupModel.TypeH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding TypeHorizontalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem x:Name="HoComboBoxItem0">
+                        <Canvas Width="140" Height="140" x:Name="HoCanvas0"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="HoComboBoxItem1">
+                        <Canvas Width="140" Height="140" x:Name="HoCanvas1"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="HoComboBoxItem2">
+                        <Canvas Width="140" Height="140" x:Name="HoCanvas2"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="HoComboBoxItem3">
+                        <Canvas Width="140" Height="140" x:Name="HoCanvas3"></Canvas>
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Margin="5" Header="Additional Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Vertical"
+                          IsChecked="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          Command="{Binding VerticalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                          ></CheckBox>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
+                          IsEnabled="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          ItemsSource="{Binding ColumnsModel.AllBars}" DisplayMemberPath="Type"
+                          SelectedItem="{Binding SelectedStirrupModel.BarV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BarVerticalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedStirrupModel.BarV.Diameter}"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="No Bar" x:Name="nVTextBlock"></TextBlock>
+                <ComboBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" x:Name="nVComboBox"
+                          IsEnabled="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          ItemsSource="{Binding NumberAdditional}" 
+                          SelectedItem="{Binding SelectedStirrupModel.nV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding NumberBarVerticalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="a" x:Name="aVTextBlocka"></TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" x:Name="aVTextBoxa"
+                         IsEnabled="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Text="{Binding SelectedStirrupModel.aV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding VerticalaTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="aVTextBlockUnit"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Type"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="5"  Style="{StaticResource ComboBoxStyle}" 
+                          IsEnabled="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedStirrupModel.TypeV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding TypeVerticalChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem x:Name="VeComboBoxItem0">
+                        <Canvas Width="140" Height="140" x:Name="VeCanvas0"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="VeComboBoxItem1">
+                        <Canvas Width="140" Height="140" x:Name="VeCanvas1"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="VeComboBoxItem2">
+                        <Canvas Width="140" Height="140" x:Name="VeCanvas2"></Canvas>
+                    </ComboBoxItem>
+                    <ComboBoxItem x:Name="VeComboBoxItem3">
+                        <Canvas Width="140" Height="140" x:Name="VeCanvas3"></Canvas>
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+        <Canvas Grid.Row="3" Margin="5" x:Name="CanvasSection"></Canvas>
+    </Grid>
+</UserControl>
