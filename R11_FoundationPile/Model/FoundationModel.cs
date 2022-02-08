@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-
+using WpfCustomControls;
 namespace R11_FoundationPile
 {
     public class FoundationModel : BaseViewModel

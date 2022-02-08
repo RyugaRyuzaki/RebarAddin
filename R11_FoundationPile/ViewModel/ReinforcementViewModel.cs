@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using R11_FoundationPile.View;
-
+using WpfCustomControls;
 namespace R11_FoundationPile.ViewModel
 {
     public class ReinforcementViewModel : BaseViewModel

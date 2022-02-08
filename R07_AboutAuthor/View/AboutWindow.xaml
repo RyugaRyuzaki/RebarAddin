@@ -10,7 +10,7 @@
         ResizeMode="NoResize" 
         ShowInTaskbar="True" 
         WindowStartupLocation="CenterScreen"
-        Height="370" Width="500"
+        Height="360" Width="500"
         Topmost="False"
         Background="Gainsboro"
         WindowStyle="None"
@@ -31,11 +31,11 @@
     </Window.Resources>
 
   <StackPanel Margin="0">
-        <Grid Height="50">
+        <Grid Height="40">
             <ContentControl Content="{Binding TaskBarViewModel}"></ContentControl>
         </Grid>
         <StackPanel Height="90" Background="White">
-            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="About DSP Rebar"></TextBlock>
+            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.About,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
             <Grid Height="35"></Grid>
             <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="DSP Rebar" FontSize="25" Foreground="Blue" ></TextBlock>
         </StackPanel>
@@ -50,10 +50,10 @@
                 <RowDefinition Height="30"></RowDefinition>
                
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Version"></TextBlock>
-           
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Support"></TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Contact Us"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Version,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Support,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Contact,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Version}" FontWeight="Bold"></TextBlock>
             
             <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}"  FontWeight="Bold">
@@ -67,7 +67,7 @@
             </TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding ContactUs}" FontWeight="Bold"></TextBlock>
         </Grid>
-        <TextBlock Margin="5 0 0 0" Style="{StaticResource DataGridTextBlockStyle}" Text="Donation" FontSize="15" FontWeight="Bold" Foreground="Blue"></TextBlock>
+        <TextBlock Margin="5 0 0 0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Donation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="15" FontWeight="Bold" Foreground="Blue"></TextBlock>
         <Grid Margin="5" Background="White" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"></ColumnDefinition>
@@ -78,8 +78,8 @@
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Bank"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Infomation"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Bank,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.AuthorLanguage.Information,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateBank}"></TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateInfo}"></TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding CopyRight}"></TextBlock>

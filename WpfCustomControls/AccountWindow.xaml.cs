@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfCustomControls.ViewModel;
 
 namespace WpfCustomControls
 {
@@ -20,9 +21,12 @@ namespace WpfCustomControls
     /// </summary>
     public partial class AccountWindow : Window
     {
-        public AccountWindow()
+        private AccountViewModel AccountViewModel;
+        public AccountWindow(AccountViewModel accountViewModel)
         {
             InitializeComponent();
+            AccountViewModel = accountViewModel;
+            this.DataContext = AccountViewModel;
         }
     }
 }

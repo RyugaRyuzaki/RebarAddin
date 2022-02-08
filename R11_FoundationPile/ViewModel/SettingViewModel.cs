@@ -5,7 +5,7 @@ using R11_FoundationPile.View;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R11_FoundationPile.ViewModel
 {
     public class SettingViewModel:BaseViewModel

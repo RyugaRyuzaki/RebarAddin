@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R11_FoundationPile.ViewModel
 {
     public class GeometryViewModel : BaseViewModel

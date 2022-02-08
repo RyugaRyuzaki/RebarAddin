@@ -26,8 +26,8 @@ namespace WpfCustomControls
             Point p2 = new Point() { X = 5, Y = 5+(28-5)/3 };
             Point p3 = new Point() { X = 5, Y = 5 + (28 - 5) / 3 +5};
             Point p4 = new Point() { X = 10, Y = 5 + (28 - 5) / 3 + 5 -5/3};
-            Point p5 = new Point() { X = 10, Y = 35 };
-            Point p6 = new Point() { X = 14, Y = 35 };
+            Point p5 = new Point() { X = 10, Y = 33 };
+            Point p6 = new Point() { X = 14, Y = 33 };
             Point p7 = new Point() { X = 14, Y = 5 + (28 - 5) / 3 + 5 - 10 / 3 };
             Point p8 = new Point() { X = 28, Y = 10 };
             Point p9 = new Point() { X = 51, Y = 5 + (28 - 5) / 3 + 5 - 10 / 3 };
@@ -55,8 +55,8 @@ namespace WpfCustomControls
             Point p2 = new Point() { X = 0, Y = (28 ) / 3 };
             Point p3 = new Point() { X = 0, Y =  (28 ) / 3 + 12 };
             Point p4 = new Point() { X = 5, Y =  (28 ) / 3 + 12 - 5 / 3 };
-            Point p5 = new Point() { X = 5, Y = 30 };
-            Point p6 = new Point() { X = 10, Y = 35 };
+            Point p5 = new Point() { X = 5, Y = 28 };
+            Point p6 = new Point() { X = 10, Y = 33 };
             Point p7 = new Point() { X = 10, Y = 5 + (28 - 5) / 3 + 5 - 5 / 3 };
             Point p8 = new Point() { X = 5, Y = 5 + (28 - 5) / 3 + 5 };
             Point p9 = new Point() { X = 5, Y = 5 + (28 - 5) / 3 };
@@ -95,7 +95,7 @@ namespace WpfCustomControls
             text.Foreground = Brushes.DarkSlateGray;
             text.Measure(new Size(System.Double.PositiveInfinity, System.Double.PositiveInfinity));
             text.Arrange(new Rect(text.DesiredSize));
-            Canvas.SetTop(text, 6 );
+            Canvas.SetTop(text, 3 );
             Canvas.SetLeft(text, 34-text.ActualWidth/2);
             canvas.Children.Add(text);
         }

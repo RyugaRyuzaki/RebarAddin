@@ -15,6 +15,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using R11_FoundationPile.View;
 using R11_FoundationPile.ViewModel;
+using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 #endregion
 
 namespace R11_FoundationPile
@@ -54,6 +56,10 @@ namespace R11_FoundationPile
         public ReinforcementViewModel ReinforcementViewModel { get => _ReinforcementViewModel; set { _ReinforcementViewModel = value; OnPropertyChanged(); } }
         private PileDetailViewModel _PileDetailViewModel;
         public PileDetailViewModel PileDetailViewModel { get => _PileDetailViewModel; set { _PileDetailViewModel = value; OnPropertyChanged(); } }
+
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+
         #endregion
         public FoundationPileViewModel(UIDocument uiDoc, Document doc, List<Element> columns)
         {
@@ -69,6 +75,7 @@ namespace R11_FoundationPile
             
             PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit);
             ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel,Unit);
+            TaskBarViewModel = new TaskBarViewModel();
             SelectedViewModel = SettingViewModel;
             
             #endregion

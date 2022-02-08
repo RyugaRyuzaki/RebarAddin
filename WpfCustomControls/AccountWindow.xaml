@@ -4,9 +4,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCustomControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:custom="clr-namespace:WpfCustomControls.CustomControls"
+        xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel"
         mc:Ignorable="d"
-        Title="Account" Height="450" Width="800">
-    <Grid>
+        Title="Account" Height="450" Width="800"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        x:Name="Account"
+        Topmost="False"
         
-    </Grid>
+        >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadAccountCommand}" CommandParameter="{Binding ElementName=Account}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="0">
+        <DockPanel LastChildFill="False" Background="#86f0a2" Margin="0" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}" CommandParameter="{Binding ElementName=Account}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Button Style="{StaticResource ButtonStyleIcon}" Width="60" DockPanel.Dock="Left"  Background="White" Margin="2"
+                Command="{Binding GotoWebCommand}"  CommandParameter="{Binding ElementName=Account}" 
+                >
+                <Canvas x:Name="LogoCanvas" Width="56" Height="35"></Canvas>
+            </Button>
+            <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" Width="40"  
+                Command="{Binding CloseWindowCommand}"  CommandParameter="{Binding ElementName=Account}" 
+                >
+                <Grid>
+                    <Ellipse Width="28" Height="28" Stroke="Black" StrokeThickness="3"></Ellipse>
+                    <Line Stroke="Black" StrokeThickness="3" X1="14" X2="14" Y1="-4" Y2="14"></Line>
+                </Grid>
+
+            </Button>
+           
+
+        </DockPanel>
+    </StackPanel>
 </Window>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R11_FoundationPile.ViewModel
 {
     public class PileDetailViewModel :BaseViewModel

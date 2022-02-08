@@ -6,20 +6,21 @@
         mc:Ignorable="d"
         xmlns:view="clr-namespace:R11_FoundationPile.View"
         xmlns:viewModel="clr-namespace:R11_FoundationPile.ViewModel"
-        
+         xmlns:custom="clr-namespace:WpfCustomControls.CustomControls;assembly=WpfCustomControls"
+        xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel;assembly=WpfCustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="R11_FoundationPile" 
         ResizeMode="NoResize" 
         ShowInTaskbar="true" 
         WindowStartupLocation="CenterScreen"
-        Height="935" Width="1400"
+        Height="975" Width="1400"
         Topmost="false"
         FontSize="11"
-        BorderBrush="Black"
-        BorderThickness="1"
+       
         FontFamily="Tahoma"
         Background="#f0ebeb"
         WindowStyle="None"
+        AllowsTransparency="True"
         >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -29,7 +30,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
                 <ResourceDictionary>
                     <DataTemplate x:Name="settingViewModel" DataType="{x:Type viewModel:SettingViewModel}">
                         <view:SettingView></view:SettingView>
@@ -43,108 +44,124 @@
                     <DataTemplate x:Name="pileDetailViewModel" DataType="{x:Type viewModel:PileDetailViewModel}">
                         <view:PileDetailView></view:PileDetailView>
                     </DataTemplate>
+                    <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
+                        <custom:TaskBarControl></custom:TaskBarControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"></ColumnDefinition>
-            <ColumnDefinition Width="360"></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="45"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <!--#region Menu-->
-        <Border Grid.Row="0" Grid.Column="0">
-            <Grid >
-                <StackPanel>
-                    <ListView x:Name="Menu">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding SelectionMenuCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <ListViewItem >
-                            <DockPanel>
-                                <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Setting" FontSize="13"></TextBlock>
-                            </DockPanel>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <DockPanel>
-                                <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Geometry" FontSize="13"></TextBlock>
-                            </DockPanel>
-                        </ListViewItem>
-                        <ListViewItem x:Name="PileDetailListViewItem"  >
-                            <DockPanel>
-                                <Canvas x:Name="PileDetailCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Pile Detail" FontSize="13"></TextBlock>
-                            </DockPanel>
-                        </ListViewItem>
-                        <ListViewItem x:Name="ReinforcementListViewItem" >
-                            <DockPanel>
-                                <Canvas x:Name="ReinforcementCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Reinforcement" FontSize="13"></TextBlock>
-                            </DockPanel>
-                        </ListViewItem>
-                        
-                        
-                    </ListView>
-                </StackPanel>
-            </Grid>
-        </Border>
-        <!--#endregion-->
-        <!--#region UserControl-->
-        <Grid Grid.Row="0" Grid.Column="1">
-            <ContentControl Content="{Binding SelectedViewModel}"></ContentControl>
+        <Grid Grid.Row="0">
+            <ContentControl Content="{Binding TaskBarViewModel}"></ContentControl>
         </Grid>
-        <!--#endregion-->
-        <!--#region CanvasMain-->
-        <GroupBox Grid.Row="0" Grid.Column="2" Margin="5" Header="Foundation" Background="White">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="scrollViewer">
-                <Grid>
-                    <Canvas x:Name="MainCanvas" >
-                        
-                    </Canvas>
-                    <Canvas Grid.Row="6" Width="140" Height="60" x:Name="CanvasRebarImage" ></Canvas>
-                    
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="360"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--#region Menu-->
+            <Border Grid.Row="0" Grid.Column="0">
+                <Grid >
+                    <StackPanel>
+                        <ListView x:Name="Menu">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionMenuCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListViewItem >
+                                <DockPanel>
+                                    <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                </DockPanel>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <DockPanel>
+                                    <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                </DockPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="PileDetailListViewItem"  >
+                                <DockPanel>
+                                    <Canvas x:Name="PileDetailCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.PileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                </DockPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="ReinforcementListViewItem" >
+                                <DockPanel>
+                                    <Canvas x:Name="ReinforcementCanvas" Style="{StaticResource canvasMenu}"></Canvas>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Reinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                </DockPanel>
+                            </ListViewItem>
+
+
+                        </ListView>
+                    </StackPanel>
                 </Grid>
-            </ScrollViewer>
-           
-        </GroupBox>
-        <!--#endregion-->
-        <!--#region Action-->
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
-            <Grid Background="White" >
-                <Grid.ColumnDefinitions>
-                    
-                    <ColumnDefinition Width="1.3*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
-                    <TextBlock Text="{Binding FoundationPileModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
-                </Grid>
-               
-                <!--<RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-                <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>-->
-                <Button Grid.Column="1" Content="Create Foundation"  Style="{StaticResource ButtonStyle}"   Width="150"
-                        Command="{Binding CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
-                <Button Grid.Column="2" Content="Create PileDetail" Style="{StaticResource ButtonStyle}" Width="150"
-                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                <Button Grid.Column="4" Content="Cancel" Style="{StaticResource ButtonStyle}"   Width="80"
-                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-               
+            </Border>
+            <!--#endregion-->
+            <!--#region UserControl-->
+            <Grid Grid.Row="0" Grid.Column="1">
+                <ContentControl Content="{Binding SelectedViewModel}"></ContentControl>
             </Grid>
-        </Border>
-        <!--#endregion-->
+            <!--#endregion-->
+            <!--#region CanvasMain-->
+            <GroupBox Grid.Row="0" Grid.Column="2" Margin="5" Header="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.FoundationHeader,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Background="White">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="scrollViewer">
+                    <Grid>
+                        <Canvas x:Name="MainCanvas" >
+
+                        </Canvas>
+                        <Canvas Grid.Row="6" Width="140" Height="60" x:Name="CanvasRebarImage" ></Canvas>
+
+                    </Grid>
+                </ScrollViewer>
+
+            </GroupBox>
+            <!--#endregion-->
+            <!--#region Action-->
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
+                <Grid Background="White" >
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
+                        <TextBlock Text="{Binding FoundationPileModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                    </Grid>
+
+                    <!--<RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
+                <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>-->
+                    <Button Grid.Column="1" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreateFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}"   Width="150"
+                        Command="{Binding CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Button Grid.Column="2" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
+                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button Grid.Column="3" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
+                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+
+                </Grid>
+            </Border>
+            <!--#endregion-->
+        </Grid>
+       
     </Grid>
 </Window>

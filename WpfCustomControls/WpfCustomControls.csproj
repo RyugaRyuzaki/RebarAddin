@@ -63,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Draw\DrawIcon.cs" />
+    <Compile Include="LanguageModel\AuthorLanguage.cs" />
+    <Compile Include="LanguageModel\Languages.cs" />
+    <Compile Include="LanguageModel\R11_FoundationPile\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\R11_FoundationPile\MenuLanguage.cs" />
+    <Compile Include="LanguageModel\R11_Language.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\TaskBarViewModel.cs" />
     <Compile Include="VisualTreeHelper.cs" />

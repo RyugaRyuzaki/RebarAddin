@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Windows.Media;
 using static R11_FoundationPile.ErrorColumns;
-
+using WpfCustomControls;
 namespace R11_FoundationPile
 {
     public class DrawModel : BaseViewModel

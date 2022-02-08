@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WpfCustomControls;
 namespace R11_FoundationPile
 {
     public class ColumnModel:BaseViewModel

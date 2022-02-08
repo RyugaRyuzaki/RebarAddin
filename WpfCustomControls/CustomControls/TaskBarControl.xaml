@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfCustomControls.CustomControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="45" d:DesignWidth="800">
+             d:DesignHeight="40" d:DesignWidth="800">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadTaskBarControlCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
@@ -25,12 +25,12 @@
                 <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Button Style="{StaticResource ButtonStyleIcon}" Width="60" DockPanel.Dock="Left"  Background="White" 
+        <Button Style="{StaticResource ButtonStyleIcon}" Width="60" DockPanel.Dock="Left"  Background="White" Margin="2"
                 Command="{Binding GotoWebCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
                 >
             <Canvas x:Name="LogoCanvas" Width="56" Height="35"></Canvas>
         </Button>
-        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right"  
+        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" Width="40"  
                 Command="{Binding CloseWindowCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
                 >
             <Grid>
@@ -39,7 +39,9 @@
             </Grid>
 
         </Button>
-        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" >
+        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" Width="40" 
+                Command="{Binding ShowAccountcommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
+                >
             
             <StackPanel Margin="0">
                 <Grid Margin="2">
@@ -70,7 +72,17 @@
             </StackPanel>
          
         </Button>
-       
+        <ComboBox DockPanel.Dock="Right" Style="{StaticResource ComboBoxStyle}" Width="60"
+                  ItemsSource="{Binding AllLanguages}"
+                  SelectedItem="{Binding SelectedLanguage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  >
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectionLanguageChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
 
     </DockPanel>
 </UserControl>
