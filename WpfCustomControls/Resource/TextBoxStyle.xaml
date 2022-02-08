@@ -94,8 +94,8 @@
                             <Setter Property="Foreground" Value="#FF000000" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            
-                            <Setter Property="Background" Value="Gainsboro"></Setter>
+                            <Setter Property="Foreground" Value="Red"></Setter>
+                            <!--<Setter Property="Background" Value="Gainsboro"></Setter>-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

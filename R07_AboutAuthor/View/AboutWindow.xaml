@@ -4,21 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        
+         xmlns:custom="clr-namespace:WpfCustomControls.CustomControls;assembly=WpfCustomControls"
+        xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel;assembly=WpfCustomControls"
         Title="R07_AboutAuthor" 
         ResizeMode="NoResize" 
         ShowInTaskbar="True" 
         WindowStartupLocation="CenterScreen"
-        Height="330" Width="500"
+        Height="370" Width="500"
         Topmost="False"
         Background="Gainsboro"
         WindowStyle="None"
+        AllowsTransparency="True"
         >
     <Window.Resources>
-        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
+                        <custom:TaskBarControl></custom:TaskBarControl>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
   <StackPanel Margin="0">
+        <Grid Height="50">
+            <ContentControl Content="{Binding TaskBarViewModel}"></ContentControl>
+        </Grid>
         <StackPanel Height="90" Background="White">
             <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="About DSP Rebar"></TextBlock>
             <Grid Height="35"></Grid>
@@ -61,17 +76,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Bank"></TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Infomation"></TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateBank}"></TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" FontWeight="Bold" Text="{Binding DonateInfo}"></TextBlock>
-           
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding CopyRight}"></TextBlock>
         </Grid>
-        <DockPanel Height="30" Margin="5" Background="White" LastChildFill="False">
-            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding CopyRight}"></TextBlock>
-            <Button Style="{StaticResource ButtonStyle}" DockPanel.Dock="Right" Content="OK"
-                    Command="{Binding OKCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-        </DockPanel>
   </StackPanel>
 </Window>

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace R07_AboutAuthor
+namespace WpfCustomControls
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
@@ -18,7 +18,7 @@ namespace R07_AboutAuthor
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-    class RelayCommand<T> : ICommand
+    public class RelayCommand<T> : ICommand
     {
         private readonly Predicate<T> _canExecute;
         private readonly Action<T> _execute;

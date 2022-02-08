@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="WpfCustomControls.CustomControls.TaskBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfCustomControls.CustomControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadTaskBarControlCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="False" Background="#86f0a2" Margin="0" >
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button Style="{StaticResource ButtonStyleIcon}" Width="60" DockPanel.Dock="Left"  Background="White" 
+                Command="{Binding GotoWebCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
+                >
+            <Canvas x:Name="LogoCanvas" Width="56" Height="35"></Canvas>
+        </Button>
+        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right"  
+                Command="{Binding CloseWindowCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
+                >
+            <Grid>
+                <Ellipse Width="28" Height="28" Stroke="Black" StrokeThickness="3"></Ellipse>
+                <Line Stroke="Black" StrokeThickness="3" X1="14" X2="14" Y1="-4" Y2="14"></Line>
+            </Grid>
+
+        </Button>
+        <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" >
+            
+            <StackPanel Margin="0">
+                <Grid Margin="2">
+                    <Ellipse Width="16" Height="16" Fill="Black" VerticalAlignment="Top" ></Ellipse>
+                    <Path Stroke="Black" Fill="Black" VerticalAlignment="Stretch" Margin="2">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigureCollection>
+                                        <PathFigure StartPoint="0,26">
+                                            <PathFigure.Segments>
+                                                <PathSegmentCollection>
+                                                    <ArcSegment Size="14, 14"
+                                    IsLargeArc="True"
+                                    SweepDirection="Clockwise"
+                                    Point="28,26" />
+                                                </PathSegmentCollection>
+                                            </PathFigure.Segments>
+                                        </PathFigure>
+                                    </PathFigureCollection>
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                   
+                </Grid>
+               
+            </StackPanel>
+         
+        </Button>
+       
+
+    </DockPanel>
+</UserControl>

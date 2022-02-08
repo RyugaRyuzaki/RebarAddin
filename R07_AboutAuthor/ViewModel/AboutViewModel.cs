@@ -1,17 +1,8 @@
 #region Namespaces
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
 using System.Windows.Input;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
+using WpfCustomControls.ViewModel;
+using WpfCustomControls;
 #endregion
 
 namespace R07_AboutAuthor
@@ -32,17 +23,20 @@ namespace R07_AboutAuthor
         public string DonateInfo { get => _DonateInfo; set { _DonateInfo = value; OnPropertyChanged(); } }
         private string _CopyRight;
         public string CopyRight { get => _CopyRight; set { _CopyRight = value; OnPropertyChanged(); } }
-        public ICommand OKCommand { get; set; }
+
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+
         public ICommand YoutubeCommand { get; set; }
         public AboutViewModel()
         {
+            TaskBarViewModel = new TaskBarViewModel();
             Version = "Demo";
             Support = "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw";
             ContactUs = "ryuzaki2005@gmail.com";
             DonateBank = "Ngân Hàng TMCP TechCombank";
             DonateInfo = "19036016100019 BUI TRONG VUONG";
             CopyRight = "Copyright 2021-2022 © Ryuga Ryuzaki";
-            OKCommand = new RelayCommand<AboutWindow>((p) => { return true; }, (p) => { p.Close(); });
             YoutubeCommand = new RelayCommand<AboutWindow>((p) => { return true; }, (p) => {
                 Process.Start(new ProcessStartInfo(Support));
                 p.Close();
