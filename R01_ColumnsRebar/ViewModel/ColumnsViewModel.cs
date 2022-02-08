@@ -16,6 +16,8 @@ using Autodesk.Revit.UI.Selection;
 using R01_ColumnsRebar.ViewModel;
 using System.Text.RegularExpressions;
 using System.Windows;
+using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 #endregion
 
 namespace R01_ColumnsRebar
@@ -67,6 +69,8 @@ namespace R01_ColumnsRebar
         private BarsDivisionViewModel _BarsDivisionViewModel;
         public BarsDivisionViewModel BarsDivisionViewModel { get => _BarsDivisionViewModel; set { _BarsDivisionViewModel = value; OnPropertyChanged(); } }
         #endregion
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
         public ColumnsViewModel(UIDocument uiDoc, Document doc,List<Element> columns)
         {
             #region Get property
@@ -77,9 +81,10 @@ namespace R01_ColumnsRebar
             ColumnsModel = new ColumnsModel(columns,Doc,Unit);
             TransactionGroup = new TransactionGroup(Doc);
             UseDetailItem = ColumnsModel.ConditionUseDetailItem(Doc);
+            TaskBarViewModel = new TaskBarViewModel();
             #endregion
             #region SelectedViewModel
-            SettingViewModel = new SettingViewModel(Doc, ColumnsModel);
+            SettingViewModel = new SettingViewModel(Doc, ColumnsModel, TaskBarViewModel);
             GeometryViewModel = new GeometryViewModel(ColumnsModel);
             StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel);
             AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel);

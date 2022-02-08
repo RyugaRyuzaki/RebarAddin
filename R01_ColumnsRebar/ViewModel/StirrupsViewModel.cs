@@ -5,7 +5,7 @@ using R01_ColumnsRebar.View;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class StirrupsViewModel:BaseViewModel

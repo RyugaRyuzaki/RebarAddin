@@ -69,13 +69,15 @@ namespace R11_FoundationPile
             Columns = columns;
             Unit = GetUnitProject();
             TransactionGroup = new TransactionGroup(Doc);
-            FoundationPileModel = new FoundationPileModel(columns,Doc, Unit);
-            SettingViewModel = new SettingViewModel(Doc,FoundationPileModel);
-            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit);
-            
-            PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit);
-            ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel,Unit);
             TaskBarViewModel = new TaskBarViewModel();
+           
+            FoundationPileModel = new FoundationPileModel(columns,Doc, Unit);
+            SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, TaskBarViewModel);
+            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+            
+            PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+            ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel,Unit, TaskBarViewModel);
+           
             SelectedViewModel = SettingViewModel;
             
             #endregion
@@ -83,8 +85,8 @@ namespace R11_FoundationPile
             LoadWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
                 DrawMenu(p);
-                p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Collapsed;
-                p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Collapsed;
+                //p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Collapsed;
+                //p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Collapsed;
             });
             SelectionMenuCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class GeometryViewModel : BaseViewModel
@@ -46,12 +47,15 @@ namespace R11_FoundationPile.ViewModel
         public ICommand SelectionChangedPileCommand { get; set; }
         public ICommand ApplyRepresentativeCommand { get; set; }
         #endregion
-        public GeometryViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public GeometryViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject,TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             Unit = unitProject;
             FoundationPileModel = foundationPileModel;
+            TaskBarViewModel = taskBarViewModel;
             SelectedNumberPile = AllNumberPile[0];
             #endregion
             #region Load

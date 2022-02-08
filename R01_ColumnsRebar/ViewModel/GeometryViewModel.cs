@@ -5,6 +5,7 @@ using R01_ColumnsRebar.View;
 using System;
 using System.Windows.Input;
 using static R01_ColumnsRebar.ErrorColumns;
+using WpfCustomControls;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class GeometryViewModel:BaseViewModel

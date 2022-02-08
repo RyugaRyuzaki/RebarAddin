@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar
 {
     public class TagColumn : BaseViewModel

@@ -95,8 +95,8 @@ namespace WpfCustomControls
             text.Foreground = Brushes.DarkSlateGray;
             text.Measure(new Size(System.Double.PositiveInfinity, System.Double.PositiveInfinity));
             text.Arrange(new Rect(text.DesiredSize));
-            Canvas.SetTop(text, 3 );
-            Canvas.SetLeft(text, 34-text.ActualWidth/2);
+            Canvas.SetTop(text, 6 );
+            Canvas.SetLeft(text, 31-text.ActualWidth/2);
             canvas.Children.Add(text);
         }
     }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar
 {
     public class DetailItemModel:BaseViewModel

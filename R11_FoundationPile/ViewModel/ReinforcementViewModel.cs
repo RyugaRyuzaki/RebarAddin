@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using R11_FoundationPile.View;
 using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class ReinforcementViewModel : BaseViewModel
@@ -80,12 +81,15 @@ namespace R11_FoundationPile.ViewModel
         public ICommand SelectionChangedGroupFoundationCommand { get; set; }
         public ICommand SelectionChangedSpanOrientationCommand { get; set; }
         #endregion
-        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel,UnitProject unit)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel,UnitProject unit, TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             Unit = unit;
             FoundationPileModel = foundationPileModel;
+            TaskBarViewModel = taskBarViewModel;
             #endregion
             LoadReinforcementViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {

@@ -6,25 +6,28 @@ using System.Threading.Tasks;
 
 namespace WpfCustomControls.LanguageModel.R11_FoundationPile
 {
-    public class SettingLanguage : BaseViewModel
+    public class PileDetailLanguage : BaseViewModel
     {
 
-        private string _PileSetting;
-        public string PileSetting { get { return _PileSetting; } set { _PileSetting = value; OnPropertyChanged(); } }
-        private string _PileCategory;
-        public string PileCategory { get { return _PileCategory; } set { _PileCategory = value; OnPropertyChanged(); } }
-        private string _PileFamily;
-        public string PileFamily { get { return _PileFamily; } set { _PileFamily = value; OnPropertyChanged(); } }
-        private string _PileFamilyType;
-        public string PileFamilyType { get { return _PileFamilyType; } set { _PileFamilyType = value; OnPropertyChanged(); } }
-        private string _PileLength;
-        public string PileLength { get { return _PileLength; } set { _PileLength = value; OnPropertyChanged(); } }
-        private string _PilePlanTemplate;
-        public string PilePlanTemplate { get { return _PilePlanTemplate; } set { _PilePlanTemplate = value; OnPropertyChanged(); } }
-        private string _PilePrefix;
-        public string PilePrefix { get { return _PilePrefix; } set { _PilePrefix = value; OnPropertyChanged(); } }
-        private string _Apply;
-        public string Apply { get { return _Apply; } set { _Apply = value; OnPropertyChanged(); } }
+        private string _RuleDetail;
+        public string RuleDetail { get { return _RuleDetail; } set { _RuleDetail = value; OnPropertyChanged(); } }
+        private string _FoundationRule;
+        public string FoundationRule { get { return _FoundationRule; } set { _FoundationRule = value; OnPropertyChanged(); } }
+        private string _PileRule;
+        public string PileRule { get { return _PileRule; } set { _PileRule = value; OnPropertyChanged(); } }
+        private string _ApplyRule;
+        public string ApplyRule { get { return _ApplyRule; } set { _ApplyRule = value; OnPropertyChanged(); } }
+        private string _ModifyRule;
+        public string ModifyRule { get { return _ModifyRule; } set { _ModifyRule = value; OnPropertyChanged(); } }
+
+        private string _AllFoundation;
+        public string AllFoundation { get { return _AllFoundation; } set { _AllFoundation = value; OnPropertyChanged(); } }
+
+        private string _TestingPile;
+        public string TestingPile { get { return _TestingPile; } set { _TestingPile = value; OnPropertyChanged(); } }
+        private string _ApplyPile;
+        public string ApplyPile { get { return _ApplyPile; } set { _ApplyPile = value; OnPropertyChanged(); } }
+
         private string _Modify;
         public string Modify { get { return _Modify; } set { _Modify = value; OnPropertyChanged(); } }
         private string _FoundationSetting;
@@ -69,7 +72,7 @@ namespace WpfCustomControls.LanguageModel.R11_FoundationPile
         public string CoverSide { get { return _CoverSide; } set { _CoverSide = value; OnPropertyChanged(); } }
         private string _CoverBottom;
         public string CoverBottom { get { return _CoverBottom; } set { _CoverBottom = value; OnPropertyChanged(); } }
-        public SettingLanguage(string language)
+        public PileDetailLanguage(string language)
         {
             ChangedLanguage(language);
         }
@@ -84,69 +87,26 @@ namespace WpfCustomControls.LanguageModel.R11_FoundationPile
         }
         private void GetLanguageEN()
         {
-            PileSetting = "Pile Setting";
-            PileCategory = "Pile Category";
-            PileFamily = "Pile Family";
-            PileFamilyType = "Pile FamilyType";
-            PileLength = "Length";
-            PilePlanTemplate = "Pile Plan Template";
-            PilePrefix = "Pile Prefix";
-            FoundationSetting = "Foundation Setting";
-            FoundationCategory = "Foundation Category";
-            FoundationType = "Foundation Type";
-            FoundationHeight = "Foundation Height";
-            CreateFormwork = "Create Formwork";
-            FoundationPlanTemplate = "Foundation Plan TP";
-            FoundationSectionTemplate = "Foundation Section TP";
-            FoundationDetailTemplate = "Foundation Detail TP";
-            FoundationPlanName = "Foundation Plan Name";
-            FoundationPlanNamePrefix = "Foundation Prefix";
-            SetParameter = "Set Parameter";
-            DimensionType = "Dimension Type";
-            TextType = "Text Type";
-            UseTag = "Use Tag";
-            FoundationTag = "Foundation Tag";
-            PileTag = "Pile Tag";
-            OffsetDim = "Offset Dim";
-            CoverProperty = "Cover Property";
-            CoverTop = "Cover Top";
-            CoverSide = "Cover Side";
-            CoverBottom = "Cover Bottom";
-            Apply = "Apply";
-            Modify = "Modify";
+            RuleDetail = "Rule Detail";
+            FoundationRule = "Foundation Rule";
+            PileRule = "Pile Rule On Foundation";
+            ApplyRule = "Apply Rule";
+            ModifyRule = "Modify Rule";
+            AllFoundation = "All Foundation";
+            TestingPile = "Testing Pile";
+            ApplyPile = "Apply";
         }
         private void GetLanguageVN()
         {
-            PileSetting = "Cài Đặt Cọc";
-            PileCategory = "Category Cọc";
-            PileFamily = "Family Cọc";
-            PileFamilyType = "FamilyType Cọc";
-            PileLength = "Dài";
-            PilePlanTemplate = "MB Cọc Template";
-            PilePrefix = "Cọc tiền tố";
-            FoundationSetting = "Cài đặt Móng";
-            FoundationCategory = "Category Móng";
-            FoundationType = "Type Móng";
-            FoundationHeight = "Chiều cao Móng";
-            CreateFormwork = "Tạo Bê tông lót";
-            FoundationPlanTemplate = "MB Móng TP";
-            FoundationSectionTemplate = "MC Móng TP";
-            FoundationDetailTemplate = "CT Móng TP";
-            FoundationPlanName = "Tên MB Móng";
-            FoundationPlanNamePrefix = "Tiền tố Móng";
-            SetParameter = "Đặt Parameter";
-            DimensionType = "Type Kích thước";
-            TextType = "Type Chữ";
-            UseTag = "Dùng Tag";
-            FoundationTag = "Tag Móng";
-            PileTag = "Tag Cọc";
-            OffsetDim = "Offset Dim";
-            CoverProperty = "Lớp BT Bảo vệ";
-            CoverTop = "Lớp trên";
-            CoverSide = "Lớp bên";
-            CoverBottom = "Lớp dưới";
-            Apply ="Áp dụng";
-            Modify = "Sửa";
+            RuleDetail = "Chi tiết quy tắc";
+            FoundationRule = "Quy tắc Móng";
+            PileRule = "Quy tắc Cọc trong từng Móng";
+            ApplyRule = "Áp dụng Quy tắc";
+            ModifyRule = "Sửa Quy tắc";
+            AllFoundation = "Các Móng";      
+            TestingPile = "Cọc thử";
+
+            ApplyPile = "Áp dụng";
         }
     }
 }

@@ -3,7 +3,7 @@ using R01_ColumnsRebar.View;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class TopDowelsViewModel : BaseViewModel

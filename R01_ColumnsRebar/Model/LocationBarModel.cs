@@ -1,8 +1,8 @@
-﻿
+﻿using WpfCustomControls;
 
 namespace R01_ColumnsRebar
 {
-    public class LocationBarModel:BaseViewModel
+    public class LocationBarModel : BaseViewModel
     {
         private double _Y;
         public double Y { get => _Y; set { _Y = value; OnPropertyChanged(); } }

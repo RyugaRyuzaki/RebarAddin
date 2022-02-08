@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BarsViewModel:BaseViewModel

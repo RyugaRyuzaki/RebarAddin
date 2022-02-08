@@ -26,7 +26,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Header="{Binding TaskBarViewModel.Languages.R11_Language.SettingLanguage.Reinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" x:Name="PileSettingGroupBox">
+                <GroupBox Grid.Row="0" Header="{Binding TaskBarViewModel.Languages.R11_Language.SettingLanguage.PileSetting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" x:Name="PileSettingGroupBox">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.6*"></ColumnDefinition>
@@ -96,10 +96,10 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Apply"
+                            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.SettingLanguage.Apply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="70"
                                 Command="{Binding ApplyPilePropertyCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
-                            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Modify"
+                            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.SettingLanguage.Modify,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="70"
                                 Command="{Binding ModifyPilePropertyCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                         </Grid>

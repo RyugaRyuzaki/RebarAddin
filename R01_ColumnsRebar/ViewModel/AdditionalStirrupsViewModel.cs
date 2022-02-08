@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class AdditionalStirrupsViewModel : BaseViewModel

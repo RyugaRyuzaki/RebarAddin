@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class SettingViewModel:BaseViewModel
@@ -31,11 +32,14 @@ namespace R11_FoundationPile.ViewModel
         public ICommand CheckedTextCommand { get; set; }
         public ICommand IscreateFormWorkCommand { get; set; }
         #endregion
-        public SettingViewModel(Document doc, FoundationPileModel foundationPileModel)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public SettingViewModel(Document doc, FoundationPileModel foundationPileModel,TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             FoundationPileModel = foundationPileModel;
+            TaskBarViewModel = taskBarViewModel;
             #endregion
             #region
             LoadSettingViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class PileDetailViewModel :BaseViewModel
@@ -30,12 +31,15 @@ namespace R11_FoundationPile.ViewModel
         public ICommand ModifyCommand { get; set; }
         public ICommand ApplyTestPileCommand { get; set; }
         #endregion
-        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject,TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             Unit = unitProject;
             FoundationPileModel = foundationPileModel;
+            TaskBarViewModel = taskBarViewModel;
             #endregion
             #region Load
             LoadPileDetailViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>

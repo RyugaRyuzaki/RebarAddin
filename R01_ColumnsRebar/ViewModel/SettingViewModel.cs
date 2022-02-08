@@ -5,7 +5,8 @@ using R01_ColumnsRebar.View;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class SettingViewModel:BaseViewModel
@@ -22,11 +23,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand PrefixSectionChangedCommand { get; set; }
         public ICommand SelectionHookChangedCommand { get; set; }
         #endregion
-        public SettingViewModel(Document doc, ColumnsModel columnsModel)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public SettingViewModel(Document doc, ColumnsModel columnsModel,TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
+            TaskBarViewModel = new TaskBarViewModel();
             #endregion
             #region LoadCommand
             LoadSettingViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar
 {
     public class ItemDivision : BaseViewModel

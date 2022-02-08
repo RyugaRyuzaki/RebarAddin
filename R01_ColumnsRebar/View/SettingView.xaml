@@ -14,10 +14,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
-        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0 10 0 0" >
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"></RowDefinition>
@@ -28,7 +28,7 @@
                     <RowDefinition Height="430"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!--#region Property-->
-                <GroupBox Grid.Row="0" Header="Rebar Shape and Hook" Margin="5">
+                <GroupBox Grid.Row="0" Header="{Binding TaskBarViewModel.Languages.R01_Language.SettingLanguage.RebarShapeHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120"></ColumnDefinition>
@@ -40,9 +40,9 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="2*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Stirrup Shape"></TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Anti-Shikage Shape"></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Hook "></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.R01_Language.SettingLanguage.StirrupShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.R01_Language.SettingLanguage.AntiShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.R01_Language.SettingLanguage.Hook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
                                    ItemsSource="{Binding ColumnsModel.SettingModel.RebarShapes}"
                                    DisplayMemberPath="Name"

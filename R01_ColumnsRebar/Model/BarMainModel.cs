@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using WpfCustomControls;
 namespace R01_ColumnsRebar
 {
     public class BarMainModel : BaseViewModel
