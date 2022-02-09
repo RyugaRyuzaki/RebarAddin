@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCustomControls.LanguageModel.R01ColumnRebar
+namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
 {
     public class TopDowelsLanguage : BaseViewModel
     {

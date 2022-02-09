@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar.ViewModel
 {
     public class BarsDivisionViewModel : BaseViewModel

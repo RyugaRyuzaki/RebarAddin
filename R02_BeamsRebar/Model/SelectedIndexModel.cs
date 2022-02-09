@@ -1,4 +1,4 @@
-﻿
+﻿using WpfCustomControls;
 namespace R02_BeamsRebar
 {
     public class SelectedIndexModel:BaseViewModel

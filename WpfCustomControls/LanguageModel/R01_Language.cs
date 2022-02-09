@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfCustomControls.LanguageModel.R01ColumnRebar;
+using WpfCustomControls.LanguageModel.R01_ColumnRebar;
 
 namespace WpfCustomControls.LanguageModel
 {

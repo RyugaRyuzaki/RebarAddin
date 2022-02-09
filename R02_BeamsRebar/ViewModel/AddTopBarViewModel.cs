@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar.ViewModel
 {
     public class AddTopBarViewModel:BaseViewModel

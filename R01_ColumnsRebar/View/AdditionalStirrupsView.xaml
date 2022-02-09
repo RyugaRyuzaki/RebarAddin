@@ -23,14 +23,14 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="360"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Margin="5" Header="Additional property">
+        <GroupBox Grid.Row="0" Margin="5" Header="{Binding TaskBarViewModel.Languages.R01_Language.AdditionalStirrupsLanguage.AdditionalProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Column No"></TextBlock>
+                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R01_Language.AdditionalStirrupsLanguage.ColumnsNo,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
                           ItemsSource="{Binding ColumnsModel.StirrupModels}" DisplayMemberPath="NumberColumn"
                           SelectedItem="{Binding SelectedStirrupModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -45,7 +45,7 @@
                         Command="{Binding ApplyAllColumnCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>-->
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Margin="5" Header="Additional Horizontal">
+        <GroupBox Grid.Row="1" Margin="5" Header="{Binding TaskBarViewModel.Languages.R01_Language.AdditionalStirrupsLanguage.AdditionalHorizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Horizontal"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R01_Language.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding HorizontalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>

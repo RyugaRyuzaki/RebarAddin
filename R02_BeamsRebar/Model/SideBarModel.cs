@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar
 {
     public class SideBarModel : BaseViewModel

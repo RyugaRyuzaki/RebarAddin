@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class AdditionalStirrupsViewModel : BaseViewModel
@@ -43,11 +44,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand VerticalaTextChangedCommand { get; set; }
 
         #endregion
-        public AdditionalStirrupsViewModel(Document doc, ColumnsModel columnsModel)
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        public AdditionalStirrupsViewModel(Document doc, ColumnsModel columnsModel,TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
+            TaskBarViewModel = taskBarViewModel;
             #endregion
             #region LoadCommand
             LoadAdditionalStirrupsViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

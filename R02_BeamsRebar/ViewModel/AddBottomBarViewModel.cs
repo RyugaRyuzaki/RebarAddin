@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using R02_BeamsRebar.View;
 using System;
 using System.Windows.Input;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar.ViewModel
 {
     public class AddBottomBarViewModel:BaseViewModel

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar
 {
     public class AddBottomBarModel : BaseViewModel

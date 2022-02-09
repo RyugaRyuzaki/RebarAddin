@@ -15,7 +15,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
-        <ResourceDictionary Source="/R02_BeamsRebar;component/Library/Resource/Styles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="5 0 0 0">
         <Grid.ColumnDefinitions>

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar.ViewModel
 {
     public class SettingViewModel:BaseViewModel

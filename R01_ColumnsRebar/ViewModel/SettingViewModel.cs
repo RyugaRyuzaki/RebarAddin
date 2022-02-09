@@ -30,7 +30,7 @@ namespace R01_ColumnsRebar.ViewModel
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
-            TaskBarViewModel = new TaskBarViewModel();
+            TaskBarViewModel = taskBarViewModel;
             #endregion
             #region LoadCommand
             LoadSettingViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

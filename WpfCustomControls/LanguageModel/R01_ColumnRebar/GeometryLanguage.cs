@@ -4,33 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCustomControls.LanguageModel.R01ColumnRebar
+namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
 {
     public class GeometryLanguage : BaseViewModel
     {
 
-        private string _Setting;
-        public string Setting { get { return _Setting; } set { _Setting = value; OnPropertyChanged(); } }
-        private string _Geometry;
-        public string Geometry { get { return _Geometry; } set { _Geometry = value; OnPropertyChanged(); } }
-        private string _Stirrups;
-        public string Stirrups { get { return _Stirrups; } set { _Stirrups = value; OnPropertyChanged(); } }
-        private string _AdditionalStirrups;
-        public string AdditionalStirrups { get { return _AdditionalStirrups; } set { _AdditionalStirrups = value; OnPropertyChanged(); } }
-        private string _Bars;
-        public string Bars { get { return _Bars; } set { _Bars = value; OnPropertyChanged(); } }
-        private string _TopDowels;
-        public string TopDowels { get { return _TopDowels; } set { _TopDowels = value; OnPropertyChanged(); } }
-        private string _BottomDowels;
-        public string BottomDowels { get { return _BottomDowels; } set { _BottomDowels = value; OnPropertyChanged(); } }
-        private string _BarsDivision;
-        public string BarsDivision { get { return _BarsDivision; } set { _BarsDivision = value; OnPropertyChanged(); } }
-        private string _OK;
-        public string OK { get { return _OK; } set { _OK = value; OnPropertyChanged(); } }
-        private string _Cancel;
-        public string Cancel { get { return _Cancel; } set { _Cancel = value; OnPropertyChanged(); } }
-        private string _Columns;
-        public string Columns { get { return _Columns; } set { _Columns = value; OnPropertyChanged(); } }
+        private string _Identification;
+        public string Identification { get { return _Identification; } set { _Identification = value; OnPropertyChanged(); } }
+        private string _FamilyName;
+        public string FamilyName { get { return _FamilyName; } set { _FamilyName = value; OnPropertyChanged(); } }
+        private string _TypeName;
+        public string TypeName { get { return _TypeName; } set { _TypeName = value; OnPropertyChanged(); } }
+        private string _Style;
+        public string Style { get { return _Style; } set { _Style = value; OnPropertyChanged(); } }
+        private string _ColumnsDimention;
+        public string ColumnsDimention { get { return _ColumnsDimention; } set { _ColumnsDimention = value; OnPropertyChanged(); } }
+        private string _Number;
+        public string Number { get { return _Number; } set { _Number = value; OnPropertyChanged(); } }
+        private string _ColumnsProperty;
+        public string ColumnsProperty { get { return _ColumnsProperty; } set { _ColumnsProperty = value; OnPropertyChanged(); } }
+       
         public GeometryLanguage(string language)
         {
             ChangedLanguage(language);
@@ -46,31 +39,25 @@ namespace WpfCustomControls.LanguageModel.R01ColumnRebar
         }
         private void GetLanguageEN()
         {
-            Setting = "Setting";
-            Geometry = "Geometry";
-            Stirrups = "Stirrups";
-            AdditionalStirrups = "Additional Stirrups";
-            Bars = "Bars";
-            TopDowels = "Top Dowels";
-            BottomDowels = "Bottom Dowels";
-            BarsDivision = "Bars Division";
-            OK = "OK";
-            Cancel = "Cancel";
-            Columns = "Columns";
+            Identification = "Identification";
+            FamilyName = "Family Name";
+            TypeName = "Type Name";
+            Style = "Style";
+            ColumnsDimention = "Columns Dimention";
+            Number = "Top Dowels";
+            ColumnsProperty = "Columns Property";
+         
         }
         private void GetLanguageVN()
         {
-            Setting = "Cài Đặt";
-            Geometry = "Hình Dạng";
-            Stirrups = "Thép Đai";
-            AdditionalStirrups = "Đai tăng cường";
-            Bars = "Thép chủ";
-            TopDowels = "Neo Thép Trên";
-            BottomDowels = "Neo Thép Dưới";
-            BarsDivision = "Cắt Thép";
-            OK = "Thực hiện";
-            Cancel = "Huỷ";
-            Columns = "Các Cột";
+            Identification = "Nhận dạng Cột";
+            FamilyName = "Tên Family";
+            TypeName = "Tên Type";
+            Style = "Loại Cột";
+            ColumnsDimention = "Kích thước cột";
+            Number = "Số";
+            ColumnsProperty = "Thông số Cột";
+          
         }
     }
 }

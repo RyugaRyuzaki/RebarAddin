@@ -6,16 +6,19 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:view="clr-namespace:R02_BeamsRebar.View"
         xmlns:viewModel="clr-namespace:R02_BeamsRebar.ViewModel"
+        xmlns:custom="clr-namespace:WpfCustomControls.CustomControls;assembly=WpfCustomControls"
+        xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel;assembly=WpfCustomControls"
         mc:Ignorable="d"
         Title="Beams Rebar" 
         ResizeMode="NoResize" 
         ShowInTaskbar="True" 
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Height="935" Width="1400"
+        Height="975" Width="1400"
         Topmost="false"
         Background="#f0ebeb"
         FontFamily="Tahoma"
+        AllowsTransparency="True"
         >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -25,7 +28,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/R02_BeamsRebar;component/Library/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
                 <ResourceDictionary>
                     <DataTemplate x:Name="settingBeamsViewModel" DataType="{x:Type viewModel:SettingViewModel}">
                         <view:SettingView></view:SettingView>
@@ -54,13 +57,19 @@
                     <DataTemplate x:Name="sectionAreaViewModel" DataType="{x:Type viewModel:SectionAreaViewModel}">
                         <view:SectionAreaView></view:SectionAreaView>
                     </DataTemplate>
+                    <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
+                        <custom:TaskBarControl></custom:TaskBarControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-  <StackPanel >
-        <Grid Height="560">
+  <StackPanel Margin="0" >
+        <Grid Height="40">
+            <ContentControl Content="{Binding TaskBarViewModel}"></ContentControl> 
+        </Grid>
+        <Grid Height="565">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -170,10 +179,10 @@
                 <TextBlock Text="{Binding BeamsModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
             </Grid>
             <TextBlock Grid.Column="2" Text="{Binding BeamsModel.SelectedAction,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}" Margin="10 0 0 0" FontStyle="Italic" FontSize="11" FontWeight="Bold" ></TextBlock>
-            <Button Grid.Column="3" Content="OK" Style="{StaticResource ButtonStyle}" 
+            <Button Grid.Column="3" Content="OK" Style="{StaticResource ButtonStyle}" Width="60"
                             Command="{Binding OKCommand}" 
                             CommandParameter="{Binding ElementName=MainWindow}"></Button>
-            <Button Grid.Column="4" Content="Cancel" Style="{StaticResource ButtonStyle}" 
+            <Button Grid.Column="4" Content="Cancel" Style="{StaticResource ButtonStyle}" Width="60"
                             Command="{Binding CancelCommand}" 
                             CommandParameter="{Binding ElementName=MainWindow}"></Button>
         </Grid>

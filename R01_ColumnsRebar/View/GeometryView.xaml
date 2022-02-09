@@ -25,7 +25,7 @@
                     <RowDefinition Height="720" ></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <GroupBox Header="Identification" BorderBrush="Black">
+                    <GroupBox Header="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.Identification,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"></ColumnDefinition>
@@ -36,17 +36,17 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Family Name"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.FamilyName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding ColumnsModel.FamilyType}"></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Type Name"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.TypeName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding ColumnsModel.AllType}"></TextBlock>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Style" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.Style,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ColumnsModel.Section}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         </Grid>
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1" >
-                    <GroupBox Header="Columns Dimension" BorderBrush="Black">
+                    <GroupBox Header="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.ColumnsDimention,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.7*"></ColumnDefinition>
@@ -65,7 +65,7 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Number" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                             <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
                                       ItemsSource="{Binding ColumnsModel.InfoModels}" DisplayMemberPath="NumberColumn"
                                       SelectedItem="{Binding SelectedColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -127,7 +127,7 @@
                 </Grid>
                 
                 <Grid Grid.Row="2">
-                    <GroupBox Header="Column Property" BorderBrush="Black">
+                    <GroupBox Header="{Binding TaskBarViewModel.Languages.R01_Language.GeometryLanguage.ColumnsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="300"></RowDefinition>

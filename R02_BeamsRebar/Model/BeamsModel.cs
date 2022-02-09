@@ -10,7 +10,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Threading;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar
 {
     public class BeamsModel : BaseViewModel

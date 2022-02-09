@@ -85,9 +85,9 @@ namespace R01_ColumnsRebar
             #endregion
             #region SelectedViewModel
             SettingViewModel = new SettingViewModel(Doc, ColumnsModel, TaskBarViewModel);
-            GeometryViewModel = new GeometryViewModel(ColumnsModel);
-            StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel);
-            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel);
+            GeometryViewModel = new GeometryViewModel(ColumnsModel, TaskBarViewModel);
+            StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel, TaskBarViewModel);
+            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel, TaskBarViewModel);
             BarsViewModel = new BarsViewModel(Doc, ColumnsModel);
             //DowelsViewModel = new DowelsViewModel(Doc, ColumnsModel);
             TopDowelsViewModel = new TopDowelsViewModel(Doc, ColumnsModel);

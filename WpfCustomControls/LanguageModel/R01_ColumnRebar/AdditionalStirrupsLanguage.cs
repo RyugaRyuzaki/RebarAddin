@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCustomControls.LanguageModel.R01ColumnRebar
+namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
 {
     public class AdditionalStirrupsLanguage : BaseViewModel
     {
 
-        private string _Setting;
-        public string Setting { get { return _Setting; } set { _Setting = value; OnPropertyChanged(); } }
-        private string _Geometry;
-        public string Geometry { get { return _Geometry; } set { _Geometry = value; OnPropertyChanged(); } }
-        private string _Stirrups;
-        public string Stirrups { get { return _Stirrups; } set { _Stirrups = value; OnPropertyChanged(); } }
+        private string _AdditionalProperty;
+        public string AdditionalProperty { get { return _AdditionalProperty; } set { _AdditionalProperty = value; OnPropertyChanged(); } }
+        private string _ColumnsNo;
+        public string ColumnsNo { get { return _ColumnsNo; } set { _ColumnsNo = value; OnPropertyChanged(); } }
+        private string _AdditionalHorizontal;
+        public string AdditionalHorizontal { get { return _AdditionalHorizontal; } set { _AdditionalHorizontal = value; OnPropertyChanged(); } }
+        private string _Horizontal;
+        public string Horizontal { get { return _Horizontal; } set { _Horizontal = value; OnPropertyChanged(); } }
         private string _AdditionalStirrups;
         public string AdditionalStirrups { get { return _AdditionalStirrups; } set { _AdditionalStirrups = value; OnPropertyChanged(); } }
         private string _Bars;
@@ -46,10 +48,10 @@ namespace WpfCustomControls.LanguageModel.R01ColumnRebar
         }
         private void GetLanguageEN()
         {
-            Setting = "Setting";
-            Geometry = "Geometry";
-            Stirrups = "Stirrups";
-            AdditionalStirrups = "Additional Stirrups";
+            AdditionalProperty = "Additional Property";
+            ColumnsNo = "Columns No";
+            AdditionalHorizontal = "Additional Horizontal";
+            Horizontal = "Horizontal";
             Bars = "Bars";
             TopDowels = "Top Dowels";
             BottomDowels = "Bottom Dowels";
@@ -60,10 +62,10 @@ namespace WpfCustomControls.LanguageModel.R01ColumnRebar
         }
         private void GetLanguageVN()
         {
-            Setting = "Cài Đặt";
-            Geometry = "Hình Dạng";
-            Stirrups = "Thép Đai";
-            AdditionalStirrups = "Đai tăng cường";
+            AdditionalProperty = "Thông số Đai tăng cường";
+            ColumnsNo = "Cột Số";
+            AdditionalHorizontal = "Tăng cường ngang";
+            Horizontal = "Phương ngang";
             Bars = "Thép chủ";
             TopDowels = "Neo Thép Trên";
             BottomDowels = "Neo Thép Dưới";

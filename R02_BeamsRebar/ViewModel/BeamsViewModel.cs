@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 #endregion
-
+using WpfCustomControls;
+using WpfCustomControls.ViewModel;
 namespace R02_BeamsRebar
 {
     public class BeamsViewModel : BaseViewModel
@@ -59,6 +60,8 @@ namespace R02_BeamsRebar
         //public ICommand DetailItemCommand { get; set; }
 
         #endregion
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
         public BeamsViewModel(UIDocument uiDoc, Document doc, List<Element> beams)
         {
             #region Get Property
@@ -67,6 +70,7 @@ namespace R02_BeamsRebar
             Beams = beams;
             Unit = GetUnitProject();
             BeamsModel = new BeamsModel(Doc, Beams);
+            TaskBarViewModel = new TaskBarViewModel();
             UseDetailItem = BeamsModel.ConditionUseDetailItem(Doc);
             SelectedIndexViewModel();
             TransactionGroup = new TransactionGroup(Doc);

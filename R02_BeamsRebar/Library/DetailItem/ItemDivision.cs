@@ -8,7 +8,7 @@ using R02_BeamsRebar.View;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Media;
-
+using WpfCustomControls;
 namespace R02_BeamsRebar
 {
     public class ItemDivision : BaseViewModel
