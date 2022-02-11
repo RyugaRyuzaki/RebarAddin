@@ -88,6 +88,26 @@ namespace R11_FoundationPile
             }
             Scale = Math.Max(scaleWidth, scaleHeight);
         }
+        public void GetScaleHeigth(SettingModel settingModel, UnitProject unit)
+        {
+            double scaleH = 0;
+            if (settingModel.HeightFoundation>410-2*Side)
+            {
+                scaleH = settingModel.HeightFoundation / (410 - 2 * Side);
+            }
+            else
+            {
+                if (settingModel.HeightFoundation < unit.Convert(410 - 2 * Side))
+                {
+                     scaleH = settingModel.HeightFoundation / (410 - 2 * Side);
+                }
+                else
+                {
+                    scaleH = 1;
+                }
+            }
+            Scale = Math.Max(Scale, scaleH);
+        }
         public void GetScaleBar(FoundationModel foundationModel, UnitProject unit)
         {
             Side = 30;

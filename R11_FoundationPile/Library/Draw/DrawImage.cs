@@ -1780,6 +1780,38 @@ namespace R11_FoundationPile
                 canvas.Children.Add(l5);
             }
         }
+        public static void DrawAxisAndLevel(Canvas canvas,double side)
+        {
+            Line l1 = new Line() { X1 = 410, X2 = 410, Y1 = 0, Y2 = 820 };
+            l1.Stroke = Brushes.Black;
+            l1.StrokeThickness = 1;
+            l1.StrokeDashArray = new DoubleCollection() { 10, 2, 2 };
+            canvas.Children.Add(l1);
+            Line l2 = new Line() { X1 = 0, X2 = 820, Y1 = 410-side, Y2 = 410 - side };
+            l2.Stroke = Brushes.Black;
+            l2.StrokeThickness = 1;
+            l2.StrokeDashArray = new DoubleCollection() { 10, 2 };
+            canvas.Children.Add(l2);
+            Line l3 = new Line() { X1 = 0, X2 = 820, Y1 = 820 - side, Y2 = 820 - side };
+            l3.Stroke = Brushes.Black;
+            l3.StrokeThickness = 1;
+            l3.StrokeDashArray = new DoubleCollection() { 10, 2 };
+            canvas.Children.Add(l3);
+            TextBlock text1 = new TextBlock();
+            text1.Text = "Main Span";
+            text1.FontSize = 15;
+            text1.Foreground = Brushes.Red;
+            Canvas.SetTop(text1, 0 +  text1.ActualHeight);
+            Canvas.SetLeft(text1, 10);
+            canvas.Children.Add(text1);
+            TextBlock text2 = new TextBlock();
+            text2.Text = "Secondary Span";
+            text2.FontSize = 15;
+            text2.Foreground = Brushes.Black;
+            Canvas.SetTop(text2, 410 + text1.ActualHeight);
+            Canvas.SetLeft(text2, 10);
+            canvas.Children.Add(text2);
+        }
         public static void DrawAxisSection(Canvas canvas)
         {
             Line l1 = new Line() { X1 = 175, X2 = 175, Y1 = 0, Y2 = 350 };

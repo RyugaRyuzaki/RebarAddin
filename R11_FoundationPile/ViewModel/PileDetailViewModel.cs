@@ -1,16 +1,11 @@
 ﻿using Autodesk.Revit.DB;
 using R11_FoundationPile.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 namespace R11_FoundationPile.ViewModel
 {
-    public class PileDetailViewModel :BaseViewModel
+    public class PileDetailViewModel : BaseViewModel
     {
         #region Property
         public Document Doc;
@@ -30,10 +25,12 @@ namespace R11_FoundationPile.ViewModel
         public ICommand ApplyCommand { get; set; }
         public ICommand ModifyCommand { get; set; }
         public ICommand ApplyTestPileCommand { get; set; }
+        public ICommand SelectionChangedFoundationCommand { get; set; }
+        public ICommand SelectionChangedPileCommand { get; set; }
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject,TaskBarViewModel taskBarViewModel)
+        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject, TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
@@ -50,37 +47,45 @@ namespace R11_FoundationPile.ViewModel
                 DrawSection(uc);
                 DrawPileDetail(p);
             });
-            ApplyCommand = new RelayCommand<FoundationPileWindow>((p) => { return !FoundationPileModel.IsApplyRule&&FoundationPileModel.ConditionCreateFoundation(); }, (p) =>
-            {
-                FoundationPileModel.GetAllFoundationModel();
-                FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation = 0;
-                FoundationPileModel.IsApplyRule = true;
-                IsEnabled = !FoundationPileModel.IsApplyRule;
-                PileDetailView uc = ProccessInfoClumns.FindChild<PileDetailView>(p, "PileDetailUC");
-                DrawSection(uc);
-                DrawPileDetail(p);
-            });
-            ModifyCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsApplyRule; }, (p) =>
-            {
-                FoundationPileModel.AllFoundationModels.Clear();
-                FoundationPileModel.IsApplyRule = false;
-                IsEnabled = !FoundationPileModel.IsApplyRule;
-                PileDetailView uc = ProccessInfoClumns.FindChild<PileDetailView>(p, "PileDetailUC");
-                DrawSection(uc);
-                DrawPileDetail(p);
-            });
-            ApplyTestPileCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsApplyRule&& SelectedFoundationModel!=null&& SelectedPileModel!=null&& !SelectedPileModel.IsTestingPile; }, (p) =>
-            {
-                SelectedPileModel.IsTestingPile = true;
-                for (int i = 0; i < SelectedFoundationModel.PileModels.Count; i++)
-                {
-                    if (SelectedFoundationModel.PileModels[i].PileNumber != SelectedPileModel.PileNumber) SelectedFoundationModel.PileModels[i].IsTestingPile = false;
-                }
-            });
+            ApplyCommand = new RelayCommand<FoundationPileWindow>((p) => { return !FoundationPileModel.IsApplyRule && FoundationPileModel.ConditionCreateFoundation(); }, (p) =>
+              {
+                  FoundationPileModel.GetAllFoundationModel();
+                  FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation = 0;
+                  FoundationPileModel.SelectedIndexModel.SelectedIndexAllPile = 0;
+                  FoundationPileModel.IsApplyRule = true;
+                  IsEnabled = !FoundationPileModel.IsApplyRule;
+                  PileDetailView uc = ProccessInfoClumns.FindChild<PileDetailView>(p, "PileDetailUC");
+                  DrawSection(uc);
+                  DrawPileDetail(p);
+              });
+            ModifyCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsApplyRule && !FoundationPileModel.IsCreatePileDetail; }, (p) =>
+              {
+                  FoundationPileModel.AllFoundationModels.Clear();
+                  FoundationPileModel.IsApplyRule = false;
+                  IsEnabled = !FoundationPileModel.IsApplyRule;
+                  PileDetailView uc = ProccessInfoClumns.FindChild<PileDetailView>(p, "PileDetailUC");
+                  DrawSection(uc);
+                  DrawPileDetail(p);
+              });
+            ApplyTestPileCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsApplyRule && SelectedFoundationModel != null && SelectedPileModel != null && !SelectedPileModel.IsTestingPile && !FoundationPileModel.IsCreatePileDetail; }, (p) =>
+                   {
+                       SelectedPileModel.IsTestingPile = true;
+                       for (int i = 0; i < SelectedFoundationModel.PileModels.Count; i++)
+                       {
+                           if (SelectedFoundationModel.PileModels[i].PileNumber != SelectedPileModel.PileNumber) SelectedFoundationModel.PileModels[i].IsTestingPile = false;
+                       }
+                   });
+            SelectionChangedFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsApplyRule && SelectedFoundationModel != null; }, (p) =>
+               {
+                   FoundationPileModel.SelectedIndexModel.SelectedIndexAllPile = 0;
+                   PileDetailView uc = ProccessInfoClumns.FindChild<PileDetailView>(p, "PileDetailUC");
+                   DrawSection(uc);
+                   DrawPileDetail(p);
+               });
             #endregion
         }
         #region DrawRule
-        private void DrawRuleImage( PileDetailView p)
+        private void DrawRuleImage(PileDetailView p)
         {
             DrawImage.DrawFoundationRule0(p.FoundationRuleCanvas0);
             DrawImage.DrawFoundationRule1(p.FoundationRuleCanvas1);
@@ -102,30 +107,30 @@ namespace R11_FoundationPile.ViewModel
         private void DrawSection(PileDetailView p)
         {
             p.PileDetailCanvas.Children.Clear();
-            if (FoundationPileModel.IsApplyRule&& SelectedFoundationModel!=null)
+            if (FoundationPileModel.IsApplyRule && SelectedFoundationModel != null)
             {
                 if (SelectedFoundationModel.BoundingLocation.Count != 0 && SelectedFoundationModel.PileModels.Count != 0)
                 {
                     FoundationPileModel.DrawModelSection.GetScaleSection(SelectedFoundationModel, Unit);
-                    DrawMainCanvas.DrawMainFoundationSection(p.PileDetailCanvas, FoundationPileModel.DrawModelSection, SelectedFoundationModel, FoundationPileModel.SettingModel, (SelectedPileModel == null) ? 1000 : (SelectedPileModel.PileNumber - 1));
+                    DrawMainCanvas.DrawMainFoundationSection(p.PileDetailCanvas, FoundationPileModel.DrawModelSection, SelectedFoundationModel, FoundationPileModel.SettingModel, (SelectedPileModel == null) ? 1000 : (SelectedFoundationModel.PileModels.IndexOf(SelectedPileModel)));
                 }
             }
         }
         private void DrawPileDetail(FoundationPileWindow p)
         {
             p.MainCanvas.Children.Clear();
-            
-            if (FoundationPileModel.IsApplyRule&&FoundationPileModel.FoundationPileDetail.FoundationView!=null)
+
+            if (FoundationPileModel.IsApplyRule && FoundationPileModel.FoundationPileDetail.FoundationView != null)
             {
-                FoundationPileModel.DrawModelPileDetail.GetScalePileDetail(FoundationPileModel.FoundationPileDetail,Doc,Unit);
+                FoundationPileModel.DrawModelPileDetail.GetScalePileDetail(FoundationPileModel.FoundationPileDetail, Doc, Unit);
                 double minX = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.FoundationPileDetail.FoundationBox.Min.X, false));
                 double maxX = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.FoundationPileDetail.FoundationBox.Max.X, false));
                 double minY = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.FoundationPileDetail.FoundationBox.Min.Y, false));
                 p.MainCanvas.Width = (maxX - minX) / FoundationPileModel.DrawModelPileDetail.Scale;
-                
+
                 for (int i = 0; i < FoundationPileModel.AllFoundationModels.Count; i++)
                 {
-                    DrawMainCanvas.DrawMainPileDetail(p.MainCanvas, FoundationPileModel.DrawModelPileDetail, FoundationPileModel.AllFoundationModels[i], FoundationPileModel.SettingModel,((i==FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation)?(FoundationPileModel.DrawModelPileDetail.ColorMainBarChoose):(FoundationPileModel.DrawModelPileDetail.ColorMainBar)), minX,minY);
+                    DrawMainCanvas.DrawMainPileDetail(p.MainCanvas, FoundationPileModel.DrawModelPileDetail, FoundationPileModel.AllFoundationModels[i], FoundationPileModel.SettingModel, ((i == FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation) ? (FoundationPileModel.DrawModelPileDetail.ColorMainBarChoose) : (FoundationPileModel.DrawModelPileDetail.ColorMainBar)), minX, minY);
                 }
             }
         }

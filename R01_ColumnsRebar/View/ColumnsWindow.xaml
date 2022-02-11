@@ -95,50 +95,50 @@
                             <ListViewItem >
                                 <DockPanel>
                                     <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
 
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="StirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Stirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Stirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="AdditionalListViewItem" >
                                 <DockPanel>
                                     <Canvas x:Name="AdditionalStirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.AdditionalStirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.AdditionalStirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="BarsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Bars,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Bars,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="TopDowelsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="BottomDowelsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="BarsDivisionCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.BarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.BarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                         </ListView>
@@ -152,7 +152,7 @@
             </Grid>
             <!--#endregion-->
             <!--#region CanvasMain-->
-            <GroupBox Grid.Row="0" Grid.Column="2" Margin="5" Header="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Columns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Background="White">
+            <GroupBox Grid.Row="0" Grid.Column="2" Margin="5" Header="{Binding TaskBarViewModel.Languages.WindowLanguage.Column,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Background="White">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="scrollViewer">
                     <Grid>
                         <Canvas x:Name="MainCanvas">
@@ -182,9 +182,9 @@
                     <TextBlock Grid.Column="3" Text="{Binding ColumnsModel.SelectedAction,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}" Margin="10 0 0 0" FontStyle="Italic" FontSize="11" FontWeight="Bold" ></TextBlock>
                     <RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
                     <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="80"
+                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="80"
                         Command="{Binding OKCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    <Button Grid.Column="5" Content="{Binding TaskBarViewModel.Languages.R01_Language.MenuLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
+                    <Button Grid.Column="5" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
                         Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
                 </Grid>
             </Border>

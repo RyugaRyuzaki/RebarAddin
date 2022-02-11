@@ -113,6 +113,11 @@
                            SelectedItem="{Binding SelectedFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexAllFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ListView.View>
                                 <GridView  >
                                     <GridViewColumn  Width="50" Header=" No" DisplayMemberBinding="{Binding FoundationNumber}"></GridViewColumn>
@@ -124,6 +129,11 @@
                            SelectedItem="{Binding SelectedPileModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexAllPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedPileCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ListView.View>
                                 <GridView  >
                                     <GridViewColumn  Width="60" Header=" Pile No" DisplayMemberBinding="{Binding PileNumber}"></GridViewColumn>

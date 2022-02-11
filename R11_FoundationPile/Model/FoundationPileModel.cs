@@ -36,6 +36,8 @@ namespace R11_FoundationPile
         public bool IsCreateGrounpFoundation { get => _IsCreateGrounpFoundation; set { _IsCreateGrounpFoundation = value; OnPropertyChanged(); } }
         private bool _IsCreatePileDetail;
         public bool IsCreatePileDetail { get => _IsCreatePileDetail; set { _IsCreatePileDetail = value; OnPropertyChanged(); } }
+        private bool _IsCreateReinforcement;
+        public bool IsCreateReinforcement { get => _IsCreateReinforcement; set { _IsCreateReinforcement = value; OnPropertyChanged(); } }
         #endregion
         #region   View
         private FoundationPileDetail _FoundationPileDetail;
@@ -60,9 +62,11 @@ namespace R11_FoundationPile
         public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
         #endregion
         #region Bar
-        public ObservableCollection<RebarBarType> RebarBarTypes { get; set; }
-        private ObservableCollection<RebarBarModel> _AllBars;
-        public ObservableCollection<RebarBarModel> AllBars { get { if (_AllBars == null) { _AllBars = new ObservableCollection<RebarBarModel>(); } return _AllBars; } set { _AllBars = value; OnPropertyChanged(); } }
+        public List<RebarBarType> RebarBarTypes { get; set; }
+        private List<RebarBarModel> _AllBars;
+        public List<RebarBarModel> AllBars { get => _AllBars; set { _AllBars = value; OnPropertyChanged(); } }
+        private ObservableCollection<FoundationBarModel> _FoundationBarModels;
+        public ObservableCollection<FoundationBarModel> FoundationBarModels { get { if (_FoundationBarModels == null) { _FoundationBarModels = new ObservableCollection<FoundationBarModel>(); } return _FoundationBarModels; } set { _FoundationBarModels = value; OnPropertyChanged(); } }
         #endregion
         public FoundationPileModel(List<Element> columns,Document  document, UnitProject unit)
         {
@@ -78,15 +82,57 @@ namespace R11_FoundationPile
            
         }
         #region   Method
+        public FoundationModel FindFoundationModelByLoacationName(string locationName)
+        {
+            FoundationModel foundationModel = null;
+            for (int i = 0; i < GroupFoundationModels.Count; i++)
+            {
+
+                for (int j = 0; j < GroupFoundationModels[i].FoundationModels.Count; j++)
+                {
+                    if (GroupFoundationModels[i].FoundationModels[j].IsRepresentative&& GroupFoundationModels[i].FoundationModels[j].LocationName.Equals(locationName))
+                    {
+                        foundationModel = GroupFoundationModels[i].FoundationModels[j];
+                    }
+                }
+
+            }
+            return foundationModel;
+        }
+        public void GetBarModels(Document document)
+        {
+            
+            for (int i = 0; i < GroupFoundationModels.Count; i++)
+            {
+
+                for (int j = 0; j < GroupFoundationModels[i].FoundationModels.Count; j++)
+                {
+                    if (GroupFoundationModels[i].FoundationModels[j].IsRepresentative)
+                    {
+                        FoundationBarModels.Add(new FoundationBarModel(
+                            GroupFoundationModels[i].FoundationModels[j].Type,
+                            GroupFoundationModels[i].FoundationModels[j].Image,
+                            GroupFoundationModels[i].FoundationModels[j].LocationName,
+                            GroupFoundationModels[i].FoundationModels[j].SpanOrientation,
+                            document,
+                            SettingModel,
+                            AllBars
+                            ));
+                    }
+                }
+              
+            }
+        }
         private void GetRebarBarType(Document document)
         {
-            RebarBarTypes =new ObservableCollection<RebarBarType>( new FilteredElementCollector(document).OfClass(typeof(RebarBarType)).Cast<RebarBarType>().ToList());
-          
+            RebarBarTypes =( new FilteredElementCollector(document).OfClass(typeof(RebarBarType)).Cast<RebarBarType>().ToList());
+            RebarBarTypes.Sort((x, y) => x.BarDiameter.CompareTo(y.BarDiameter));
+            AllBars = new List<RebarBarModel>();
             foreach (var item in RebarBarTypes)
             {
                 AllBars.Add(new RebarBarModel(document, item.Name, RebarBarTypes));
             }
-            AllBars = new ObservableCollection<RebarBarModel>(AllBars.OrderBy(x=>x.Diameter).ToList());
+            AllBars.Sort((x, y) => x.Diameter.CompareTo(y.Diameter));
         }
         private void GetSettingMOdel(Document document)
         {
@@ -100,13 +146,7 @@ namespace R11_FoundationPile
         private void GetGroupFoundationModels(Document document)
         {
             GroupFoundationModels = ProccessInfoClumns.GetGroupFoundationModels(ColumnModels,SettingModel);
-            for (int i = 0; i < GroupFoundationModels.Count; i++)
-            {
-                for (int j = 0; j < GroupFoundationModels[i].FoundationModels.Count; j++)
-                {
-                    GroupFoundationModels[i].FoundationModels[j].GetBar(AllBars[3]);
-                }
-            }
+           
         }
         #endregion
         #region Condition

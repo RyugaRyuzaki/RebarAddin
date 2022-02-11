@@ -98,8 +98,10 @@
     <Compile Include="Library\Orther\SolidFace.cs" />
     <Compile Include="Library\Unit\UnitProject.cs" />
     <Compile Include="Library\Warning\DeleteWarningSuper.cs" />
+    <Compile Include="Model\BarModel.cs" />
     <Compile Include="Model\ColumnModel.cs" />
     <Compile Include="Model\DrawModel.cs" />
+    <Compile Include="Model\FoundationBarModel.cs" />
     <Compile Include="Model\FoundationModel.cs" />
     <Compile Include="Model\FoundationPileModel.cs" />
     <Compile Include="Model\GroupFoundationModel.cs" />

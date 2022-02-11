@@ -11,6 +11,12 @@ namespace WpfCustomControls.LanguageModel
 
         private AuthorLanguage _AuthorLanguage;
         public AuthorLanguage AuthorLanguage { get { return _AuthorLanguage; } set { _AuthorLanguage = value; OnPropertyChanged(); } }
+        private MenuLanguage _MenuLanguage;
+        public MenuLanguage MenuLanguage { get { return _MenuLanguage; } set { _MenuLanguage = value; OnPropertyChanged(); } }
+        private WindowLanguage _WindowLanguage;
+        public WindowLanguage WindowLanguage { get { return _WindowLanguage; } set { _WindowLanguage = value; OnPropertyChanged(); } }
+        private GeneralLanguage _GeneralLanguage;
+        public GeneralLanguage GeneralLanguage { get { return _GeneralLanguage; } set { _GeneralLanguage = value; OnPropertyChanged(); } }
         private R01_Language _R01_Language;
         public R01_Language R01_Language { get { return _R01_Language; } set { _R01_Language = value; OnPropertyChanged(); } }
         private R11_Language _R11_Language;
@@ -18,12 +24,18 @@ namespace WpfCustomControls.LanguageModel
         public Languages(string language)
         {
             AuthorLanguage = new AuthorLanguage(language);
+            MenuLanguage = new MenuLanguage(language);
+            WindowLanguage = new WindowLanguage(language);
+            GeneralLanguage = new GeneralLanguage(language);
             R01_Language = new R01_Language(language);
             R11_Language = new R11_Language(language);
         }
         public void ChangeLanguages(string language)
         {
             AuthorLanguage.ChangedLanguage(language);
+            MenuLanguage.ChangedLanguage(language);
+            WindowLanguage.ChangedLanguage(language);
+            GeneralLanguage.ChangedLanguage(language);
             R01_Language.ChangeLanguage(language);
             R11_Language.ChangeLanguage(language);
         }

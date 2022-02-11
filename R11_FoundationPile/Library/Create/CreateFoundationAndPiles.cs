@@ -20,24 +20,28 @@ namespace R11_FoundationPile
                 transaction.Start();
                 if (foundationPileModel.SettingModel.HeightFoundation != foundationPileModel.SettingModel.WidthFloor(document, foundationPileModel.SettingModel.SelectedFoundationType))
                 {
-                    foundationPileModel.SettingModel.SelectedFoundationType.Duplicate(foundationPileModel.SettingModel.SelectedFoundationType.Name + "Foundation");
-                    CompoundStructure compound = foundationPileModel.SettingModel.SelectedFoundationType.GetCompoundStructure();
+                    FloorType floorType = foundationPileModel.SettingModel.SelectedFoundationType.Duplicate(foundationPileModel.SettingModel.HeightFoundation + "Foundation") as FloorType;
+
+                    CompoundStructure compound = floorType.GetCompoundStructure();
                     CompoundStructureLayer layer = compound.GetLayers().FirstOrDefault();
                     layer.Width = unit.Convert(foundationPileModel.SettingModel.HeightFoundation);
                     compound.SetLayer(0, layer);
-                    foundationPileModel.SettingModel.SelectedFoundationType.SetCompoundStructure(compound);
+                    floorType.SetCompoundStructure(compound);
+                    foundationPileModel.SettingModel.SelectedFoundationType = floorType;
                     SetValue(p, foundationPileModel, 1);
                 }
                 if (foundationPileModel.SettingModel.IsCreateFormWork)
                 {
                     if (foundationPileModel.SettingModel.HeightFormWork != foundationPileModel.SettingModel.WidthFloor(document, foundationPileModel.SettingModel.SelectedFormWorkType))
                     {
-                        foundationPileModel.SettingModel.SelectedFormWorkType.Duplicate(foundationPileModel.SettingModel.SelectedFormWorkType.Name + "FormWork");
-                        CompoundStructure compound = foundationPileModel.SettingModel.SelectedFormWorkType.GetCompoundStructure();
+                       
+                        FloorType floorType = foundationPileModel.SettingModel.SelectedFormWorkType.Duplicate(foundationPileModel.SettingModel.HeightFormWork + "FormWork") as FloorType;
+                        CompoundStructure compound = floorType.GetCompoundStructure();
                         CompoundStructureLayer layer = compound.GetLayers().FirstOrDefault();
                         layer.Width = unit.Convert(foundationPileModel.SettingModel.HeightFormWork);
                         compound.SetLayer(0, layer);
-                        foundationPileModel.SettingModel.SelectedFormWorkType.SetCompoundStructure(compound);
+                        floorType.SetCompoundStructure(compound);
+                        foundationPileModel.SettingModel.SelectedFormWorkType = floorType;
                         SetValue(p, foundationPileModel, 1);
                     }
                 }
@@ -46,7 +50,7 @@ namespace R11_FoundationPile
                 {
                     for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
                     {
-                        foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundation(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type);
+                        foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundation(document, unit, foundationPileModel.SettingModel);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
@@ -102,9 +106,10 @@ namespace R11_FoundationPile
                                 {
                                     foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateCallOutFoundationDetailView(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type);
                                     SetValue(p, foundationPileModel, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionHorizontal(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); SetValue(p, foundationPileModel, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionVertical(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); SetValue(p, foundationPileModel, 1);
                                 }
-                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionHorizontal(document, unit, foundationPileModel.SettingModel); SetValue(p, foundationPileModel, 1);
-                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionVertical(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); SetValue(p, foundationPileModel, 1);
+                                
                             }
                         }
                         transaction.Commit();
@@ -116,7 +121,7 @@ namespace R11_FoundationPile
         #endregion
         private static void GetProgressBarCreateFoundationAndPiles(FoundationPileWindow p, FoundationPileModel foundationPileModel,Document document)
         {
-            foundationPileModel.Value = 0; foundationPileModel.Percent = 0;
+            foundationPileModel.Value = 0; foundationPileModel.Percent = 0.0;
             p.ProgressWindow.Maximum = 0;
             if (foundationPileModel.SettingModel.HeightFoundation != foundationPileModel.SettingModel.WidthFloor(document, foundationPileModel.SettingModel.SelectedFoundationType)) p.ProgressWindow.Maximum++;
             if (foundationPileModel.SettingModel.IsCreateFormWork) p.ProgressWindow.Maximum++;
@@ -146,7 +151,7 @@ namespace R11_FoundationPile
         private static void SetValue(FoundationPileWindow p, FoundationPileModel foundationPileModel, int n)
         {
             foundationPileModel.Value += n;
-            foundationPileModel.Percent = foundationPileModel.Value / p.ProgressWindow.Maximum * 100;
+            foundationPileModel.Percent = (foundationPileModel.Value / p.ProgressWindow.Maximum) * 100;
             p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = foundationPileModel.Value,
                 DispatcherPriority.Background);
         }

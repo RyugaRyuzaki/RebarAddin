@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using WpfCustomControls;
@@ -18,13 +19,7 @@ namespace R11_FoundationPile
         public RebarShape RebarShape { get => _RebarShape; set { _RebarShape = value; OnPropertyChanged(); } }
         private Rebar _Rebar;
         public Rebar Rebar { get => _Rebar; set { _Rebar = value; OnPropertyChanged(); } }
-        private double _HookLength;
-        public double HookLength { get => _HookLength; set { _HookLength = value; OnPropertyChanged(); } }
-        private double _Distance;
-        public double Distance { get => _Distance; set { _Distance = value; OnPropertyChanged(); } }
-        private int _Number;
-        public int Number { get => _Number; set { _Number = value; OnPropertyChanged(); } }
-
+       
         public TagMode Mode = TagMode.TM_ADDBY_CATEGORY;
         public TagOrientation Horizontal = TagOrientation.Horizontal;
         public TagOrientation Vertical = TagOrientation.Vertical;
@@ -36,12 +31,12 @@ namespace R11_FoundationPile
         public MultiReferenceAnnotationOptions MultiTagOption { get => _MultiTagOption; set { _MultiTagOption = value; OnPropertyChanged(); } }
         private RebarHookType _Hook;
         public RebarHookType Hook { get => _Hook; set { _Hook = value; OnPropertyChanged(); } }
-        public RebarBarModel(Document document, string type, ObservableCollection<RebarBarType> rebarBarType)
+        public RebarBarModel(Document document, string type, List<RebarBarType> rebarBarType)
         {
             Type = type;
             RebarBarType = rebarBarType.Where(x => x.Name == Type).SingleOrDefault();
             Diameter = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, RebarBarType.get_Parameter(BuiltInParameter.REBAR_BAR_DIAMETER).AsDouble(), false));
-            Number = 1;
+            
         }
        
         public void SetPartitionRebar(string name)
@@ -49,13 +44,7 @@ namespace R11_FoundationPile
             Parameter p1 = Rebar.LookupParameter("Partition");
             p1.Set(name);
         }
-        public void SetPropertyBar(Document document,double distance,SettingModel settingModel)
-        {
-            double coverTop= double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, settingModel.SelectedTopCover.CoverDistance, false));
-            double coverBottom= double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, settingModel.SelectedBotomCover.CoverDistance, false));
-            HookLength = settingModel.HeightFoundation - coverTop - coverBottom;
-            Distance = distance;
-        }
+       
         //#region Tag
         ////private XYZ GetXYZOriginTagDetail(UnitProject unit, InfoModel infoModel0, PlanarFace planarFace0)
         ////{

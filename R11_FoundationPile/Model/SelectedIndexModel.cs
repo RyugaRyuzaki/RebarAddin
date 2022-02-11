@@ -33,9 +33,14 @@ namespace R11_FoundationPile
         private int _SelectedIndexAllPile;
         public int SelectedIndexAllPile { get => _SelectedIndexAllPile; set { _SelectedIndexAllPile = value; OnPropertyChanged(); } }
 
-
+        private int _SelectedIndexFoundationBarModel;
+        public int SelectedIndexFoundationBarModel { get => _SelectedIndexFoundationBarModel; set { _SelectedIndexFoundationBarModel = value; OnPropertyChanged(); } }
+        private int _SelectedIndexBarModel;
+        public int SelectedIndexBarModel { get => _SelectedIndexBarModel; set { _SelectedIndexBarModel = value; OnPropertyChanged(); } }
         private ObservableCollection<string> _Representative;
         public ObservableCollection<string> Representative { get { if (_Representative == null) { _Representative = new ObservableCollection<string>(); } return _Representative; } set { _Representative = value; OnPropertyChanged(); } }
+
+       
         public SelectedIndexModel()
         {
             SelectedIndexPileCategory = 0;
@@ -45,9 +50,13 @@ namespace R11_FoundationPile
             SelectedIndexFoundationType = 0;
             SelectedIndexGroupFoundationModel = 0;
             SelectedIndexFoundationModel = 0;
+            SelectedIndexFoundationBarModel = 0;
+            SelectedIndexBarModel = 0;
             SelectedIndexPile = 0;
             SelectedIndexAllFoundation = 0;
             SelectedIndexAllPile = 0;
         }
+        
+        
     }
 }

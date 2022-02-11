@@ -10,8 +10,7 @@ namespace WpfCustomControls.LanguageModel
     public class R01_Language  :BaseViewModel
     {
 
-        private MenuLanguage _MenuLanguage;
-        public MenuLanguage MenuLanguage { get { return _MenuLanguage; } set { _MenuLanguage = value; OnPropertyChanged(); } }
+        
         private SettingLanguage _SettingLanguage;
         public SettingLanguage SettingLanguage { get { return _SettingLanguage; } set { _SettingLanguage = value; OnPropertyChanged(); } }
         private GeometryLanguage _GeometryLanguage;
@@ -30,7 +29,7 @@ namespace WpfCustomControls.LanguageModel
         public BarsDivisionLanguage BarsDivisionLanguage { get { return _BarsDivisionLanguage; } set { _BarsDivisionLanguage = value; OnPropertyChanged(); } }
         public R01_Language(string language)
         {
-            MenuLanguage = new MenuLanguage(language);
+            
             SettingLanguage = new SettingLanguage(language);
             GeometryLanguage = new GeometryLanguage(language);
             StirrupsLanguage = new StirrupsLanguage(language);
@@ -42,7 +41,7 @@ namespace WpfCustomControls.LanguageModel
         }
         public void ChangeLanguage(string languge)
         {
-            MenuLanguage.ChangedLanguage(languge);
+           
             SettingLanguage.ChangedLanguage(languge);
             GeometryLanguage.ChangedLanguage(languge);
             StirrupsLanguage.ChangedLanguage(languge);

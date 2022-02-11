@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
+namespace WpfCustomControls.LanguageModel
 {
-    public class MenuLanguage:BaseViewModel
+    public class MenuLanguage : BaseViewModel
     {
 
         private string _Setting;
@@ -25,19 +25,18 @@ namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
         public string BottomDowels { get { return _BottomDowels; } set { _BottomDowels = value; OnPropertyChanged(); } }
         private string _BarsDivision;
         public string BarsDivision { get { return _BarsDivision; } set { _BarsDivision = value; OnPropertyChanged(); } }
-        private string _OK;
-        public string OK { get { return _OK; } set { _OK = value; OnPropertyChanged(); } }
-        private string _Cancel;
-        public string Cancel { get { return _Cancel; } set { _Cancel = value; OnPropertyChanged(); } }
-        private string _Columns;
-        public string Columns { get { return _Columns; } set { _Columns = value; OnPropertyChanged(); } }
-        public MenuLanguage(string language)
+        private string _PileDetail;
+        public string PileDetail { get { return _PileDetail; } set { _PileDetail = value; OnPropertyChanged(); } }
+        private string _Reinforcement;
+        public string Reinforcement { get { return _Reinforcement; } set { _Reinforcement = value; OnPropertyChanged(); } }
+
+        public MenuLanguage(string languge)
         {
-            ChangedLanguage(language);
+            ChangedLanguage(languge);
         }
-        public void ChangedLanguage(string language)
+        public void ChangedLanguage(string languge)
         {
-            switch (language)
+            switch (languge)
             {
                 case "EN": GetLanguageEN(); break;
                 case "VN": GetLanguageVN(); break;
@@ -54,9 +53,8 @@ namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
             TopDowels = "Top Dowels";
             BottomDowels = "Bottom Dowels";
             BarsDivision = "Bars Division";
-            OK = "OK";
-            Cancel = "Cancel";
-            Columns = "Columns";
+            PileDetail = "Pile Detail";
+            Reinforcement = "Reinforcement";
         }
         private void GetLanguageVN()
         {
@@ -68,9 +66,8 @@ namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
             TopDowels = "Neo Thép Trên";
             BottomDowels = "Neo Thép Dưới";
             BarsDivision = "Cắt Thép";
-            OK = "Thực hiện";
-            Cancel = "Huỷ";
-            Columns = "Các Cột";
+            PileDetail = "Chi tiết Cọc";
+            Reinforcement = "Cốt thép";
         }
     }
 }

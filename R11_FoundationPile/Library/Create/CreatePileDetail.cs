@@ -63,6 +63,7 @@ namespace R11_FoundationPile
                     transaction.Commit();
                 }
                 foundationPileModel.IsCreatePileDetail = true;
+                ResetValue(p, foundationPileModel);
             }
 
            
@@ -72,37 +73,30 @@ namespace R11_FoundationPile
             foundationPileModel.Value = 0; 
             p.ProgressWindow.Maximum = 0;
             p.ProgressWindow.Maximum++;
-           
-            if (foundationPileModel.FoundationPileDetail.PildeDetailView != null)
+
+            p.ProgressWindow.Maximum += 2;
+            for (int i = 0; i < foundationPileModel.AllFoundationModels.Count; i++)
             {
-                p.ProgressWindow.Maximum+=2;
-                for (int i = 0; i < foundationPileModel.AllFoundationModels.Count; i++)
+                for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)
                 {
-                    for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)
-                    {
 
-                        p.ProgressWindow.Maximum += 3;
-                    }
+                    p.ProgressWindow.Maximum += 3;
                 }
-                p.ProgressWindow.Maximum += 3;
-                if (foundationPileModel.FoundationPileDetail.PileSpotCoordinateView != null)
+            }
+            p.ProgressWindow.Maximum += 3;
+            for (int i = 0; i < foundationPileModel.AllFoundationModels.Count; i++)
+            {
+                for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)
                 {
-                    for (int i = 0; i < foundationPileModel.AllFoundationModels.Count; i++)
-                    {
-                        for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)
-                        {
-                            p.ProgressWindow.Maximum++;
-                        }
-                    }
+                    p.ProgressWindow.Maximum++;
                 }
-
             }
 
         }
         private static void SetValue(FoundationPileWindow p, FoundationPileModel foundationPileModel, int n)
         {
             foundationPileModel.Value += n;
-            foundationPileModel.Percent = foundationPileModel.Value / p.ProgressWindow.Maximum * 100;
+            foundationPileModel.Percent = (foundationPileModel.Value / p.ProgressWindow.Maximum) * 100;
             p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = foundationPileModel.Value,
                 DispatcherPriority.Background);
         }

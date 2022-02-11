@@ -22,35 +22,34 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="210"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0" Margin="5" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.ListFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <StackPanel>
                         <DockPanel LastChildFill="False" Height="35">
                             <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.GroupFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
-                            <ComboBox  Width="80" Style="{StaticResource ComboBoxStyle}"
-                                  ItemsSource="{Binding FoundationPileModel.GroupFoundationModels}"  DisplayMemberPath="Type"
-                                  SelectedItem="{Binding SelectedGroupFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexGroupFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <ComboBox  Width="100" Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding FoundationPileModel.FoundationBarModels}"  DisplayMemberPath="Type"
+                                  SelectedItem="{Binding SelectedFoundationBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                       SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexFoundationBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  
                                   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding SelectionChangedGroupFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedFoundationBarModelCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
                             <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Representative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBlock  Style="{StaticResource DataGridTextBlockCenter}" Margin="10 0 0 0" Foreground="Red" FontWeight="Bold" FontSize="15" Text="{Binding SelectedFoundationModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                            <TextBlock  Style="{StaticResource DataGridTextBlockCenter}" Margin="10 0 0 0" Foreground="Red" FontWeight="Bold" FontSize="15" Text="{Binding SelectedFoundationBarModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         </DockPanel>
                         <DockPanel LastChildFill="False" Height="35">
                             <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ComboBoxStyle}" x:Name="OrientationComboBox"
+                            <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="100" Style="{StaticResource ComboBoxStyle}" x:Name="OrientationComboBox"
                                   ItemsSource="{Binding AllSpans}"  
-                                  SelectedItem="{Binding SelectedFoundationModel.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedFoundationBarModel.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
@@ -58,25 +57,37 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
-                            
                         </DockPanel>
                     </StackPanel>
-                    
+
                 </GroupBox>
-                <Canvas Grid.Row="1" Margin="5" x:Name="BarCanvas"></Canvas>
-                <GroupBox Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.MainSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" Grid.Row="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                <GroupBox Grid.Row="1" Margin="5" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.ListBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    <StackPanel>
+                        <Grid Height="220">
+                            <ListView  ItemsSource="{Binding SelectedFoundationBarModel.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                                     SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  
+                                  >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedBarModelCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListView.View>
+                                    <GridView   >
+                                        <GridViewColumn  Width="150" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
+                                        
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                        <Grid Height="Auto">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="35"></RowDefinition>
                                 <RowDefinition Height="35"></RowDefinition>
                                 <RowDefinition Height="35"></RowDefinition>
                             </Grid.RowDefinitions>
@@ -88,292 +99,61 @@
                                 <ColumnDefinition Width="65"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
+                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding SelectedBarModel.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                         Command="{Binding CheckModelCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
+                                      >
+                            </CheckBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="BarTextBlock"></TextBlock>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="BarComboBox"
                                        ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.MainBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedBarModel.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                       ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainBottomBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainBottomBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Command="{Binding FixedMainBottomBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                    ></Button>
-                        </Grid>
-                        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsMainTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckMainAddTopBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=MainAddTopBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
-                                         ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.MainTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainTopBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainTopBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Command="{Binding FixedMainTopBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                    ></Button>
-                        </Grid>
-                        <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsMainAddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckMainAddHorizontalBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=MainAddHorizontalBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                      ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.MainAddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedFoundationModel.MainAddHorizontalBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedFoundationModel.MainAddHorizontalBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                            <ComboBox Grid.Row="1" Grid.Column="4"   Style="{StaticResource ComboBoxStyle}"
-                                        ItemsSource="{Binding NumberBars}" 
-                                      SelectedItem="{Binding SelectedFoundationModel.MainAddHorizontalBar.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                        </Grid>
-                        <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsMainAddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckMainAddVerticalBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=MainAddVerticalBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                     ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.MainAddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainAddVerticalBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.MainAddVerticalBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                            <ComboBox Grid.Row="1" Grid.Column="4"   Style="{StaticResource ComboBoxStyle}" 
-                                        ItemsSource="{Binding NumberBars}" 
-                                      SelectedItem="{Binding SelectedFoundationModel.MainAddVerticalBar.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.SecondarySpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" Grid.Row="3">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                       ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryBottomBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryBottomBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Command="{Binding FixedSecondaryBottomBarCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
-                                    ></Button>
-                        </Grid>
-                        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsSecondaryTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckSecondaryAddTopBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=SecondaryAddTopBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
-                                         ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryTopBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryTopBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                     Command="{Binding FixedSecondaryTopBarCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
-                                    ></Button>
-                        </Grid>
-                        <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsSecondaryAddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckSecondaryAddHorizontalBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=SecondaryAddHorizontalBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                      ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryAddHorizontalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedFoundationModel.SecondaryAddHorizontalBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedFoundationModel.SecondaryAddHorizontalBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                            <ComboBox Grid.Row="1" Grid.Column="4"   Style="{StaticResource ComboBoxStyle}"
-                                        ItemsSource="{Binding NumberBars}" 
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryAddHorizontalBar.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                        </Grid>
-                        <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.AddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  IsChecked="{Binding SelectedFoundationModel.IsSecondaryAddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  Command="{Binding CheckSecondaryAddVerticalBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                                  ></CheckBox>
-                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Visibility="{Binding Path=SecondaryAddVerticalBarVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35"></RowDefinition>
-                                <RowDefinition Height="35"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="65"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                     ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryAddVerticalBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                                      ></ComboBox>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryAddVerticalBar.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="0" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedFoundationModel.SecondaryAddVerticalBar.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                            <ComboBox Grid.Row="1" Grid.Column="4"   Style="{StaticResource ComboBoxStyle}" 
-                                        ItemsSource="{Binding NumberBars}" 
-                                      SelectedItem="{Binding SelectedFoundationModel.SecondaryAddVerticalBar.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Header="Side Bars" Margin="5" Grid.Row="4">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"></RowDefinition>
+
+                            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.GeneralLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="HookLengthTextBlock"></TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBarModel.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   x:Name="HookLengthTextBox">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding HookLengthTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}" x:Name="HookLengthTextBlockUnit"></TextBlock>
+
+                            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding FoundationPileModel.SettingModel.SelectedHook.Name}" x:Name="HookTypeTextBlock"></TextBlock>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="DistanceTextBlock"></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBarModel.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  x:Name="DistanceTextBox">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding DistanceTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="DistanceTextBlockUnit"></TextBlock>
                             
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition ></ColumnDefinition>
-                            <ColumnDefinition Width="65"></ColumnDefinition>
-                            <ColumnDefinition ></ColumnDefinition>
-                            <ColumnDefinition ></ColumnDefinition>
-                            <ColumnDefinition Width="65"></ColumnDefinition>
-                            <ColumnDefinition ></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
-                        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
-                                      ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
-                                      SelectedItem="{Binding SelectedFoundationModel.SideBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  ></ComboBox>
-                        <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="No"></TextBlock>
-                        <ComboBox Grid.Row="0" Grid.Column="4" Style="{StaticResource ComboBoxStyle}" 
-                                    ItemsSource="{Binding NumberBars}" 
-                                      SelectedItem="{Binding SelectedFoundationModel.SideBar.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                  ></ComboBox>
-                    </Grid>
+                            
+                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Command="{Binding FixedNumberBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"   x:Name="FixNumberButton"
+                                    ></Button>
+
+                            <TextBlock Grid.Row="2" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="NumberTextBlock" ></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding SelectedBarModel.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource TextBoxStyle}" x:Name="NumberTextBox" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding NumberBarTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                           
+                        </Grid>
+                    </StackPanel>
+
                 </GroupBox>
+                <Canvas Grid.Row="3" Margin="5" x:Name="BarCanvas"></Canvas>
+             
             </Grid>
         </ScrollViewer>
-     
+
     </Grid>
 </UserControl>

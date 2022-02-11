@@ -39,7 +39,7 @@ namespace R11_FoundationPile
             Image = 0;
             for (int i = 0; i < columnModels.Count; i++)
             {
-                FoundationModels.Add(new FoundationModel(i + 1, columnModels[i], settingModel));
+                FoundationModels.Add(new FoundationModel(Type,Image,i + 1, columnModels[i], settingModel));
             }
             IsGenerate = false;
             IsCreate = false;
@@ -47,6 +47,13 @@ namespace R11_FoundationPile
             L2 = Math.Round(2 * Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
         }
         #region   Method
+        public void ChangedImage()
+        {
+            for (int i = 0; i < FoundationModels.Count; i++)
+            {
+                FoundationModels[i].Image = Image;
+            }
+        }
         public void GetL1L2(SettingModel settingModel)
         {
             L1 = Math.Round(Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
@@ -134,8 +141,8 @@ namespace R11_FoundationPile
         {
             for (int i = 0; i < FoundationModels.Count; i++)
             {
-                FoundationModels[i].GetAllPiles(Image, settingModel, L1, L2, LayerPileModels);
-                FoundationModels[i].GetBoundingFoundation(Image, settingModel, L1, L2, LayerPileModels);
+                FoundationModels[i].GetAllPiles( settingModel, L1, L2, LayerPileModels);
+                FoundationModels[i].GetBoundingFoundation( settingModel, L1, L2, LayerPileModels);
                
             }
         }

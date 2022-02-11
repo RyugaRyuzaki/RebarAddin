@@ -1,20 +1,12 @@
 #region Namespaces
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using R11_FoundationPile.ViewModel;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using R11_FoundationPile.View;
-using R11_FoundationPile.ViewModel;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 #endregion
@@ -40,10 +32,10 @@ namespace R11_FoundationPile
         public ICommand LoadWindowCommand { get; set; }
         public ICommand SelectionMenuCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        
+
         public ICommand CreateFoundationCommand { get; set; }
         public ICommand CreatePileDetailCommand { get; set; }
-        public ICommand PreviewTextInputCommand { get; set; }
+        public ICommand CreateReinforcementCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -70,23 +62,20 @@ namespace R11_FoundationPile
             Unit = GetUnitProject();
             TransactionGroup = new TransactionGroup(Doc);
             TaskBarViewModel = new TaskBarViewModel();
-           
-            FoundationPileModel = new FoundationPileModel(columns,Doc, Unit);
+
+            FoundationPileModel = new FoundationPileModel(columns, Doc, Unit);
             SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, TaskBarViewModel);
             GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
-            
-            PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
-            ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel,Unit, TaskBarViewModel);
-           
+
             SelectedViewModel = SettingViewModel;
-            
+
             #endregion
             #region Load
             LoadWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
                 DrawMenu(p);
-                //p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Collapsed;
-                //p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Collapsed;
+                p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Collapsed;
+                p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Collapsed;
             });
             SelectionMenuCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
@@ -124,22 +113,28 @@ namespace R11_FoundationPile
                 {
                     p.DialogResult = true;
                 }
-                
+
 
             });
-            CreateFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.ConditionCreateFoundation()&&!FoundationPileModel.IsCreateGrounpFoundation; }, (p) =>
+            CreateFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.ConditionCreateFoundation() && !FoundationPileModel.IsCreateGrounpFoundation; }, (p) =>
+              {
+                  CreateFoundation(p);
+                  ShowPileDetailAndReinforcement(p);
+                 
+              });
+            CreatePileDetailCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation && FoundationPileModel.IsApplyRule && !FoundationPileModel.IsCreatePileDetail; }, (p) =>
+               {
+                   CreatePileDetailPlan(p);
+                   
+               });
+            CreateReinforcementCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
-                CreateFoundation(p);
-                ShowPileDetail(p);
-
-            });
-            CreatePileDetailCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation&& FoundationPileModel.IsApplyRule&&!FoundationPileModel.IsCreatePileDetail; }, (p) =>
-            {
-                CreateFPileDetail(p);
-                ShowReinforcement(p);
+               
             });
             #endregion
         }
+
+       
         #region Get Property Method
 
         private UnitProject GetUnitProject()
@@ -199,30 +194,36 @@ namespace R11_FoundationPile
         }
         #endregion
         #region CreateGroupFoundation
-        private void ShowPileDetail(FoundationPileWindow p)
+        private void ShowPileDetailAndReinforcement(FoundationPileWindow p)
         {
-           if(FoundationPileModel.IsCreateGrounpFoundation) { p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Visible; }
-            
+            if (FoundationPileModel.IsCreateGrounpFoundation)
+            {
+                p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Visible; PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+                p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Visible; ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+            }
+
         }
         private void ShowReinforcement(FoundationPileWindow p)
         {
-           if(FoundationPileModel.IsCreatePileDetail) { p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Visible; }
+            if (FoundationPileModel.IsCreatePileDetail)
+          
+            { }
         }
         #endregion
         #region Action
-        
+
         private void CreateFoundation(FoundationPileWindow p)
         {
             TransactionGroup.Start("Action");
             if (TransactionGroup.HasStarted())
             {
-                CreateFoundationAndPiles.Create(p,FoundationPileModel, Doc, Unit);
+                CreateFoundationAndPiles.Create(p, FoundationPileModel, Doc, Unit);
                 TransactionGroup.Commit();
-               
+
                 //p.DialogResult = true;
             }
         }
-        private void CreateFPileDetail(FoundationPileWindow p)
+        private void CreatePileDetailPlan(FoundationPileWindow p)
         {
             TransactionGroup.Start("Action");
             if (TransactionGroup.HasStarted())

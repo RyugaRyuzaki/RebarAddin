@@ -11,7 +11,11 @@ namespace R11_FoundationPile
         #region property
         private int _FoundationNumber;
         public int FoundationNumber { get => _FoundationNumber; set { _FoundationNumber = value; OnPropertyChanged(); } }
+        private int _Type;
+        public int Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
 
+        private int _Image;
+        public int Image { get => _Image; set { _Image = value; OnPropertyChanged(); } }
         private string _LocationName;
         public string LocationName { get => _LocationName; set { _LocationName = value; OnPropertyChanged(); } }
         private LocationModel _Location;
@@ -58,65 +62,22 @@ namespace R11_FoundationPile
         #region Bar
         private string _SpanOrientation;
         public string SpanOrientation { get => _SpanOrientation; set { _SpanOrientation = value; OnPropertyChanged(); } }
-        private RebarBarModel _MainBottomBar;
-        public RebarBarModel MainBottomBar { get => _MainBottomBar; set { _MainBottomBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _MainTopBar;
-        public RebarBarModel MainTopBar { get => _MainTopBar; set { _MainTopBar = value; OnPropertyChanged(); } }
-        private bool _IsMainTopBar;
-        public bool IsMainTopBar { get => _IsMainTopBar; set { _IsMainTopBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _MainAddHorizontalBar;
-        public RebarBarModel MainAddHorizontalBar { get => _MainAddHorizontalBar; set { _MainAddHorizontalBar = value; OnPropertyChanged(); } }
-        private bool _IsMainAddHorizontalBar;
-        public bool IsMainAddHorizontalBar { get => _IsMainAddHorizontalBar; set { _IsMainAddHorizontalBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _MainAddVerticalBar;
-        public RebarBarModel MainAddVerticalBar { get => _MainAddVerticalBar; set { _MainAddVerticalBar = value; OnPropertyChanged(); } }
-        private bool _IsMainAddVerticalBar;
-        public bool IsMainAddVerticalBar { get => _IsMainAddVerticalBar; set { _IsMainAddVerticalBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _SecondaryBottomBar;
-        public RebarBarModel SecondaryBottomBar { get => _SecondaryBottomBar; set { _SecondaryBottomBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _SecondaryTopBar;
-        public RebarBarModel SecondaryTopBar { get => _SecondaryTopBar; set { _SecondaryTopBar = value; OnPropertyChanged(); } }
-        private bool _IsSecondaryTopBar;
-        public bool IsSecondaryTopBar { get => _IsSecondaryTopBar; set { _IsSecondaryTopBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _SecondaryAddHorizontalBar;
-        public RebarBarModel SecondaryAddHorizontalBar { get => _SecondaryAddHorizontalBar; set { _SecondaryAddHorizontalBar = value; OnPropertyChanged(); } }
-        private bool _IsSecondaryAddHorizontalBar;
-        public bool IsSecondaryAddHorizontalBar { get => _IsSecondaryAddHorizontalBar; set { _IsSecondaryAddHorizontalBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _SecondaryAddVerticalBar;
-        public RebarBarModel SecondaryAddVerticalBar { get => _SecondaryAddVerticalBar; set { _SecondaryAddVerticalBar = value; OnPropertyChanged(); } }
-        private bool _IsSecondaryAddVerticalBar;
-        public bool IsSecondaryAddVerticalBar { get => _IsSecondaryAddVerticalBar; set { _IsSecondaryAddVerticalBar = value; OnPropertyChanged(); } }
-        private RebarBarModel _SideBar;
-        public RebarBarModel SideBar { get => _SideBar; set { _SideBar = value; OnPropertyChanged(); } }
+       
         #endregion
-        public FoundationModel(int foundationNumber, ColumnModel columnModel, SettingModel settingModel)
+        public FoundationModel(int type, int image,int foundationNumber, ColumnModel columnModel, SettingModel settingModel)
         {
+            Type = type;Image = image;
             FoundationNumber = foundationNumber;
+            
             LocationName = columnModel.LocationName;
             Location = new LocationModel(columnModel.PointXPosition, columnModel.PointYPosition, columnModel.PointZPosition);
             ColumnModel = columnModel;     
             CurveArray = new CurveArray();
             SpanOrientation = "Horizontal";
+           
         }
         #region method
-        public void GetBar(RebarBarModel bar)
-        {
-            MainBottomBar = bar; MainTopBar = bar; MainAddHorizontalBar = bar; MainAddVerticalBar = bar;
-            SecondaryBottomBar = bar; SecondaryTopBar = bar; SecondaryAddHorizontalBar = bar; SecondaryAddVerticalBar = bar;
-            SideBar = bar;
-        }
-        public void SetPropertyBar(Document document,double distance, SettingModel settingModel)
-        {
-            MainBottomBar.SetPropertyBar(document, distance, settingModel);
-            MainTopBar.SetPropertyBar(document, distance, settingModel);
-            MainAddHorizontalBar.SetPropertyBar(document, distance, settingModel);
-            MainAddVerticalBar.SetPropertyBar(document, distance, settingModel);
-            SecondaryBottomBar.SetPropertyBar(document, distance, settingModel);
-            SecondaryTopBar.SetPropertyBar(document, distance, settingModel);
-            SecondaryAddHorizontalBar.SetPropertyBar(document, distance, settingModel);
-            SecondaryAddVerticalBar.SetPropertyBar(document, distance, settingModel);
-            SideBar.SetPropertyBar(document, distance, settingModel);
-        }
+       
         public bool IscreatePile()
         {
             for (int i = 0; i < PileModels.Count; i++)
@@ -230,13 +191,13 @@ namespace R11_FoundationPile
             }
             return true;
         }
-        public void GetAllPiles(int image, SettingModel settingModel, double L1, double L2, ObservableCollection<LayerPileModel> layerPileModels)
+        public void GetAllPiles(SettingModel settingModel, double L1, double L2, ObservableCollection<LayerPileModel> layerPileModels)
         {
             if (PileModels.Count != 0)
             {
                 PileModels.Clear();
             }
-            switch (image)
+            switch (Image)
             {
                 case 0: GetAllPiles0(settingModel, L1, L2); break;
                 case 1: GetAllPiles1(settingModel, layerPileModels, L1, L2); break;
@@ -582,13 +543,13 @@ namespace R11_FoundationPile
         }
         #endregion
         #region Foundation
-        public void GetBoundingFoundation(int image, SettingModel settingModel, double L1, double L2, ObservableCollection<LayerPileModel> layerPileModels)
+        public void GetBoundingFoundation( SettingModel settingModel, double L1, double L2, ObservableCollection<LayerPileModel> layerPileModels)
         {
             if (BoundingLocation.Count != 0)
             {
                 BoundingLocation.Clear();
             }
-            switch (image)
+            switch (Image)
             {
                 case 0: GetBoundingFoundation0(settingModel, L1, L2); break;
                 case 1: GetBoundingFoundation1(settingModel, layerPileModels); break;
@@ -861,7 +822,7 @@ namespace R11_FoundationPile
             }
             return curves;
         }
-        public void CreateFoundation(Document document, UnitProject unit, SettingModel settingModel,int type)
+        public void CreateFoundation(Document document, UnitProject unit, SettingModel settingModel)
         {
             if (Foundation == null)
             {
@@ -879,7 +840,7 @@ namespace R11_FoundationPile
                 if (Foundation != null)
                 {
                     Parameter comments = Foundation.LookupParameter("Comments");
-                    if (comments != null) comments.Set(settingModel.FoundationNamePrefix + type);
+                    if (comments != null) comments.Set(settingModel.FoundationNamePrefix + Type);
                 }
             }
             for (int i = 0; i < PileModels.Count; i++)
@@ -893,7 +854,10 @@ namespace R11_FoundationPile
             if (settingModel.IsCreateFormWork)
             {
                 CurveLoop curves = GetCurveLoopFormWork();
-                FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves,- unit.Convert(settingModel.OffsetFormWork), XYZ.BasisZ);
+
+                //FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves, unit.Convert(settingModel.OffsetFormWork*((IsRollBack)?1:-1)), XYZ.BasisZ);
+                bool a = ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h;
+                FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves, unit.Convert(settingModel.OffsetFormWork*(-1)), XYZ.BasisZ);
                 if (FormWorkCurveLoop != null)
                 {
                     CurveArray array = new CurveArray();
@@ -1213,9 +1177,46 @@ namespace R11_FoundationPile
         }
         #endregion
         #region Section
-        private void GetBoundingBoxHorizontal(UnitProject unit,SettingModel settingModel)
+        private void GetBoundingBoxHorizontal(UnitProject unit,SettingModel settingModel, int image)
         {
-            XYZ origin = ColumnModel.PointPosition;
+            XYZ origin = null;
+            switch (image)
+            {
+                case 0:
+                    
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        origin = ColumnModel.PointPosition + ColumnModel.East.FaceNormal * unit.Convert((BoundingLocation[0].X + BoundingLocation[1].X) * 0.5);
+                    }
+                    else
+                    {
+                        origin = ColumnModel.PointPosition;
+                    }
+                    break;
+                case 1: origin = ColumnModel.PointPosition; break;
+                case 2:
+                    
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        origin = ColumnModel.PointPosition + ColumnModel.East.FaceNormal * unit.Convert((BoundingLocation[1].X));
+                    }
+                    else
+                    {
+                        origin = ColumnModel.PointPosition;
+                    }
+                    break;
+                case 3: origin = ColumnModel.PointPosition; break;
+                default:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        origin = ColumnModel.PointPosition + ColumnModel.East.FaceNormal * unit.Convert((BoundingLocation[0].X + BoundingLocation[1].X) * 0.5);
+                    }
+                    else
+                    {
+                        origin = ColumnModel.PointPosition;
+                    }
+                    break;
+            }
             XYZ baseX = ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.Nouth.FaceNormal) : (XYZ.BasisY));
             XYZ baseY = XYZ.BasisZ;
             XYZ baseZ = ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.East.FaceNormal) : (XYZ.BasisX));
@@ -1239,11 +1240,27 @@ namespace R11_FoundationPile
             switch (image)
             {
                 case 0:
-                    origin=ColumnModel.PointPosition+ ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.Nouth.FaceNormal) : (XYZ.BasisY))*unit.Convert((BoundingLocation[0].Y+BoundingLocation[1].Y)*0.5);
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        origin = ColumnModel.PointPosition;
+                    }
+                    else
+                    {
+                        origin = ColumnModel.PointPosition + ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.Nouth.FaceNormal) : (XYZ.BasisY)) * unit.Convert((BoundingLocation[0].Y + BoundingLocation[1].Y) * 0.5);
+                    }
+                   
                     break;
                 case 1: origin = ColumnModel.PointPosition; break;
                 case 2:
-                    origin = ColumnModel.PointPosition + ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.Nouth.FaceNormal) : (XYZ.BasisY)) * unit.Convert(BoundingLocation[1].Y);
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        origin = ColumnModel.PointPosition;
+                    }
+                    else
+                    {
+                        origin = ColumnModel.PointPosition + ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.Nouth.FaceNormal) : (XYZ.BasisY)) * unit.Convert(BoundingLocation[1].Y);
+                    }
+                   
                     break;
                 case 3: origin = ColumnModel.PointPosition; break; 
                 default:
@@ -1266,9 +1283,9 @@ namespace R11_FoundationPile
             SectionBoxVertical.Max = max;
             SectionBoxVertical.Min = min;
         }
-        public void CreateFoundationSectionHorizontal(Document document, UnitProject unit, SettingModel settingModel)
+        public void CreateFoundationSectionHorizontal(Document document, UnitProject unit, SettingModel settingModel, int image)
         {
-            GetBoundingBoxHorizontal(unit, settingModel);
+            GetBoundingBoxHorizontal(unit, settingModel,image);
             Horizontal = ViewSection.CreateSection(document, settingModel.FoundationSectionType.Id, SectionBoxHorizontal);
         }
         public void CreateFoundationSectionVertical(Document document, UnitProject unit, SettingModel settingModel, int image)

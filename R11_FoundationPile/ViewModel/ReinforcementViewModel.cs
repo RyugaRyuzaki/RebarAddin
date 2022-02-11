@@ -1,11 +1,12 @@
 ﻿using Autodesk.Revit.DB;
+using R11_FoundationPile.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
-using R11_FoundationPile.View;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+
 namespace R11_FoundationPile.ViewModel
 {
     public class ReinforcementViewModel : BaseViewModel
@@ -15,220 +16,724 @@ namespace R11_FoundationPile.ViewModel
         private UnitProject _Unit;
         public UnitProject Unit { get { return _Unit; } set { _Unit = value; OnPropertyChanged(); } }
         private FoundationPileModel _FoundationPileModel;
-        public FoundationPileModel FoundationPileModel{get => _FoundationPileModel; set{ _FoundationPileModel = value; OnPropertyChanged(); }}
-        private GroupFoundationModel _SelectedGroupFoundationModel;
-        public GroupFoundationModel SelectedGroupFoundationModel
-        {
-            get => _SelectedGroupFoundationModel; set
-            {
-                _SelectedGroupFoundationModel = value; OnPropertyChanged();
-                if (SelectedGroupFoundationModel != null)
-                {
-                    SelectedFoundationModel = SelectedGroupFoundationModel.FoundationModels.Where(x => x.IsRepresentative).FirstOrDefault();
-                    MainAddTopBarVisible = (SelectedFoundationModel.IsMainTopBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                    MainAddHorizontalBarVisible = (SelectedFoundationModel.IsMainAddHorizontalBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                    MainAddVerticalBarVisible = (SelectedFoundationModel.IsMainAddVerticalBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                    SecondaryAddTopBarVisible = (SelectedFoundationModel.IsSecondaryTopBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                    SecondaryAddHorizontalBarVisible = (SelectedFoundationModel.IsSecondaryAddHorizontalBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                    SecondaryAddVerticalBarVisible = (SelectedFoundationModel.IsSecondaryAddVerticalBar) ? (System.Windows.Visibility.Visible) : (System.Windows.Visibility.Collapsed);
-                }
-            }
-        }
-        private FoundationModel _SelectedFoundationModel;
-        public FoundationModel SelectedFoundationModel{get => _SelectedFoundationModel; set { _SelectedFoundationModel = value; OnPropertyChanged();}}
-        private ObservableCollection<string> _AllSpans;
-        public ObservableCollection<string> AllSpans { get { if (_AllSpans == null) { _AllSpans = new ObservableCollection<string>(new List<string> { "Horizontal", "Vertical" }); } return _AllSpans; } set { _AllSpans = value; OnPropertyChanged();
-            } }
-       
-        #endregion
-        #region Visibility
-        private System.Windows.Visibility _MainAddTopBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility MainAddTopBarVisible { get => _MainAddTopBarVisible; set { _MainAddTopBarVisible = value; OnPropertyChanged(); } }
-        private System.Windows.Visibility _MainAddHorizontalBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility MainAddHorizontalBarVisible { get => _MainAddHorizontalBarVisible; set { _MainAddHorizontalBarVisible = value; OnPropertyChanged(); } }
-        private System.Windows.Visibility _MainAddVerticalBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility MainAddVerticalBarVisible { get => _MainAddVerticalBarVisible; set { _MainAddVerticalBarVisible = value; OnPropertyChanged(); } }
-        private System.Windows.Visibility _SecondaryAddTopBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility SecondaryAddTopBarVisible { get => _SecondaryAddTopBarVisible; set { _SecondaryAddTopBarVisible = value; OnPropertyChanged(); } }
-        private System.Windows.Visibility _SecondaryAddHorizontalBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility SecondaryAddHorizontalBarVisible { get => _SecondaryAddHorizontalBarVisible; set { _SecondaryAddHorizontalBarVisible = value; OnPropertyChanged(); } }
-        private System.Windows.Visibility _SecondaryAddVerticalBarVisible;    // Overlap pile to foundation
-        public System.Windows.Visibility SecondaryAddVerticalBarVisible { get => _SecondaryAddVerticalBarVisible; set { _SecondaryAddVerticalBarVisible = value; OnPropertyChanged(); } }
+        public FoundationPileModel FoundationPileModel { get => _FoundationPileModel; set { _FoundationPileModel = value; OnPropertyChanged(); } }
 
+
+        private ObservableCollection<string> _AllSpans;
+        public ObservableCollection<string> AllSpans { get { if (_AllSpans == null) { _AllSpans = new ObservableCollection<string>(new List<string> { "Horizontal", "Vertical" }); } return _AllSpans; } set { _AllSpans = value; OnPropertyChanged(); } }
         #endregion
-        private ObservableCollection<int> _NumberBars;
-        public ObservableCollection<int> NumberBars
+        private FoundationBarModel _SelectedFoundationBarModel;
+        public FoundationBarModel SelectedFoundationBarModel { get => _SelectedFoundationBarModel; set { _SelectedFoundationBarModel = value; OnPropertyChanged(); } }
+        private BarModel _SelectedBarModel;
+        public BarModel SelectedBarModel
         {
-            get { if (_NumberBars == null) { _NumberBars = new ObservableCollection<int> {1,2,3,4,5,6,7,8,9,10 }; } return _NumberBars; }
-            set
+            get => _SelectedBarModel; set
             {
-                _NumberBars = value; OnPropertyChanged();
+                _SelectedBarModel = value; OnPropertyChanged();
+                if (SelectedBarModel != null) IsEnabled = !(SelectedBarModel.Name.Contains("Bottom")||SelectedBarModel.Name.Contains("Side"));
             }
         }
+        private bool _IsEnabled;
+        public bool IsEnabled { get => _IsEnabled; set { _IsEnabled = value; OnPropertyChanged(); } }
         #region Icommand
         public ICommand LoadReinforcementViewCommand { get; set; }
-        public ICommand CheckMainAddTopBarCommand { get; set; }
-        public ICommand CheckMainAddHorizontalBarCommand { get; set; }
-        public ICommand CheckMainAddVerticalBarCommand { get; set; }
-        public ICommand CheckSecondaryAddTopBarCommand { get; set; }
-        public ICommand CheckSecondaryAddHorizontalBarCommand { get; set; }
-        public ICommand CheckSecondaryAddVerticalBarCommand { get; set; }
-        public ICommand FixedMainBottomBarCommand { get; set; }
-        public ICommand FixedMainTopBarCommand { get; set; }
-        public ICommand FixedSecondaryBottomBarCommand { get; set; }
-        public ICommand FixedSecondaryTopBarCommand { get; set; }
 
-        public ICommand SelectionChangedGroupFoundationCommand { get; set; }
+
+        public ICommand SelectionChangedFoundationBarModelCommand { get; set; }
         public ICommand SelectionChangedSpanOrientationCommand { get; set; }
+        public ICommand SelectionChangedBarModelCommand { get; set; }
+        public ICommand CheckModelCommand { get; set; }
+        public ICommand FixedNumberBarCommand { get; set; }
+        public ICommand HookLengthTextChangedCommand { get; set; }
+        public ICommand DistanceTextChangedCommand { get; set; }
+        public ICommand NumberBarTextChangedCommand { get; set; }
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel,UnitProject unit, TaskBarViewModel taskBarViewModel)
+        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unit, TaskBarViewModel taskBarViewModel)
         {
             #region property
             Doc = doc;
             Unit = unit;
             FoundationPileModel = foundationPileModel;
+            FoundationPileModel.GetBarModels(Doc);
             TaskBarViewModel = taskBarViewModel;
             #endregion
+            #region Load
             LoadReinforcementViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
                 p.MainCanvas.Width = 820;
                 ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                ShowProperty(uc);
                 DrawSpanOrientation(uc);
-            });
-            CheckMainAddTopBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-                if (SelectedFoundationModel.IsMainTopBar)
-                {
-                    MainAddTopBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (MainAddTopBarVisible == System.Windows.Visibility.Visible) MainAddTopBarVisible = System.Windows.Visibility.Collapsed;
-                }
+                DrawMain(p);
+                if (SelectedBarModel != null) IsEnabled = !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Side"));
 
             });
-            CheckMainAddHorizontalBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
+            SelectionChangedFoundationBarModelCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
+                if (SelectedBarModel != null) IsEnabled = !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Side"));
+                ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                FoundationPileModel.SelectedIndexModel.SelectedIndexBarModel = 0;
 
-                if (SelectedFoundationModel.IsMainAddHorizontalBar)
-                {
-                    MainAddHorizontalBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (MainAddHorizontalBarVisible == System.Windows.Visibility.Visible) MainAddHorizontalBarVisible = System.Windows.Visibility.Collapsed;
-                }
-
+                ShowProperty(uc);
+                DrawSpanOrientation(uc);
+                DrawMain(p);
             });
-            CheckMainAddVerticalBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
+            SelectionChangedSpanOrientationCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedFoundationBarModel != null; }, (p) =>
             {
-
-                if (SelectedFoundationModel.IsMainAddVerticalBar)
-                {
-                    MainAddVerticalBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (MainAddVerticalBarVisible == System.Windows.Visibility.Visible) MainAddVerticalBarVisible = System.Windows.Visibility.Collapsed;
-                }
-
-            });
-            CheckSecondaryAddTopBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-                if (SelectedFoundationModel.IsSecondaryTopBar)
-                {
-                    SecondaryAddTopBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (SecondaryAddTopBarVisible == System.Windows.Visibility.Visible) SecondaryAddTopBarVisible = System.Windows.Visibility.Collapsed;
-                }
-
-            });
-            CheckSecondaryAddHorizontalBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-                if (SelectedFoundationModel.IsSecondaryAddHorizontalBar)
-                {
-                    SecondaryAddHorizontalBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (SecondaryAddHorizontalBarVisible == System.Windows.Visibility.Visible) SecondaryAddHorizontalBarVisible = System.Windows.Visibility.Collapsed;
-                }
-
-            });
-            CheckSecondaryAddVerticalBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-                if (SelectedFoundationModel.IsSecondaryAddVerticalBar)
-                {
-                    SecondaryAddVerticalBarVisible = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    if (SecondaryAddVerticalBarVisible == System.Windows.Visibility.Visible) SecondaryAddVerticalBarVisible = System.Windows.Visibility.Collapsed;
-                }
-
-            });
-            FixedMainBottomBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-                
-
-            });
-            FixedMainTopBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-               
-
-            });
-            FixedSecondaryBottomBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-               
-
-            });
-            FixedSecondaryTopBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
-            {
-
-               
-
-            });
-            SelectionChangedGroupFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedGroupFoundationModel!=null; }, (p) =>
-            {
-
                 ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
                 DrawSpanOrientation(uc);
-
+                DrawMain(p);
             });
-            SelectionChangedSpanOrientationCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedFoundationModel!=null; }, (p) =>
+            SelectionChangedBarModelCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedFoundationBarModel != null; }, (p) =>
             {
-
+                if (SelectedBarModel != null) IsEnabled = !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Side"));
                 ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
-                DrawSpanOrientation(uc);
+                ShowProperty(uc);
+                DrawMain(p);
 
             });
+            CheckModelCommand = new RelayCommand<FoundationPileWindow>((p) => { return IsEnabled; }, (p) =>
+            {
+                ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                ShowProperty(uc);
+                DrawMain(p);
+
+            });
+            FixedNumberBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.Name.Contains("Bottom")||SelectedBarModel.Name.Contains("Top"); }, (p) =>
+            {
+               
+                double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
+                FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                double p1 = GetP1(foundationModel);
+                double p2 = GetP2(foundationModel);
+                double p3 = GetP3(foundationModel);
+                double p4 = GetP4(foundationModel);
+                if (SelectedBarModel.Name.Equals("MainBottom"))
+                {
+                    SelectedBarModel.FixNumber(p3, p4, coverSide);
+                }
+                if (SelectedBarModel.Name.Equals("SecondaryBottom"))
+                {
+                    SelectedBarModel.FixNumber(p1, p2, coverSide);
+                }
+                DrawMain(p);
+            });
+            HookLengthTextChangedCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.Name.Contains("Bottom")||SelectedBarModel.Name.Contains("Top"); }, (p) =>
+            {
+                ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                if (double.TryParse(uc.HookLengthTextBox.Text.ToString(),out double S))
+                {
+                    DrawMain(p);
+                }
+            });
+            DistanceTextChangedCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
+            {
+                ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                if (double.TryParse(uc.DistanceTextBox.Text.ToString(), out double S))
+                {
+                    DrawMain(p);
+                }
+            });
+            NumberBarTextChangedCommand = new RelayCommand<FoundationPileWindow>((p) => { return !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Top")); }, (p) =>
+            {
+                ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
+                if (int.TryParse(uc.NumberTextBox.Text.ToString(), out int S))
+                {
+                    DrawMain(p);
+                }
+            });
+            #endregion
+
+
+
         }
+
+
         #region Method
+        private void ShowProperty(ReinforcementView uc)
+        {
+            if (SelectedBarModel.IsModel)
+            {
+                uc.BarTextBlock.Visibility = System.Windows.Visibility.Visible;
+                uc.BarComboBox.Visibility = System.Windows.Visibility.Visible;
+
+                uc.HookLengthTextBlock.Visibility = System.Windows.Visibility.Visible;
+                uc.HookLengthTextBlockUnit.Visibility = System.Windows.Visibility.Visible;
+                uc.HookLengthTextBox.Visibility = System.Windows.Visibility.Visible;
+
+                uc.HookTypeTextBlock.Visibility = System.Windows.Visibility.Visible;
+
+                uc.DistanceTextBlock.Visibility = System.Windows.Visibility.Visible;
+                uc.DistanceTextBox.Visibility = System.Windows.Visibility.Visible;
+                uc.DistanceTextBlockUnit.Visibility = System.Windows.Visibility.Visible;
+
+                uc.NumberTextBlock.Visibility = System.Windows.Visibility.Visible;
+                uc.NumberTextBox.Visibility = System.Windows.Visibility.Visible;
+
+                uc.FixNumberButton.Visibility = System.Windows.Visibility.Visible;
+                if (SelectedBarModel.Name.Contains("Add") || SelectedBarModel.Name.Contains("Side"))
+                {
+                    uc.HookLengthTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                    uc.HookLengthTextBlockUnit.Visibility = System.Windows.Visibility.Hidden;
+                    uc.HookLengthTextBox.Visibility = System.Windows.Visibility.Hidden;
+                    uc.HookTypeTextBlock.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    uc.HookLengthTextBlock.Visibility = System.Windows.Visibility.Visible;
+                    uc.HookLengthTextBlockUnit.Visibility = System.Windows.Visibility.Visible;
+                    uc.HookLengthTextBox.Visibility = System.Windows.Visibility.Visible;
+                    uc.HookTypeTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                }
+                if (SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Top"))
+                {
+                    uc.FixNumberButton.Visibility = System.Windows.Visibility.Visible;
+                    uc.NumberTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                    uc.NumberTextBox.Visibility = System.Windows.Visibility.Hidden;
+                }
+                else
+                {
+                    uc.FixNumberButton.Visibility = System.Windows.Visibility.Hidden;
+                    uc.NumberTextBlock.Visibility = System.Windows.Visibility.Visible;
+                    uc.NumberTextBox.Visibility = System.Windows.Visibility.Visible;
+                }
+            }
+            else
+            {
+                uc.BarTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                uc.BarComboBox.Visibility = System.Windows.Visibility.Hidden;
+
+                uc.HookLengthTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                uc.HookLengthTextBlockUnit.Visibility = System.Windows.Visibility.Hidden;
+                uc.HookLengthTextBox.Visibility = System.Windows.Visibility.Hidden;
+
+                uc.HookTypeTextBlock.Visibility = System.Windows.Visibility.Hidden;
+
+                uc.DistanceTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                uc.DistanceTextBox.Visibility = System.Windows.Visibility.Hidden;
+                uc.DistanceTextBlockUnit.Visibility = System.Windows.Visibility.Hidden;
+
+                uc.NumberTextBlock.Visibility = System.Windows.Visibility.Hidden;
+                uc.NumberTextBox.Visibility = System.Windows.Visibility.Hidden;
+
+                uc.FixNumberButton.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        #endregion
+        #region Draw
         private void DrawSpanOrientation(ReinforcementView p)
         {
             p.BarCanvas.Children.Clear();
-            if (SelectedFoundationModel != null)
+            if (SelectedFoundationBarModel != null)
             {
-                if (SelectedFoundationModel.BoundingLocation.Count != 0 && SelectedFoundationModel.PileModels.Count != 0)
+                FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                if (foundationModel != null)
                 {
-                    FoundationPileModel.DrawModelBar.GetScaleBar(SelectedFoundationModel, Unit);
-                    DrawMainCanvas.DrawBarFoundation(p.BarCanvas, FoundationPileModel.DrawModelBar, SelectedFoundationModel, FoundationPileModel.SettingModel,1000,SelectedGroupFoundationModel.Image,SelectedFoundationModel.SpanOrientation);
-                }
-            }
 
+                    if (foundationModel.BoundingLocation.Count != 0 && foundationModel.PileModels.Count != 0)
+                    {
+                        FoundationPileModel.DrawModelBar.GetScaleBar(foundationModel, Unit);
+                        DrawMainCanvas.DrawBarFoundationSection(p.BarCanvas, FoundationPileModel.DrawModelBar, foundationModel, FoundationPileModel.SettingModel, 1000, foundationModel.Image, SelectedFoundationBarModel.SpanOrientation);
+                    }
+                }
+
+            }
+        }
+        private void DrawMain(FoundationPileWindow p)
+        {
+            p.MainCanvas.Children.Clear();
+            if (SelectedFoundationBarModel != null)
+            {
+                FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                if (foundationModel != null)
+                {
+                    FoundationPileModel.DrawModel.GetScale(foundationModel, Unit);
+                    FoundationPileModel.DrawModel.GetScaleHeigth(FoundationPileModel.SettingModel, Unit);
+                    double coverTop = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedTopCover.CoverDistance, false));
+                    double coverBottom = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedBotomCover.CoverDistance, false));
+                    double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
+                    DrawMainCanvas.DrawBarSection(p.MainCanvas, FoundationPileModel.DrawModel, foundationModel, SelectedFoundationBarModel.BarModels,SelectedBarModel, FoundationPileModel.SettingModel, foundationModel.Image, SelectedFoundationBarModel.SpanOrientation, coverTop, coverBottom, coverSide, GetP1(foundationModel), GetP2(foundationModel), GetP3(foundationModel), GetP4(foundationModel));
+                }
+
+            }
         }
         #endregion
+        private double GetP1(FoundationModel foundationModel)
+        {
+            double p1 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[2].Y;
+                        }
+                    }
 
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                    }
+                    else
+                    {
+                        p1 = foundationModel.BoundingLocation[0].Y;
+                    }
+
+                    break;
+                case 2:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[2].Y;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[3].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[3].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    break;
+                default:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = foundationModel.BoundingLocation[2].Y;
+                        }
+                    }
+                    break;
+            }
+            return p1;
+        }
+        private double GetP2(FoundationModel foundationModel)
+        {
+            double p2 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p2 = foundationModel.BoundingLocation[0].X;
+                    }
+                    else
+                    {
+                        p2 = foundationModel.BoundingLocation[1].Y;
+                    }
+
+                    break;
+                case 2:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[1].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[1].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[1].Y;
+                        }
+                    }
+                    break;
+                default:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = foundationModel.BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = foundationModel.BoundingLocation[0].Y;
+                        }
+                    }
+                    break;
+            }
+            return p2;
+        }
+        private double GetP3(FoundationModel foundationModel)
+        {
+            double p3 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p3 = foundationModel.BoundingLocation[0].Y;
+                    }
+                    else
+                    {
+                        p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                    }
+                    break;
+                case 2:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[3].Y;
+
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[3].X;
+                        }
+                    }
+                    break;
+                default:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = foundationModel.BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+                            p3 = foundationModel.BoundingLocation[foundationModel.BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    break;
+            }
+            return p3;
+        }
+        private double GetP4(FoundationModel foundationModel)
+        {
+            double p4 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p4 = foundationModel.BoundingLocation[1].Y;
+                    }
+                    else
+                    {
+                        p4 = foundationModel.BoundingLocation[0].X;
+                    }
+                    break;
+                case 2:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[1].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[1].X;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[1].X;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[1].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+                    }
+                    break;
+                default:
+                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = foundationModel.BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = foundationModel.BoundingLocation[0].X;
+                        }
+                    }
+                    break;
+            }
+            return p4;
+        }
     }
 }

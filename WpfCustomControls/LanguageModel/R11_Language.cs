@@ -9,8 +9,7 @@ namespace WpfCustomControls.LanguageModel
     public class R11_Language  :BaseViewModel
     {
 
-        private MenuLanguage _MenuLanguage;
-        public MenuLanguage MenuLanguage { get { return _MenuLanguage; } set { _MenuLanguage = value; OnPropertyChanged(); } }
+      
         private SettingLanguage _SettingLanguage;
         public SettingLanguage SettingLanguage { get { return _SettingLanguage; } set { _SettingLanguage = value; OnPropertyChanged(); } }
         private GeometryLanguage _GeometryLanguage;
@@ -21,7 +20,7 @@ namespace WpfCustomControls.LanguageModel
         public ReinforcementLanguage ReinforcementLanguage { get { return _ReinforcementLanguage; } set { _ReinforcementLanguage = value; OnPropertyChanged(); } }
         public R11_Language(string language)
         {
-            MenuLanguage = new MenuLanguage(language);
+           
             SettingLanguage = new SettingLanguage(language);
             GeometryLanguage = new GeometryLanguage(language);
             PileDetailLanguage = new PileDetailLanguage(language);
@@ -29,7 +28,7 @@ namespace WpfCustomControls.LanguageModel
         }
         public void ChangeLanguage(string languge)
         {
-            MenuLanguage.ChangedLanguage(languge);
+           
             SettingLanguage.ChangedLanguage(languge);
             GeometryLanguage.ChangedLanguage(languge);
             PileDetailLanguage.ChangedLanguage(languge);

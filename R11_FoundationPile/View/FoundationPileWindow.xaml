@@ -84,30 +84,36 @@
                             <ListViewItem >
                                 <DockPanel>
                                     <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem>
                                 <DockPanel>
                                     <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="PileDetailListViewItem"  >
                                 <DockPanel>
                                     <Canvas x:Name="PileDetailCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.PileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.PileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="ReinforcementListViewItem" >
                                 <DockPanel>
                                     <Canvas x:Name="ReinforcementCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Reinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Reinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
 
 
                         </ListView>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="Action" FontSize="13"></TextBlock>
+                            <CheckBox Style="{StaticResource CheckBoxStyle}"  Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateGrounpFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -137,9 +143,9 @@
                     <Grid.ColumnDefinitions>
 
                         <ColumnDefinition Width="1.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
@@ -149,13 +155,13 @@
 
                     <!--<RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
                 <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>-->
-                    <Button Grid.Column="1" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreateFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}"   Width="150"
+                    <Button Grid.Column="1" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}"   Width="150"
                         Command="{Binding CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
-                    <Button Grid.Column="2" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
+                    <Button Grid.Column="2" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
                         Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    <Button Grid.Column="3" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
-                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.R11_Language.MenuLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
+                    <Button Grid.Column="3" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
+                        Command="{Binding CreateReinforcementCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
                         Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
 
                 </Grid>
