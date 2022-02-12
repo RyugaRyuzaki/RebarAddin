@@ -60,6 +60,9 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
+                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
+                        <custom:StatusBarControl></custom:StatusBarControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -162,29 +165,7 @@
         <!--#endregion-->
       <!--#region Button-->
         <Grid Height="40"  Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="0.85*"></ColumnDefinition>
-                <ColumnDefinition Width="0.25*"></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <DockPanel Grid.Column="0" LastChildFill="False" >
-                <RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding BeamsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="DetailItem"  Style="{StaticResource RadioButtonStyle}" Content="Detail-Item" 
-                             ></RadioButton>
-                <RadioButton IsChecked="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="Rebar" Style="{StaticResource RadioButtonStyle}"  Content="Rebar" ></RadioButton>
-            </DockPanel>
-            <Grid Grid.Column="1">
-                <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
-                <TextBlock Text="{Binding BeamsModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
-            </Grid>
-            <TextBlock Grid.Column="2" Text="{Binding BeamsModel.SelectedAction,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}" Margin="10 0 0 0" FontStyle="Italic" FontSize="11" FontWeight="Bold" ></TextBlock>
-            <Button Grid.Column="3" Content="OK" Style="{StaticResource ButtonStyle}" Width="60"
-                            Command="{Binding OKCommand}" 
-                            CommandParameter="{Binding ElementName=MainWindow}"></Button>
-            <Button Grid.Column="4" Content="Cancel" Style="{StaticResource ButtonStyle}" Width="60"
-                            Command="{Binding CancelCommand}" 
-                            CommandParameter="{Binding ElementName=MainWindow}"></Button>
+            <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
         </Grid>
         <!--#endregion-->
     </StackPanel>

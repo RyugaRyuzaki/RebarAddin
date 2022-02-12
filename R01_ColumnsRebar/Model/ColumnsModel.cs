@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
+using WpfCustomControls.Model;
 namespace R01_ColumnsRebar
 {
     public class ColumnsModel : BaseViewModel
@@ -87,12 +88,9 @@ namespace R01_ColumnsRebar
         public TagColumn TagColumn { get => _TagColumn; set { _TagColumn = value; OnPropertyChanged(); } }
         #endregion
         #region Action
-        private string _SelectedAction;
-        public string SelectedAction { get => _SelectedAction; set { _SelectedAction = value; OnPropertyChanged(); } }
-        private int _Value;
-        public int Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
-        private double _Percent;
-        public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
+     
+        private ProgressModel _ProgressModel;
+        public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
         #endregion
         #region BarDivision
         private DivisionBar _DivisionBar;
@@ -119,6 +117,7 @@ namespace R01_ColumnsRebar
             GetSectionColumnsView();
             GetDimensionView();
             GetBarDivision();
+            ProgressModel = new ProgressModel(0, 0);
         }
         #region Property
         private void GetFamilyType(List<Element> columns, Document document)

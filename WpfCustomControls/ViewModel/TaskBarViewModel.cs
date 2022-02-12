@@ -26,10 +26,10 @@ namespace WpfCustomControls.ViewModel
         public ICommand GotoWebCommand { get; set; }
         public ICommand ShowAccountcommand { get; set; }
         public ICommand SelectionLanguageChangedCommand { get; set; }
-        public TaskBarViewModel()
+        public TaskBarViewModel(Languages languages)
         {
             SelectedLanguage = AllLanguages[0];
-            Languages = new Languages(SelectedLanguage);
+            Languages = languages;
             LoadTaskBarControlCommand = new RelayCommand<TaskBarControl>((p) => { return true; }, (p) =>
             {
                 DrawLogo(p);
@@ -38,10 +38,7 @@ namespace WpfCustomControls.ViewModel
             {
                 p.DragMove();
             });
-            CloseWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                p.Close();
-            });
+            
             GotoWebCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 string navigateUri = "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw";

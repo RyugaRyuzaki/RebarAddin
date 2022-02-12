@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="WpfCustomControls.CustomControls.StatusBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfCustomControls.CustomControls"
+               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="2000"
+             Background="White"
+             x:Name="StatusBarUC"
+             >
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadStatusBarControlCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel Margin="0" LastChildFill="true">
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding DataContext.ColumnsModel.IsDetailItem, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsDetailItemColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.ColumnsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsRebarColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding DataContext.BeamsModel.IsDetailItem, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.BeamsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
+                 Visibility="{Binding Path=Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Visibility="{Binding Path=OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="80"  
+                        Command="{Binding  DataContext.OKCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Visibility="{Binding Path=CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  DataContext.CreateReinforcementCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Visibility="{Binding Path=CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  DataContext.CreatePileDetailCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Visibility="{Binding Path=CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  DataContext.CreateFoundationCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+        <Grid DockPanel.Dock="Right" >
+
+            <ProgressBar Background="Transparent" x:Name="Progress" Style="{StaticResource ProgressBarStyle}" ></ProgressBar>
+            <TextBlock Text="{Binding ProgressModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+        </Grid>
+       
+    </DockPanel>
+</UserControl>

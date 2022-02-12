@@ -26,11 +26,70 @@ namespace R11_FoundationPile
             Number = number;
             IsModel = isModel;
         }
-        public void FixNumber(double p1, double p2, double coverSide)
+        public int GetNumberBottom(double p1, double p2, double coverSide)
         {
-            Number = (int)((Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter) / Distance) + 1;
-            Distance = Math.Round((Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter)/(Number-1), 3);
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter);
+            return (int)(sum / Distance) + 1;
         }
-      
+        public int GetNumberTop(double p1, double p2, double coverSide, BarModel mainBottom, BarModel side)
+        {
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
+            return (int)(sum / Distance) + 1;
+        }
+        public double FixDistanceBottom(double p1, double p2, double coverSide)
+        {
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter) ;
+            return Math.Round(sum / (Number-1), 3);
+        }
+        public double FixDistanceTop(double p1, double p2, double coverSide, BarModel mainBottom, BarModel side)
+        {
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
+            return Math.Round(sum / (Number - 1), 3);
+        }
+        public double FixDistance(double p1, double p2,double p3,double p4, double coverSide, BarModel mainBottom, BarModel secondaryBottom, BarModel side)
+        {
+            switch (Name)
+            {
+                case "MainBottom": return FixDistanceBottom(p3, p4, coverSide);
+                case "MainTop": return FixDistanceTop(p3, p4, coverSide, secondaryBottom, side);
+                case "MainAddHorizontal": return Distance;
+                case "MainAddVertical": return Distance;
+                case "SecondaryBottom": return FixDistanceBottom(p1, p2, coverSide);
+                case "SecondaryTop": return FixDistanceTop(p1, p2, coverSide, mainBottom, side);
+                case "SecondaryAddHorizontal": return Distance;
+                case "SecondaryAddVertical": return Distance;
+                case "Side": return Distance;
+                default: return Distance;
+            }
+        }
+        public int FixNumber(double p1, double p2, double p3, double p4, double coverSide, BarModel mainBottom, BarModel secondaryBottom, BarModel side)
+        {
+            switch (Name)
+            {
+                case "MainBottom": return GetNumberBottom(p3, p4, coverSide);
+                case "MainTop": return GetNumberTop(p3, p4, coverSide, secondaryBottom, side);
+                case "MainAddHorizontal": return Number;
+                case "MainAddVertical": return Number;
+                case "SecondaryBottom": return GetNumberBottom(p1, p2, coverSide);
+                case "SecondaryTop": return GetNumberTop(p1, p2, coverSide, mainBottom, side);
+                case "SecondaryAddHorizontal": return Number;
+                case "SecondaryAddVertical": return Number;
+                case "Side": return Number;
+                default: return Number;
+            }
+        }
+        public void FixNumberBottom(double p1, double p2, double coverSide)
+        {
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter);
+            Number = (int)(sum / Distance) + 1;
+            Distance = Math.Round(sum / (Number - 1), 3);
+        }
+        public void FixNumberTop(double p1, double p2, double coverSide,BarModel mainBottom,BarModel side)
+        {
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
+            Number = (int)(sum / Distance) + 1;
+            Distance = Math.Round(sum / (Number - 1), 3);
+        }
+
     }
 }

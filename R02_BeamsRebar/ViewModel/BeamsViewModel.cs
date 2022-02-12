@@ -12,6 +12,7 @@ using System.Windows.Threading;
 #endregion
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar
 {
     public class BeamsViewModel : BaseViewModel
@@ -62,6 +63,11 @@ namespace R02_BeamsRebar
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        private StatusBarViewModel _StatusBarViewModel;
+        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
+
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public BeamsViewModel(UIDocument uiDoc, Document doc, List<Element> beams)
         {
             #region Get Property
@@ -69,11 +75,14 @@ namespace R02_BeamsRebar
             Doc = doc;
             Beams = beams;
             Unit = GetUnitProject();
+            Languages = new Languages("EN");
             BeamsModel = new BeamsModel(Doc, Beams);
-            TaskBarViewModel = new TaskBarViewModel();
+            TaskBarViewModel = new TaskBarViewModel(Languages);
             UseDetailItem = BeamsModel.ConditionUseDetailItem(Doc);
             SelectedIndexViewModel();
             TransactionGroup = new TransactionGroup(Doc);
+            StatusBarViewModel = new StatusBarViewModel(BeamsModel.ProgressModel, Languages);
+            StatusBarViewModel.SetStatusBarBeams();
             #endregion
             #region Command
             LoadWindowCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>

@@ -43,6 +43,17 @@ namespace R11_FoundationPile
             BarModels.Add(new BarModel("SecondaryAddHorizontal", AllBars[3], (settingModel.HeightFoundation - coverSide), 5 * maxDiameter, 1, false));
             BarModels.Add(new BarModel("SecondaryAddVertical", AllBars[3], (settingModel.HeightFoundation - coverSide), 5 * maxDiameter, 1, false));
             BarModels.Add(new BarModel("Side", AllBars[3], (settingModel.HeightFoundation - coverSide), 5 * maxDiameter, 1, true));
+            
+        }
+        public void FixNumber(double p1, double p2,double p3,double p4, double coverSide)
+        {
+            BarModel mainBottom = BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
+            BarModel secondaryBottom = BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
+            BarModel side = BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
+            for (int i = 0; i < BarModels.Count; i++)
+            {
+                BarModels[i].Number = BarModels[i].FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
+            }
         }
     }
 }

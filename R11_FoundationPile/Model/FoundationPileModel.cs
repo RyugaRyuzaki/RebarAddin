@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfCustomControls;
+using WpfCustomControls.Model;
 namespace R11_FoundationPile
 {
     public class FoundationPileModel  :BaseViewModel
@@ -56,10 +57,9 @@ namespace R11_FoundationPile
         public DimensionDetail DimensionDetail { get => _DimensionDetail; set { _DimensionDetail = value; OnPropertyChanged(); } }
         #endregion
         #region Action
-        private int _Value;
-        public int Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
-        private double _Percent;
-        public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
+      
+        private ProgressModel _ProgressModel;
+        public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
         #endregion
         #region Bar
         public List<RebarBarType> RebarBarTypes { get; set; }
@@ -79,7 +79,7 @@ namespace R11_FoundationPile
             DimensionDetail = new DimensionDetail(document);
             RuleFoundation = 0;
             RulePile = 0;
-           
+            ProgressModel = new ProgressModel(0, 0);
         }
         #region   Method
         public FoundationModel FindFoundationModelByLoacationName(string locationName)

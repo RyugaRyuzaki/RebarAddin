@@ -47,6 +47,9 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
+                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
+                        <custom:StatusBarControl></custom:StatusBarControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -105,14 +108,12 @@
                                     <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Reinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                 </DockPanel>
                             </ListViewItem>
-
-
                         </ListView>
                         <StackPanel>
                             <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="Action" FontSize="13"></TextBlock>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}"  Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateGrounpFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
-                            <CheckBox Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                            <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}"  Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateGrounpFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                            <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
+                            <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding FoundationPileModel.IsCreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></CheckBox>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -139,32 +140,29 @@
             <!--#endregion-->
             <!--#region Action-->
             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
-                <Grid Background="White" >
-                    <Grid.ColumnDefinitions>
+                <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
+                <!--<DockPanel Background="White" LastChildFill="true">
+                    
+                    
 
-                        <ColumnDefinition Width="1.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    --><!--<RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
+                <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>--><!--
+                    <Button DockPanel.Dock="Right" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button DockPanel.Dock="Right" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
+                        Command="{Binding CreateReinforcementCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button DockPanel.Dock="Right" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="150"
+                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
+                    <Button DockPanel.Dock="Right" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}"   Width="150"
+                        Command="{Binding CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Grid DockPanel.Dock="Right">
                         <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
                         <TextBlock Text="{Binding FoundationPileModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                     </Grid>
+                    
+                   
 
-                    <!--<RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-                <RadioButton Grid.Column="1" IsChecked="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>-->
-                    <Button Grid.Column="1" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}"   Width="150"
-                        Command="{Binding CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
-                    <Button Grid.Column="2" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
-                        Command="{Binding CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    <Button Grid.Column="3" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="150"
-                        Command="{Binding CreateReinforcementCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    <Button Grid.Column="4" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
-                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-
-                </Grid>
+                </DockPanel>-->
             </Border>
             <!--#endregion-->
         </Grid>

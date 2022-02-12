@@ -4,34 +4,34 @@ using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
-
+using WpfCustomControls;
+using System.Windows.Controls;
 namespace R01_ColumnsRebar
 {
     public class CreateViewDimension
     {
         public static void Create(ColumnsWindow p, ColumnsModel ColumnsModel, UIDocument UiDoc, Document document, List<Element> columns, UnitProject unit)
         {
-            GetProgressBarViewDimension(p, ColumnsModel);
+            ProgressBar uc = VisualTreeHelper.FindChild<ProgressBar>(p, "Progress");
+            uc.Maximum = GetProgressBarViewDimension(ColumnsModel) * 1.0;
 
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start(ActionDimension[0]);
-                ColumnsModel.SelectedAction = ActionDimension[0];
                 ColumnsModel.DetailColumnView.CeateDetailView(ColumnsModel.SectionStyle, document, unit, ColumnsModel.InfoModels, ColumnsModel.PlanarFaces, columns, ColumnsModel.SettingModel, ColumnsModel.SettingModel.DetailViewName + "X", ColumnsModel.SettingModel.DetailViewName + "Y", ColumnsModel.SettingModel.L1);
-                SetValue(p, ColumnsModel, 1);
+                ColumnsModel.ProgressModel.SetValue(uc, 1);
                 transaction.Commit();
             }
             double offset0 = (ColumnsModel.SectionStyle == ErrorColumns.SectionStyle.RECTANGLE) ? (Math.Max((ColumnsModel.InfoModels[0].b), (ColumnsModel.InfoModels[0].h))) : (ColumnsModel.InfoModels[0].D);
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start("bbb");
-                ColumnsModel.SelectedAction = ActionDimension[1];
                 for (int i = 0; i < ColumnsModel.SectionColumnViews.Count; i++)
                 {
                     ColumnsModel.SectionColumnViews[i].CreateSectionView(ColumnsModel.SectionStyle, unit, document, ColumnsModel.InfoModels[i], ColumnsModel.StirrupModels[i], ColumnsModel.SettingModel, offset0);
-                    SetValue(p, ColumnsModel, 1);
-                    SetValue(p, ColumnsModel, 1);
-                    SetValue(p, ColumnsModel, 1);
+                    ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.ProgressModel.SetValue(uc, 1);
                 }
                 
                 transaction.Commit();
@@ -40,21 +40,20 @@ namespace R01_ColumnsRebar
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start(ActionDimension[2]);
-                ColumnsModel.SelectedAction = ActionDimension[2];
 
                 if (ColumnsModel.SectionStyle == ErrorColumns.SectionStyle.RECTANGLE)
                 {
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailRectangle(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailRectangle(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupRectangle(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0, true); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupRectangle(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0, false); SetValue(p, ColumnsModel, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailRectangle(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailRectangle(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupRectangle(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0, true); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupRectangle(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0, false); ColumnsModel.ProgressModel.SetValue(uc, 1);
                 }
                 else
                 {
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailCylindrical(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailCylindrical(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupCylindrical(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0); SetValue(p, ColumnsModel, 1);
-                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupCylindrical(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0); SetValue(p, ColumnsModel, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailCylindrical(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailCylindrical(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.SettingModel, 2 * offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupCylindrical(ColumnsModel.DetailColumnView.DetailViewX, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                    ColumnsModel.DimensionView.CreateDimensionHorizontalDetailStirrupCylindrical(ColumnsModel.DetailColumnView.DetailViewY, document, unit, ColumnsModel.PlanarFaces, ColumnsModel.InfoModels, ColumnsModel.StirrupModels, ColumnsModel.SettingModel, offset0); ColumnsModel.ProgressModel.SetValue(uc, 1);
                 }
 
                 transaction.Commit();
@@ -63,15 +62,14 @@ namespace R01_ColumnsRebar
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start(ActionDimension[3]);
-                ColumnsModel.SelectedAction = ActionDimension[3];
                 for (int i = 0; i < ColumnsModel.InfoModels.Count; i++)
                 {
                     if (ColumnsModel.SectionStyle == ErrorColumns.SectionStyle.RECTANGLE)
                     {
                         //ColumnsModel.DimensionView.CreateDimensionHorizontalSectionRectangle(ColumnsModel.SectionColumnViews[i].StartView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                         //ColumnsModel.DimensionView.CreateDimensionVerticalSectionRectangle(ColumnsModel.SectionColumnViews[i].StartView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
-                        ColumnsModel.DimensionView.CreateDimensionHorizontalSectionRectangle(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
-                        ColumnsModel.DimensionView.CreateDimensionVerticalSectionRectangle(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
+                        ColumnsModel.DimensionView.CreateDimensionHorizontalSectionRectangle(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                        ColumnsModel.DimensionView.CreateDimensionVerticalSectionRectangle(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); ColumnsModel.ProgressModel.SetValue(uc, 1);
                         //ColumnsModel.DimensionView.CreateDimensionHorizontalSectionRectangle(ColumnsModel.SectionColumnViews[i].EndView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                         //ColumnsModel.DimensionView.CreateDimensionVerticalSectionRectangle(ColumnsModel.SectionColumnViews[i].EndView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                     }
@@ -79,8 +77,8 @@ namespace R01_ColumnsRebar
                     {
                         //ColumnsModel.DimensionView.CreateDimensionHorizontalSectionCylindrical(ColumnsModel.SectionColumnViews[i].StartView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                         //ColumnsModel.DimensionView.CreateDimensionVerticalSectionCylindrical(ColumnsModel.SectionColumnViews[i].StartView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
-                        ColumnsModel.DimensionView.CreateDimensionHorizontalSectionCylindrical(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
-                        ColumnsModel.DimensionView.CreateDimensionVerticalSectionCylindrical(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
+                        ColumnsModel.DimensionView.CreateDimensionHorizontalSectionCylindrical(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); ColumnsModel.ProgressModel.SetValue(uc, 1);
+                        ColumnsModel.DimensionView.CreateDimensionVerticalSectionCylindrical(ColumnsModel.SectionColumnViews[i].MidView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); ColumnsModel.ProgressModel.SetValue(uc, 1);
                         //ColumnsModel.DimensionView.CreateDimensionHorizontalSectionCylindrical(ColumnsModel.SectionColumnViews[i].EndView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                         //ColumnsModel.DimensionView.CreateDimensionVerticalSectionCylindrical(ColumnsModel.SectionColumnViews[i].EndView, document, unit, ColumnsModel.InfoModels[i], ColumnsModel.SettingModel); SetValue(p, ColumnsModel, 1);
                     }
@@ -89,28 +87,22 @@ namespace R01_ColumnsRebar
                 transaction.Commit();
             }
         }
-        private static void GetProgressBarViewDimension(ColumnsWindow p, ColumnsModel ColumnsModel)
+        private static int GetProgressBarViewDimension(ColumnsModel ColumnsModel)
         {
-            ColumnsModel.Value = 0;
-            p.ProgressWindow.Maximum = 0;
-            p.ProgressWindow.Maximum += 1;
+            int a = 0;
+            a += 1;
             for (int i = 0; i < ColumnsModel.SectionColumnViews.Count; i++)
             {
-                p.ProgressWindow.Maximum += 3;
+               a += 3;
             }
-            p.ProgressWindow.Maximum += 4;
+            a += 4;
             for (int i = 0; i < ColumnsModel.SectionColumnViews.Count; i++)
             {
-                p.ProgressWindow.Maximum += 6;
+                a += 6;
             }
+            return a;
         }
-        private static void SetValue(ColumnsWindow p, ColumnsModel ColumnsModel, int n)
-        {
-            ColumnsModel.Value += n;
-            ColumnsModel.Percent = ColumnsModel.Value / p.ProgressWindow.Maximum * 100;
-            p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = ColumnsModel.Value,
-                DispatcherPriority.Background);
-        }
+       
         private static List<string> ActionDimension = new List<string>()
         {
           "Create Detail View",

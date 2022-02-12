@@ -3,6 +3,7 @@ using R11_FoundationPile.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
@@ -47,6 +48,7 @@ namespace R11_FoundationPile.ViewModel
         public ICommand HookLengthTextChangedCommand { get; set; }
         public ICommand DistanceTextChangedCommand { get; set; }
         public ICommand NumberBarTextChangedCommand { get; set; }
+        public ICommand SelectionChangedBarCommand { get; set; }
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
@@ -66,9 +68,16 @@ namespace R11_FoundationPile.ViewModel
                 ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
                 ShowProperty(uc);
                 DrawSpanOrientation(uc);
-                DrawMain(p);
+               
                 if (SelectedBarModel != null) IsEnabled = !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Side"));
-
+                double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
+                FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                double p1 = GetP1(foundationModel);
+                double p2 = GetP2(foundationModel);
+                double p3 = GetP3(foundationModel);
+                double p4 = GetP4(foundationModel);
+                SelectedFoundationBarModel.FixNumber(p1, p2, p3, p4, coverSide);
+                DrawMain(p);
             });
             SelectionChangedFoundationBarModelCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
@@ -103,21 +112,16 @@ namespace R11_FoundationPile.ViewModel
             });
             FixedNumberBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.Name.Contains("Bottom")||SelectedBarModel.Name.Contains("Top"); }, (p) =>
             {
-               
                 double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
                 FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
                 double p1 = GetP1(foundationModel);
                 double p2 = GetP2(foundationModel);
                 double p3 = GetP3(foundationModel);
                 double p4 = GetP4(foundationModel);
-                if (SelectedBarModel.Name.Equals("MainBottom"))
-                {
-                    SelectedBarModel.FixNumber(p3, p4, coverSide);
-                }
-                if (SelectedBarModel.Name.Equals("SecondaryBottom"))
-                {
-                    SelectedBarModel.FixNumber(p1, p2, coverSide);
-                }
+                BarModel mainBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
+                BarModel secondaryBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
+                BarModel side = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
+                SelectedBarModel.Distance = SelectedBarModel.FixDistance(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
                 DrawMain(p);
             });
             HookLengthTextChangedCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.Name.Contains("Bottom")||SelectedBarModel.Name.Contains("Top"); }, (p) =>
@@ -133,7 +137,20 @@ namespace R11_FoundationPile.ViewModel
                 ReinforcementView uc = ProccessInfoClumns.FindChild<ReinforcementView>(p, "ReinforcementUC");
                 if (double.TryParse(uc.DistanceTextBox.Text.ToString(), out double S))
                 {
-                    DrawMain(p);
+                    if (S>0)
+                    {
+                        double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
+                        FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                        double p1 = GetP1(foundationModel);
+                        double p2 = GetP2(foundationModel);
+                        double p3 = GetP3(foundationModel);
+                        double p4 = GetP4(foundationModel);
+                        BarModel mainBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
+                        BarModel secondaryBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
+                        BarModel side = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
+                        SelectedBarModel.Number = SelectedBarModel.FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
+                        DrawMain(p);
+                    }
                 }
             });
             NumberBarTextChangedCommand = new RelayCommand<FoundationPileWindow>((p) => { return !(SelectedBarModel.Name.Contains("Bottom") || SelectedBarModel.Name.Contains("Top")); }, (p) =>
@@ -143,6 +160,10 @@ namespace R11_FoundationPile.ViewModel
                 {
                     DrawMain(p);
                 }
+            });
+            SelectionChangedBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.IsModel; }, (p) =>
+            {
+                DrawMain(p);
             });
             #endregion
 
@@ -252,10 +273,11 @@ namespace R11_FoundationPile.ViewModel
                 {
                     FoundationPileModel.DrawModel.GetScale(foundationModel, Unit);
                     FoundationPileModel.DrawModel.GetScaleHeigth(FoundationPileModel.SettingModel, Unit);
+                    double hook = FoundationPileModel.SettingModel.SelectedHook.get_Parameter(BuiltInParameter.REBAR_HOOK_ANGLE).AsDouble();
                     double coverTop = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedTopCover.CoverDistance, false));
                     double coverBottom = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedBotomCover.CoverDistance, false));
                     double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
-                    DrawMainCanvas.DrawBarSection(p.MainCanvas, FoundationPileModel.DrawModel, foundationModel, SelectedFoundationBarModel.BarModels,SelectedBarModel, FoundationPileModel.SettingModel, foundationModel.Image, SelectedFoundationBarModel.SpanOrientation, coverTop, coverBottom, coverSide, GetP1(foundationModel), GetP2(foundationModel), GetP3(foundationModel), GetP4(foundationModel));
+                    DrawMainCanvas.DrawBarSection(p.MainCanvas, FoundationPileModel.DrawModel, foundationModel, SelectedFoundationBarModel.BarModels,SelectedBarModel, FoundationPileModel.SettingModel, foundationModel.Image, SelectedFoundationBarModel.SpanOrientation, coverTop, coverBottom, coverSide, GetP1(foundationModel), GetP2(foundationModel), GetP3(foundationModel), GetP4(foundationModel), hook);
                 }
 
             }

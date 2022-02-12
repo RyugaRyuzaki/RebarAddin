@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
+using WpfCustomControls.Model;
 #endregion
 
 namespace R11_FoundationPile
@@ -36,6 +38,7 @@ namespace R11_FoundationPile
         public ICommand CreateFoundationCommand { get; set; }
         public ICommand CreatePileDetailCommand { get; set; }
         public ICommand CreateReinforcementCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -51,7 +54,11 @@ namespace R11_FoundationPile
 
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-
+        private StatusBarViewModel _StatusBarViewModel;
+        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
+      
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         #endregion
         public FoundationPileViewModel(UIDocument uiDoc, Document doc, List<Element> columns)
         {
@@ -60,15 +67,17 @@ namespace R11_FoundationPile
             Doc = doc;
             Columns = columns;
             Unit = GetUnitProject();
+            Languages = new Languages("EN");
             TransactionGroup = new TransactionGroup(Doc);
-            TaskBarViewModel = new TaskBarViewModel();
-
+            TaskBarViewModel = new TaskBarViewModel(Languages);
             FoundationPileModel = new FoundationPileModel(columns, Doc, Unit);
             SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, TaskBarViewModel);
             GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
 
             SelectedViewModel = SettingViewModel;
-
+           
+            StatusBarViewModel = new StatusBarViewModel(FoundationPileModel.ProgressModel, Languages);
+            StatusBarViewModel.SetStatusBarFoundationPile();
             #endregion
             #region Load
             LoadWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
@@ -98,6 +107,11 @@ namespace R11_FoundationPile
                 }
             });
             CancelCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
+            {
+                p.Close();
+
+            });
+            CloseWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
                 if (!FoundationPileModel.IsCreateGrounpFoundation)
                 {

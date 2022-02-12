@@ -59,6 +59,9 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
+                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
+                        <custom:StatusBarControl></custom:StatusBarControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -166,7 +169,8 @@
             <!--#endregion-->
             <!--#region Action-->
             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
-                <Grid Background="White" >
+                <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
+                <!--<Grid Background="White" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -186,7 +190,7 @@
                         Command="{Binding OKCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
                     <Button Grid.Column="5" Content="{Binding TaskBarViewModel.Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource ButtonStyle}"   Width="80"
                         Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                </Grid>
+                </Grid>-->
             </Border>
             <!--#endregion-->
         </Grid>

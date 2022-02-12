@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-
+using WpfCustomControls.CustomControls;
+using System.Windows.Controls;
+using WpfCustomControls;
 namespace R11_FoundationPile
 {
     public class CreateFoundationAndPiles
@@ -14,7 +16,8 @@ namespace R11_FoundationPile
         #region Create
         public static void Create(FoundationPileWindow p, FoundationPileModel foundationPileModel,Document document,UnitProject unit)
         {
-            GetProgressBarCreateFoundationAndPiles(p, foundationPileModel, document);
+            ProgressBar uc = VisualTreeHelper.FindChild<ProgressBar>(p, "Progress");
+            uc.Maximum = GetProgressBarCreateFoundationAndPiles(foundationPileModel, document) * 1.0;
             using (Transaction transaction = new Transaction(document, Guid.NewGuid().GetHashCode().ToString()))
             {
                 transaction.Start();
@@ -28,7 +31,7 @@ namespace R11_FoundationPile
                     compound.SetLayer(0, layer);
                     floorType.SetCompoundStructure(compound);
                     foundationPileModel.SettingModel.SelectedFoundationType = floorType;
-                    SetValue(p, foundationPileModel, 1);
+                    foundationPileModel.ProgressModel.SetValue(uc, 1);
                 }
                 if (foundationPileModel.SettingModel.IsCreateFormWork)
                 {
@@ -42,7 +45,7 @@ namespace R11_FoundationPile
                         compound.SetLayer(0, layer);
                         floorType.SetCompoundStructure(compound);
                         foundationPileModel.SettingModel.SelectedFormWorkType = floorType;
-                        SetValue(p, foundationPileModel, 1);
+                        foundationPileModel.ProgressModel.SetValue(uc, 1);
                     }
                 }
               
@@ -50,7 +53,7 @@ namespace R11_FoundationPile
                 {
                     for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
                     {
-                        foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundation(document, unit, foundationPileModel.SettingModel);
+                        foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundation(document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
@@ -62,7 +65,7 @@ namespace R11_FoundationPile
                         {
                             foundationPileModel.GroupFoundationModels[i].IsCreate = true ;
                         }
-                        SetValue(p, foundationPileModel, 1);
+                      
                     }
                 }
               
@@ -78,8 +81,8 @@ namespace R11_FoundationPile
                     transaction.Start("aaa");
                    
                     foundationPileModel.FoundationPileDetail.CeateFoundationPlan(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[0].FoundationModels[0].ColumnModel, foundationPileModel.GetMaxBoundBox(unit), foundationPileModel.GetMinBoundBox(unit));
-                    SetValue(p, foundationPileModel, 1);
-                   
+                    foundationPileModel.ProgressModel.SetValue(uc, 1);
+
                     transaction.Commit();
                 }
                 if (foundationPileModel.FoundationPileDetail.FoundationView != null)
@@ -87,80 +90,66 @@ namespace R11_FoundationPile
                     using (Transaction transaction = new Transaction(document, Guid.NewGuid().GetHashCode().ToString()))
                     {
                         transaction.Start("aaa");
-                        foundationPileModel.SettingModel.GetFoundationViewType(document);
-                        foundationPileModel.SettingModel.GetFoundationSectionType(document);
-                        foundationPileModel.DimensionDetail.CreateDimensionGridX(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel);
-                        foundationPileModel.DimensionDetail.CreateDimensionGridY(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel);
-                        SetValue(p, foundationPileModel, 1); SetValue(p, foundationPileModel, 1);
+                        foundationPileModel.SettingModel.GetFoundationViewType(document); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                        foundationPileModel.SettingModel.GetFoundationSectionType(document); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                        foundationPileModel.DimensionDetail.CreateDimensionGridX(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                        foundationPileModel.DimensionDetail.CreateDimensionGridY(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
+
                         for (int i = 0; i < foundationPileModel.GroupFoundationModels.Count; i++)
                         {
                             for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
                             {
-                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].ColumnModel.RefreshPlanarFaceNormal(document, unit);
-                                foundationPileModel.DimensionDetail.CreateDimensionFoundationVertical(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image);
-                                foundationPileModel.DimensionDetail.CreateDimensionFoundationHorizontal(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image);
-                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateTagFoundation(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type);
-                                SetValue(p, foundationPileModel, 1);
-                                
+                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].ColumnModel.RefreshPlanarFaceNormal(document, unit); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                foundationPileModel.DimensionDetail.CreateDimensionFoundationVertical(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                foundationPileModel.DimensionDetail.CreateDimensionFoundationHorizontal(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateTagFoundation(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type); foundationPileModel.ProgressModel.SetValue(uc, 1);
+
                                 if (foundationPileModel.GroupFoundationModels[i].FoundationModels[j].IsRepresentative&& foundationPileModel.SettingModel.FoundationDetailViewType!=null)
                                 {
-                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateCallOutFoundationDetailView(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type);
-                                    SetValue(p, foundationPileModel, 1);
-                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionHorizontal(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); SetValue(p, foundationPileModel, 1);
-                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionVertical(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); SetValue(p, foundationPileModel, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateCallOutFoundationDetailView(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionHorizontal(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionVertical(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                 }
-                                
                             }
                         }
                         transaction.Commit();
                     }
                 }
             }
-            ResetValue(p, foundationPileModel);
-        }
-        #endregion
-        private static void GetProgressBarCreateFoundationAndPiles(FoundationPileWindow p, FoundationPileModel foundationPileModel,Document document)
-        {
-            foundationPileModel.Value = 0; foundationPileModel.Percent = 0.0;
-            p.ProgressWindow.Maximum = 0;
-            if (foundationPileModel.SettingModel.HeightFoundation != foundationPileModel.SettingModel.WidthFloor(document, foundationPileModel.SettingModel.SelectedFoundationType)) p.ProgressWindow.Maximum++;
-            if (foundationPileModel.SettingModel.IsCreateFormWork) p.ProgressWindow.Maximum++;
-            for (int i = 0; i < foundationPileModel.GroupFoundationModels.Count; i++)
-            {
-                for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
-                {
-                    p.ProgressWindow.Maximum++;
-                }
-            }
-            p.ProgressWindow.Maximum+=1;
-            p.ProgressWindow.Maximum+=2;
-            for (int i = 0; i < foundationPileModel.GroupFoundationModels.Count; i++)
-            {
-                for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
-                {
-                    p.ProgressWindow.Maximum++;
-                    if (foundationPileModel.GroupFoundationModels[i].FoundationModels[j].IsRepresentative)
-                    {
-                        p.ProgressWindow.Maximum++;
-                    }
-                    p.ProgressWindow.Maximum+=2;
-                }
-            }
+            foundationPileModel.ProgressModel.ResetValue(uc);
+
 
         }
-        private static void SetValue(FoundationPileWindow p, FoundationPileModel foundationPileModel, int n)
+        #endregion
+        private static int GetProgressBarCreateFoundationAndPiles( FoundationPileModel foundationPileModel,Document document)
         {
-            foundationPileModel.Value += n;
-            foundationPileModel.Percent = (foundationPileModel.Value / p.ProgressWindow.Maximum) * 100;
-            p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = foundationPileModel.Value,
-                DispatcherPriority.Background);
+            int a = 0;
+            
+            
+            if (foundationPileModel.SettingModel.HeightFoundation != foundationPileModel.SettingModel.WidthFloor(document, foundationPileModel.SettingModel.SelectedFoundationType)) a++;
+            if (foundationPileModel.SettingModel.IsCreateFormWork) a++;
+            for (int i = 0; i < foundationPileModel.GroupFoundationModels.Count; i++)
+            {
+                for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
+                {
+                    a++;
+                }
+            }
+            a+=1;
+            a+=4;
+            for (int i = 0; i < foundationPileModel.GroupFoundationModels.Count; i++)
+            {
+                for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
+                {
+                    a+=4;
+                    if (foundationPileModel.GroupFoundationModels[i].FoundationModels[j].IsRepresentative)
+                    {
+                        a+=3;
+                    }
+                }
+            }
+            return a;
         }
-        private static void ResetValue(FoundationPileWindow p, FoundationPileModel foundationPileModel)
-        {
-            foundationPileModel.Value = 0; ;
-            foundationPileModel.Percent = 0;
-            p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = foundationPileModel.Value,
-                DispatcherPriority.Background);
-        }
+        
     }
 }

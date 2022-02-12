@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using WpfCustomControls;
+using WpfCustomControls.Model;
 namespace R02_BeamsRebar
 {
     public class BeamsModel : BaseViewModel
@@ -102,7 +103,7 @@ namespace R02_BeamsRebar
         private bool _IsDetailItem;
         public bool IsDetailItem { get => _IsDetailItem; set { _IsDetailItem = value; OnPropertyChanged(); } }
         private bool _IsDetailShop;
-        public bool IsDetailIShop { get => _IsDetailItem; set { _IsDetailItem = value; OnPropertyChanged(); } }
+        public bool IsDetailIShop { get => _IsDetailShop; set { _IsDetailShop = value; OnPropertyChanged(); } }
         #endregion
         #region Action
         private string _SelectedAction;
@@ -111,6 +112,8 @@ namespace R02_BeamsRebar
         public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
         private double _Value;
         public double Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
+        private ProgressModel _ProgressModel;
+        public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
         #endregion
         public BeamsModel(Document document, List<Element> beams)
         {
@@ -130,6 +133,7 @@ namespace R02_BeamsRebar
             IsRebar = true;
             IsDetailItem = false;
             IsDetailIShop = false;
+            ProgressModel = new ProgressModel(0, 0);
         }
         #region Orther constructor
         private void GetFamilyType(List<Element> beams)

@@ -63,7 +63,7 @@
                 </GroupBox>
                 <GroupBox Grid.Row="1" Margin="5" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.ListBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <StackPanel>
-                        <Grid Height="220">
+                        <Grid Height="200">
                             <ListView  ItemsSource="{Binding SelectedFoundationBarModel.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                                      SelectedIndex="{Binding FoundationPileModel.SelectedIndexModel.SelectedIndexBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  
@@ -75,10 +75,10 @@
                                 </i:Interaction.Triggers>
                                 <ListView.View>
                                     <GridView   >
-                                        <GridViewColumn  Width="150" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
+                                        <GridViewColumn  Width="150" Header="{Binding TaskBarViewModel.Languages.GeneralLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
+                                        <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
                                         <GridViewColumn Width="40" Header="{Binding TaskBarViewModel.Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
                                         
                                     </GridView>
@@ -107,7 +107,13 @@
                             <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="BarComboBox"
                                        ItemsSource="{Binding FoundationPileModel.AllBars}" DisplayMemberPath="Type"
                                       SelectedItem="{Binding SelectedBarModel.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                      ></ComboBox>
+                                      >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
 
                             <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.GeneralLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="HookLengthTextBlock"></TextBlock>
                             <TextBox Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedBarModel.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   x:Name="HookLengthTextBox">

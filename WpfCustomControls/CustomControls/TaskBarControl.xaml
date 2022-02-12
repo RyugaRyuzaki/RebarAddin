@@ -28,10 +28,12 @@
         <Button Style="{StaticResource ButtonStyleIcon}" Width="65" DockPanel.Dock="Left"  Background="White" Margin="2"
                 Command="{Binding GotoWebCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
                 >
-            <Canvas x:Name="LogoCanvas" Width="61" Height="35"></Canvas>
+            <Canvas x:Name="LogoCanvas" Width="61" Height="35">
+               
+            </Canvas>
         </Button>
         <Button Margin="2" Style="{StaticResource ButtonStyleIcon}" DockPanel.Dock="Right" Width="40"  
-                Command="{Binding CloseWindowCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
+                Command="{Binding DataContext.CloseWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
                 >
             <Grid>
                 <Ellipse Width="28" Height="28" Stroke="Black" StrokeThickness="3"></Ellipse>

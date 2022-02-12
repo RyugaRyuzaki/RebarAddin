@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 #endregion
 
 namespace R01_ColumnsRebar
@@ -46,6 +47,7 @@ namespace R01_ColumnsRebar
         public ICommand CancelCommand { get; set; }
         public ICommand OKCommand { get; set; }
         public ICommand PreviewTextInputCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -71,6 +73,11 @@ namespace R01_ColumnsRebar
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        private StatusBarViewModel _StatusBarViewModel;
+        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
+
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public ColumnsViewModel(UIDocument uiDoc, Document doc,List<Element> columns)
         {
             #region Get property
@@ -79,9 +86,12 @@ namespace R01_ColumnsRebar
             Unit = GetUnitProject();
             Columns = columns;
             ColumnsModel = new ColumnsModel(columns,Doc,Unit);
+            Languages = new Languages("EN");
             TransactionGroup = new TransactionGroup(Doc);
             UseDetailItem = ColumnsModel.ConditionUseDetailItem(Doc);
-            TaskBarViewModel = new TaskBarViewModel();
+            TaskBarViewModel = new TaskBarViewModel(Languages);
+            StatusBarViewModel = new StatusBarViewModel(ColumnsModel.ProgressModel, Languages);
+            StatusBarViewModel.SetStatusBarColumns();
             #endregion
             #region SelectedViewModel
             SettingViewModel = new SettingViewModel(Doc, ColumnsModel, TaskBarViewModel);
@@ -144,6 +154,10 @@ namespace R01_ColumnsRebar
                 OKAction(p);
             });
             CancelCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>
+            {
+                p.Close();
+            });
+            CloseWindowCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>
             {
                 p.DialogResult = false;
                 if (TransactionGroup.HasStarted())
