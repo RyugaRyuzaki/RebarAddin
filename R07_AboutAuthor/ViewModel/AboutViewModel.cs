@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 #endregion
 
 namespace R07_AboutAuthor
@@ -26,11 +27,13 @@ namespace R07_AboutAuthor
 
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public ICommand YoutubeCommand { get; set; }
         public AboutViewModel()
         {
-            TaskBarViewModel = new TaskBarViewModel();
+            Languages = new Languages("EN");
+            TaskBarViewModel = new TaskBarViewModel(Languages);
             Version = "Demo";
             Support = "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw";
             ContactUs = "ryuzaki2005@gmail.com";

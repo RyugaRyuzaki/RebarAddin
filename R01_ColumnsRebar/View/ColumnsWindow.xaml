@@ -62,6 +62,9 @@
                     <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
                         <custom:StatusBarControl></custom:StatusBarControl>
                     </DataTemplate>
+                    <DataTemplate x:Name="actionViewModel" DataType="{x:Type customViewModel:ActionViewModel}">
+                        <custom:ActionControl></custom:ActionControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -145,6 +148,7 @@
                                 </DockPanel>
                             </ListViewItem>
                         </ListView>
+                        <ContentControl Margin="0 5 0 0" Content="{Binding ActionViewModel}"></ContentControl>
                     </StackPanel>
                 </Grid>
             </Border>

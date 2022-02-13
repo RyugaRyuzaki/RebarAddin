@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class SectionColumnView

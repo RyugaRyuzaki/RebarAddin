@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using DSP;
 namespace R11_FoundationPile.ViewModel
 {
     public class GeometryViewModel : BaseViewModel

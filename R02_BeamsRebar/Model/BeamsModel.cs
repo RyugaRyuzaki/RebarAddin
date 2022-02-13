@@ -106,14 +106,17 @@ namespace R02_BeamsRebar
         public bool IsDetailIShop { get => _IsDetailShop; set { _IsDetailShop = value; OnPropertyChanged(); } }
         #endregion
         #region Action
-        private string _SelectedAction;
-        public string SelectedAction { get => _SelectedAction; set { _SelectedAction = value; OnPropertyChanged(); } }
-        private double _Percent;
-        public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
-        private double _Value;
-        public double Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
+        
         private ProgressModel _ProgressModel;
         public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
+        private bool _IsCreateRebar;
+        public bool IsCreateRebar { get => _IsCreateRebar; set { _IsCreateRebar = value; OnPropertyChanged(); } }
+        private bool _IsCreateViewDimension;
+        public bool IsCreateViewDimension { get => _IsCreateViewDimension; set { _IsCreateViewDimension = value; OnPropertyChanged(); } }
+        private bool _IsCreateDetailShop;
+        public bool IsCreateDetailShop { get => _IsCreateDetailShop; set { _IsCreateDetailShop = value; OnPropertyChanged(); } }
+        private bool _IsCreateRebarDetailItem;
+        public bool IsCreateRebarDetailItem { get => _IsCreateRebarDetailItem; set { _IsCreateRebarDetailItem = value; OnPropertyChanged(); } }
         #endregion
         public BeamsModel(Document document, List<Element> beams)
         {

@@ -8,6 +8,7 @@ using System.Linq;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
 using WpfCustomControls.Model;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class ColumnsModel : BaseViewModel
@@ -91,6 +92,23 @@ namespace R01_ColumnsRebar
      
         private ProgressModel _ProgressModel;
         public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
+        private bool _IsCreateStirrupBars;
+        public bool IsCreateStirrupBars { get => _IsCreateStirrupBars; set { _IsCreateStirrupBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateMainBars;
+        public bool IsCreateMainBars { get => _IsCreateMainBars; set { _IsCreateMainBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateTagBars;
+        public bool IsCreateTagBars { get => _IsCreateTagBars; set { _IsCreateTagBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateDetailView;
+        public bool IsCreateDetailView { get => _IsCreateDetailView; set { _IsCreateDetailView = value; OnPropertyChanged(); } }
+        private bool _IsCreateSectionView;
+        public bool IsCreateSectionView { get => _IsCreateSectionView; set { _IsCreateSectionView = value; OnPropertyChanged(); } }
+        private bool _IsCreateDimensionView;
+        public bool IsCreateDimensionView { get => _IsCreateDimensionView; set { _IsCreateDimensionView = value; OnPropertyChanged(); } }
+        private bool _IsCreateDimensionSection;
+        public bool IsCreateDimensionSection { get => _IsCreateDimensionSection; set { _IsCreateDimensionSection = value; OnPropertyChanged(); } }
+        private bool _IsCreateDetailShop;
+        public bool IsCreateDetailShop { get => _IsCreateDetailShop; set { _IsCreateDetailShop = value; OnPropertyChanged(); } }
+
         #endregion
         #region BarDivision
         private DivisionBar _DivisionBar;

@@ -1,6 +1,5 @@
 ﻿using WpfCustomControls.Model;
 using System.Windows;
-using System.Windows.Input;
 using WpfCustomControls.LanguageModel;
 namespace WpfCustomControls.ViewModel
 {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using WpfCustomControls;
 using System.Windows.Controls;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class CreateViewDimension
@@ -21,6 +22,7 @@ namespace R01_ColumnsRebar
                 ColumnsModel.DetailColumnView.CeateDetailView(ColumnsModel.SectionStyle, document, unit, ColumnsModel.InfoModels, ColumnsModel.PlanarFaces, columns, ColumnsModel.SettingModel, ColumnsModel.SettingModel.DetailViewName + "X", ColumnsModel.SettingModel.DetailViewName + "Y", ColumnsModel.SettingModel.L1);
                 ColumnsModel.ProgressModel.SetValue(uc, 1);
                 transaction.Commit();
+                ColumnsModel.IsCreateDetailView = true;
             }
             double offset0 = (ColumnsModel.SectionStyle == ErrorColumns.SectionStyle.RECTANGLE) ? (Math.Max((ColumnsModel.InfoModels[0].b), (ColumnsModel.InfoModels[0].h))) : (ColumnsModel.InfoModels[0].D);
             using (Transaction transaction = new Transaction(document))
@@ -35,6 +37,7 @@ namespace R01_ColumnsRebar
                 }
                 
                 transaction.Commit();
+                ColumnsModel.IsCreateSectionView = true;
             }
 
             using (Transaction transaction = new Transaction(document))
@@ -57,6 +60,7 @@ namespace R01_ColumnsRebar
                 }
 
                 transaction.Commit();
+                ColumnsModel.IsCreateDimensionView = true;
             }
             
             using (Transaction transaction = new Transaction(document))
@@ -85,7 +89,9 @@ namespace R01_ColumnsRebar
 
                 }
                 transaction.Commit();
+                ColumnsModel.IsCreateDimensionSection = true;
             }
+            ColumnsModel.ProgressModel.ResetValue(uc);
         }
         private static int GetProgressBarViewDimension(ColumnsModel ColumnsModel)
         {
@@ -108,7 +114,7 @@ namespace R01_ColumnsRebar
           "Create Detail View",
           "Create Section View",
           "Create Dimension View",
-          "Create Demension Section",
+          "Create Dimension Section",
         };
 
     }

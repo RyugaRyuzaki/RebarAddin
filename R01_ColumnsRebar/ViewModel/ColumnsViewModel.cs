@@ -19,6 +19,7 @@ using System.Windows;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
+using DSP;
 #endregion
 
 namespace R01_ColumnsRebar
@@ -75,7 +76,8 @@ namespace R01_ColumnsRebar
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
         private StatusBarViewModel _StatusBarViewModel;
         public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-
+        private ActionViewModel _ActionViewModel;
+        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public ColumnsViewModel(UIDocument uiDoc, Document doc,List<Element> columns)
@@ -90,8 +92,7 @@ namespace R01_ColumnsRebar
             TransactionGroup = new TransactionGroup(Doc);
             UseDetailItem = ColumnsModel.ConditionUseDetailItem(Doc);
             TaskBarViewModel = new TaskBarViewModel(Languages);
-            StatusBarViewModel = new StatusBarViewModel(ColumnsModel.ProgressModel, Languages);
-            StatusBarViewModel.SetStatusBarColumns();
+            
             #endregion
             #region SelectedViewModel
             SettingViewModel = new SettingViewModel(Doc, ColumnsModel, TaskBarViewModel);
@@ -103,7 +104,12 @@ namespace R01_ColumnsRebar
             TopDowelsViewModel = new TopDowelsViewModel(Doc, ColumnsModel);
             BottomDowelsViewModel = new BottomDowelsViewModel(Doc, ColumnsModel);
             BarsDivisionViewModel = new BarsDivisionViewModel(Doc, ColumnsModel);
+            StatusBarViewModel = new StatusBarViewModel(ColumnsModel.ProgressModel, Languages);
+            StatusBarViewModel.SetStatusBarColumns();
+            ActionViewModel = new ActionViewModel(Languages);
+            ActionViewModel.SetStatusBarColumns();
             SelectedViewModel = SettingViewModel;
+           
             SelectionMenuCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>
             {
                 switch (p.Menu.SelectedIndex)

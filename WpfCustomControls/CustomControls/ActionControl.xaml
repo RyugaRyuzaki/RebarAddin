@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="WpfCustomControls.CustomControls.ActionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfCustomControls.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="180"
+             Background="White"
+              x:Name="ActionUC"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Margin="0">
+        <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="Action" FontSize="13"></TextBlock>
+        <!--#region R11-->
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding DataContext.FoundationPileModel.IsCreateGrounpFoundation,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  Visibility="{Binding Path=CreateGrounpFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.FoundationPileModel.IsCreatePileDetail,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.FoundationPileModel.IsCreateReinforcement,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+         <!--#endregion-->
+        <!--#region R11-->
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateDetailViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDetailView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDetailViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateSectionViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateSectionView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateSectionViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateDimensionViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDimensionView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDimensionViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateDimensionSectionColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDimensionSection,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDimensionSectionColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateDetailShopColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDetailShop,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDetailShopColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateStirrupBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateStirrupBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateStirrupBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateMainBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateMainBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateMainBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R01_CreateTagBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.ColumnsModel.IsCreateTagBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateTagBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <!--#endregion-->
+        <!--#region R11-->
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R02_CreateRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.BeamsModel.IsCreateRebar,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R02_CreateViewDimensionBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.BeamsModel.IsCreateViewDimension,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateViewDimensionBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R02_CreateDetailShopBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.BeamsModel.IsCreateDetailShop,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDetailShopBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R02_CreateRebarDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.BeamsModel.IsCreateRebarDetailItem,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateRebarDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <!--#endregion-->
+    </StackPanel>
+</UserControl>

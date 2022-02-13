@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using WpfCustomControls;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class CreateRebar
@@ -16,6 +17,7 @@ namespace R01_ColumnsRebar
             CreateStirrupBar(uc, columnsModel, document, unit);
             CreateMainBar(uc, columnsModel, document, unit);
             CreateTagBar(uc, columnsModel, document, unit);
+            columnsModel.ProgressModel.ResetValue(uc);
         }
 
         private static void CreateStirrupBar(ProgressBar uc, ColumnsModel columnsModel, Document document, UnitProject unit)
@@ -40,6 +42,7 @@ namespace R01_ColumnsRebar
                     columnsModel.StirrupModels[i].CreateAddVerticalStirrup(columnsModel.SectionStyle, columnsModel.InfoModels[i], document, unit, columnsModel.SettingModel, columnsModel.Cover); if (columnsModel.StirrupModels[i].AddV) columnsModel.ProgressModel.SetValue(uc, 1);
                 }
                 transaction.Commit();
+                columnsModel.IsCreateStirrupBars = true;
             }
         }
         private static void CreateMainBar(ProgressBar uc, ColumnsModel columnsModel, Document document, UnitProject unit)
@@ -65,6 +68,7 @@ namespace R01_ColumnsRebar
                     }
                 }
                 transaction.Commit();
+                columnsModel.IsCreateMainBars = true;
             }
         }
         private static void CreateTagBar(ProgressBar uc, ColumnsModel columnsModel, Document document, UnitProject unit)
@@ -79,6 +83,7 @@ namespace R01_ColumnsRebar
                     columnsModel.ProgressModel.SetValue(uc, 1);
                 }
                 transaction.Commit();
+                columnsModel.IsCreateTagBars = true;
             }
         }
         #endregion

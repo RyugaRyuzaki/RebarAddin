@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfCustomControls;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class DetailItem:BaseViewModel

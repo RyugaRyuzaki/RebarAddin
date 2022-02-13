@@ -3,6 +3,7 @@ using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using WpfCustomControls;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class SideBarModel : BaseViewModel

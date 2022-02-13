@@ -5,6 +5,9 @@ using System.Linq;
 using System.Windows.Media;
 using static R11_FoundationPile.ErrorColumns;
 using WpfCustomControls;
+
+using DSP;
+
 namespace R11_FoundationPile
 {
     public class DrawModel : BaseViewModel

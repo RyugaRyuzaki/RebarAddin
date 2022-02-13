@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
+using DSP;
 namespace R02_BeamsRebar
 {
     public class DetailShopView

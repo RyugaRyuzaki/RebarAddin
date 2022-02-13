@@ -3,7 +3,9 @@ using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
-
+using System.Windows.Controls;
+using WpfCustomControls;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class CreateRebar
@@ -11,17 +13,20 @@ namespace R02_BeamsRebar
         #region Create
         public static void Create(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit)
         {
-            GetProgressBarRebar(document, p, BeamsModel);
+            ProgressBar uc = VisualTreeHelper.FindChild<ProgressBar>(p, "Progress");
+            uc.Maximum = GetProgressBarRebar(BeamsModel) * 1.0;
             double dsmax = ProcessInfoBeamRebar.GetDiameterStirrupMax(BeamsModel.InfoModels, BeamsModel.DistributeStirrups, BeamsModel.StirrupModels);
-            CreateStirrupBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateDimensionStirrupBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateMainTopBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateMainBottomBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateAddTopBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateAddBottomBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateDimensionAddBottomBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateSideBar(action, p, BeamsModel, document, unit, dsmax);
-            CreateSpecialBar(action, p, BeamsModel, document, unit, dsmax);
+            CreateStirrupBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateDimensionStirrupBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateMainTopBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateMainBottomBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateAddTopBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateAddBottomBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateDimensionAddBottomBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateSideBar(action, uc, BeamsModel, document, unit, dsmax);
+            CreateSpecialBar(action, uc, BeamsModel, document, unit, dsmax);
+            BeamsModel.IsCreateRebar = true;
+            BeamsModel.ProgressModel.ResetValue(uc);
             #region Dimension Add Top Bar
 
             //using (Transaction transaction = new Transaction(document))
@@ -64,9 +69,9 @@ namespace R02_BeamsRebar
         }
         #endregion
         #region Create Item
-        private static void CreateStirrupBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit,double dsmax)
+        private static void CreateStirrupBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit,double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[0];
+           
             bool hasSpecial = (BeamsModel.SpecialBarModel.Count != 0);
             BeamsModel.ReferenceStirrupBar = BeamsModel.DimensionView.GetReferenceArray(document, BeamsModel.PlanarFaces);
             for (int i = 0; i < BeamsModel.InfoModels.Count; i++)
@@ -92,49 +97,49 @@ namespace R02_BeamsRebar
                     transaction.Start(ActionRebar[0]);
                     BeamsModel.StirrupModels[i].CreateStirrup(BeamsModel.InfoModels[i], BeamsModel.DistributeStirrups[i], document, unit, BeamsModel.SettingModel, special, start, end);
                     BeamsModel.StirrupModels[i].CeateAnti(BeamsModel.InfoModels[i], document, unit, BeamsModel.SettingModel);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc,1);
                     BeamsModel.StirrupModels[i].CreateTagStirrupDetail(BeamsModel.DetailBeamView.DetailView, BeamsModel.InfoModels[i], BeamsModel.DistributeStirrups[i], document, unit, BeamsModel.SettingModel, BeamsModel.SettingModel.L1 * 0.85, special, start, end);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     BeamsModel.StirrupModels[i].CreateTagStirrupSection(BeamsModel.SectionBeamViews[i].StartView, BeamsModel.SectionBeamViews[i].MidView, BeamsModel.SectionBeamViews[i].EndView, BeamsModel.InfoModels[i], BeamsModel.DistributeStirrups[i], document, unit, BeamsModel.SettingModel, special, start, end);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1); BeamsModel.ProgressModel.SetValue(uc, 1);
                     FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                     option.SetFailuresPreprocessor(new DeleteWarningSuper());
                     transaction.SetFailureHandlingOptions(option);
                     BeamsModel.ReferenceStirrupBar.Append(BeamsModel.StirrupModels[i].GetReferenceItem(BeamsModel.DetailBeamView.DetailView, document, BeamsModel.InfoModels[i], BeamsModel.DistributeStirrups[i], BeamsModel.PlanarFaces[0], unit, BeamsModel.DistributeStirrups[i].L1));
                     BeamsModel.ReferenceStirrupBar.Append(BeamsModel.StirrupModels[i].GetReferenceItem(BeamsModel.DetailBeamView.DetailView, document, BeamsModel.InfoModels[i], BeamsModel.DistributeStirrups[i], BeamsModel.PlanarFaces[0], unit, BeamsModel.DistributeStirrups[i].L1 + BeamsModel.DistributeStirrups[i].L2));
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     transaction.Commit();
                 }
 
             }
         }
-        private static void CreateDimensionStirrupBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateDimensionStirrupBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[1];
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start(ActionRebar[1]);
                 BeamsModel.DimensionView.CreateDimensionHorizontalAddTopBar(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.PlanarFaces, BeamsModel.ReferenceStirrupBar, BeamsModel.SettingModel, BeamsModel.InfoModels, true, BeamsModel.SettingModel.L1);
+                BeamsModel.ProgressModel.SetValue(uc, 1);
                 transaction.Commit();
             }
         }
-        private static void CreateMainTopBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateMainTopBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[2];
+            
             if (BeamsModel.SelectedIndexModel.StyleMainTop == 0)
             {
                 using (Transaction transaction = new Transaction(document))
                 {
                     transaction.Start(ActionRebar[2]);
                     BeamsModel.SingleMainTopBarModel.CreateMaintopBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                     option.SetFailuresPreprocessor(new DeleteWarningSuper());
                     transaction.SetFailureHandlingOptions(option);
                     BeamsModel.SingleMainTopBarModel.CreateTagRebarDetailMainTop(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels, BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     BeamsModel.SingleMainTopBarModel.CreateTagRebarSection(BeamsModel.SectionBeamViews, document, unit, BeamsModel.InfoModels, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     transaction.Commit();
                 }
 
@@ -147,22 +152,21 @@ namespace R02_BeamsRebar
                     {
                         transaction.Start(ActionRebar[2]);
                         BeamsModel.MainTopBarModel[i].CreateMaintopBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
                         BeamsModel.MainTopBarModel[i].CreateTagRebarDetailMainTop(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels, BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         BeamsModel.MainTopBarModel[i].CreateTagRebarSection(BeamsModel.SectionBeamViews, document, unit, BeamsModel.InfoModels, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         transaction.Commit();
                     }
                 }
             }
         }
-        private static void CreateMainBottomBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateMainBottomBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[4];
             for (int i = 0; i < BeamsModel.MainBottomBarModel.Count; i++)
             {
                 using (Transaction transaction = new Transaction(document))
@@ -170,22 +174,21 @@ namespace R02_BeamsRebar
                     transaction.Start(ActionRebar[4]);
                     
                     BeamsModel.MainBottomBarModel[i].CreateMainBottomBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                     option.SetFailuresPreprocessor(new DeleteWarningSuper());
                     transaction.SetFailureHandlingOptions(option);
                     BeamsModel.MainBottomBarModel[i].CreateTagRebarDetailMainBottom(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels, BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     BeamsModel.MainBottomBarModel[i].CreateTagRebarSection(BeamsModel.SectionBeamViews, document, unit, BeamsModel.InfoModels, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     transaction.Commit();
                 }
 
             }
         }
-        private static void CreateAddTopBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateAddTopBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[4];
             if (BeamsModel.SelectedIndexModel.StartTopChecked)
             {
                 using (Transaction transaction = new Transaction(document))
@@ -193,14 +196,14 @@ namespace R02_BeamsRebar
                     transaction.Start(ActionRebar[4]);
                     
                     BeamsModel.AddTopBarModel.Start.CreateBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                     option.SetFailuresPreprocessor(new DeleteWarningSuper());
                     transaction.SetFailureHandlingOptions(option);
                     BeamsModel.AddTopBarModel.Start.CreateTagRebarDetailAddTopStart(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.NodeModels[0], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     BeamsModel.AddTopBarModel.Start.CreateTagRebarSectionAddTopStart(BeamsModel.SectionBeamViews[0], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, -BeamsModel.SettingModel.tmin / 2);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     transaction.Commit();
                 }
             }
@@ -210,14 +213,14 @@ namespace R02_BeamsRebar
                 {
                     transaction.Start(ActionRebar[4]);
                     BeamsModel.AddTopBarModel.End.CreateBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                     option.SetFailuresPreprocessor(new DeleteWarningSuper());
                     transaction.SetFailureHandlingOptions(option);
                     BeamsModel.AddTopBarModel.End.CreateTagRebarDetailAddTopEnd(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.NodeModels[BeamsModel.NodeModels.Count - 1], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     BeamsModel.AddTopBarModel.End.CreateTagRebarSectionAddTopEnd(BeamsModel.SectionBeamViews[BeamsModel.SectionBeamViews.Count - 1], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, -BeamsModel.SettingModel.tmin / 2);
-                    SetValue(p, 1, BeamsModel);
+                    BeamsModel.ProgressModel.SetValue(uc, 1);
                     transaction.Commit();
                 }
 
@@ -232,7 +235,7 @@ namespace R02_BeamsRebar
                         {
                             transaction.Start(ActionRebar[4]);
                             BeamsModel.AddTopBarModel.Mid[i].CreateBarMid(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                            SetValue(p, 1, BeamsModel);
+                            BeamsModel.ProgressModel.SetValue(uc, 1);
                             FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                             option.SetFailuresPreprocessor(new DeleteWarningSuper());
                             transaction.SetFailureHandlingOptions(option);
@@ -242,9 +245,9 @@ namespace R02_BeamsRebar
                                 if (nodeModel != null)
                                 {
                                     BeamsModel.AddTopBarModel.Mid[i].CreateTagRebarDetailAddTopMid(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], nodeModel, BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                                    SetValue(p, 1, BeamsModel);
+                                    BeamsModel.ProgressModel.SetValue(uc, 1);
                                     BeamsModel.AddTopBarModel.Mid[i].CreateTagRebarSectionAddTopMid(BeamsModel.SectionBeamViews[i], BeamsModel.SectionBeamViews[i + 1], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, -BeamsModel.SettingModel.tmin / 2);
-                                    SetValue(p, 2, BeamsModel);
+                                    BeamsModel.ProgressModel.SetValue(uc, 1);
                                 }
                             }
                             transaction.Commit();
@@ -254,9 +257,8 @@ namespace R02_BeamsRebar
                 }
             }
         }
-        private static void CreateAddBottomBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateAddBottomBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[5];
             for (int i = 0; i < BeamsModel.AddBottomBarModel.Count; i++)
             {
                 using (Transaction transaction = new Transaction(document))
@@ -266,47 +268,46 @@ namespace R02_BeamsRebar
                     if (BeamsModel.SelectedBottomModels[i].StartBottomChecked)
                     {
                         BeamsModel.AddBottomBarModel[i].Start.CreateBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
                         BeamsModel.AddBottomBarModel[i].Start.CreateTagRebarDetailAddBottomStart(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.InfoModels[i], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         BeamsModel.AddBottomBarModel[i].Start.CreateTagRebarSectionAddBottomStart(BeamsModel.SectionBeamViews[i], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.tmin / 2);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                     }
                     if (BeamsModel.SelectedBottomModels[i].EndBottomChecked)
                     {
                         BeamsModel.AddBottomBarModel[i].End.CreateBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
                         BeamsModel.AddBottomBarModel[i].End.CreateTagRebarDetailAddBottomEnd(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.InfoModels[i], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         BeamsModel.AddBottomBarModel[i].Start.CreateTagRebarSectionAddBottomEnd(BeamsModel.SectionBeamViews[i], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.tmin / 2);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                     }
                     if (BeamsModel.AddBottomBarModel[i].Mid.Model.Count != 0)
                     {
                         BeamsModel.AddBottomBarModel[i].Mid.CreateBarMid(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
                         BeamsModel.AddBottomBarModel[i].Mid.CreateTagRebarDetailAddBottomMid(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.InfoModels[i], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         BeamsModel.AddBottomBarModel[i].Start.CreateTagRebarSectionAddBottomMid(BeamsModel.SectionBeamViews[i], document, unit, BeamsModel.InfoModels[0], BeamsModel.PlanarFaces[0], BeamsModel.SettingModel, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.tmin / 2);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                     }
                     transaction.Commit();
                 }
 
             }
         }
-        private static void CreateDimensionAddBottomBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateDimensionAddBottomBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[6];
             using (Transaction transaction = new Transaction(document))
             {
                 transaction.Start(ActionRebar[6]);
@@ -331,14 +332,12 @@ namespace R02_BeamsRebar
                     }
                 }
                 BeamsModel.DimensionView.CreateDimensionHorizontalAddTopBar(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.PlanarFaces, BeamsModel.ReferenceAddBottomBar, BeamsModel.SettingModel, BeamsModel.InfoModels, false, BeamsModel.SettingModel.L1);
-                SetValue(p, 1, BeamsModel);
+                BeamsModel.ProgressModel.SetValue(uc, 1);
                 transaction.Commit();
             }
         }
-        private static void CreateSideBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateSideBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-
-            BeamsModel.SelectedAction = ActionRebar[7];
             for (int i = 0; i < BeamsModel.SideBarModel.Count; i++)
             {
                 if (BeamsModel.SideBarModel[i].IsSide)
@@ -347,23 +346,22 @@ namespace R02_BeamsRebar
                     {
                         transaction.Start(ActionRebar[7]);
                         BeamsModel.SideBarModel[i].CreateSideBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
                         transaction.SetFailureHandlingOptions(option);
                         BeamsModel.SideBarModel[i].CreateTagRebarDetail(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         BeamsModel.SideBarModel[i].CreateTagRebarSection(BeamsModel.SectionBeamViews[i], document, unit, BeamsModel.InfoModels[0], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], BeamsModel.SettingModel.TagH, -BeamsModel.SettingModel.tmin);
-                        SetValue(p, 3, BeamsModel);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         transaction.Commit();
                     }
 
                 }
             }
         }
-        private static void CreateSpecialBar(string action, BeamsWindow p, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
+        private static void CreateSpecialBar(string action, ProgressBar uc, BeamsModel BeamsModel, Document document, UnitProject unit, double dsmax)
         {
-            BeamsModel.SelectedAction = ActionRebar[8];
             if (BeamsModel.SpecialBarModel.Count != 0)
             {
                 for (int i = 0; i < BeamsModel.SpecialBarModel.Count; i++)
@@ -375,13 +373,13 @@ namespace R02_BeamsRebar
                         {
                             transaction.Start(ActionRebar[8]);
                             BeamsModel.SpecialBarModel[i].CreateSpecialBar(document, BeamsModel.PlanarFaces[0], unit, BeamsModel.Cover, dsmax, BeamsModel.InfoModels[0], BeamsModel.SettingModel);
-                            SetValue(p, 1, BeamsModel);
+                            BeamsModel.ProgressModel.SetValue(uc, 1);
                             FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                             option.SetFailuresPreprocessor(new DeleteWarningSuper());
                             transaction.SetFailureHandlingOptions(option);
                             double x0 = BeamsModel.SpecialBarModel[i].X0 + BeamsModel.SpecialBarModel[i].L3 / 2 + BeamsModel.SpecialBarModel[i].L2 + BeamsModel.SpecialBarModel[i].L1 / 2;
                             BeamsModel.SpecialBarModel[i].BarSP.CreateTagRebarDetailTop(BeamsModel.DetailBeamView.DetailView, document, unit, BeamsModel.InfoModels[0], BeamsModel.SettingModel, BeamsModel.PlanarFaces[0], x0, BeamsModel.SpecialBarModel[i].Y0, BeamsModel.SettingModel.TagH, BeamsModel.SettingModel.TagV);
-                            SetValue(p, 1, BeamsModel);
+                            BeamsModel.ProgressModel.SetValue(uc, 1);
                             transaction.Commit();
                         }
 
@@ -392,12 +390,12 @@ namespace R02_BeamsRebar
                         {
                             transaction.Start(ActionRebar[8]);
                             BeamsModel.SpecialBarModel[i].CreateStirrupSpecial(document, unit, BeamsModel.Cover, b, BeamsModel.SpecialNodeModels[i], BeamsModel.SettingModel);
-                            SetValue(p, 1, BeamsModel);
+                            BeamsModel.ProgressModel.SetValue(uc, 1);
                             FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                             option.SetFailuresPreprocessor(new DeleteWarningSuper());
                             transaction.SetFailureHandlingOptions(option);
                             BeamsModel.SpecialBarModel[i].CreateTagStirrupDetail(BeamsModel.DetailBeamView.DetailView, document, unit, b, BeamsModel.SettingModel, BeamsModel.SpecialNodeModels[i]);
-                            SetValue(p, 1, BeamsModel);
+                            BeamsModel.ProgressModel.SetValue(uc, 1);
                             transaction.Commit();
                         }
 
@@ -407,7 +405,7 @@ namespace R02_BeamsRebar
         }
         #endregion
         #region Action
-        private static int GetProgressBarStirrupBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarStirrupBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             for (int i = 0; i < BeamsModel.InfoModels.Count; i++)
@@ -416,12 +414,12 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarDimensionStirrupBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarDimensionStirrupBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 1;
             return pro;
         }
-        private static int GetProgressBarMainTopBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarMainTopBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             if (BeamsModel.SelectedIndexModel.StyleMainTop == 0)
@@ -437,7 +435,7 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarMainBottomBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarMainBottomBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             for (int i = 0; i < BeamsModel.MainBottomBarModel.Count; i++)
@@ -446,7 +444,7 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarAddTopBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarAddTopBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             if (BeamsModel.SelectedIndexModel.StartTopChecked)
@@ -477,7 +475,7 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarAddBottomBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarAddBottomBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             for (int i = 0; i < BeamsModel.AddBottomBarModel.Count; i++)
@@ -497,13 +495,13 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarDimensionAddBottomBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarDimensionAddBottomBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 1;
            
             return pro;
         }
-        private static int GetProgressBarSideBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarSideBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             for (int i = 0; i < BeamsModel.SideBarModel.Count; i++)
@@ -515,7 +513,7 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static int GetProgressBarSpecialBar(Document document, BeamsWindow p, BeamsModel BeamsModel, double dsmax)
+        private static int GetProgressBarSpecialBar( BeamsModel BeamsModel, double dsmax)
         {
             int pro = 0;
             if (BeamsModel.SpecialBarModel.Count != 0)
@@ -535,49 +533,44 @@ namespace R02_BeamsRebar
             }
             return pro;
         }
-        private static void GetProgressBarRebar(Document document, BeamsWindow p, BeamsModel BeamsModel)
+        private static int GetProgressBarRebar( BeamsModel BeamsModel)
         {
-            BeamsModel.Value = 0;
-            p.ProgressWindow.Maximum = 0;
+            
+            int a = 0;
             double dsmax = ProcessInfoBeamRebar.GetDiameterStirrupMax(BeamsModel.InfoModels, BeamsModel.DistributeStirrups, BeamsModel.StirrupModels);
             #region Stirrup bar
-            p.ProgressWindow.Maximum += GetProgressBarStirrupBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarStirrupBar( BeamsModel, dsmax);
             #endregion
             #region Dimension Stirrup
-            p.ProgressWindow.Maximum += GetProgressBarDimensionStirrupBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarDimensionStirrupBar(BeamsModel, dsmax);
             #endregion
             #region Main Top bar
-            p.ProgressWindow.Maximum += GetProgressBarMainTopBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarMainTopBar(BeamsModel, dsmax);
             #endregion
             #region Main Bottom Bar
-            p.ProgressWindow.Maximum += GetProgressBarMainBottomBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarMainBottomBar( BeamsModel, dsmax);
             #endregion
             #region Add Top Bar
-            p.ProgressWindow.Maximum += GetProgressBarAddTopBar(document, p, BeamsModel, dsmax);
+           a += GetProgressBarAddTopBar( BeamsModel, dsmax);
             #endregion
             #region Dimension Add Top Bar
             //p.ProgressWindow.Maximum += 1;
             #endregion
             #region Add Bottom Bar
-            p.ProgressWindow.Maximum += GetProgressBarAddBottomBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarAddBottomBar( BeamsModel, dsmax);
             #endregion
             #region Dimension Add Bottom Bar
-            p.ProgressWindow.Maximum += GetProgressBarDimensionAddBottomBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarDimensionAddBottomBar( BeamsModel, dsmax);
             #endregion
             #region Side Bar
-            p.ProgressWindow.Maximum += GetProgressBarSideBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarSideBar(BeamsModel, dsmax);
             #endregion
             #region Special Bar
-            p.ProgressWindow.Maximum += GetProgressBarSpecialBar(document, p, BeamsModel, dsmax);
+            a += GetProgressBarSpecialBar( BeamsModel, dsmax);
             #endregion
+            return a;
         }
-        private static void SetValue(BeamsWindow p, int n, BeamsModel BeamsModel)
-        {
-            BeamsModel.Value += n;
-            BeamsModel.Percent = BeamsModel.Value / p.ProgressWindow.Maximum * 100;
-            p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = BeamsModel.Value,
-                DispatcherPriority.Background);
-        }
+        
         private static List<string> ActionRebar = new List<string>()
         {
             "Create Stirrup Bars",

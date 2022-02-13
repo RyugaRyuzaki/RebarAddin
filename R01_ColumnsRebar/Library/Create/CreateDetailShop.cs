@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using WpfCustomControls;
 using System.Windows.Controls;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class CreateDetailShop
@@ -17,7 +18,7 @@ namespace R01_ColumnsRebar
             uc.Maximum = GetProgressBarDetailShop( columnsModel) * 1.0;
             string folder = FolderImage(document, columnsModel); columnsModel.ProgressModel.SetValue(uc, 1);
             CreateDetailShopRebar(p,columnsModel,document,unit, folder, columns);
-            
+            columnsModel.ProgressModel.ResetValue(uc);
         }
 
         private static void CreateDetailShopRebar(ColumnsWindow p, ColumnsModel columnsModel, Document document, UnitProject unit, string folder, List<Element> columns)
@@ -80,6 +81,7 @@ namespace R01_ColumnsRebar
                 }
                 columnsModel.DetailColumnView.CreateSchedule(document, columnsModel.SettingModel);
                 transaction.Commit();
+                columnsModel.IsCreateDetailShop = true;
             }
         }
 

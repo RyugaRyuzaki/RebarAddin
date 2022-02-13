@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using System.IO;
 using R02_BeamsRebar.View;
-using System.Windows.Forms;
-
+using System.Windows.Controls;
+using WpfCustomControls;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class CreateDetailShop
@@ -13,9 +14,9 @@ namespace R02_BeamsRebar
         #region Create
         public static void Create(BeamsWindow p,BeamsModel BeamsModel, Document document,UnitProject unit,List<Element> beams)
         {
-            BarsDivisionView uc = ProcessInfoBeamRebar.FindChild<BarsDivisionView>(p, "BarsDivisionUC");
-            GetProgressBarDetailShop(p,  BeamsModel);
-            BeamsModel.SelectedAction = ActionDetailShop;
+            BarsDivisionView bv = ProcessInfoBeamRebar.FindChild<BarsDivisionView>(p, "BarsDivisionUC");
+            ProgressBar uc = VisualTreeHelper.FindChild<ProgressBar>(p, "Progress");
+            uc.Maximum = GetProgressBarDetailShop(BeamsModel) * 1.0;
             string folder = FolderImage(document, BeamsModel);
             using (Transaction transaction = new Transaction(document))
             {
@@ -23,7 +24,7 @@ namespace R02_BeamsRebar
                 
                 #region create detail shop view
                 BeamsModel.DetailShopView.CeateDetailShopView(document, unit, BeamsModel.InfoModels[0],BeamsModel.PlanarFaces, beams, BeamsModel.SettingModel, BeamsModel.SettingModel.DetailViewName + "-S", 2 * BeamsModel.SettingModel.L1, 2 * BeamsModel.SettingModel.L3+ 2*BeamsModel.SettingModel.L4);
-                SetValue(p, 1, BeamsModel);
+                BeamsModel.ProgressModel.SetValue(uc, 1);
                 #endregion
                 int number = 1;
                 #region Stirrup
@@ -37,8 +38,8 @@ namespace R02_BeamsRebar
                             if (BeamsModel.BarsDivisionModel.Stirrups[j].Location.X> BeamsModel.InfoModels[i].startPosition&& BeamsModel.BarsDivisionModel.Stirrups[j].Location.X < BeamsModel.InfoModels[i].endPosition)
                             {
                                 BeamsModel.BarsDivisionModel.Stirrups[j].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                                BeamsModel.BarsDivisionModel.Stirrups[j].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.Stirrups[j].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                             }
                         }
                         number++;
@@ -54,8 +55,8 @@ namespace R02_BeamsRebar
                             if (BeamsModel.BarsDivisionModel.AntiStirrups[j].Location.X > BeamsModel.InfoModels[i].startPosition && BeamsModel.BarsDivisionModel.AntiStirrups[j].Location.X < BeamsModel.InfoModels[i].endPosition)
                             {
                                 BeamsModel.BarsDivisionModel.AntiStirrups[j].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                                BeamsModel.BarsDivisionModel.AntiStirrups[j].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.AntiStirrups[j].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                                 number++;
                             }
                         }
@@ -70,8 +71,8 @@ namespace R02_BeamsRebar
                     if (BeamsModel.BarsDivisionModel.MainTop.Count == 1)
                     {
                         BeamsModel.BarsDivisionModel.MainTop[0].CreateDetailItem(document, BeamsModel, unit,0, number);
-                        BeamsModel.BarsDivisionModel.MainTop[0].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.MainTop[0].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                     else
@@ -81,20 +82,20 @@ namespace R02_BeamsRebar
                             if (i == BeamsModel.BarsDivisionModel.MainTop.Count - 1)
                             {
                                 BeamsModel.BarsDivisionModel.MainTop[i].CreateDetailItem(document, BeamsModel, unit, (i % 2 == 0) ? 0 : y0, number);
-                                BeamsModel.BarsDivisionModel.MainTop[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.MainTop[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                                 number++;
                             }
                             else
                             {
                                 bool a = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainTop[i], BeamsModel.BarsDivisionModel.MainTop[i + 1]);
                                 BeamsModel.BarsDivisionModel.MainTop[i].CreateDetailItem(document, BeamsModel, unit, (i % 2 == 0 && a) ? 0 : y0, number);
-                                BeamsModel.BarsDivisionModel.MainTop[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.MainTop[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                                 number++;
                                 if (a)
                                 {
-                                    SetValue(p, 1, BeamsModel);
+                                    BeamsModel.ProgressModel.SetValue(uc, 1);
                                 }
                             }
                         }
@@ -109,8 +110,8 @@ namespace R02_BeamsRebar
                     if (BeamsModel.BarsDivisionModel.MainBottom.Count == 1)
                     {
                         BeamsModel.BarsDivisionModel.MainBottom[0].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                        BeamsModel.BarsDivisionModel.MainBottom[0].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.MainBottom[0].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                     else
@@ -120,20 +121,20 @@ namespace R02_BeamsRebar
                             if (i == BeamsModel.BarsDivisionModel.MainBottom.Count - 1)
                             {
                                 BeamsModel.BarsDivisionModel.MainBottom[i].CreateDetailItem(document, BeamsModel, unit, (i % 2 == 0) ? y0 : y0 + y1, number);
-                                BeamsModel.BarsDivisionModel.MainBottom[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.MainBottom[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                                 number++;
                             }
                             else
                             {
                                 bool a = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainBottom[i], BeamsModel.BarsDivisionModel.MainBottom[i + 1]);
                                 BeamsModel.BarsDivisionModel.MainBottom[i].CreateDetailItem(document, BeamsModel, unit, (i % 2 == 0 && a) ? y0 : y0 + y1, number);
-                                BeamsModel.BarsDivisionModel.MainBottom[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                                SetValue(p, 1, BeamsModel);
+                                BeamsModel.BarsDivisionModel.MainBottom[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                                BeamsModel.ProgressModel.SetValue(uc, 1);
                                 number++;
                                 if (a)
                                 {
-                                    SetValue(p, 1, BeamsModel);
+                                    BeamsModel.ProgressModel.SetValue(uc, 1);
                                 }
                             }
                         }
@@ -147,8 +148,8 @@ namespace R02_BeamsRebar
                     for (int i = 0; i < BeamsModel.BarsDivisionModel.AddTop.Count; i++)
                     {
                         BeamsModel.BarsDivisionModel.AddTop[i].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                        BeamsModel.BarsDivisionModel.AddTop[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.AddTop[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                 }
@@ -160,8 +161,8 @@ namespace R02_BeamsRebar
                     for (int i = 0; i < BeamsModel.BarsDivisionModel.AddBottom.Count; i++)
                     {
                         BeamsModel.BarsDivisionModel.AddBottom[i].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                        BeamsModel.BarsDivisionModel.AddBottom[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.AddBottom[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                 }
@@ -173,8 +174,8 @@ namespace R02_BeamsRebar
                     for (int i = 0; i < BeamsModel.BarsDivisionModel.Special.Count; i++)
                     {
                         BeamsModel.BarsDivisionModel.Special[i].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                        BeamsModel.BarsDivisionModel.Special[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.Special[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                 }
@@ -184,8 +185,8 @@ namespace R02_BeamsRebar
                     for (int i = 0; i < BeamsModel.BarsDivisionModel.Side.Count; i++)
                     {
                         BeamsModel.BarsDivisionModel.Side[i].CreateDetailItem(document, BeamsModel, unit, y0, number);
-                        BeamsModel.BarsDivisionModel.Side[i].CreateImage(uc, document, BeamsModel.SettingModel, folder, number);
-                        SetValue(p, 1, BeamsModel);
+                        BeamsModel.BarsDivisionModel.Side[i].CreateImage(bv, document, BeamsModel.SettingModel, folder, number);
+                        BeamsModel.ProgressModel.SetValue(uc, 1);
                         number++;
                     }
                 }
@@ -194,6 +195,8 @@ namespace R02_BeamsRebar
                 
                 #endregion
                 transaction.Commit();
+                BeamsModel.IsCreateDetailShop = true;
+                BeamsModel.ProgressModel.ResetValue(uc);
             }
         }
         public static string FolderImage(Document document,BeamsModel beamsModel)
@@ -210,24 +213,23 @@ namespace R02_BeamsRebar
         #endregion
         #region Action
 
-        private static void GetProgressBarDetailShop(BeamsWindow p, BeamsModel BeamsModel)
+        private static int GetProgressBarDetailShop( BeamsModel BeamsModel)
         {
-            BeamsModel.Value = 0;
-            p.ProgressWindow.Maximum = 0;
-            p.ProgressWindow.Maximum += 1;
+            int a = 0;
+            a+= 1;
             #region create Stirrup
             if (BeamsModel.BarsDivisionModel.Stirrups.Count != 0)
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.Stirrups.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                   a += 1;
                 }
             }
             if (BeamsModel.BarsDivisionModel.AntiStirrups.Count != 0)
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.AntiStirrups.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a += 1;
                 }
             }
             #endregion
@@ -237,7 +239,7 @@ namespace R02_BeamsRebar
             {
                 if (BeamsModel.BarsDivisionModel.MainTop.Count == 1)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a+= 1;
                 }
                 else
                 {
@@ -245,15 +247,15 @@ namespace R02_BeamsRebar
                     {
                         if (i == BeamsModel.BarsDivisionModel.MainTop.Count - 1)
                         {
-                            p.ProgressWindow.Maximum += 1;
+                            a += 1;
                         }
                         else
                         {
-                            bool a = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainTop[i], BeamsModel.BarsDivisionModel.MainTop[i + 1]);
-                            p.ProgressWindow.Maximum += 1;
-                            if (a)
+                            bool x = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainTop[i], BeamsModel.BarsDivisionModel.MainTop[i + 1]);
+                            a += 1;
+                            if (x)
                             {
-                                p.ProgressWindow.Maximum += 1;
+                                a += 1;
                             }
                         }
                     }
@@ -267,7 +269,7 @@ namespace R02_BeamsRebar
                 double y1 = 0.2 * BeamsModel.SettingModel.L3;
                 if (BeamsModel.BarsDivisionModel.MainBottom.Count == 1)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a += 1;
                 }
                 else
                 {
@@ -275,15 +277,15 @@ namespace R02_BeamsRebar
                     {
                         if (i == BeamsModel.BarsDivisionModel.MainBottom.Count - 1)
                         {
-                            p.ProgressWindow.Maximum += 1;
+                            a += 1;
                         }
                         else
                         {
-                            bool a = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainBottom[i], BeamsModel.BarsDivisionModel.MainBottom[i + 1]);
-                            p.ProgressWindow.Maximum += 1;
-                            if (a)
+                            bool x = ConditionDrawOverlap(BeamsModel.BarsDivisionModel.MainBottom[i], BeamsModel.BarsDivisionModel.MainBottom[i + 1]);
+                            a += 1;
+                            if (x)
                             {
-                                p.ProgressWindow.Maximum += 1;
+                                a += 1;
                             }
                         }
                     }
@@ -295,7 +297,7 @@ namespace R02_BeamsRebar
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.AddTop.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a += 1;
                 }
             }
             #endregion
@@ -304,7 +306,7 @@ namespace R02_BeamsRebar
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.AddBottom.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a += 1;
                 }
             }
             #endregion
@@ -313,26 +315,20 @@ namespace R02_BeamsRebar
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.Special.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a += 1;
                 }
             }
             if (BeamsModel.BarsDivisionModel.Side.Count != 0)
             {
                 for (int i = 0; i < BeamsModel.BarsDivisionModel.Side.Count; i++)
                 {
-                    p.ProgressWindow.Maximum += 1;
+                    a+= 1;
                 }
             }
             #endregion
-
+            return a;
         }
-        private static void SetValue(BeamsWindow p, int n, BeamsModel BeamsModel)
-        {
-            BeamsModel.Value += n;
-            BeamsModel.Percent = BeamsModel.Value / p.ProgressWindow.Maximum * 100;
-            p.ProgressWindow.Dispatcher.Invoke(() => p.ProgressWindow.Value = BeamsModel.Value,
-                DispatcherPriority.Background);
-        }
+       
         private static string ActionDetailShop = "Create Detail Shop";
         private static bool ConditionDrawOverlap(ItemDivision itemDivision1, ItemDivision itemDivision2)
         {

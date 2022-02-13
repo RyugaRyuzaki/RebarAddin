@@ -2,6 +2,7 @@
 using System;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class TagColumn : BaseViewModel

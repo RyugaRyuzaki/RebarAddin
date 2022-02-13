@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Forms;
 using static R01_ColumnsRebar.ErrorColumns;
-
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class DetailShopView

@@ -11,6 +11,7 @@ using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
 using WpfCustomControls.Model;
+using DSP;
 #endregion
 
 namespace R11_FoundationPile
@@ -56,7 +57,9 @@ namespace R11_FoundationPile
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
         private StatusBarViewModel _StatusBarViewModel;
         public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-      
+        private ActionViewModel _ActionViewModel;
+        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         #endregion
@@ -74,10 +77,13 @@ namespace R11_FoundationPile
             SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, TaskBarViewModel);
             GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
 
-            SelectedViewModel = SettingViewModel;
            
             StatusBarViewModel = new StatusBarViewModel(FoundationPileModel.ProgressModel, Languages);
             StatusBarViewModel.SetStatusBarFoundationPile();
+            ActionViewModel = new ActionViewModel(Languages);
+            ActionViewModel.SetStatusBarFoundationPile();
+
+            SelectedViewModel = SettingViewModel;
             #endregion
             #region Load
             LoadWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
@@ -113,7 +119,8 @@ namespace R11_FoundationPile
             });
             CloseWindowCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
-                if (!FoundationPileModel.IsCreateGrounpFoundation)
+                p.DialogResult = true;
+                if (!FoundationPileModel.IsCreateGrounpFoundation|| !FoundationPileModel.IsCreatePileDetail|| !FoundationPileModel.IsCreateReinforcement)
                 {
                     if (TransactionGroup.HasStarted())
                     {
@@ -121,12 +128,9 @@ namespace R11_FoundationPile
                         System.Windows.MessageBox.Show("Progress is Cancel!", "Stop Progress",
                             MessageBoxButton.OK, MessageBoxImage.Stop);
                     }
-                    p.Close();
+                   
                 }
-                else
-                {
-                    p.DialogResult = true;
-                }
+               
 
 
             });

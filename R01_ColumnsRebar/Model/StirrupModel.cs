@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
+using DSP;
 namespace R01_ColumnsRebar
 {
     public class StirrupModel : BaseViewModel

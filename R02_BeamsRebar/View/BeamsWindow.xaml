@@ -63,6 +63,9 @@
                     <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
                         <custom:StatusBarControl></custom:StatusBarControl>
                     </DataTemplate>
+                    <DataTemplate x:Name="actionViewModel" DataType="{x:Type customViewModel:ActionViewModel}">
+                        <custom:ActionControl></custom:ActionControl>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -79,7 +82,7 @@
             </Grid.ColumnDefinitions>
             <!--#region Menu-->
             <Border Grid.Column="0" >
-                <Grid Style="{StaticResource BorderGrid}">
+                <StackPanel >
                     <ListView x:Name="Menu">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
@@ -141,7 +144,8 @@
                             </DockPanel>
                         </ListViewItem>
                     </ListView>
-                </Grid>
+                    <ContentControl Margin="0 5 0 0" Content="{Binding ActionViewModel}"></ContentControl>
+                </StackPanel>
             </Border>
             <!--#endregion-->
             <!--#region UserControl-->

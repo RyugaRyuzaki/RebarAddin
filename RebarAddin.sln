@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R11_FoundationPile", "R11_F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCustomControls", "WpfCustomControls\WpfCustomControls.csproj", "{31808D97-C013-4684-AA1C-F2F46A892CA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSP", "DSP\DSP.csproj", "{A116ED71-D8E6-4F8A-962C-144680B63A13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{31808D97-C013-4684-AA1C-F2F46A892CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31808D97-C013-4684-AA1C-F2F46A892CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31808D97-C013-4684-AA1C-F2F46A892CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A116ED71-D8E6-4F8A-962C-144680B63A13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A116ED71-D8E6-4F8A-962C-144680B63A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A116ED71-D8E6-4F8A-962C-144680B63A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A116ED71-D8E6-4F8A-962C-144680B63A13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

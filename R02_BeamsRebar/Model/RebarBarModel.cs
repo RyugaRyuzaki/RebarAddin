@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WpfCustomControls;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class RebarBarModel : BaseViewModel

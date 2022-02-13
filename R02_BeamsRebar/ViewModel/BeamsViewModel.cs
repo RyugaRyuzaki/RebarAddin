@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
+using DSP;
 namespace R02_BeamsRebar
 {
     public class BeamsViewModel : BaseViewModel
@@ -58,6 +59,7 @@ namespace R02_BeamsRebar
         public ICommand CancelCommand { get; set; }
         public ICommand OKCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
         //public ICommand DetailItemCommand { get; set; }
 
         #endregion
@@ -65,7 +67,8 @@ namespace R02_BeamsRebar
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
         private StatusBarViewModel _StatusBarViewModel;
         public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-
+        private ActionViewModel _ActionViewModel;
+        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public BeamsViewModel(UIDocument uiDoc, Document doc, List<Element> beams)
@@ -83,6 +86,8 @@ namespace R02_BeamsRebar
             TransactionGroup = new TransactionGroup(Doc);
             StatusBarViewModel = new StatusBarViewModel(BeamsModel.ProgressModel, Languages);
             StatusBarViewModel.SetStatusBarBeams();
+            ActionViewModel = new ActionViewModel(Languages);
+            ActionViewModel.SetStatusBarBeams();
             #endregion
             #region Command
             LoadWindowCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
@@ -110,17 +115,23 @@ namespace R02_BeamsRebar
             //});
             CancelCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
             {
-                p.DialogResult = false;
+                p.Close();
+            });
+            OKCommand = new RelayCommand<BeamsWindow>((p) => { return BeamsModel.ConditionAction(p, Doc); }, (p) =>
+            {
+                OKAction(p);
+            });
+            CloseWindowCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
+            {
+                p.DialogResult = true;
                 if (TransactionGroup.HasStarted())
                 {
                     TransactionGroup.RollBack();
                     System.Windows.MessageBox.Show("Progress is Cancel!", "Stop Progress",
                         MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
-            });
-            OKCommand = new RelayCommand<BeamsWindow>((p) => { return BeamsModel.ConditionAction(p, Doc); }, (p) =>
-            {
-                OKAction(p);
+
+
             });
             #endregion
 

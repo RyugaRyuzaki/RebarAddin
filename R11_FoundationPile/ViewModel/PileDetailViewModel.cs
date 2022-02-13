@@ -3,6 +3,7 @@ using R11_FoundationPile.View;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using DSP;
 namespace R11_FoundationPile.ViewModel
 {
     public class PileDetailViewModel : BaseViewModel
