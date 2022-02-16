@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\RAPI00\RAPI00\bin\Debug\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -70,6 +71,7 @@
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\RAPI00\RAPI00\bin\Debug\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -89,7 +91,9 @@
     <Compile Include="Library\Compare\DistinctCompare.cs" />
     <Compile Include="Library\Compare\DistinctID.cs" />
     <Compile Include="Library\Create\CreateFoundationAndPiles.cs" />
+    <Compile Include="Library\Create\CreateHookLength.cs" />
     <Compile Include="Library\Create\CreatePileDetail.cs" />
+    <Compile Include="Library\Create\CreateRebar.cs" />
     <Compile Include="Library\Create\DimensionDetail.cs" />
     <Compile Include="Library\Create\FoundationPileDetail.cs" />
     <Compile Include="Library\Draw\DrawIcon.cs" />
@@ -100,7 +104,9 @@
     <Compile Include="Library\Orther\LineProcess.cs" />
     <Compile Include="Library\Orther\PointModel.cs" />
     <Compile Include="Library\Orther\ProccessInfoClumns.cs" />
+    <Compile Include="Library\Orther\ProcessCurveRebar.cs" />
     <Compile Include="Library\Orther\SolidFace.cs" />
+    <Compile Include="Model\AddSharedParams.cs" />
     <Compile Include="Model\BarModel.cs" />
     <Compile Include="Model\ColumnModel.cs" />
     <Compile Include="Model\DrawModel.cs" />

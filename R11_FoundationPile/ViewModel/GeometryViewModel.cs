@@ -6,6 +6,7 @@ using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using DSP;
+using WpfCustomControls.LanguageModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class GeometryViewModel : BaseViewModel
@@ -47,15 +48,15 @@ namespace R11_FoundationPile.ViewModel
         public ICommand SelectionChangedPileCommand { get; set; }
         public ICommand ApplyRepresentativeCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public GeometryViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject, TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public GeometryViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject, Languages languages)
         {
             #region property
             Doc = doc;
             Unit = unitProject;
             FoundationPileModel = foundationPileModel;
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             SelectedNumberPile = AllNumberPile[0];
             #endregion
             #region Load
@@ -84,7 +85,8 @@ namespace R11_FoundationPile.ViewModel
             });
             SelectionChangedImageFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
-                SelectedGroupFoundationModel.ChangedImage();
+                SelectedGroupFoundationModel.ChangedImage(FoundationPileModel.SettingModel);
+               
                 GeometryView uc = ProccessInfoClumns.FindChild<GeometryView>(p, "GeometryUC");
                 ShowLayerPile(uc);
                 ShowBHDColumnModel(uc);

@@ -42,7 +42,7 @@ namespace R00_Startup
 
         private void CreateRibbonPanel(UIControlledApplication a)
         {
-            DLQConstraint dlqConstraint = new DLQConstraint();
+            DSPConstraint dlqConstraint = new DSPConstraint();
             RibbonUtils ribbonUtils = new RibbonUtils(a.ControlledApplication);
 
             // Tạo Ribbon tab

@@ -118,9 +118,9 @@
                             </i:Interaction.Triggers>
                         </TextBox>
                         <TextBlock Grid.Row="4" Grid.Column="4"  Style="{StaticResource DataGridTextBlockStyle}" Text="*Ø"></TextBlock>
-                        <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Apply"
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="Apply" Width="80"
                                 Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                        <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource ButtonStyle}" Content="Modify"
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="Modify"    Width="80"
                                  Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
                         
                     </Grid>

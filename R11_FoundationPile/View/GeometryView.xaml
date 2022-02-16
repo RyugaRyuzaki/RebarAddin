@@ -25,7 +25,7 @@
                 <RowDefinition Height="260"></RowDefinition>
                 <RowDefinition Height="260"></RowDefinition>
             </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Header="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.GroupFoundationSetting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" x:Name="FoundationDesignGroupBox">
+            <GroupBox Grid.Row="0" Header="{Binding Languages.R11_Language.GeometryLanguage.GroupFoundationSetting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" x:Name="FoundationDesignGroupBox">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"></RowDefinition>
@@ -47,7 +47,7 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="0.7*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.FoundationType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.GeometryLanguage.FoundationType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                     <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding FoundationPileModel.GroupFoundationModels}"  DisplayMemberPath="Type"
                                   SelectedItem="{Binding SelectedGroupFoundationModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -61,7 +61,7 @@
                     </ComboBox>
                     <TextBlock Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedGroupFoundationModel.SectionStyle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Image,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.GeometryLanguage.Image,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                     <ComboBox Grid.Row="2" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="3" Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   SelectedIndex="{Binding SelectedGroupFoundationModel.Image, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   >
@@ -108,16 +108,16 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.NumberPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.GeometryLanguage.NumberPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"  IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   ItemsSource="{Binding AllNumberPile}"
                                   SelectedItem="{Binding SelectedNumberPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   >
                         </ComboBox>
-                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Add,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="60"
+                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.GeometryLanguage.Add,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="60"
                                     Command="{Binding AddLayerPileCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                     ></Button>
-                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Delete,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="60"
+                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.GeometryLanguage.Delete,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="60"
                                     Command="{Binding DeleteLayerPileCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                     ></Button>
                         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -137,20 +137,20 @@
                     <!--#endregion-->
 
 
-                    <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Generate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                    <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.GeometryLanguage.Generate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   Command="{Binding GenerateFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
-                    <Button Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Modify,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                    <Button Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.GeometryLanguage.Modify,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   Command="{Binding ModifyFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
-                    <Button Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.Reverse,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                    <Button Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" Width="80" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.GeometryLanguage.Reverse,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   Command="{Binding ReverseFoundationCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                    
                     
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.Row="1" Header="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.FoundationProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+            <GroupBox Grid.Row="1" Header="{Binding Languages.R11_Language.GeometryLanguage.FoundationProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -186,16 +186,16 @@
                             <ColumnDefinition Width="70"></ColumnDefinition>
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.FoundationRepresentative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock  Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.GeometryLanguage.FoundationRepresentative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <TextBlock  Grid.Column="1"  Style="{StaticResource DataGridTextBlockCenter}" FontWeight="Bold" Foreground="Red" FontSize="13" Text="{Binding SelectedFoundationModel.FoundationNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <TextBlock  Grid.Column="2" Style="{StaticResource DataGridTextBlockCenter}" FontWeight="Bold" Foreground="Red" FontSize="13" Text="{Binding SelectedFoundationModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <Button Grid.Column="3" Style="{StaticResource ButtonStyle}" Width="60" Content="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.FoundationApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                        <Button Grid.Column="3" Style="{StaticResource ButtonStyle}" Width="60" Content="{Binding Languages.R11_Language.GeometryLanguage.FoundationApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                  Command="{Binding ApplyRepresentativeCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                     </Grid>
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.Row="2" Header="{Binding TaskBarViewModel.Languages.R11_Language.GeometryLanguage.PileProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+            <GroupBox Grid.Row="2" Header="{Binding Languages.R11_Language.GeometryLanguage.PileProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                 <Grid >
                     <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <ListView  ItemsSource="{Binding SelectedFoundationModel.PileModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

@@ -15,7 +15,10 @@ namespace WpfCustomControls
         {
             return GetAllVisualChildren(source).OfType<T>().Single(x => x.Name == name);
         }
-
+        public static T FindVisualChildTag<T>(this DependencyObject source, string tag) where T : FrameworkElement
+        {
+            return GetAllVisualChildren(source).OfType<T>().Single(x => x.Tag == tag as Object);
+        }
         public static IEnumerable<T> GetVisualChildren<T>(this DependencyObject source) where T : DependencyObject
         {
             if (source == null) throw new ArgumentNullException(nameof(source));

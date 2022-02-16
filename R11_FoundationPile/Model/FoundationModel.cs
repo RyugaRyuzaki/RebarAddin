@@ -63,7 +63,7 @@ namespace R11_FoundationPile
         #region Bar
         private string _SpanOrientation;
         public string SpanOrientation { get => _SpanOrientation; set { _SpanOrientation = value; OnPropertyChanged(); } }
-       
+      
         #endregion
         public FoundationModel(int type, int image,int foundationNumber, ColumnModel columnModel, SettingModel settingModel)
         {
@@ -77,8 +77,62 @@ namespace R11_FoundationPile
             SpanOrientation = "Horizontal";
            
         }
+        #region PlanarFace
+        //public void GetPlanarFaces()
+        //{
+        //    Solid solid = SolidFace.GetSolidOneElement(Foundation);
+        //    List<PlanarFace> planarFaces = new List<PlanarFace>();
+        //    if (solid!=null)
+        //    {
+        //        FaceArray faceArray = solid.Faces;
+        //        foreach (var item in faceArray)
+        //        {
+        //            PlanarFace a = item as PlanarFace;
+        //            if(a!=null&&(PointModel.AreEqual(a.FaceNormal.AngleTo(XYZ.BasisZ),Math.PI*0.5)))
+        //            {
+        //                planarFaces.Add(a);
+        //            }
+        //        }
+        //        if (planarFaces.Count != 0&&planarFaces.Count==CurveArray.Size)
+        //        {
+        //            for (int i = 0; i < planarFaces.Count; i++)
+        //            {
+        //                try
+        //                {
+        //                    Line line = CurveArray.get_Item(i) as Line;
+        //                    if (line != null)
+        //                    {
+        //                        XYZ v1 = line.Direction.CrossProduct(planarFaces[i].FaceNormal);
+        //                        if (PointModel.AreEqual(v1.AngleTo(XYZ.BasisZ),0))
+        //                        {
+        //                            PlanarFaces.Add(planarFaces[i]);
+        //                        }
+        //                    }
+
+        //                }
+        //                catch (Exception e)
+        //                {
+
+        //                    System.Windows.Forms.MessageBox.Show(e.Message);
+        //                }
+                        
+        //            }
+                     
+        //        }
+        //    }
+        //}
+        #endregion
         #region method
-       
+
+        public void SetRebarCover(SettingModel settingModel)
+        {
+            Parameter coverBottom = Foundation.LookupParameter("Rebar Cover - Bottom Face");
+            if (coverBottom != null) coverBottom.Set(settingModel.SelectedBotomCover.Id);
+            Parameter coverTop = Foundation.LookupParameter("Rebar Cover - Top Face"); 
+            if (coverTop != null) coverTop.Set(settingModel.SelectedTopCover.Id);
+            Parameter coverSide = Foundation.LookupParameter("Rebar Cover - Other Faces"); 
+            if (coverSide != null) coverSide.Set(settingModel.SelectedSideCover.Id); 
+        }
         public bool IscreatePile()
         {
             for (int i = 0; i < PileModels.Count; i++)
@@ -748,7 +802,6 @@ namespace R11_FoundationPile
 
         private Curve GetCurveCylindrical(UnitProject unit, LocationModel l1, LocationModel l2)
         {
-
             XYZ p1 = ColumnModel.PointPosition + unit.Convert(l1.X) * XYZ.BasisX;
             XYZ p1a = p1 + unit.Convert(l1.Y) * XYZ.BasisY;
             XYZ p2 = ColumnModel.PointPosition + unit.Convert(l2.X) * XYZ.BasisX;

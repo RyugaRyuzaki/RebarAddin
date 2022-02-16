@@ -31,19 +31,19 @@
                      Visibility="{Binding Path=IsDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
         <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.BeamsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                      Visibility="{Binding Path=IsRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
-        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
+        <Button  DockPanel.Dock="Right" Content="{Binding DataContext.Languages.WindowLanguage.Cancel,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
                  Visibility="{Binding Path=Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" 
                         Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
-        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+        <Button  DockPanel.Dock="Right" Content="{Binding DataContext.Languages.WindowLanguage.OK,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                  Visibility="{Binding Path=OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="80"  
                         Command="{Binding  DataContext.OKCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
-        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+        <Button  DockPanel.Dock="Right" Content="{Binding DataContext.Languages.WindowLanguage.R11_CreateReinforcement,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                  Visibility="{Binding Path=CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
                         Command="{Binding  DataContext.CreateReinforcementCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
-        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+        <Button  DockPanel.Dock="Right" Content="{Binding DataContext.Languages.WindowLanguage.R11_CreatePileDetail,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                  Visibility="{Binding Path=CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
                         Command="{Binding  DataContext.CreatePileDetailCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
-        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+        <Button  DockPanel.Dock="Right" Content="{Binding DataContext.Languages.WindowLanguage.R11_CreateFoundationPile,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                  Visibility="{Binding Path=CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource ButtonStyle}" Width="150"  
                         Command="{Binding  DataContext.CreateFoundationCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
         <Grid DockPanel.Dock="Right" >

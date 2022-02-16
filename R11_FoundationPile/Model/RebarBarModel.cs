@@ -1,5 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using DSP;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,9 +19,10 @@ namespace R11_FoundationPile
         public RebarBarType RebarBarType { get => _RebarBarType; set { _RebarBarType = value; OnPropertyChanged(); } }
         private RebarShape _RebarShape;
         public RebarShape RebarShape { get => _RebarShape; set { _RebarShape = value; OnPropertyChanged(); } }
-        private Rebar _Rebar;
-        public Rebar Rebar { get => _Rebar; set { _Rebar = value; OnPropertyChanged(); } }
-       
+        private ObservableCollection<Rebar> _Rebars;
+        public ObservableCollection<Rebar> Rebars { get { if (_Rebars == null) { _Rebars = new ObservableCollection<Rebar>(); } return _Rebars; } set { _Rebars = value; OnPropertyChanged(); } }
+        private ObservableCollection<Curve> _Curves;
+        public ObservableCollection<Curve> Curves { get { if (_Curves == null) { _Curves = new ObservableCollection<Curve>(); } return _Curves; } set { _Curves = value; OnPropertyChanged(); } }
         public TagMode Mode = TagMode.TM_ADDBY_CATEGORY;
         public TagOrientation Horizontal = TagOrientation.Horizontal;
         public TagOrientation Vertical = TagOrientation.Vertical;
@@ -38,13 +41,76 @@ namespace R11_FoundationPile
             Diameter = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, RebarBarType.get_Parameter(BuiltInParameter.REBAR_BAR_DIAMETER).AsDouble(), false));
             
         }
-       
-        public void SetPartitionRebar(string name)
+        public void CreateRebar(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
         {
-            Parameter p1 = Rebar.LookupParameter("Partition");
-            p1.Set(name);
+            Curves = ProcessCurveRebar.GetCurvesImage0(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide);
+            if (Curves.Count != 0)
+            {
+                if ((barModel.Name.Contains("Bottom") || barModel.Name.Contains("Top")))
+                {
+                    for (int i = 0; i < Curves.Count; i++)
+                    {
+                        List<Curve> curves1 = new List<Curve>();
+                        curves1.Add(Curves[i]);
+                        CurveLoop curveL = CurveLoop.Create(curves1);
+                        List<CurveLoop> curveLs = new List<CurveLoop>();
+                        curveLs.Add(curveL);
+                        try
+                        {
+
+                            var bar = Rebar.CreateFreeForm(document, RebarBarType, FoundationModel.Foundation, curveLs, out RebarFreeFormValidationResult a);
+                            if (barModel.HookLength != 0)
+                            {
+                                bar.LookupParameter("Hook At Start").Set(barModel.Hook.Id);
+                                bar.LookupParameter("Hook At End").Set(barModel.Hook.Id);
+                                bar.SetHookRotationAngle((barModel.Name.Contains("Bottom") ? (Math.PI * 1.5) : (Math.PI * 0.5)), 0);
+                                bar.SetHookRotationAngle((barModel.Name.Contains("Bottom") ? (Math.PI * 1.5) : (Math.PI * 0.5)), 1);
+                            }
+                            Rebars.Add(bar);
+                        }
+                        catch (Exception e)
+                        {
+                            System.Windows.Forms.MessageBox.Show(e.Message);
+                        }
+                    }
+                   SetPartitionRebar(FoundationModel);
+                }
+
+                if (barModel.Name.Equals("Side"))
+                {
+                    try
+                    {
+                        var bar = Rebar.CreateFromCurves(document, RebarStyle.Standard, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, Curves, RebarHookOrientation.Right, RebarHookOrientation.Right, true, true);
+                        //bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
+                        //bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
+                        RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
+                        double s = Unit.Convert((settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Number + 1));
+                        rebarShape1.SetLayoutAsFixedNumber(barModel.Number, s, true, true, true);
+                        Rebars.Add(bar);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Windows.Forms.MessageBox.Show(e.Message);
+                    }
+                    SetPartitionRebar(FoundationModel);
+                }
+               
+            }
+            
         }
-       
+
+        private void SetPartitionRebar(FoundationModel foundationModel)
+        {
+            if (Rebars.Count!=0)
+            {
+                for (int i = 0; i < Rebars.Count; i++)
+                {
+                    Rebars[i].LookupParameter("Partition").Set(foundationModel.LocationName);
+                }
+            }
+          
+        }
+
         //#region Tag
         ////private XYZ GetXYZOriginTagDetail(UnitProject unit, InfoModel infoModel0, PlanarFace planarFace0)
         ////{

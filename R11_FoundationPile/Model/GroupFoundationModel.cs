@@ -43,21 +43,32 @@ namespace R11_FoundationPile
             }
             IsGenerate = false;
             IsCreate = false;
-            L1 = Math.Round(Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
-            L2 = Math.Round(2 * Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
+            ChangedImage(settingModel);
         }
         #region   Method
-        public void ChangedImage()
+        public void ChangedImage( SettingModel settingModel)
         {
             for (int i = 0; i < FoundationModels.Count; i++)
             {
                 FoundationModels[i].Image = Image;
             }
+            GetL1L2(settingModel);
         }
         public void GetL1L2(SettingModel settingModel)
         {
-            L1 = Math.Round(Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
-            L2 = Math.Round(2 * Math.Sqrt(3) * 0.5 * settingModel.DistancePP * settingModel.DiameterPile / 3, 3);
+            if (Image == 0)
+            {
+                L1 = Math.Round( settingModel.DiameterPile , 3);
+                L2 = Math.Round(2 * settingModel.DiameterPile, 3);
+            }
+            else
+            {
+                if (Image == 1)
+                {
+                    L1 = Math.Round(2* settingModel.DiameterPile , 3);
+                    L2 = Math.Round(2.5 *settingModel.DiameterPile, 3);
+                }
+            }
         }
         public void AddLayerPileModel(int numberPile)
         {
@@ -103,7 +114,7 @@ namespace R11_FoundationPile
                 }
                 else
                 {
-                    if (L1+L2>=settingModel.DistancePP*settingModel.DiameterPile)
+                    if (L1+L2>settingModel.DistancePP*settingModel.DiameterPile)
                     {
                         return false;
                     }

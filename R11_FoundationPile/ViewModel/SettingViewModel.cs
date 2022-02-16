@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class SettingViewModel:BaseViewModel
@@ -32,14 +33,14 @@ namespace R11_FoundationPile.ViewModel
         public ICommand CheckedTextCommand { get; set; }
         public ICommand IscreateFormWorkCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public SettingViewModel(Document doc, FoundationPileModel foundationPileModel,TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public SettingViewModel(Document doc, FoundationPileModel foundationPileModel, Languages languages)
         {
             #region property
             Doc = doc;
             FoundationPileModel = foundationPileModel;
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             #endregion
             #region
             LoadSettingViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>

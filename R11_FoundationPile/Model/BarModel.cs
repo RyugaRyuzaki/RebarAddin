@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using DSP;
+using System;
+using System.Linq;
 using WpfCustomControls;
 namespace R11_FoundationPile
 {
     public class BarModel : BaseViewModel
     {
-        
+
         private string _Name;
         public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
         private RebarBarModel _Bar;
@@ -17,7 +21,8 @@ namespace R11_FoundationPile
         public int Number { get => _Number; set { _Number = value; OnPropertyChanged(); } }
         private bool _IsModel;
         public bool IsModel { get => _IsModel; set { _IsModel = value; OnPropertyChanged(); } }
-        public BarModel(string name,RebarBarModel rebarBarModel,double hookLength,double distance,int number,bool isModel)
+        public RebarHookType Hook { get; set; }
+        public BarModel(string name, RebarBarModel rebarBarModel, double hookLength, double distance, int number, bool isModel)
         {
             Name = name;
             Bar = rebarBarModel;
@@ -29,24 +34,24 @@ namespace R11_FoundationPile
         public int GetNumberBottom(double p1, double p2, double coverSide)
         {
             double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter);
-            return (int)(sum / Distance) + 1;
+            return (int)(sum / Distance) + 2;
         }
         public int GetNumberTop(double p1, double p2, double coverSide, BarModel mainBottom, BarModel side)
         {
             double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
-            return (int)(sum / Distance) + 1;
+            return (int)(sum / Distance) + 2;
         }
         public double FixDistanceBottom(double p1, double p2, double coverSide)
         {
-            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter) ;
-            return Math.Round(sum / (Number-1), 3);
+            double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter);
+            return Math.Round(sum / (Number - 1), 3);
         }
         public double FixDistanceTop(double p1, double p2, double coverSide, BarModel mainBottom, BarModel side)
         {
             double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
             return Math.Round(sum / (Number - 1), 3);
         }
-        public double FixDistance(double p1, double p2,double p3,double p4, double coverSide, BarModel mainBottom, BarModel secondaryBottom, BarModel side)
+        public double FixDistance(double p1, double p2, double p3, double p4, double coverSide, BarModel mainBottom, BarModel secondaryBottom, BarModel side)
         {
             switch (Name)
             {
@@ -84,12 +89,66 @@ namespace R11_FoundationPile
             Number = (int)(sum / Distance) + 1;
             Distance = Math.Round(sum / (Number - 1), 3);
         }
-        public void FixNumberTop(double p1, double p2, double coverSide,BarModel mainBottom,BarModel side)
+        public void FixNumberTop(double p1, double p2, double coverSide, BarModel mainBottom, BarModel side)
         {
             double sum = (Math.Abs(p1 - p2) - 2 * coverSide - Bar.Diameter - 2 * mainBottom.Bar.Diameter - 2 * side.Bar.Diameter);
             Number = (int)(sum / Distance) + 1;
             Distance = Math.Round(sum / (Number - 1), 3);
         }
+        #region Create HookLength
+
+        private void CreateHookLengthItem(Document document, SettingModel settingModel, UnitProject unit,string locationName)
+        {
+            RebarHookType hook = settingModel.RebarHookTypes.Where(x => x.Name.Equals("Standard - 90 deg")).FirstOrDefault();
+            if (hook == null)
+            {
+                hook = settingModel.RebarHookTypes[0];
+            }
+            try
+            {
+                Hook = hook.Duplicate(Name + " " + HookLength + " " + unit.UnitName + " " + locationName) as RebarHookType;
+            }
+            catch
+            {
+                Hook = hook.Duplicate(Name + " " + HookLength + " " + unit.UnitName + " " + locationName+" Copy ") as RebarHookType;
+            }
+           
+        }
+       
+        public void CreateHookLength(Document document, SettingModel settingModel, UnitProject unit, string locationName)
+        {
+            if (IsModel && ((Name.Contains("Bottom")) || Name.Contains("Top")))
+            {
+                CreateHookLengthItem(document, settingModel, unit, locationName);
+               
+            }
+        }
+        #endregion
+        #region   Create Rebar
+        private void CreateMainBottomBar(Document document, SettingModel settingModel, UnitProject unit)
+        {
+            
+        }
+        public void IsCreateRebar(Document document, SettingModel settingModel, UnitProject unit)
+        {
+            if (IsModel)
+            {
+                switch (Name)
+                {
+                    case "MainBottom": CreateMainBottomBar(document,settingModel,unit); break;
+                    case "MainTop": break;
+                    case "MainAddHorizontal": break;
+                    case "MainAddVertical": break;
+                    case "SecondaryBottom": break;
+                    case "SecondaryTop": break;
+                    case "SecondaryAddHorizontal": break;
+                    case "SecondaryAddVertical": break;
+                    case "Side": break;
+                    default: break;
+                }
+            }
+        }
+        #endregion
 
     }
 }

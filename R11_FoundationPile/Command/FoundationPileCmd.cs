@@ -17,9 +17,10 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 namespace R11_FoundationPile
 {
     [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class FoundationPileCmd : IExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData,
+        public virtual  Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
@@ -50,7 +51,7 @@ namespace R11_FoundationPile
                 {
                     transGr.Start("RAPI00TransGr");
 
-                    FoundationPileViewModel viewModel = new FoundationPileViewModel(uidoc, doc, columns);
+                    FoundationPileViewModel viewModel = new FoundationPileViewModel(uiapp,uidoc, doc, columns);
                     FoundationPileWindow window = new FoundationPileWindow(viewModel);
 
                     //window.Show();
@@ -61,10 +62,10 @@ namespace R11_FoundationPile
 
                 return Result.Succeeded;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
 
-                System.Windows.Forms.MessageBox.Show(e.Message);
+                message = e.Message;
                 return Result.Cancelled;
             }
 

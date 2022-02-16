@@ -5,7 +5,7 @@ using Autodesk.Revit.ApplicationServices;
 
 namespace R00_Startup
 {
-    public class DLQConstraint
+    public class DSPConstraint
     {
         #region Khai báo các Field Constraint
 
@@ -19,7 +19,7 @@ namespace R00_Startup
         public string HelperPath;
 
         #endregion
-        public DLQConstraint(ControlledApplication a = null)
+        public DSPConstraint(ControlledApplication a = null)
         {
             #region   Khởi tạo giá trị cho các Field Constraint
             ContentsFolder = @"C:\ProgramData\Autodesk\ApplicationPlugins\DSP.bundle\Contents";

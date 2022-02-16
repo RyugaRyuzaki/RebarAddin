@@ -11,13 +11,13 @@ namespace R00_Startup
 {
     public class RibbonUtils
     {
-        private DLQConstraint dlqConstraint;
+        private DSPConstraint dlqConstraint;
         private string imageFolder;
         private string dllFolder;
 
         public RibbonUtils(ControlledApplication a)
         {
-            dlqConstraint = new DLQConstraint(a);
+            dlqConstraint = new DSPConstraint(a);
             imageFolder = dlqConstraint.ImageFolder;
             dllFolder = dlqConstraint.DllFolder;
         }

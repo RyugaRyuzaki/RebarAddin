@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using WpfCustomControls;
+using DSP;
 namespace R11_FoundationPile
 {
     public class SettingModel : BaseViewModel
@@ -191,7 +192,7 @@ namespace R11_FoundationPile
             RebarHookTypes.Sort((x, y) => x.Name.CompareTo(y.Name));
             SelectedHook = RebarHookTypes[0];
         }
-
+        
         public void GetFoundationViewType(Document document)
         {
             List<ViewFamilyType> list = new FilteredElementCollector(document)

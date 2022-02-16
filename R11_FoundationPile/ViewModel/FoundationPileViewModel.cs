@@ -12,6 +12,7 @@ using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
 using WpfCustomControls.Model;
 using DSP;
+using System.Windows.Controls;
 #endregion
 
 namespace R11_FoundationPile
@@ -19,6 +20,7 @@ namespace R11_FoundationPile
     public class FoundationPileViewModel : BaseViewModel
     {
         #region property
+        public UIApplication Uiapp;
         public UIDocument UiDoc;
         public Document Doc;
         private UnitProject _Unit;
@@ -63,9 +65,10 @@ namespace R11_FoundationPile
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         #endregion
-        public FoundationPileViewModel(UIDocument uiDoc, Document doc, List<Element> columns)
+        public FoundationPileViewModel(UIApplication uiapp,UIDocument uiDoc, Document doc, List<Element> columns)
         {
             #region
+            Uiapp = uiapp;
             UiDoc = uiDoc;
             Doc = doc;
             Columns = columns;
@@ -74,8 +77,8 @@ namespace R11_FoundationPile
             TransactionGroup = new TransactionGroup(Doc);
             TaskBarViewModel = new TaskBarViewModel(Languages);
             FoundationPileModel = new FoundationPileModel(columns, Doc, Unit);
-            SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, TaskBarViewModel);
-            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+            SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, Languages);
+            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, Languages);
 
            
             StatusBarViewModel = new StatusBarViewModel(FoundationPileModel.ProgressModel, Languages);
@@ -145,14 +148,14 @@ namespace R11_FoundationPile
                    CreatePileDetailPlan(p);
                    
                });
-            CreateReinforcementCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
+            CreateReinforcementCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation; }, (p) =>
             {
-               
+                CreateReinforcement(p);
             });
             #endregion
         }
 
-       
+        
         #region Get Property Method
 
         private UnitProject GetUnitProject()
@@ -201,7 +204,7 @@ namespace R11_FoundationPile
             }
             return a;
         }
-        #endregion
+        #endregion                                                                             
         #region Draw Menu
         private void DrawMenu(FoundationPileWindow p)
         {
@@ -216,8 +219,8 @@ namespace R11_FoundationPile
         {
             if (FoundationPileModel.IsCreateGrounpFoundation)
             {
-                p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Visible; PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
-                p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Visible; ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel, Unit, TaskBarViewModel);
+                p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Visible; PileDetailViewModel = new PileDetailViewModel(Doc, FoundationPileModel, Unit, Languages);
+                p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Visible; ReinforcementViewModel = new ReinforcementViewModel(Doc, FoundationPileModel, Unit, Languages);
             }
 
         }
@@ -247,6 +250,17 @@ namespace R11_FoundationPile
             if (TransactionGroup.HasStarted())
             {
                 CreatePileDetail.Create(p, FoundationPileModel, Doc, Unit);
+                TransactionGroup.Commit();
+                //p.DialogResult = true;
+            }
+        }
+        private void CreateReinforcement(FoundationPileWindow p)
+        {
+            TransactionGroup.Start("Action");
+            if (TransactionGroup.HasStarted())
+            {
+                CreateHookLength.Create(p, FoundationPileModel, Doc, Unit);
+                CreateRebar.Create( p, FoundationPileModel, Doc, Unit);
                 TransactionGroup.Commit();
                 //p.DialogResult = true;
             }

@@ -8,8 +8,10 @@ namespace R11_FoundationPile
     public class ColumnsBoundingBox
     {
         #region Columns and Beams Node
-       
-       
+      
+
+
+
         public static List<Element> GetBeamsBoudingBoxSameTopLevelColumns(List<Element> columns, Document document,  string level)
         {
             List<Element> beams = new List<Element>();

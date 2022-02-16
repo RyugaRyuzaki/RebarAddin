@@ -31,8 +31,9 @@ namespace WpfCustomControls.ViewModel
         {
             ProgressModel = progressModel;
             Languages = languages;
+            HideAllStatusBar();
         }
-        public void SetStatusBarFoundationPile()
+        private void HideAllStatusBar()
         {
             HasDetailItemColumns(false);
             HasRebarColumns(false);
@@ -40,6 +41,13 @@ namespace WpfCustomControls.ViewModel
             HasRebarBeams(false);
             HasCancel(true);
             HasOK(false);
+            HasCreateReinforcement(false);
+            HasCreatePileDetail(false);
+            HasCreateFoundationPile(false);
+        }
+        public void SetStatusBarFoundationPile()
+        {
+            HasCancel(true);
             HasCreateReinforcement(true);
             HasCreatePileDetail(true);
             HasCreateFoundationPile(true);
@@ -48,25 +56,15 @@ namespace WpfCustomControls.ViewModel
         {
             HasDetailItemColumns(true);
             HasRebarColumns(true);
-            HasDetailItemBeams(false);
-            HasRebarBeams(false);
             HasCancel(true);
             HasOK(true);
-            HasCreateReinforcement(false);
-            HasCreatePileDetail(false);
-            HasCreateFoundationPile(false);
         }
         public void SetStatusBarBeams()
         {
-            HasDetailItemColumns(false);
-            HasRebarColumns(false);
             HasDetailItemBeams(true);
             HasRebarBeams(true);
             HasCancel(true);
             HasOK(true);
-            HasCreateReinforcement(false);
-            HasCreatePileDetail(false);
-            HasCreateFoundationPile(false);
         }
         private void HasDetailItemColumns(bool detailItem)
         {

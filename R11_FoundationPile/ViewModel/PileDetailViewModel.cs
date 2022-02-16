@@ -4,6 +4,7 @@ using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using DSP;
+using WpfCustomControls.LanguageModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class PileDetailViewModel : BaseViewModel
@@ -29,15 +30,15 @@ namespace R11_FoundationPile.ViewModel
         public ICommand SelectionChangedFoundationCommand { get; set; }
         public ICommand SelectionChangedPileCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject, TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public PileDetailViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unitProject, Languages languages)
         {
             #region property
             Doc = doc;
             Unit = unitProject;
             FoundationPileModel = foundationPileModel;
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             #endregion
             #region Load
             LoadPileDetailViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>

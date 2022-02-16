@@ -1,11 +1,12 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DSP;
 using WpfCustomControls;
 namespace R11_FoundationPile
 {
@@ -23,7 +24,8 @@ namespace R11_FoundationPile
       
         private ObservableCollection<BarModel> _BarModels;
         public ObservableCollection<BarModel> BarModels { get => _BarModels; set { _BarModels = value; OnPropertyChanged(); } }
-        
+       
+
         #endregion
         public FoundationBarModel(int type,int image,string locationName,string spanOrientation,Document document,SettingModel settingModel, List<RebarBarModel> AllBars)
         {
@@ -55,5 +57,6 @@ namespace R11_FoundationPile
                 BarModels[i].Number = BarModels[i].FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
             }
         }
+       
     }
 }

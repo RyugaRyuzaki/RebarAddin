@@ -73,6 +73,6 @@
     </Style>
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="BorderBrush" Value="Black"></Setter>
-        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>                                     
     </Style>
 </ResourceDictionary>

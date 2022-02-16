@@ -8,6 +8,7 @@ using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using DSP;
+using WpfCustomControls.LanguageModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class ReinforcementViewModel : BaseViewModel
@@ -50,16 +51,16 @@ namespace R11_FoundationPile.ViewModel
         public ICommand NumberBarTextChangedCommand { get; set; }
         public ICommand SelectionChangedBarCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unit, TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public ReinforcementViewModel(Document doc, FoundationPileModel foundationPileModel, UnitProject unit, Languages languages)
         {
             #region property
             Doc = doc;
             Unit = unit;
             FoundationPileModel = foundationPileModel;
             FoundationPileModel.GetBarModels(Doc);
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             #endregion
             #region Load
             LoadReinforcementViewCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
@@ -121,6 +122,7 @@ namespace R11_FoundationPile.ViewModel
                 BarModel mainBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
                 BarModel secondaryBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
                 BarModel side = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
+                SelectedBarModel.Number = SelectedBarModel.FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
                 SelectedBarModel.Distance = SelectedBarModel.FixDistance(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
                 DrawMain(p);
             });
@@ -139,16 +141,16 @@ namespace R11_FoundationPile.ViewModel
                 {
                     if (S>0)
                     {
-                        double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
-                        FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
-                        double p1 = GetP1(foundationModel);
-                        double p2 = GetP2(foundationModel);
-                        double p3 = GetP3(foundationModel);
-                        double p4 = GetP4(foundationModel);
-                        BarModel mainBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
-                        BarModel secondaryBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
-                        BarModel side = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
-                        SelectedBarModel.Number = SelectedBarModel.FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
+                        //double coverSide = double.Parse(UnitFormatUtils.Format(Doc.GetUnits(), SpecTypeId.Length, FoundationPileModel.SettingModel.SelectedSideCover.CoverDistance, false));
+                        //FoundationModel foundationModel = FoundationPileModel.FindFoundationModelByLoacationName(SelectedFoundationBarModel.LocationName);
+                        //double p1 = GetP1(foundationModel);
+                        //double p2 = GetP2(foundationModel);
+                        //double p3 = GetP3(foundationModel);
+                        //double p4 = GetP4(foundationModel);
+                        //BarModel mainBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault();
+                        //BarModel secondaryBottom = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("SecondaryBottom")).FirstOrDefault();
+                        //BarModel side = SelectedFoundationBarModel.BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault();
+                        //SelectedBarModel.Number = SelectedBarModel.FixNumber(p1, p2, p3, p4, coverSide, mainBottom, secondaryBottom, side);
                         DrawMain(p);
                     }
                 }
