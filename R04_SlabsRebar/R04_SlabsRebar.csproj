@@ -77,7 +77,6 @@
     <Compile Include="Library\Orther\Cooperator.cs" />
     <Compile Include="Library\Orther\LineProcess.cs" />
     <Compile Include="Library\Orther\SolidFace.cs" />
-    <Compile Include="Library\Unit\ChangeUnit.cs" />
     <Compile Include="Model\SlabModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
@@ -95,46 +94,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Library\Resource\ButtonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\CheckBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\ComboBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\DataGridStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\ProgressBarStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\RadiobuttonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\TextBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\TreeViewStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Library\Resource\WrapPanelStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\GeometryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,10 +110,21 @@
   <ItemGroup>
     <Folder Include="Icons\" />
     <Folder Include="Library\Compare\" />
-    <Folder Include="Library\Warning\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSP\DSP.csproj">
+      <Project>{a116ed71-d8e6-4f8a-962c-144680b63a13}</Project>
+      <Name>DSP</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfCustomControls\WpfCustomControls.csproj">
+      <Project>{31808d97-c013-4684-aa1c-f2f46a892ca4}</Project>
+      <Name>WpfCustomControls</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

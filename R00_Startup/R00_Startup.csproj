@@ -61,7 +61,7 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DLQConstraint.cs" />
+    <Compile Include="DSPConstraint.cs" />
     <Compile Include="DSPApp.cs" />
     <Compile Include="Model\LicenseModel.cs" />
     <Compile Include="RibbonUtils.cs" />

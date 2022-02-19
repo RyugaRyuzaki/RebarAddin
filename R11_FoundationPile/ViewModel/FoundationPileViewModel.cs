@@ -141,14 +141,15 @@ namespace R11_FoundationPile
               {
                   CreateFoundation(p);
                   ShowPileDetailAndReinforcement(p);
-                 
+                  StatusBarViewModel.HasCreateReinforcement(true);
+                  StatusBarViewModel.HasCreatePileDetail(true);
               });
             CreatePileDetailCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation && FoundationPileModel.IsApplyRule && !FoundationPileModel.IsCreatePileDetail; }, (p) =>
                {
                    CreatePileDetailPlan(p);
                    
                });
-            CreateReinforcementCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation; }, (p) =>
+            CreateReinforcementCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation&&FoundationPileModel.FoundationBarModels.Count!=0&& !FoundationPileModel. IsCreateReinforcement; }, (p) =>
             {
                 CreateReinforcement(p);
             });
@@ -259,8 +260,7 @@ namespace R11_FoundationPile
             TransactionGroup.Start("Action");
             if (TransactionGroup.HasStarted())
             {
-                CreateHookLength.Create(p, FoundationPileModel, Doc, Unit);
-                CreateRebar.Create( p, FoundationPileModel, Doc, Unit);
+                CreateRebar.Create(p, FoundationPileModel, Doc, Unit);
                 TransactionGroup.Commit();
                 //p.DialogResult = true;
             }

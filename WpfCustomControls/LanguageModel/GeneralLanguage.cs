@@ -11,6 +11,8 @@ namespace WpfCustomControls.LanguageModel
 
         private string _NameBar;
         public string NameBar { get { return _NameBar; } set { _NameBar = value; OnPropertyChanged(); } }
+        private string _LayerBar;
+        public string LayerBar { get { return _LayerBar; } set { _LayerBar = value; OnPropertyChanged(); } }
         private string _Bar;
         public string Bar { get { return _Bar; } set { _Bar = value; OnPropertyChanged(); } }
 
@@ -42,6 +44,7 @@ namespace WpfCustomControls.LanguageModel
         private void GetLanguageEN()
         {
             NameBar = "Name Bar";
+            LayerBar = "Layer";
             Bar = "Bar";
             Distance = "Distance";
             NumberBar = "No";
@@ -50,6 +53,7 @@ namespace WpfCustomControls.LanguageModel
         private void GetLanguageVN()
         {
             NameBar = "Loại Thép";
+            LayerBar = "Lớp";
             Bar = "Thép";
             Distance = "KC";
             NumberBar = "SL";

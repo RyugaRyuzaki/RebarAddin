@@ -791,8 +791,8 @@ namespace R11_FoundationPile
             double left = (p1 + ((p1 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 + mainBottom.Bar.Diameter)) / drawModel.Scale;
             double right = (p2 + ((p2 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 + mainBottom.Bar.Diameter)) / drawModel.Scale;
             double bot = 410 - drawModel.Side - (coverBottom + barModel.Bar.Diameter * 0.5) / drawModel.Scale;
-            double distance = (settingModel.HeightFoundation - coverBottom - coverTop - barModel.Bar.Diameter) / (barModel.Number + 1);
-            for (int i = 0; i < barModel.Number; i++)
+            double distance = (settingModel.HeightFoundation - coverBottom - coverTop - barModel.Bar.Diameter) / (barModel.Layer + 1);
+            for (int i = 0; i < barModel.Layer; i++)
             {
                 DrawImage.DrawOneBarSection(canvas, drawModel.Left + left, bot - (i + 1) * distance / drawModel.Scale, drawModel.Scale, barModel.Bar.Diameter, solidColorBrush);
                 DrawImage.DrawOneBarSection(canvas, drawModel.Left + right, bot - (i + 1) * distance / drawModel.Scale, drawModel.Scale, barModel.Bar.Diameter, solidColorBrush);
@@ -803,8 +803,8 @@ namespace R11_FoundationPile
             double left = (p1 + ((p1 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 + secondaryBottom.Bar.Diameter)) / drawModel.Scale;
             double right = (p2 + ((p2 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 + secondaryBottom.Bar.Diameter)) / drawModel.Scale;
             double bot = 820 - drawModel.Side - (coverBottom + barModel.Bar.Diameter * 0.5) / drawModel.Scale;
-            double distance = (settingModel.HeightFoundation - coverBottom - coverTop - barModel.Bar.Diameter) / (barModel.Number + 1);
-            for (int i = 0; i < barModel.Number; i++)
+            double distance = (settingModel.HeightFoundation - coverBottom - coverTop - barModel.Bar.Diameter) / (barModel.Layer + 1);
+            for (int i = 0; i < barModel.Layer; i++)
             {
                 DrawImage.DrawOneBarSection(canvas, drawModel.Left + left, bot - (i + 1) * distance / drawModel.Scale, drawModel.Scale, barModel.Bar.Diameter, solidColorBrush);
                 DrawImage.DrawOneBarSection(canvas, drawModel.Left + right, bot - (i + 1) * distance / drawModel.Scale, drawModel.Scale, barModel.Bar.Diameter, solidColorBrush);
@@ -813,11 +813,11 @@ namespace R11_FoundationPile
         private static void DrawAddHorizontalBarItem(Canvas canvas, DrawModel drawModel, BarModel barModel, SettingModel settingModel, double p1, double p2, double coverTop, double coverBottom, double coverSide, double hook, SolidColorBrush solidColorBrush,bool main)
         {
 
-            double left = (p1) / drawModel.Scale;
+            double left = ((p1<0)?p1:p2) / drawModel.Scale;
             double b = (Math.Abs(p1 - p2));
             double bot = ((main)?410:820) - drawModel.Side - (coverBottom) / drawModel.Scale;
-            double distance = (settingModel.HeightFoundation - coverBottom - coverTop) / (barModel.Number + 1);
-            for (int i = 0; i < barModel.Number; i++)
+            double distance = (settingModel.HeightFoundation - coverBottom - coverTop) / (barModel.Layer + 1);
+            for (int i = 0; i < barModel.Layer; i++)
             {
                 DrawImage.DrawHook(canvas, drawModel.Left + left, bot - (i + 1) * distance / drawModel.Scale, drawModel.Scale, b, coverSide, barModel.Bar.Diameter, 2 * barModel.Bar.Diameter, hook, solidColorBrush);
             }
@@ -825,11 +825,11 @@ namespace R11_FoundationPile
         private static void DrawAddVerticalBarItem(Canvas canvas, DrawModel drawModel, BarModel barModel, SettingModel settingModel, double p1, double p2, double coverTop, double coverBottom, double coverSide, double hook, SolidColorBrush solidColorBrush, bool main)
         {
 
-            double left = (p1 + ((p1 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 )) / drawModel.Scale;
+            double left = ((p1<0)?p1:p2 + ((p1 < 0) ? (1) : (-1)) * (coverSide + barModel.Bar.Diameter * 0.5 )) / drawModel.Scale;
             double b = settingModel.HeightFoundation - (coverBottom-coverTop);
             double top = ((main) ? 410 : 820) - drawModel.Side - settingModel.HeightFoundation / drawModel.Scale;
-            double distance = (Math.Abs(p1-p2)) / (barModel.Number + 1);
-            for (int i = 0; i < barModel.Number; i++)
+            double distance = (Math.Abs(p1-p2)-2*coverSide- barModel.Bar.Diameter) / (barModel.Layer + 1);
+            for (int i = 0; i < barModel.Layer; i++)
             {
                 DrawImage.DrawHookVertical(canvas, drawModel.Left + left + (i + 1) * distance / drawModel.Scale, top, drawModel.Scale, b, coverTop, barModel.Bar.Diameter, 2 * barModel.Bar.Diameter, hook, solidColorBrush);
             }

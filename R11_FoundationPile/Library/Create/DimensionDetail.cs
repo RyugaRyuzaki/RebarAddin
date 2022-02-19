@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using WpfCustomControls;
 using DSP;
+using ViewCallOut = Autodesk.Revit.DB.View;
 namespace R11_FoundationPile
 {
     public class DimensionDetail : BaseViewModel
@@ -160,6 +161,24 @@ namespace R11_FoundationPile
             {
                 Line line = foundationModel.GetFoundationLineDimHorizontalImage0(viewPlan, document, unit, settingModel);
                 Dimension dimension = document.Create.NewDimension(viewPlan, line, referenceArray, settingModel.SelectedDimensionType);
+            }
+        }
+        public void CreateDimensionFoundationVerticalCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel, FoundationModel foundationModel, int image)
+        {
+            ReferenceArray referenceArray = foundationModel.GetReferenceArrayVerticalCallOut(viewCallOut, document, unit, settingModel, image);
+            if (referenceArray.Size >= 2)
+            {
+                Line line = foundationModel.GetFoundationLineDimVerticalImage0CallOut(viewCallOut, document, unit, settingModel);
+                Dimension dimension = document.Create.NewDimension(viewCallOut, line, referenceArray, settingModel.SelectedDimensionType);
+            }
+        }
+        public void CreateDimensionFoundationHorizontalCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel, FoundationModel foundationModel, int image)
+        {
+            ReferenceArray referenceArray = foundationModel.GetReferenceArrayHorizontalCallOut(viewCallOut, document, unit, settingModel, image);
+            if (referenceArray.Size >= 2)
+            {
+                Line line = foundationModel.GetFoundationLineDimHorizontalImage0CallOut(viewCallOut, document, unit, settingModel);
+                Dimension dimension = document.Create.NewDimension(viewCallOut, line, referenceArray, settingModel.SelectedDimensionType);
             }
         }
         #endregion

@@ -1,24 +1,33 @@
-<Window x:Name="MainWindow" x:Class="R04_SlabsRebar.APIWindow"
+<Window x:Name="MainWindow" x:Class="R04_SlabsRebar.SlabsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        
+        xmlns:custom="clr-namespace:WpfCustomControls.CustomControls;assembly=WpfCustomControls"
+        xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel;assembly=WpfCustomControls"
         ResizeMode="NoResize" 
         ShowInTaskbar="True" 
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800"
         Topmost="False"
         Background="White"
+     
         >
     <Window.Resources>
-        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                   
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
-  <StackPanel>
-        <TextBlock Text="En cours......" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
-  </StackPanel>
+  <Grid>
+
+        
+    </Grid>
 </Window>

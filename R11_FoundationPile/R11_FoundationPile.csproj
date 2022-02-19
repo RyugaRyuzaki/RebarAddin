@@ -91,7 +91,6 @@
     <Compile Include="Library\Compare\DistinctCompare.cs" />
     <Compile Include="Library\Compare\DistinctID.cs" />
     <Compile Include="Library\Create\CreateFoundationAndPiles.cs" />
-    <Compile Include="Library\Create\CreateHookLength.cs" />
     <Compile Include="Library\Create\CreatePileDetail.cs" />
     <Compile Include="Library\Create\CreateRebar.cs" />
     <Compile Include="Library\Create\DimensionDetail.cs" />

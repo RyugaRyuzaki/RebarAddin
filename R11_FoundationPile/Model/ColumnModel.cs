@@ -120,6 +120,7 @@ namespace R11_FoundationPile
             }
             else
             {
+                Bottom = SolidFace.GetBottom(Element);
                 //PointPosition = PointModel.ProjectToPlane((Element.Location as LocationPoint).Point, Bottom);
                 //PointXPosition = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, PointPosition.X, false));
                 //PointYPosition = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, PointPosition.Y, false));

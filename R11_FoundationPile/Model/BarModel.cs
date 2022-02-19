@@ -19,10 +19,12 @@ namespace R11_FoundationPile
         public double Distance { get => _Distance; set { _Distance = value; OnPropertyChanged(); } }
         private int _Number;
         public int Number { get => _Number; set { _Number = value; OnPropertyChanged(); } }
+        private int _Layer;
+        public int Layer { get => _Layer; set { _Layer = value; OnPropertyChanged(); } }
         private bool _IsModel;
         public bool IsModel { get => _IsModel; set { _IsModel = value; OnPropertyChanged(); } }
         public RebarHookType Hook { get; set; }
-        public BarModel(string name, RebarBarModel rebarBarModel, double hookLength, double distance, int number, bool isModel)
+        public BarModel(string name, RebarBarModel rebarBarModel, double hookLength, double distance, int number,int layer, bool isModel)
         {
             Name = name;
             Bar = rebarBarModel;
@@ -30,6 +32,7 @@ namespace R11_FoundationPile
             Distance = distance;
             Number = number;
             IsModel = isModel;
+            Layer = layer;
         }
         public int GetNumberBottom(double p1, double p2, double coverSide)
         {
@@ -57,11 +60,11 @@ namespace R11_FoundationPile
             {
                 case "MainBottom": return FixDistanceBottom(p3, p4, coverSide);
                 case "MainTop": return FixDistanceTop(p3, p4, coverSide, secondaryBottom, side);
-                case "MainAddHorizontal": return Distance;
+                case "MainAddHorizontal": return FixDistanceBottom(p3, p4, coverSide);
                 case "MainAddVertical": return Distance;
                 case "SecondaryBottom": return FixDistanceBottom(p1, p2, coverSide);
                 case "SecondaryTop": return FixDistanceTop(p1, p2, coverSide, mainBottom, side);
-                case "SecondaryAddHorizontal": return Distance;
+                case "SecondaryAddHorizontal": return FixDistanceBottom(p3, p4, coverSide);
                 case "SecondaryAddVertical": return Distance;
                 case "Side": return Distance;
                 default: return Distance;
@@ -73,11 +76,11 @@ namespace R11_FoundationPile
             {
                 case "MainBottom": return GetNumberBottom(p3, p4, coverSide);
                 case "MainTop": return GetNumberTop(p3, p4, coverSide, secondaryBottom, side);
-                case "MainAddHorizontal": return Number;
+                case "MainAddHorizontal": return GetNumberBottom(p3, p4, coverSide);
                 case "MainAddVertical": return Number;
                 case "SecondaryBottom": return GetNumberBottom(p1, p2, coverSide);
                 case "SecondaryTop": return GetNumberTop(p1, p2, coverSide, mainBottom, side);
-                case "SecondaryAddHorizontal": return Number;
+                case "SecondaryAddHorizontal": return GetNumberBottom(p3, p4, coverSide);
                 case "SecondaryAddVertical": return Number;
                 case "Side": return Number;
                 default: return Number;
@@ -99,7 +102,7 @@ namespace R11_FoundationPile
 
         private void CreateHookLengthItem(Document document, SettingModel settingModel, UnitProject unit,string locationName)
         {
-            RebarHookType hook = settingModel.RebarHookTypes.Where(x => x.Name.Equals("Standard - 90 deg")).FirstOrDefault();
+            RebarHookType hook = new FilteredElementCollector(document).WhereElementIsElementType().OfClass(typeof(RebarHookType)).Cast<RebarHookType>().Where(x => x.Name.Contains("Standard")).FirstOrDefault();
             if (hook == null)
             {
                 hook = settingModel.RebarHookTypes[0];

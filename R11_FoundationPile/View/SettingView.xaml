@@ -353,7 +353,45 @@
                     </Grid>
 
                 </GroupBox>
-               
+                <GroupBox Grid.Row="3" Header="{Binding Languages.R11_Language.SettingLanguage.CoverProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverTop,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"   IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedTopCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"     IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedSideCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"    IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedBotomCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                        <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="HookType" ></TextBlock>
+                        <ComboBox Grid.Row="3" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"   IsEnabled="{Binding IsApply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarHookTypes}" DisplayMemberPath="Name"
+                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    >
+                        </ComboBox>
+                    </Grid>
+
+                </GroupBox>
             </Grid>
         </ScrollViewer>
 

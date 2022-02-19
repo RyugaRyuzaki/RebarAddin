@@ -42,7 +42,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
-                            <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.ReinforcementLanguage.Representative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                            <!--<TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.ReinforcementLanguage.Representative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>-->
                             <TextBlock  Style="{StaticResource DataGridTextBlockCenter}" Margin="10 0 0 0" Foreground="Red" FontWeight="Bold" FontSize="15" Text="{Binding SelectedFoundationBarModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         </DockPanel>
                         <DockPanel LastChildFill="False" Height="35">
@@ -75,11 +75,11 @@
                                 </i:Interaction.Triggers>
                                 <ListView.View>
                                     <GridView   >
-                                        <GridViewColumn  Width="150" Header="{Binding Languages.GeneralLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                        <GridViewColumn  Width="145" Header="{Binding Languages.GeneralLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                                         <GridViewColumn Width="40" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
-                                        <GridViewColumn Width="40" Header="{Binding Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="{Binding Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
+                                        <GridViewColumn Width="35" Header="{Binding Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="{Binding Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
                                         
                                     </GridView>
                                 </ListView.View>
@@ -143,8 +143,8 @@
                                     Command="{Binding FixedNumberBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"   x:Name="FixNumberButton"
                                     ></Button>
 
-                            <TextBlock Grid.Row="2" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="NumberTextBlock" ></TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding SelectedBarModel.Number,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource TextBoxStyle}" x:Name="NumberTextBox" >
+                            <TextBlock Grid.Row="2" Grid.Column="3"   Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.LayerBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="NumberTextBlock" ></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding SelectedBarModel.Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource TextBoxStyle}" x:Name="NumberTextBox" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
                                         <i:InvokeCommandAction Command="{Binding NumberBarTextChangedCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
@@ -157,45 +157,7 @@
 
                 </GroupBox>
                 <Canvas Grid.Row="3" Margin="5" x:Name="BarCanvas"></Canvas>
-                <GroupBox Grid.Row="4" Header="{Binding Languages.R11_Language.SettingLanguage.CoverProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverTop,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                        <ComboBox Grid.Row="0" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"
-                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
-                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedTopCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    >
-                        </ComboBox>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverSide,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                        <ComboBox Grid.Row="1" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}"  
-                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
-                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedSideCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    >
-                        </ComboBox>
-                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R11_Language.SettingLanguage.CoverBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
-                        <ComboBox Grid.Row="2" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}" 
-                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarCoverTypes}" DisplayMemberPath="Name"
-                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedBotomCover,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    >
-                        </ComboBox>
-                        <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource DataGridTextBlockStyle}" Text="HookType" ></TextBlock>
-                        <ComboBox Grid.Row="3" Grid.Column="1"   Style="{StaticResource ComboBoxStyle}" 
-                                    ItemsSource="{Binding FoundationPileModel.SettingModel.RebarHookTypes}" DisplayMemberPath="Name"
-                                    SelectedItem="{Binding FoundationPileModel.SettingModel.SelectedHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    >
-                        </ComboBox>
-                    </Grid>
-
-                </GroupBox>
+               
             </Grid>
         </ScrollViewer>
 

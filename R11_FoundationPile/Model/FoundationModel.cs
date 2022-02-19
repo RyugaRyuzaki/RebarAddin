@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using WpfCustomControls;
 using DSP;
+using ViewCallOut = Autodesk.Revit.DB.View;
 namespace R11_FoundationPile
 {
     public class FoundationModel : BaseViewModel
@@ -77,50 +78,601 @@ namespace R11_FoundationPile
             SpanOrientation = "Horizontal";
            
         }
-        #region PlanarFace
-        //public void GetPlanarFaces()
+        #region Offset
+        public List<LocationModel> GetOffsetBoundingFoundation2(SettingModel settingModel, double offset)
+        {
+            List<LocationModel> list = new List<LocationModel>();
+            double angle = 2 * Math.PI / 5;
+            double angle0 = 0;
+            if (ColumnModel.Style.Equals("RECTANGLE"))
+            {
+                if (ColumnModel.b <= ColumnModel.h)
+                {
+
+                    angle0 = (IsRollBack) ? Math.PI * 1.5 : Math.PI * 0.5;
+                }
+                else
+                {
+                    angle0 = (IsRollBack) ? Math.PI * 2 : Math.PI;
+                }
+            }
+            else
+            {
+                angle0 = (IsRollBack) ? Math.PI * 1.5 : Math.PI * 0.5;
+            }
+            double radius = settingModel.DistancePP * settingModel.DiameterPile + settingModel.DistancePS - offset;
+            for (int i = 0; i < 5; i++)
+            {
+                double x = Math.Round(Math.Cos(angle0 + (i) * angle) * (radius), 9), y = Math.Round(Math.Sin(angle0 + (i) * angle) * (radius), 9), z = ColumnModel.PointZPosition;
+                list.Add(new LocationModel(x, y, z));
+            }
+            return list;
+        }
+        public List<LocationModel> GetOffsetBoundingFoundation3(SettingModel settingModel, double offset)
+        {
+            List<LocationModel> list = new List<LocationModel>();
+            double angle = 2 * Math.PI / 6;
+            double angle0 = 0;
+            if (ColumnModel.Style.Equals("RECTANGLE"))
+            {
+                if (ColumnModel.b <= ColumnModel.h)
+                {
+
+                    angle0 = 0;
+                }
+                else
+                {
+                    angle0 = Math.PI * 0.5;
+                }
+            }
+            else
+            {
+                angle0 = 0;
+            }
+            double radius = settingModel.DistancePP * settingModel.DiameterPile + settingModel.DistancePS - offset;
+            for (int i = 0; i < 6; i++)
+            {
+                double x = Math.Round(Math.Cos(angle0 + (i) * angle) * (radius), 9), y = Math.Round(Math.Sin(angle0 + (i) * angle) * (radius), 9), z = ColumnModel.PointZPosition;
+                list.Add(new LocationModel(x, y, z));
+            }
+            return list;
+        }
+        //private List<LocationModel> GetOffseBoundingFoundation0(SettingModel settingModel, double offset)
         //{
-        //    Solid solid = SolidFace.GetSolidOneElement(Foundation);
-        //    List<PlanarFace> planarFaces = new List<PlanarFace>();
-        //    if (solid!=null)
+        //    List<LocationModel> list = new List<LocationModel>();
+           
+        //    if (ColumnModel.Style.Equals("RECTANGLE"))
         //    {
-        //        FaceArray faceArray = solid.Faces;
-        //        foreach (var item in faceArray)
+        //        if (ColumnModel.b <= ColumnModel.h)
         //        {
-        //            PlanarFace a = item as PlanarFace;
-        //            if(a!=null&&(PointModel.AreEqual(a.FaceNormal.AngleTo(XYZ.BasisZ),Math.PI*0.5)))
-        //            {
-        //                planarFaces.Add(a);
-        //            }
+        //            x1 = dp_p * 0.5 + dp_s; y1 = L1 + dp_s;
+        //            x2 = x1; y2 = L1 - dp_s;
+        //            x3 = dp_s; y3 = -L2 - dp_s;
+        //            x4 = -dp_s; y4 = -L2 - dp_s;
+        //            x5 = -dp_p * 0.5 - dp_s; y5 = L1 - dp_s;
+        //            x6 = x5; y6 = L1 + dp_s;
+        //            BoundingLocation.Add(new LocationModel(x1, (IsRollBack) ? -y1 : y1, z1));
+        //            BoundingLocation.Add(new LocationModel(x2, (IsRollBack) ? -y2 : y2, z2));
+        //            BoundingLocation.Add(new LocationModel(x3, (IsRollBack) ? -y3 : y3, z3));
+        //            BoundingLocation.Add(new LocationModel(x4, (IsRollBack) ? -y4 : y4, z4));
+        //            BoundingLocation.Add(new LocationModel(x5, (IsRollBack) ? -y5 : y5, z5));
+        //            BoundingLocation.Add(new LocationModel(x6, (IsRollBack) ? -y6 : y6, z6));
+        //            Width = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
+        //            Length = 2 * settingModel.DistancePS + L1 + L2;
         //        }
-        //        if (planarFaces.Count != 0&&planarFaces.Count==CurveArray.Size)
+        //        else
         //        {
-        //            for (int i = 0; i < planarFaces.Count; i++)
-        //            {
-        //                try
-        //                {
-        //                    Line line = CurveArray.get_Item(i) as Line;
-        //                    if (line != null)
-        //                    {
-        //                        XYZ v1 = line.Direction.CrossProduct(planarFaces[i].FaceNormal);
-        //                        if (PointModel.AreEqual(v1.AngleTo(XYZ.BasisZ),0))
-        //                        {
-        //                            PlanarFaces.Add(planarFaces[i]);
-        //                        }
-        //                    }
-
-        //                }
-        //                catch (Exception e)
-        //                {
-
-        //                    System.Windows.Forms.MessageBox.Show(e.Message);
-        //                }
-                        
-        //            }
-                     
+        //            x1 = -L1 - dp_s; y1 = dp_p * 0.5 + dp_s;
+        //            x2 = -L1 + dp_s; y2 = y1;
+        //            x3 = L2 + dp_s; y3 = dp_s;
+        //            x4 = x3; y4 = -dp_s;
+        //            x5 = -L1 + dp_s; y5 = -dp_p * 0.5 - dp_s;
+        //            x6 = x1; y6 = y5;
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x1 : x1, y1, z1));
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x2 : x2, y2, z2));
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x3 : x3, y3, z3));
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x4 : x4, y4, z4));
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x5 : x5, y5, z5));
+        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x6 : x6, y6, z6));
+        //            Length = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
+        //            Width = 2 * settingModel.DistancePS + L1 + L2;
         //        }
         //    }
+        //    else
+        //    {
+        //        x1 = dp_p * 0.5 + dp_s; y1 = L1 + dp_s;
+        //        x2 = x1; y2 = L1 - dp_s;
+        //        x3 = dp_s; y3 = -L2 - dp_s;
+        //        x4 = -dp_s; y4 = -L2 - dp_s;
+        //        x5 = -dp_p * 0.5 - dp_s; y5 = L1 - dp_s;
+        //        x6 = x5; y6 = L1 + dp_s;
+        //        BoundingLocation.Add(new LocationModel(x1, (IsRollBack) ? -y1 : y1, z1));
+        //        BoundingLocation.Add(new LocationModel(x2, (IsRollBack) ? -y2 : y2, z2));
+        //        BoundingLocation.Add(new LocationModel(x3, (IsRollBack) ? -y3 : y3, z3));
+        //        BoundingLocation.Add(new LocationModel(x4, (IsRollBack) ? -y4 : y4, z4));
+        //        BoundingLocation.Add(new LocationModel(x5, (IsRollBack) ? -y5 : y5, z5));
+        //        BoundingLocation.Add(new LocationModel(x6, (IsRollBack) ? -y6 : y6, z6));
+        //        Width = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
+        //        Length = 2 * settingModel.DistancePS + L1 + L2;
+        //    }
+        //    return list;
         //}
+        #endregion
+        #region PlanarFace
+        public double GetP1(FoundationBarModel SelectedFoundationBarModel)
+        {
+            double p1 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[2].Y;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p1 = BoundingLocation[0].X;
+                    }
+                    else
+                    {
+                        p1 = BoundingLocation[0].Y;
+                    }
+
+                    break;
+                case 2:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[2].Y;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[3].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[3].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    break;
+                default:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[2].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p1 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                        else
+                        {
+                            p1 = BoundingLocation[2].Y;
+                        }
+                    }
+                    break;
+            }
+            return p1;
+        }
+        public double GetP2(FoundationBarModel SelectedFoundationBarModel)
+        {
+            double p2 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p2 = BoundingLocation[BoundingLocation.Count-1].X;
+                    }
+                    else
+                    {
+                        p2 = BoundingLocation[1].Y;
+                    }
+
+                    break;
+                case 2:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[1].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[1].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[1].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[1].Y;
+                        }
+                    }
+                    break;
+                default:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p2 = BoundingLocation[0].X;
+                        }
+                        else
+                        {
+                            p2 = BoundingLocation[0].Y;
+                        }
+                    }
+                    break;
+            }
+            return p2;
+        }
+        public double GetP3(FoundationBarModel SelectedFoundationBarModel)
+        {
+            double p3 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p3 = BoundingLocation[0].Y;
+                    }
+                    else
+                    {
+                        p3 = BoundingLocation[0].X;
+                    }
+                    break;
+                case 2:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[3].Y;
+
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[3].X;
+                        }
+                    }
+                    break;
+                default:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].Y;
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[2].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p3 = BoundingLocation[2].Y;
+                        }
+                        else
+                        {
+                            p3 = BoundingLocation[BoundingLocation.Count - 1].X;
+                        }
+                    }
+                    break;
+            }
+            return p3;
+        }
+        public double GetP4(FoundationBarModel SelectedFoundationBarModel)
+        {
+            double p4 = 0;
+            switch (SelectedFoundationBarModel.Image)
+            {
+                case 0:
+
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+                    }
+
+                    break;
+                case 1:
+                    if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                    {
+                        p4 = BoundingLocation[1].Y;
+                    }
+                    else
+                    {
+                        p4 = BoundingLocation[BoundingLocation.Count-1].X;
+                    }
+                    break;
+                case 2:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[1].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[1].X;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[1].X;
+                        }
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[1].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+                    }
+                    break;
+                default:
+                    if (ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h)
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+
+                    }
+                    else
+                    {
+                        if (SelectedFoundationBarModel.SpanOrientation.Equals("Horizontal"))
+                        {
+                            p4 = BoundingLocation[0].Y;
+                        }
+                        else
+                        {
+                            p4 = BoundingLocation[0].X;
+                        }
+                    }
+                    break;
+            }
+            return p4;
+        }
         #endregion
         #region method
 
@@ -710,7 +1262,7 @@ namespace R11_FoundationPile
                 BoundingLocation.Add(new LocationModel(x, y, z));
             }
         }
-
+        
         private void GetBoundingFoundation3(SettingModel settingModel)
         {
 
@@ -739,6 +1291,7 @@ namespace R11_FoundationPile
                 BoundingLocation.Add(new LocationModel(x, y, z));
             }
         }
+      
         private void GetBoundingFoundation1(SettingModel settingModel, ObservableCollection<LayerPileModel> layerPileModels)
         {
             if (ColumnModel.Style.Equals("RECTANGLE"))
@@ -911,7 +1464,7 @@ namespace R11_FoundationPile
 
                 //FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves, unit.Convert(settingModel.OffsetFormWork*((IsRollBack)?1:-1)), XYZ.BasisZ);
                 bool a = ColumnModel.Style.Equals("RECTANGLE") && ColumnModel.b > ColumnModel.h;
-                FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves, unit.Convert(settingModel.OffsetFormWork*(-1)), XYZ.BasisZ);
+                FormWorkCurveLoop = CurveLoop.CreateViaOffset(curves, unit.Convert(((Image==2||Image==3)?1:-1)*settingModel.OffsetFormWork), XYZ.BasisZ);
                 if (FormWorkCurveLoop != null)
                 {
                     CurveArray array = new CurveArray();
@@ -1032,7 +1585,25 @@ namespace R11_FoundationPile
             XYZ p3 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
             return Line.CreateBound(p2, p3);
         }
-        public Reference GetReferenceDoundation23Top(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
+        public Line GetFoundationLineDimVerticalImage0CallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X) - settingModel.OffsetDim);
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
+            XYZ p3 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Min(x => x.Y));
+            return Line.CreateBound(p2, p3);
+        }
+        public Line GetFoundationLineDimHorizontalImage0CallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y) + settingModel.OffsetDim);
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Max(x => x.X));
+            XYZ p3 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
+            return Line.CreateBound(p2, p3);
+        }
+       
+        public Reference GetReferenceFoundation23Top(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
         {
             XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewPlan.Origin.Z);
             XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
@@ -1042,7 +1613,7 @@ namespace R11_FoundationPile
             DetailCurve detailCurve = document.Create.NewDetailCurve(viewPlan, line);
             return detailCurve.GeometryCurve.Reference;
         }
-        public Reference GetReferenceDoundation23Bottom(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
+        public Reference GetReferenceFoundation23Bottom(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
         {
             XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewPlan.Origin.Z);
             XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
@@ -1052,7 +1623,7 @@ namespace R11_FoundationPile
             DetailCurve detailCurve = document.Create.NewDetailCurve(viewPlan, line);
             return detailCurve.GeometryCurve.Reference;
         }
-        public Reference GetReferenceDoundation23Left(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
+        public Reference GetReferenceFoundation23Left(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
         {
             XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewPlan.Origin.Z);
             XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
@@ -1062,7 +1633,7 @@ namespace R11_FoundationPile
             DetailCurve detailCurve = document.Create.NewDetailCurve(viewPlan, line);
             return detailCurve.GeometryCurve.Reference;
         }
-        public Reference GetReferenceDoundation23Right(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
+        public Reference GetReferenceFoundation23Right(ViewPlan viewPlan, Document document, UnitProject unit, SettingModel settingModel)
         {
             XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewPlan.Origin.Z);
             XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
@@ -1072,6 +1643,47 @@ namespace R11_FoundationPile
             DetailCurve detailCurve = document.Create.NewDetailCurve(viewPlan, line);
             return detailCurve.GeometryCurve.Reference;
         }
+        public Reference GetReferenceFoundation23TopCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
+            XYZ p3 = p2 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * 0.01;
+            Line line = Line.CreateBound(p2, p3);
+            DetailCurve detailCurve = document.Create.NewDetailCurve(viewCallOut, line);
+            return detailCurve.GeometryCurve.Reference;
+        }
+        public Reference GetReferenceFoundation23BottomCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Min(x => x.Y));
+            XYZ p3 = p2 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * 0.01;
+            Line line = Line.CreateBound(p2, p3);
+            DetailCurve detailCurve = document.Create.NewDetailCurve(viewCallOut, line);
+            return detailCurve.GeometryCurve.Reference;
+        }
+        public Reference GetReferenceFoundation23LeftCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Min(x => x.X));
+            XYZ p3 = p2 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * 0.01;
+            Line line = Line.CreateBound(p2, p3);
+            DetailCurve detailCurve = document.Create.NewDetailCurve(viewCallOut, line);
+            return detailCurve.GeometryCurve.Reference;
+        }
+        public Reference GetReferenceFoundation23RightCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel)
+        {
+            XYZ p0 = new XYZ(ColumnModel.PointPosition.X, ColumnModel.PointPosition.Y, viewCallOut.Origin.Z);
+            XYZ p1 = p0 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * unit.Convert(BoundingLocation.Max(x => x.Y));
+            XYZ p2 = p1 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.East.FaceNormal : XYZ.BasisX) * unit.Convert(BoundingLocation.Max(x => x.X));
+            XYZ p3 = p2 + ((ColumnModel.Style.Equals("RECTANGLE")) ? ColumnModel.Nouth.FaceNormal : XYZ.BasisY) * 0.01;
+            Line line = Line.CreateBound(p2, p3);
+            DetailCurve detailCurve = document.Create.NewDetailCurve(viewCallOut, line);
+            return detailCurve.GeometryCurve.Reference;
+        }
+       
         private Reference ChangeReference( Document document, PlanarFace planarFace)
         {
             string sam = planarFace.Reference.ConvertToStableRepresentation(document);
@@ -1103,14 +1715,14 @@ namespace R11_FoundationPile
                     break;
                 case 2:
                     {
-                        referenceArray.Append(GetReferenceDoundation23Top(viewPlan, document, unit, settingModel));
-                        referenceArray.Append(GetReferenceDoundation23Bottom(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Top(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Bottom(viewPlan, document, unit, settingModel));
                     }
                     break;
                 case 3:
                     {
-                        referenceArray.Append(GetReferenceDoundation23Top(viewPlan, document, unit, settingModel));
-                        referenceArray.Append(GetReferenceDoundation23Bottom(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Top(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Bottom(viewPlan, document, unit, settingModel));
                     }
                     break;
                 default:
@@ -1150,14 +1762,14 @@ namespace R11_FoundationPile
                     break;
                 case 2:
                     {
-                        referenceArray.Append(GetReferenceDoundation23Left(viewPlan, document, unit, settingModel));
-                        referenceArray.Append(GetReferenceDoundation23Right(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Left(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Right(viewPlan, document, unit, settingModel));
                     }
                     break;
                 case 3:
                     {
-                        referenceArray.Append(GetReferenceDoundation23Left(viewPlan, document, unit, settingModel));
-                        referenceArray.Append(GetReferenceDoundation23Right(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Left(viewPlan, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23Right(viewPlan, document, unit, settingModel));
                     }
                     break;
                 default:
@@ -1170,8 +1782,219 @@ namespace R11_FoundationPile
                     }
                     break;
             }
-         
+
             return referenceArray;
+        }
+        public ReferenceArray GetReferenceArrayVerticalCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel, int image)
+        {
+            ReferenceArray referenceArray = new ReferenceArray();
+            switch (image)
+            {
+                case 0:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimVerticalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimVerticalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        referenceArray.Append(GetReferenceFoundation23TopCallOut(viewCallOut, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23BottomCallOut(viewCallOut, document, unit, settingModel));
+                    }
+                    break;
+                case 3:
+                    {
+                        referenceArray.Append(GetReferenceFoundation23TopCallOut(viewCallOut, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23BottomCallOut(viewCallOut, document, unit, settingModel));
+                    }
+                    break;
+                default:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimVerticalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+            }
+            return referenceArray;
+        }
+        public ReferenceArray GetReferenceArrayHorizontalCallOut(ViewCallOut viewCallOut, Document document, UnitProject unit, SettingModel settingModel, int image)
+        {
+            ReferenceArray referenceArray = new ReferenceArray();
+            switch (image)
+            {
+                case 0:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimHorizontalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimHorizontalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        referenceArray.Append(GetReferenceFoundation23LeftCallOut(viewCallOut, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23RightCallOut(viewCallOut, document, unit, settingModel));
+                    }
+                    break;
+                case 3:
+                    {
+                        referenceArray.Append(GetReferenceFoundation23LeftCallOut(viewCallOut, document, unit, settingModel));
+                        referenceArray.Append(GetReferenceFoundation23RightCallOut(viewCallOut, document, unit, settingModel));
+                    }
+                    break;
+                default:
+                    {
+                        ObservableCollection<PlanarFace> planarFaces = GetFoundationPlanarFaceDimHorizontalImage0(document);
+                        for (int i = 0; i < planarFaces.Count; i++)
+                        {
+                            referenceArray.Append(ChangeReference(document, planarFaces[i]));
+                        }
+                    }
+                    break;
+            }
+
+            return referenceArray;
+        }
+        public ReferenceArray GetReferenceArrayFoundationTopBottomSection( Document document, UnitProject unit, SettingModel settingModel, PlanarFace top,PlanarFace bottom)
+        {
+           
+            ReferenceArray referenceArray = new ReferenceArray();
+            referenceArray.Append(ChangeReference(document, top));
+            referenceArray.Append(ChangeReference(document, bottom));
+            return referenceArray;
+        }
+        public Line GetLineDimensionHorizontalTopBottomSection(  UnitProject unit, SettingModel settingModel, PlanarFace top, PlanarFace bottom)
+        {
+            XYZ x = null;
+            XYZ y = null;
+            if (ColumnModel.Style.Equals("RECTANGLE"))
+            {
+                x = ColumnModel.East.FaceNormal;
+                y = ColumnModel.Nouth.FaceNormal;
+            }
+            else
+            {
+                x = XYZ.BasisX;
+                y = XYZ.BasisY;
+            }
+            bool rotate = (ColumnModel.Style.Equals("RECTANGLE")) && (ColumnModel.b > ColumnModel.h);
+            double lx = 0, ly = 0;
+            switch (Image)
+            {
+                case 0:
+                    lx = (rotate ? ((IsRollBack) ? (BoundingLocation[2].X) : (BoundingLocation[0].X)) : (BoundingLocation[5].X));
+                    ly = (rotate) ? (0) : ((BoundingLocation[0].Y+BoundingLocation[0].Y)*0.5);
+                    break;
+                case 1:
+                    lx = BoundingLocation[0].X;ly = 0;
+                    break;
+                case 2:
+                    lx = (rotate) ? ((IsRollBack)?(BoundingLocation[2].X):(BoundingLocation[0].X)) : (BoundingLocation[4].X);
+                    ly = (rotate) ? (0) : (BoundingLocation[1].Y);
+                    break;
+                case 3:
+                    lx = (rotate) ? (BoundingLocation[4].X) : (BoundingLocation[3].X);
+                    ly = 0;
+                    break;
+                default:
+                    lx = (rotate ? ((IsRollBack) ? (BoundingLocation[2].X) : (BoundingLocation[0].X)) : (BoundingLocation[4].X));
+                    ly = (rotate) ? (0) : ((BoundingLocation[0].Y + BoundingLocation[0].Y) * 0.5);
+                    break;
+            }
+            XYZ p0 = ColumnModel.PointPosition - unit.Convert(lx-settingModel.HeightFoundation) * Horizontal.RightDirection + unit.Convert(ly) * y;
+            XYZ p1 = PointModel.ProjectToPlane(p0, bottom);
+            XYZ p2 = PointModel.ProjectToPlane(p0, top);
+            return Line.CreateBound(p1, p2);
+        }
+        public Line GetLineDimensionVerticalTopBottomSection(  UnitProject unit, SettingModel settingModel, PlanarFace top, PlanarFace bottom)
+        {
+            XYZ x = null;
+            XYZ y = null;
+            if (ColumnModel.Style.Equals("RECTANGLE"))
+            {
+                x = ColumnModel.East.FaceNormal;
+                y = ColumnModel.Nouth.FaceNormal;
+            }
+            else
+            {
+                x = XYZ.BasisX;
+                y = XYZ.BasisY;
+            }
+            bool rotate = (ColumnModel.Style.Equals("RECTANGLE")) && (ColumnModel.b > ColumnModel.h);
+            double lx = 0, ly = 0;
+            switch (Image)
+            {
+                case 0:
+                    ly = (rotate ? (BoundingLocation[0].Y) : ((IsRollBack)?(BoundingLocation[2].Y):(BoundingLocation[0].Y)));
+                    lx = (rotate) ? ((BoundingLocation[0].X+ BoundingLocation[0].X) * 0.5) : (0);
+                    break;
+                case 1:
+                    ly = BoundingLocation[1].Y; lx = 0;
+                    break;
+                case 2:
+                    lx = (rotate) ? ((IsRollBack) ? (BoundingLocation[2].X) : (BoundingLocation[0].X)) : (BoundingLocation[4].X);
+                    lx = (rotate) ? (BoundingLocation[1].X) : (BoundingLocation[1].Y);
+                    break;
+                case 3:
+                    lx = 0;
+                    ly = (rotate) ? (BoundingLocation[0].Y) : (BoundingLocation[5].Y);
+                    break;
+                default:
+                    ly = (rotate ? (BoundingLocation[0].Y) : ((IsRollBack) ? (BoundingLocation[2].Y) : (BoundingLocation[0].Y)));
+                    lx = (rotate) ? ((BoundingLocation[0].X + BoundingLocation[0].X) * 0.5) : (0);
+                    break;
+            }
+            XYZ p0 = ColumnModel.PointPosition + unit.Convert(lx) * x - unit.Convert(ly+settingModel.HeightFoundation) * Vertical.RightDirection;
+            XYZ p1 = PointModel.ProjectToPlane(p0, bottom);
+            XYZ p2 = PointModel.ProjectToPlane(p0, top);
+            return Line.CreateBound(p1, p2);
+        }
+        public void CreateDimensionFoundationHorizontalSection( Document document, UnitProject unit, SettingModel settingModel)
+        {
+            PlanarFace top = SolidFace.GetTop(Foundation);
+            PlanarFace bottom = SolidFace.GetBottom(Foundation);
+            ReferenceArray referenceArray = GetReferenceArrayFoundationTopBottomSection( document, unit, settingModel, top,bottom);
+            if (referenceArray.Size >= 2)
+            {
+                Line line = GetLineDimensionHorizontalTopBottomSection(  unit, settingModel, top, bottom);
+                Dimension dimension = document.Create.NewDimension(Horizontal, line, referenceArray, settingModel.SelectedDimensionType);
+            }
+        }
+        public void CreateDimensionFoundationVerticalSection(Document document, UnitProject unit, SettingModel settingModel)
+        {
+            PlanarFace top = SolidFace.GetTop(Foundation);
+            PlanarFace bottom = SolidFace.GetBottom(Foundation);
+            ReferenceArray referenceArray = GetReferenceArrayFoundationTopBottomSection(document, unit, settingModel, top, bottom);
+            if (referenceArray.Size >= 2)
+            {
+                Line line = GetLineDimensionVerticalTopBottomSection(unit, settingModel, top, bottom);
+                Dimension dimension = document.Create.NewDimension(Vertical, line, referenceArray, settingModel.SelectedDimensionType);
+            }
         }
         #endregion
         #region Tag
@@ -1201,7 +2024,7 @@ namespace R11_FoundationPile
             double minX = BoundingLocation.Max(x=>Math.Abs(x.X));
             double minY = BoundingLocation.Max(x=>Math.Abs(x.Y));
             XYZ p1 = ColumnModel.PointPosition + unit.Convert(minY+settingModel.HeightFoundation) * ((ColumnModel.Style.Equals("RECTANGLE")) ?(ColumnModel.South.FaceNormal):(-XYZ.BasisY));
-            return p1 + unit.Convert(minX + settingModel.HeightFoundation) * ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.West.FaceNormal) : (-XYZ.BasisX));
+            return p1 +unit.Convert(minX + settingModel.HeightFoundation) * ((ColumnModel.Style.Equals("RECTANGLE")) ? (ColumnModel.West.FaceNormal) : (-XYZ.BasisX));
         }
         private XYZ GetOriginCallOutMax(UnitProject unit, SettingModel settingModel)
         {
@@ -1215,6 +2038,7 @@ namespace R11_FoundationPile
             XYZ oMin = GetOriginCallOutMin(unit, settingModel);
             XYZ oMax = GetOriginCallOutMax(unit, settingModel);
             FoundationDetailView = ViewSection.CreateCallout(document, viewPlan.Id, settingModel.FoundationDetailViewType.Id, oMin, oMax);
+          
             if (FoundationDetailView != null)
             {
                 FoundationDetailView.ViewTemplateId = settingModel.SelectedFoundationDetailTemplate.Id;
@@ -1228,6 +2052,7 @@ namespace R11_FoundationPile
                     FoundationDetailView.Name += "Copy";
                 }
             }
+            FoundationDetailView.get_Parameter(BuiltInParameter.VIEWER_CROP_REGION_VISIBLE).Set(0);
         }
         #endregion
         #region Section
@@ -1282,8 +2107,8 @@ namespace R11_FoundationPile
             SectionBoxHorizontal = new BoundingBoxXYZ();
             SectionBoxHorizontal.Transform = t;
             double maxY = BoundingLocation.Max(x => Math.Abs(x.Y));
-            XYZ max = new XYZ(unit.Convert(maxY+settingModel.HeightFoundation*0.5),unit.Convert(settingModel.HeightFoundation),unit.Convert(settingModel.HeightFoundation));
-            XYZ min = new XYZ(-unit.Convert(maxY+settingModel.HeightFoundation*0.5),-unit.Convert(settingModel.HeightFoundation*2),0);
+            XYZ max = new XYZ(unit.Convert(maxY+settingModel.HeightFoundation),unit.Convert(settingModel.HeightFoundation),unit.Convert(settingModel.HeightFoundation));
+            XYZ min = new XYZ(-unit.Convert(maxY+settingModel.HeightFoundation),-unit.Convert(settingModel.HeightFoundation*2),0);
             SectionBoxHorizontal.Max = max;
             SectionBoxHorizontal.Min = min;
         }
@@ -1332,8 +2157,8 @@ namespace R11_FoundationPile
             SectionBoxVertical = new BoundingBoxXYZ();
             SectionBoxVertical.Transform = t;
             double maxY = BoundingLocation.Max(x => Math.Abs(x.X));
-            XYZ max = new XYZ(unit.Convert(maxY + settingModel.HeightFoundation * 0.5), unit.Convert(settingModel.HeightFoundation), unit.Convert(settingModel.HeightFoundation));
-            XYZ min = new XYZ(-unit.Convert(maxY + settingModel.HeightFoundation * 0.5), -unit.Convert(settingModel.HeightFoundation * 2), 0);
+            XYZ max = new XYZ(unit.Convert(maxY + settingModel.HeightFoundation ), unit.Convert(settingModel.HeightFoundation), unit.Convert(settingModel.HeightFoundation));
+            XYZ min = new XYZ(-unit.Convert(maxY + settingModel.HeightFoundation ), -unit.Convert(settingModel.HeightFoundation * 2), 0);
             SectionBoxVertical.Max = max;
             SectionBoxVertical.Min = min;
         }

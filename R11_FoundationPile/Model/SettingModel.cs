@@ -188,7 +188,7 @@ namespace R11_FoundationPile
             GetTag(document);
             OffsetDim = 700;
             GetSpotDimensionType(document);
-            RebarHookTypes = new FilteredElementCollector(document).WhereElementIsElementType().OfClass(typeof(RebarHookType)).Cast<RebarHookType>().ToList();
+            RebarHookTypes = new FilteredElementCollector(document).WhereElementIsElementType().OfClass(typeof(RebarHookType)).Cast<RebarHookType>().Where(x=>x.Name.Contains("Stirrup")).ToList();
             RebarHookTypes.Sort((x, y) => x.Name.CompareTo(y.Name));
             SelectedHook = RebarHookTypes[0];
         }

@@ -48,8 +48,6 @@ namespace WpfCustomControls.ViewModel
         public void SetStatusBarFoundationPile()
         {
             HasCancel(true);
-            HasCreateReinforcement(true);
-            HasCreatePileDetail(true);
             HasCreateFoundationPile(true);
         }
         public void SetStatusBarColumns()
@@ -90,11 +88,11 @@ namespace WpfCustomControls.ViewModel
         {
             OK = (ok) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
-        private void HasCreateReinforcement(bool createReinforcement)
+        public void HasCreateReinforcement(bool createReinforcement)
         {
             CreateReinforcement = (createReinforcement) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
-        private void HasCreatePileDetail(bool createPileDetail)
+        public void HasCreatePileDetail(bool createPileDetail)
         {
             CreatePileDetail = (createPileDetail) ? (Visibility.Visible) : (Visibility.Collapsed);
         }

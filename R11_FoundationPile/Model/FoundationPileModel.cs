@@ -110,7 +110,7 @@ namespace R11_FoundationPile
                 {
                     if (GroupFoundationModels[i].FoundationModels[j].IsRepresentative)
                     {
-                        FoundationBarModels.Add(new FoundationBarModel(
+                        var a= (new FoundationBarModel(
                             GroupFoundationModels[i].FoundationModels[j].Type,
                             GroupFoundationModels[i].FoundationModels[j].Image,
                             GroupFoundationModels[i].FoundationModels[j].LocationName,
@@ -119,6 +119,15 @@ namespace R11_FoundationPile
                             SettingModel,
                             AllBars
                             ));
+                        double coverSide = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, SettingModel.SelectedSideCover.CoverDistance, false));
+                        FoundationModel foundationModel = FindFoundationModelByLoacationName(a.LocationName);
+                        double p1 = foundationModel.GetP1(a);
+                        double p2 = foundationModel.GetP2(a);
+                        double p3 = foundationModel.GetP3(a);
+                        double p4 = foundationModel.GetP4(a);
+                        a.FixNumber(p1, p2, p3, p4, coverSide);
+                        a.FixDistance(p1, p2, p3, p4, coverSide);
+                        FoundationBarModels.Add(a);
                     }
                 }
               

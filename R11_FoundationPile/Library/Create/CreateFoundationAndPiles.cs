@@ -54,6 +54,7 @@ namespace R11_FoundationPile
                 {
                     for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
                     {
+                       
                         foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundation(document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                         FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
                         option.SetFailuresPreprocessor(new DeleteWarningSuper());
@@ -80,7 +81,7 @@ namespace R11_FoundationPile
                 using (Transaction transaction = new Transaction(document, Guid.NewGuid().GetHashCode().ToString()))
                 {
                     transaction.Start("aaa");
-                   
+                    
                     foundationPileModel.FoundationPileDetail.CeateFoundationPlan(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[0].FoundationModels[0].ColumnModel, foundationPileModel.GetMaxBoundBox(unit), foundationPileModel.GetMinBoundBox(unit));
                     foundationPileModel.ProgressModel.SetValue(uc, 1);
 
@@ -101,15 +102,21 @@ namespace R11_FoundationPile
                             for (int j = 0; j < foundationPileModel.GroupFoundationModels[i].FoundationModels.Count; j++)
                             {
                                 foundationPileModel.GroupFoundationModels[i].FoundationModels[j].ColumnModel.RefreshPlanarFaceNormal(document, unit); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                
                                 foundationPileModel.DimensionDetail.CreateDimensionFoundationVertical(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                 foundationPileModel.DimensionDetail.CreateDimensionFoundationHorizontal(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                 foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateTagFoundation(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type); foundationPileModel.ProgressModel.SetValue(uc, 1);
-
+                                
                                 if (foundationPileModel.GroupFoundationModels[i].FoundationModels[j].IsRepresentative&& foundationPileModel.SettingModel.FoundationDetailViewType!=null)
                                 {
                                     foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateCallOutFoundationDetailView(foundationPileModel.FoundationPileDetail.FoundationView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Type); foundationPileModel.ProgressModel.SetValue(uc, 1);
+
+                                    foundationPileModel.DimensionDetail.CreateDimensionFoundationVerticalCallOut(foundationPileModel.GroupFoundationModels[i].FoundationModels[j].FoundationDetailView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].FoundationModels[j].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                    foundationPileModel.DimensionDetail.CreateDimensionFoundationHorizontalCallOut(foundationPileModel.GroupFoundationModels[i].FoundationModels[j].FoundationDetailView, document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].FoundationModels[j], foundationPileModel.GroupFoundationModels[i].FoundationModels[j].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                     foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionHorizontal(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                     foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateFoundationSectionVertical(document, unit, foundationPileModel.SettingModel, foundationPileModel.GroupFoundationModels[i].Image); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateDimensionFoundationHorizontalSection(document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                    foundationPileModel.GroupFoundationModels[i].FoundationModels[j].CreateDimensionFoundationVerticalSection(document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                                 }
                             }
                         }
@@ -145,7 +152,7 @@ namespace R11_FoundationPile
                     a+=4;
                     if (foundationPileModel.GroupFoundationModels[i].FoundationModels[j].IsRepresentative)
                     {
-                        a+=3;
+                        a+=7;
                     }
                 }
             }

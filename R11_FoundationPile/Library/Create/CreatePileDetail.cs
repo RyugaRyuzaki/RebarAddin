@@ -68,8 +68,8 @@ namespace R11_FoundationPile
                 foundationPileModel.IsCreatePileDetail = true;
                
             }
+            foundationPileModel.ProgressModel.ResetValue(uc);
 
-           
         }
         private static int GetProgressBarPileDetail( FoundationPileModel foundationPileModel, Document document)
         {

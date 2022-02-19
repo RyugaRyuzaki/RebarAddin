@@ -24,8 +24,22 @@ namespace R04_SlabsRebar
             // code
 
 
-            MessageBox.Show("This Add-in will be coming soon", "Imformation");
-            return Result.Succeeded;
+            using (TransactionGroup transG = new TransactionGroup(doc))
+            {
+                transG.Start("Columns Rebar");
+                SlabViewModel SlabViewModel
+                    = new SlabViewModel(uidoc, doc);
+                SlabsWindow window
+                    = new SlabsWindow(SlabViewModel);
+                bool? showDialog = window.ShowDialog();
+                if (showDialog == null || showDialog == false)
+                {
+                    transG.RollBack();
+                    return Result.Cancelled;
+                }
+                transG.Assimilate();
+                return Result.Succeeded;
+            }
         }
     }
 }
