@@ -137,66 +137,62 @@ namespace R11_FoundationPile
             }
             return list;
         }
-        //private List<LocationModel> GetOffseBoundingFoundation0(SettingModel settingModel, double offset)
-        //{
-        //    List<LocationModel> list = new List<LocationModel>();
-           
-        //    if (ColumnModel.Style.Equals("RECTANGLE"))
-        //    {
-        //        if (ColumnModel.b <= ColumnModel.h)
-        //        {
-        //            x1 = dp_p * 0.5 + dp_s; y1 = L1 + dp_s;
-        //            x2 = x1; y2 = L1 - dp_s;
-        //            x3 = dp_s; y3 = -L2 - dp_s;
-        //            x4 = -dp_s; y4 = -L2 - dp_s;
-        //            x5 = -dp_p * 0.5 - dp_s; y5 = L1 - dp_s;
-        //            x6 = x5; y6 = L1 + dp_s;
-        //            BoundingLocation.Add(new LocationModel(x1, (IsRollBack) ? -y1 : y1, z1));
-        //            BoundingLocation.Add(new LocationModel(x2, (IsRollBack) ? -y2 : y2, z2));
-        //            BoundingLocation.Add(new LocationModel(x3, (IsRollBack) ? -y3 : y3, z3));
-        //            BoundingLocation.Add(new LocationModel(x4, (IsRollBack) ? -y4 : y4, z4));
-        //            BoundingLocation.Add(new LocationModel(x5, (IsRollBack) ? -y5 : y5, z5));
-        //            BoundingLocation.Add(new LocationModel(x6, (IsRollBack) ? -y6 : y6, z6));
-        //            Width = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
-        //            Length = 2 * settingModel.DistancePS + L1 + L2;
-        //        }
-        //        else
-        //        {
-        //            x1 = -L1 - dp_s; y1 = dp_p * 0.5 + dp_s;
-        //            x2 = -L1 + dp_s; y2 = y1;
-        //            x3 = L2 + dp_s; y3 = dp_s;
-        //            x4 = x3; y4 = -dp_s;
-        //            x5 = -L1 + dp_s; y5 = -dp_p * 0.5 - dp_s;
-        //            x6 = x1; y6 = y5;
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x1 : x1, y1, z1));
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x2 : x2, y2, z2));
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x3 : x3, y3, z3));
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x4 : x4, y4, z4));
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x5 : x5, y5, z5));
-        //            BoundingLocation.Add(new LocationModel((IsRollBack) ? -x6 : x6, y6, z6));
-        //            Length = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
-        //            Width = 2 * settingModel.DistancePS + L1 + L2;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        x1 = dp_p * 0.5 + dp_s; y1 = L1 + dp_s;
-        //        x2 = x1; y2 = L1 - dp_s;
-        //        x3 = dp_s; y3 = -L2 - dp_s;
-        //        x4 = -dp_s; y4 = -L2 - dp_s;
-        //        x5 = -dp_p * 0.5 - dp_s; y5 = L1 - dp_s;
-        //        x6 = x5; y6 = L1 + dp_s;
-        //        BoundingLocation.Add(new LocationModel(x1, (IsRollBack) ? -y1 : y1, z1));
-        //        BoundingLocation.Add(new LocationModel(x2, (IsRollBack) ? -y2 : y2, z2));
-        //        BoundingLocation.Add(new LocationModel(x3, (IsRollBack) ? -y3 : y3, z3));
-        //        BoundingLocation.Add(new LocationModel(x4, (IsRollBack) ? -y4 : y4, z4));
-        //        BoundingLocation.Add(new LocationModel(x5, (IsRollBack) ? -y5 : y5, z5));
-        //        BoundingLocation.Add(new LocationModel(x6, (IsRollBack) ? -y6 : y6, z6));
-        //        Width = 2 * settingModel.DistancePS + settingModel.DistancePP * settingModel.DiameterPile;
-        //        Length = 2 * settingModel.DistancePS + L1 + L2;
-        //    }
-        //    return list;
-        //}
+        public List<LocationModel> GetOffsetBoundingFoundation0(SettingModel settingModel, double offset)
+        {
+            List<LocationModel> list = new List<LocationModel>();
+            double z0 = ColumnModel.PointZPosition;
+            double x0 = BoundingLocation[0].X;
+            double x1 = BoundingLocation[1].X;
+            double x2 = BoundingLocation[2].X;
+            double x3 = BoundingLocation[3].X;
+            double x4 = BoundingLocation[4].X;
+            double x5 = BoundingLocation[5].X;
+            double y0 = BoundingLocation[0].Y;
+            double y1 = BoundingLocation[1].Y;
+            double y2 = BoundingLocation[2].Y;
+            double y3 = BoundingLocation[3].Y;
+            double y4 = BoundingLocation[4].Y;
+            double y5 = BoundingLocation[5].Y;
+            if (ColumnModel.Style.Equals("RECTANGLE") && (ColumnModel.b > ColumnModel.h))
+            {
+                double tan1 = (Math.Abs(x1 - x2)) / (Math.Abs(y1 - y2));
+                double cotan1 = (Math.Abs(y1 - y2)) / (Math.Abs(x1 - x2));
+                double sin1 = Math.Sqrt(1 / (1 + cotan1 * cotan1));
+                double cos1 = Math.Sqrt(1 / (1 + tan1 * tan1));
+                double o1 = offset - offset * sin1;
+                double delx1 = o1 / sin1;
+                double dely1 = delx1 * tan1;
+                double dely2 = offset / cos1 - offset;
+                double delx2 = dely2 / tan1;
+                list.Add(new LocationModel(((x0 > 0) ? (x0 - offset) : (x0 + offset)), ((y0 > 0) ? (y0 - offset) : (y0 + offset)), z0));
+                list.Add(new LocationModel(((x0 > x1) ? (x1 + dely1) : (x1 - dely1)), ((y1 > 0) ? (y1 - offset) : (y1 + offset)), z0));
+                list.Add(new LocationModel(((x2 > 0) ? (x2 - offset) : (x2 + offset)), ((y2 > 0) ? (y2 - delx2) : (y2 + delx2)), z0));
+                list.Add(new LocationModel(((x3 > 0) ? (x3 - offset) : (x3 + offset)), ((y3 > 0) ? (y3 - delx2) : (y3 + delx2)), z0));
+
+                list.Add(new LocationModel(((x4 > 0) ? (x4 + dely1) : (x4 - dely1)), ((y5 > y4) ? (y4 - offset) : (y4 + offset)), z0));
+                list.Add(new LocationModel(((x5 > 0) ? (x5 - offset) : (x5 + offset)), ((y5 > 0) ? (y5 - offset) : (y5 + offset)), z0));
+            }
+            else
+            {
+                double tan1 = (Math.Abs(y1 - y2)) / (Math.Abs(x1 - x2));
+                double cotan1 = (Math.Abs(x1 - x2)) / (Math.Abs(y1 - y2));
+                double sin1 = Math.Sqrt(1 / (1 + cotan1 * cotan1));
+                double cos1 = Math.Sqrt(1 / (1 + tan1 * tan1));
+                double o1 = offset - offset * sin1;
+                double delx1 = o1 / sin1;
+                double dely1 = delx1 * tan1;
+                double dely2 = offset / cos1 - offset;
+                double delx2 = dely2 / tan1;
+                list.Add(new LocationModel(((x0 > 0) ? (x0 - offset) : (x0 + offset)), ((y0 > 0) ? (y0 - offset) : (y0 + offset)), z0));
+                list.Add(new LocationModel(((x1 > 0) ? (x1 - offset) : (x1 + offset)), ((y0 > y1) ? (y1 + dely1) : (y1 - dely1)), z0));
+                list.Add(new LocationModel(((x2 > 0) ? (x2 - delx2) : (x2 + delx2)), ((y2 > 0) ? (y2 - offset) : (y2 + offset)), z0));
+                list.Add(new LocationModel(((x3 > 0) ? (x3 - delx2) : (x3 + delx2)), ((y3 > 0) ? (y3 - offset) : (y3 + offset)), z0));
+
+                list.Add(new LocationModel(((x4 > 0) ? (x4 - offset) : (x4 + offset)), ((y5 > y4) ? (y4 +dely1) : (y4 - dely1)), z0));
+                list.Add(new LocationModel(((x5 > 0) ? (x5 - offset) : (x5+ offset)), ((y5 > 0) ? (y5 - offset) : (y5 + offset)), z0));
+            }
+            return list;
+        }
         #endregion
         #region PlanarFace
         public double GetP1(FoundationBarModel SelectedFoundationBarModel)
@@ -1926,7 +1922,7 @@ namespace R11_FoundationPile
                     ly = (rotate) ? (0) : ((BoundingLocation[0].Y + BoundingLocation[0].Y) * 0.5);
                     break;
             }
-            XYZ p0 = ColumnModel.PointPosition - unit.Convert(lx-settingModel.HeightFoundation) * Horizontal.RightDirection + unit.Convert(ly) * y;
+            XYZ p0 = ColumnModel.PointPosition + unit.Convert(lx+((lx>0)?2:-2)*settingModel.HeightFoundation) * Horizontal.RightDirection + unit.Convert(ly) * y;
             XYZ p1 = PointModel.ProjectToPlane(p0, bottom);
             XYZ p2 = PointModel.ProjectToPlane(p0, top);
             return Line.CreateBound(p1, p2);
@@ -1969,7 +1965,7 @@ namespace R11_FoundationPile
                     lx = (rotate) ? ((BoundingLocation[0].X + BoundingLocation[0].X) * 0.5) : (0);
                     break;
             }
-            XYZ p0 = ColumnModel.PointPosition + unit.Convert(lx) * x - unit.Convert(ly+settingModel.HeightFoundation) * Vertical.RightDirection;
+            XYZ p0 = ColumnModel.PointPosition + unit.Convert(lx) * x - unit.Convert(ly + 2*settingModel.HeightFoundation) * Vertical.RightDirection;
             XYZ p1 = PointModel.ProjectToPlane(p0, bottom);
             XYZ p2 = PointModel.ProjectToPlane(p0, top);
             return Line.CreateBound(p1, p2);

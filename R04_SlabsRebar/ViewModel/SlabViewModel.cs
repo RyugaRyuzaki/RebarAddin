@@ -29,7 +29,8 @@ namespace R04_SlabsRebar
         #endregion
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
-       
+
+     
         public SlabViewModel(UIDocument uiDoc, Document doc)
         {
             UiDoc = uiDoc;

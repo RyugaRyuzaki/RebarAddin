@@ -111,7 +111,7 @@ namespace R11_FoundationPile
         private void CreateRebarImage0(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
         {
             List<double> Distance = new List<double>();
-            Curves = ProcessCurveRebar.GetCurvesImage0(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
+            Curves = ProcessCurveRebar.GetCurvesImage0A(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
             if (Curves.Count != 0)
             {
                 if ((barModel.Name.Contains("Bottom") || barModel.Name.Contains("Top")))
@@ -241,7 +241,7 @@ namespace R11_FoundationPile
                         try
                         {
 
-                            var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, -normal, curves1, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
+                            var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, normal, curves1, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
                             if (settingModel.SelectedHook.Name.Contains("Stirrup"))
                             {
                                 bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);

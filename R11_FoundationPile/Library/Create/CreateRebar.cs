@@ -90,9 +90,9 @@ namespace R11_FoundationPile
                         
                        
                         FoundationPileModel.FoundationBarModels[i].BarModels[j].Bar.CreateRebar(document,FoundationPileModel.SettingModel, foundationModel, FoundationPileModel.FoundationBarModels[i], FoundationPileModel.FoundationBarModels[i].BarModels[j],unit,dMainBottom,dMainTop,dSide,coverTop,coverBottom,coverSide);
-                        FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
-                        option.SetFailuresPreprocessor(new DeleteWarningSuper());
-                        transaction.SetFailureHandlingOptions(option);
+                        //FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
+                        //option.SetFailuresPreprocessor(new DeleteWarningSuper());
+                        //transaction.SetFailureHandlingOptions(option);
                         FoundationPileModel.ProgressModel.SetValue(uc, 1);
                     }
 

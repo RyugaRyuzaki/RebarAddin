@@ -27,18 +27,22 @@ namespace R06_StairRebar
 
 
 
-            //using (TransactionGroup transGr = new TransactionGroup(doc))
-            //{
-            //    transGr.Start("RAPI00TransGr");
+           
+            using (TransactionGroup transGr = new TransactionGroup(doc))
+            {
+                transGr.Start("RAPI00TransGr");
 
-            //    StairViewModel viewModel = new StairViewModel(uidoc, doc);
-            //    StairWindow window = new StairWindow(viewModel);
-            //    if (window.ShowDialog() == false) return Result.Cancelled;
-
-            //    transGr.Assimilate();
-            //}
-            MessageBox.Show("This Add-in will be coming soon", "Imformation");
-            return Result.Succeeded;
+                StairViewModel viewModel = new StairViewModel(uidoc, doc);
+                StairWindow window = new StairWindow(viewModel);
+                if (window.ShowDialog() == false) 
+                {
+                    transGr.RollBack();
+                    return Result.Cancelled;
+                }
+                transGr.Assimilate();
+                return Result.Succeeded;
+            }
+           
         }
     }
 }

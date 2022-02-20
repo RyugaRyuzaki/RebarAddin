@@ -7,6 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:custom="clr-namespace:WpfCustomControls.CustomControls;assembly=WpfCustomControls"
         xmlns:customViewModel="clr-namespace:WpfCustomControls.ViewModel;assembly=WpfCustomControls"
+       
         ResizeMode="NoResize" 
         ShowInTaskbar="True" 
         WindowStartupLocation="CenterScreen"
@@ -20,7 +21,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
                 <ResourceDictionary>
-                   
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -28,6 +29,7 @@
 
   <Grid>
 
-        
+
+
     </Grid>
 </Window>
