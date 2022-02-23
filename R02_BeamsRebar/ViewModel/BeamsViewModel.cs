@@ -141,12 +141,12 @@ namespace R02_BeamsRebar
         #region Menu Method
         private void SelectedIndexViewModel()
         {
-            SettingViewModel = new SettingViewModel(BeamsModel);
-            GeometryViewModel = new GeometryViewModel(Doc, BeamsModel);
-            StirrupsViewModel = new StirrupsViewModel(Doc, BeamsModel);
-            BarsMainViewModel = new BarsMainViewModel(Doc, BeamsModel);
-            AddTopBarViewModel = new AddTopBarViewModel(Doc, BeamsModel);
-            AddBottomBarViewModel = new AddBottomBarViewModel(Doc, BeamsModel);
+            SettingViewModel = new SettingViewModel(BeamsModel, Languages);
+            GeometryViewModel = new GeometryViewModel(Doc, BeamsModel, Languages);
+            StirrupsViewModel = new StirrupsViewModel(Doc, BeamsModel,Languages);
+            BarsMainViewModel = new BarsMainViewModel(Doc, BeamsModel, Languages);
+            AddTopBarViewModel = new AddTopBarViewModel(Doc, BeamsModel, Languages);
+            AddBottomBarViewModel = new AddBottomBarViewModel(Doc, BeamsModel, Languages);
             SpecialBarViewModel = new SpecialBarViewModel(Doc, BeamsModel);
             BarsDivisionViewModel = new BarsDivisionViewModel(Doc, BeamsModel);
             SectionAreaViewModel = new SectionAreaViewModel(Doc, BeamsModel);

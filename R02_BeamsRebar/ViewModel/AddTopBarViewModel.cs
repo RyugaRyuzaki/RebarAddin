@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class AddTopBarViewModel:BaseViewModel
@@ -61,12 +62,14 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand LEndTextChangedCommand { get; set; }
         public ICommand LaEndTextChangedCommand { get; set; }
         #endregion
-        public AddTopBarViewModel(Document document, BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public AddTopBarViewModel(Document document, BeamsModel beamsModel, Languages languages)
         {
             #region Get Property
             Doc = document;
             BeamsModel = beamsModel;
-            GetNode();
+            GetNode(); Languages = languages;
             #endregion
             #region Load
             LoadAddTopBarsViewCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>

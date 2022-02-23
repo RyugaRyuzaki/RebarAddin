@@ -93,7 +93,8 @@ namespace R11_FoundationPile
                         Pile.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM).Set(-unit.Convert(settingModel.HeightFoundation - settingModel.Overlap));
                         Pile.LookupParameter("L").Set(unit.Convert(settingModel.LengthPile));
                     }
-                    if(columnModel.Style.Equals("RECTANGLE"))
+                  
+                    if (columnModel.Style.Equals("RECTANGLE"))
                     {
                         Line axis = Line.CreateBound(Point, Point + 0.1 * XYZ.BasisZ);
                         ElementTransformUtils.RotateElement(document, Pile.Id, axis, columnModel.South.FaceNormal.AngleTo((-1) * XYZ.BasisY));

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class TopDowelsViewModel : BaseViewModel
@@ -46,11 +47,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand ModifyCommand { get; set; }
         public ICommand FixedTopBarDowelsCommand { get; set; }
         #endregion
-        public TopDowelsViewModel(Document doc, ColumnsModel columnsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public TopDowelsViewModel(Document doc, ColumnsModel columnsModel, Languages languages)
         {
             #region property
             Doc = doc;
-            ColumnsModel = columnsModel;       
+            ColumnsModel = columnsModel;
+            Languages = languages;
             #endregion
             #region   Load
             LoadTopDowelsViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

@@ -9,28 +9,17 @@ namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
     public class TopDowelsLanguage : BaseViewModel
     {
 
-        private string _Setting;
-        public string Setting { get { return _Setting; } set { _Setting = value; OnPropertyChanged(); } }
-        private string _Geometry;
-        public string Geometry { get { return _Geometry; } set { _Geometry = value; OnPropertyChanged(); } }
-        private string _Stirrups;
-        public string Stirrups { get { return _Stirrups; } set { _Stirrups = value; OnPropertyChanged(); } }
-        private string _AdditionalStirrups;
-        public string AdditionalStirrups { get { return _AdditionalStirrups; } set { _AdditionalStirrups = value; OnPropertyChanged(); } }
-        private string _Bars;
-        public string Bars { get { return _Bars; } set { _Bars = value; OnPropertyChanged(); } }
+        private string _TopDowelsProperty;
+        public string TopDowelsProperty { get { return _TopDowelsProperty; } set { _TopDowelsProperty = value; OnPropertyChanged(); } }
+        private string _ApplyAllBar;
+        public string ApplyAllBar { get { return _ApplyAllBar; } set { _ApplyAllBar = value; OnPropertyChanged(); } }
+        private string _Top;
+        public string Top { get { return _Top; } set { _Top = value; OnPropertyChanged(); } }
         private string _TopDowels;
         public string TopDowels { get { return _TopDowels; } set { _TopDowels = value; OnPropertyChanged(); } }
-        private string _BottomDowels;
-        public string BottomDowels { get { return _BottomDowels; } set { _BottomDowels = value; OnPropertyChanged(); } }
-        private string _BarsDivision;
-        public string BarsDivision { get { return _BarsDivision; } set { _BarsDivision = value; OnPropertyChanged(); } }
-        private string _OK;
-        public string OK { get { return _OK; } set { _OK = value; OnPropertyChanged(); } }
-        private string _Cancel;
-        public string Cancel { get { return _Cancel; } set { _Cancel = value; OnPropertyChanged(); } }
-        private string _Columns;
-        public string Columns { get { return _Columns; } set { _Columns = value; OnPropertyChanged(); } }
+        private string _FixedtoUpColumn;
+        public string FixedtoUpColumn { get { return _FixedtoUpColumn; } set { _FixedtoUpColumn = value; OnPropertyChanged(); } }
+       
         public TopDowelsLanguage(string language)
         {
             ChangedLanguage(language);
@@ -46,31 +35,21 @@ namespace WpfCustomControls.LanguageModel.R01_ColumnRebar
         }
         private void GetLanguageEN()
         {
-            Setting = "Setting";
-            Geometry = "Geometry";
-            Stirrups = "Stirrups";
-            AdditionalStirrups = "Additional Stirrups";
-            Bars = "Bars";
+            TopDowelsProperty = "Top Dowels Property";
+            ApplyAllBar = "Apply All Bar";
+            Top = "Top";
             TopDowels = "Top Dowels";
-            BottomDowels = "Bottom Dowels";
-            BarsDivision = "Bars Division";
-            OK = "OK";
-            Cancel = "Cancel";
-            Columns = "Columns";
+            FixedtoUpColumn = "Fixed to Up Column";
+        
         }
         private void GetLanguageVN()
         {
-            Setting = "Cài Đặt";
-            Geometry = "Hình Dạng";
-            Stirrups = "Thép Đai";
-            AdditionalStirrups = "Đai tăng cường";
-            Bars = "Thép chủ";
+            TopDowelsProperty = "Thông số Neo thép trên";
+            ApplyAllBar = "Áp dụng hết";
+            Top = "Trên";
             TopDowels = "Neo Thép Trên";
-            BottomDowels = "Neo Thép Dưới";
-            BarsDivision = "Cắt Thép";
-            OK = "Thực hiện";
-            Cancel = "Huỷ";
-            Columns = "Các Cột";
+            FixedtoUpColumn = "Chẵn Cột Trên";
+         
         }
     }
 }

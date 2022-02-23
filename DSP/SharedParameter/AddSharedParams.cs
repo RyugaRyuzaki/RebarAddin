@@ -3,70 +3,53 @@ using System;
 using System.IO;
 using System.Reflection;
 using Application = Autodesk.Revit.ApplicationServices.Application;
-namespace R11_FoundationPile
+namespace DSP
 {
     
     public class AddSharedParams 
     {
-        public static string ParameterName = "Updated";
-        public static string CurveIdName = "CurveElementId";
-        public static void ShareParameter(Document document, Application app)
+        public static string XVector = "XVector";
+        public static string YVector = "YVector";
+        public static void ShareParameterPile(Document document, Application app, BuiltInCategory categoryPile)
         {
             using (Transaction tran = new Transaction(document, "Add shared param"))
             {
                 tran.Start();
-                bool paramsAdded = AddSharedTestParameter(app,document, ParameterName, ParameterType.YesNo, false);
-                paramsAdded &= AddSharedTestParameter( app,  document, CurveIdName, ParameterType.Integer, true);
-               
+                bool paramsAdded = AddSharedPileParameter(app,document, XVector, ParameterType.Length, categoryPile, true);
+                paramsAdded &= AddSharedPileParameter( app,  document, YVector, ParameterType.Length, categoryPile, true);
+                tran.Commit();
             }
         }
-       private static bool AddSharedTestParameter(Application app, Document document, string paramName, ParameterType paramType, bool userModifiable)
+       private static bool AddSharedPileParameter(Application app, Document document, string paramName, ParameterType paramType, BuiltInCategory categoryPile, bool userModifiable)
         {
             try
             {
-                
-                // check whether shared parameter exists
                 if (ShareParameterExists(document, paramName))
                 {
                     return true;
                 }
 
                 // create shared parameter file
-                string modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string paramFile = modulePath + "\\RebarTestParameters.txt";
+                string modulePath = Path.GetDirectoryName(document.PathName);
+                string paramFile = modulePath + "\\DSPParameters.txt";
                 if (File.Exists(paramFile))
                 {
                     File.Delete(paramFile);
                 }
                 FileStream fs = File.Create(paramFile);
                 fs.Close();
-
-                // cache application handle
-                
-
-                // prepare shared parameter file
                 app.SharedParametersFilename  = paramFile;
-
-                // open shared parameter file
                 DefinitionFile parafile = app.OpenSharedParameterFile();
-
-                // create a group
-                DefinitionGroup apiGroup = parafile.Groups.Create("RebarTestParamGroup");
-
-                // create a visible param 
+                DefinitionGroup apiGroup = parafile.Groups.Create("PileParamGroup");
                 ExternalDefinitionCreationOptions ExtDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType);
-                ExtDefinitionCreationOptions.HideWhenNoValue = true;//used this to show the parameter only in some rebar instances that will use it
-                ExtDefinitionCreationOptions.UserModifiable = userModifiable;//  set if users need to modify this
-                Definition rebarSharedParamDef = apiGroup.Definitions.Create(ExtDefinitionCreationOptions);
-
-                // get rebar category
-                Category rebarCat = document.Settings.Categories.get_Item(BuiltInCategory.OST_Rebar);
+                ExtDefinitionCreationOptions.HideWhenNoValue = true;
+                ExtDefinitionCreationOptions.UserModifiable = userModifiable;
+                Definition pileSharedParamDef = apiGroup.Definitions.Create(ExtDefinitionCreationOptions);
+                Category rebarCat = document.Settings.Categories.get_Item(categoryPile);
                 CategorySet categories = app.Create.NewCategorySet();
                 categories.Insert(rebarCat);
-
-                // insert the new parameter
                 InstanceBinding binding = app.Create.NewInstanceBinding(categories);
-                document.ParameterBindings.Insert(rebarSharedParamDef, binding);
+                document.ParameterBindings.Insert(pileSharedParamDef, binding);
                 return true;
             }
             catch (Exception ex)
@@ -84,14 +67,10 @@ namespace R11_FoundationPile
             while (iter.MoveNext())
             {
                 Definition tempDefinition = iter.Key;
-
-                // find the definition of which the name is the appointed one
                 if (string.Compare(tempDefinition.Name, paramName) != 0)
                 {
                     continue;
                 }
-
-                // get the category which is bound
                 ElementBinding binding = bindingMap.get_Item(tempDefinition) as ElementBinding;
                 CategorySet bindCategories = binding.Categories;
                 foreach (Category category in bindCategories)

@@ -4,6 +4,7 @@ using R02_BeamsRebar.View;
 using System;
 using System.Windows.Input;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class AddBottomBarViewModel:BaseViewModel
@@ -57,11 +58,13 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand LEndTextChangedCommand { get; set; }
         public ICommand LaEndTextChangedCommand { get; set; }
         #endregion
-        public AddBottomBarViewModel(Document document, BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public AddBottomBarViewModel(Document document, BeamsModel beamsModel, Languages languages)
         {
             #region Get Property
             Doc = document;
-            BeamsModel = beamsModel;
+            BeamsModel = beamsModel; Languages = languages;
             #endregion
             #region Load
             LoadAddBottomBarsViewCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>

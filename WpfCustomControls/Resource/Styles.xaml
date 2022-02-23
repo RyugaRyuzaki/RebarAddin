@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./DataGridStyle.xaml"/>
         <ResourceDictionary Source="./TextBoxStyle.xaml"/>
+        <ResourceDictionary Source="./TextBlockStyle.xaml"/>
         <ResourceDictionary Source="./ButtonStyle.xaml"/>
         <ResourceDictionary Source="./ButtonStyleIcon.xaml"/>
         <ResourceDictionary Source="./ComboBoxStyle.xaml"/>
@@ -60,13 +61,7 @@
     <Style x:Key="BorderGrid" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="#edebe6"></Setter>
     </Style>
-    <Style x:Key="TextBlockUnit" TargetType="{x:Type TextBlock}">
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="13"></Setter>
-        <Setter Property="FontFamily" Value="Tahoma"></Setter>
-        <Setter Property="Text" Value="{Binding DataContext.Unit.UnitName, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
-    </Style>
+    
     <Style x:Key="canvasMenu" TargetType="{x:Type Canvas}">
         <Setter Property="Width" Value="32"></Setter>
         <Setter Property="Height" Value="32"></Setter>

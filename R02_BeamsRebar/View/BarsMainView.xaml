@@ -31,10 +31,10 @@
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Margin="5 0 5 5" Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Top Long Bar" >
+                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.TopLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <StackPanel>
                         <DockPanel LastChildFill="False">
-                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="Style Bar"></TextBlock>
+                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R02_Language.BarsMainLanguage.StyleBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <ComboBox IsEnabled="{Binding IsStyleMainTop}" x:Name="ComboStyleMainTopBar" Style="{StaticResource ComboBoxStyle}" Width="150" DockPanel.Dock="Left" 
                                       ItemsSource="{Binding AllStyleTopBar}" 
                                       SelectedIndex="{Binding BeamsModel.SelectedIndexModel.StyleMainTop,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -63,7 +63,7 @@
                                 </Grid.ColumnDefinitions>
                                 <!--#region header-->
                                 <Border BorderThickness="0.8" Grid.Row="0" Grid.Column="0" BorderBrush="Gainsboro">
-                                    <TextBlock Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                                    <TextBlock Text="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                                 </Border>
                                 <Border BorderThickness="0.8" Grid.Row="0" Grid.Column="1" BorderBrush="Gainsboro">
                                     <TextBlock Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
@@ -100,7 +100,7 @@
                                 </i:Interaction.Triggers>
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Width="80" Header="Bar Number" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                        <GridViewColumn Width="80" Header="Bar Number" DisplayMemberBinding="{Binding BarNumber}" ></GridViewColumn>
                                         <GridViewColumn Width="55" Header="Bar" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
                                         <GridViewColumn Width="55" Header="No" DisplayMemberBinding="{Binding NumberBar}"></GridViewColumn>
                                         <GridViewColumn Width="55" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter}"></GridViewColumn>
@@ -120,7 +120,7 @@
             </Grid>
 
             <Grid Margin="5 5 5 0" Grid.Column="0" Grid.Row="1">
-                <GroupBox Header="Top Detail Bar" >
+                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.TopDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition ></ColumnDefinition>
@@ -141,7 +141,7 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Canvas x:Name="canvasTop" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="9"></Canvas>
-                        <TextBlock Text="Bar :" Grid.Column="0" Grid.Row="1"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock  Grid.Column="0" Grid.Row="1"  Style="{StaticResource TextBlockBar}"></TextBlock>
                         <TextBlock Text="n = " Grid.Column="0" Grid.Row="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <!--#region Single Main Top-->
                         <ComboBox x:Name="BarTopTypeS" Height="22" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}" 
@@ -252,7 +252,7 @@
             </Grid>
             <!--#region Bottom-->
             <Grid Margin="5 0 0 5" Grid.Column="1" Grid.Row="0">
-                <GroupBox Header="Bottom Long Bar" >
+                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.BottomLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <ListView  x:Name="ListViewBottomBar" ItemsSource="{Binding BeamsModel.MainBottomBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                                   SelectedItem="{Binding SelectedMainBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   SelectedIndex="{Binding BeamsModel.SelectedIndexModel.BarBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
@@ -263,8 +263,8 @@
                         </i:Interaction.Triggers>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="80" Header="Bar Number" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
-                                <GridViewColumn Width="55" Header="Bar" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
+                                <GridViewColumn Width="80" Header="{Binding Languages.GeneralLanguage.BarNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                <GridViewColumn Width="55" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
                                 <GridViewColumn Width="55" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter}"></GridViewColumn>
                                 <GridViewColumn Width="55" Header="No" DisplayMemberBinding="{Binding NumberBar}"></GridViewColumn>
                                 <GridViewColumn Width="55" Header="L" DisplayMemberBinding="{Binding Length}"></GridViewColumn>
@@ -278,7 +278,7 @@
                 </GroupBox>
             </Grid>
             <Grid Margin="5 5 0 0" Grid.Column="1" Grid.Row="1">
-                <GroupBox Header="Bottom Detail Bar" >
+                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.BottomDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition ></ColumnDefinition>
@@ -299,7 +299,7 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Canvas x:Name="canvasBottom" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="9"></Canvas>
-                        <TextBlock Text="Bar :" Grid.Column="0" Grid.Row="1"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1"  Style="{StaticResource TextBlockBar}"></TextBlock>
                         <TextBlock Text="n = " Grid.Column="0" Grid.Row="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Text="L = " Grid.Column="0" Grid.Row="3" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
 

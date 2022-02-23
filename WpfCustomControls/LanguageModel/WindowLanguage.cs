@@ -15,6 +15,8 @@ namespace WpfCustomControls.LanguageModel
         private string _Cancel;
         public string Cancel { get { return _Cancel; } set { _Cancel = value; OnPropertyChanged(); } }
 
+      
+
         #region R01
         private string _Column;
         public string Column { get { return _Column; } set { _Column = value; OnPropertyChanged(); } }
@@ -73,6 +75,7 @@ namespace WpfCustomControls.LanguageModel
         {
             OK = "OK";
             Cancel = "Cancel";
+     
             Column = "Columns";
             R11_CreateFoundationPile = "Create FoundationPile";
             R11_CreatePileDetail = "Create PileDetail";
@@ -97,6 +100,7 @@ namespace WpfCustomControls.LanguageModel
         {
             OK = "Thực Hiện";
             Cancel = "Huỷ";
+        
             Column = "Cột";
             R11_CreateFoundationPile = "Tạo Móng Cọc";
             R11_CreatePileDetail = "Tạo Chi tiết Cọc";
@@ -108,7 +112,7 @@ namespace WpfCustomControls.LanguageModel
             R01_CreateDetailViewColumns = "Tạo Detail";
             R01_CreateSectionViewColumns = "Tạo MC";
             R01_CreateDimensionViewColumns = "Tạo KT Detail ";
-            R01_CreateDimensionSectionColumns = "Tạo KT Detail";
+            R01_CreateDimensionSectionColumns = "Tạo KT Mặt cắt";
             R01_CreateDetailShopColumns = "Tạo DetailShop";
 
             R02_CreateRebarBeams = "Tạo Thép ";

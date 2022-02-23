@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class StirrupsViewModel:BaseViewModel
@@ -37,14 +38,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand S1TextChangedCommand { get; set; }
         public ICommand S2TextChangedCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public StirrupsViewModel(Document doc, ColumnsModel columnsModel,TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public StirrupsViewModel(Document doc, ColumnsModel columnsModel, Languages languages)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             #endregion
             #region LoadCommand
             LoadStirrupsViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

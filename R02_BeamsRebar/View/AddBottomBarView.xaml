@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
             <!--#region Add Bottom San-->
             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                <GroupBox Header="Additional Bottom Bar">
+                <GroupBox Header="{Binding Languages.R02_Language.AddBottomBarLanguage.AdditionalBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -43,7 +43,7 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition Width="4*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Span :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="0" Text="{Binding Languages.R02_Language.AddBottomBarLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <ComboBox Grid.Column="1" Height="30" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding BeamsModel.SelectedBottomModels}" DisplayMemberPath="Span"
                                   SelectedItem="{Binding BottomModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -54,10 +54,10 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
-                        <TextBlock Grid.Column="3" Text="Length :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="3" Text="{Binding Languages.R02_Language.AddBottomBarLanguage.Lenght,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Column="4" Text="{Binding BottomModels.Length}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <DockPanel Grid.Column="5" LastChildFill="False">
-                            <Button DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Width="120" Content="Fixed To Span"
+                            <Button DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.R02_Language.AddBottomBarLanguage.FixedSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Command="{Binding FixedToSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                     ></Button>
                         </DockPanel>
@@ -67,7 +67,7 @@
             <!--#endregion-->
             <!--#region Start Card-->
             <Grid Grid.Column="0" Grid.Row="1" Margin="0 5 5 0">
-                <GroupBox x:Name="GStart" Header="Start" >
+                <GroupBox x:Name="GStart" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.Start,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Start">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -86,12 +86,12 @@
                             <ColumnDefinition Width="1.4*"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource TextBlockLayerBar}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerStart.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
 
-                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonAddLayerStyle}" 
                                 Command="{Binding AddStartCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
-                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonDeleteLayerStyle}" 
                                 Command="{Binding DeleteStartCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
                         <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" >
                             <CheckBox  Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding BottomModels.StartBottomChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -100,7 +100,7 @@
                             </CheckBox>
                             <Canvas x:Name="CanvasStart"></Canvas>
                         </DockPanel>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockBar}"></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerStart.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
@@ -157,8 +157,8 @@
                             </i:Interaction.Triggers>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
-                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.LayerBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
@@ -172,7 +172,7 @@
             <!--#endregion-->
             <!--#region Mid Card-->
             <Grid Grid.Column="1" Grid.Row="1" Margin="5 5 5 0">
-                <GroupBox x:Name="GMid" Header="Start" >
+                <GroupBox x:Name="GMid" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.Middle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Mid">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -191,18 +191,18 @@
                             <ColumnDefinition Width="1.4*"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockLayerBar}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerMid.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
 
-                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonAddLayerStyle}" 
                                 Command="{Binding AddMidCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
-                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonDeleteLayerStyle}" 
                                 Command="{Binding DeleteMidCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
                         <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
 
                             <Canvas x:Name="CanvasMid"></Canvas>
                         </DockPanel>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource TextBlockBar}"></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerMid.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
@@ -259,8 +259,8 @@
                             </i:Interaction.Triggers>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
-                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.LayerBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
@@ -274,7 +274,7 @@
             <!--#endregion-->
             <!--#region Start Card-->
             <Grid Grid.Column="2" Grid.Row="1" Margin="0 5 0 0">
-                <GroupBox x:Name="GEnd" Header="Start" >
+                <GroupBox x:Name="GEnd" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.End,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="End">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -293,12 +293,12 @@
                             <ColumnDefinition Width="1.4*"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Layer :" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockLayerBar}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerEnd.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
 
-                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Content="Add Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonAddLayerStyle}" 
                                 Command="{Binding AddEndCommand }" CommandParameter="{Binding ElementName=MainWindow}" />
-                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Content="Delete Layer" Style="{StaticResource ButtonStyle}" 
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Width="100" Style="{StaticResource ButtonDeleteLayerStyle}" 
                                 Command="{Binding DeleteEndCommand }" CommandParameter="{Binding ElementName=MainWindow}"/>
                         <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" LastChildFill="False">
                             <Canvas x:Name="CanvasEnd" ></Canvas>
@@ -308,7 +308,7 @@
                             </CheckBox>
 
                         </DockPanel>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bar" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource TextBlockBar}"></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" Text="Ø" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerEnd.Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="n = " Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
@@ -365,8 +365,8 @@
                             </i:Interaction.Triggers>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="58" Header="Layer" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
-                                    <GridViewColumn Width="58" Header="Bar" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.LayerBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Layer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
+                                    <GridViewColumn Width="58" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="Ø" DisplayMemberBinding="{Binding Bar.Diameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="n" DisplayMemberBinding="{Binding NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>
                                     <GridViewColumn Width="58" Header="L" DisplayMemberBinding="{Binding L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></GridViewColumn>

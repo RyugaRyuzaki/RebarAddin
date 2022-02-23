@@ -70,6 +70,16 @@
     </Compile>
     <Compile Include="Draw\DrawIcon.cs" />
     <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\SectionAreaLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\SpeciaBarLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\StirrupLanguage.cs" />
+    <Compile Include="LanguageModel\R02_Language.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\BarsDivisionLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\BarsMainLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\AddBottomBarLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\R02_BeamRebar\AddTopBarLanguage.cs" />
     <Compile Include="LanguageModel\WindowLanguage.cs" />
     <Compile Include="LanguageModel\MenuLanguage.cs" />
     <Compile Include="LanguageModel\AuthorLanguage.cs" />
@@ -153,6 +163,10 @@
     <Page Include="Resource\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resource\TextBlockStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resource\TextBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>

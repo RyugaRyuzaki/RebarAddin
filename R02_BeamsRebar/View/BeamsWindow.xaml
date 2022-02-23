@@ -92,55 +92,55 @@
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Setting" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem >
                             <DockPanel>
                                 <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Geometry" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="StirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Stirrups" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.Stirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="BarsMainCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Bars Main" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.BarsMain,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="AddTopBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Add-Top Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.AddTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="AddBottomBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Add-Bottom Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.AddBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="SpecialBarCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Special Bar" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.SpecialBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="SectionAreaCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Section Area" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.SectionArea,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                         <ListViewItem>
                             <DockPanel>
                                 <Canvas x:Name="BarsDivisionCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                <TextBlock Text="Bars Division" FontSize="13" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Text="{Binding Languages.MenuLanguage.BarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13" Margin="5 0 0 0"></TextBlock>
                             </DockPanel>
                         </ListViewItem>
                     </ListView>

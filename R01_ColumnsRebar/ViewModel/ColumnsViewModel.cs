@@ -1,4 +1,4 @@
-#region Namespaces
+﻿#region Namespaces
 
 using System;
 using System.Collections;
@@ -49,6 +49,7 @@ namespace R01_ColumnsRebar
         public ICommand OKCommand { get; set; }
         public ICommand PreviewTextInputCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
+
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -80,6 +81,8 @@ namespace R01_ColumnsRebar
         public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+
+
         public ColumnsViewModel(UIDocument uiDoc, Document doc,List<Element> columns)
         {
             #region Get property
@@ -95,15 +98,15 @@ namespace R01_ColumnsRebar
             
             #endregion
             #region SelectedViewModel
-            SettingViewModel = new SettingViewModel(Doc, ColumnsModel, TaskBarViewModel);
-            GeometryViewModel = new GeometryViewModel(ColumnsModel, TaskBarViewModel);
-            StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel, TaskBarViewModel);
-            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel, TaskBarViewModel);
-            BarsViewModel = new BarsViewModel(Doc, ColumnsModel);
+            SettingViewModel = new SettingViewModel(Doc, ColumnsModel, Languages);
+            GeometryViewModel = new GeometryViewModel(ColumnsModel, Languages);
+            StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel, Languages);
+            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel, Languages);
+            BarsViewModel = new BarsViewModel(Doc, ColumnsModel, Languages);
             //DowelsViewModel = new DowelsViewModel(Doc, ColumnsModel);
-            TopDowelsViewModel = new TopDowelsViewModel(Doc, ColumnsModel);
-            BottomDowelsViewModel = new BottomDowelsViewModel(Doc, ColumnsModel);
-            BarsDivisionViewModel = new BarsDivisionViewModel(Doc, ColumnsModel);
+            TopDowelsViewModel = new TopDowelsViewModel(Doc, ColumnsModel, Languages);
+            BottomDowelsViewModel = new BottomDowelsViewModel(Doc, ColumnsModel, Languages);
+            BarsDivisionViewModel = new BarsDivisionViewModel(Doc, ColumnsModel, Languages);
             StatusBarViewModel = new StatusBarViewModel(ColumnsModel.ProgressModel, Languages);
             StatusBarViewModel.SetStatusBarColumns();
             ActionViewModel = new ActionViewModel(Languages);

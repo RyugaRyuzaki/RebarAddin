@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <Style x:Key="TextBlockUnit" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Unit.UnitName, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockBar" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockNameBar" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.NameBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockLayerBar" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.LayerBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockType" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockDistance" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockNumberBar" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockBarNumber" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.BarNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockHookLength" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.HookLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockHookType" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.HookType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockColumnsNumber" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.ColumnsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockBeamsNumber" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.BeamsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockWallsNumber" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
+        <Setter Property="Text" Value="{Binding DataContext.Languages.GeneralLanguage.WallsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+</ResourceDictionary>

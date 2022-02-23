@@ -51,6 +51,7 @@ namespace R11_FoundationPile
                 {
                     transaction.Start("aaa");
                     foundationPileModel.FoundationPileDetail.CreatePileSpotCoodinateView(document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                    foundationPileModel.FoundationPileDetail.CreateSchedule(document, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                     foundationPileModel.DimensionDetail.CreateDimensionGridXPile(foundationPileModel.FoundationPileDetail.PileSpotCoordinateView, document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                     foundationPileModel.DimensionDetail.CreateDimensionGridYPile(foundationPileModel.FoundationPileDetail.PileSpotCoordinateView, document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
                     if (foundationPileModel.FoundationPileDetail.PileSpotCoordinateView != null)
@@ -60,6 +61,9 @@ namespace R11_FoundationPile
                             for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)
                             {
                                 foundationPileModel.AllFoundationModels[i].PileModels[j].CreateSpotDimensionPileCoordinate(foundationPileModel.FoundationPileDetail.PileSpotCoordinateView, document, unit, foundationPileModel.SettingModel); foundationPileModel.ProgressModel.SetValue(uc, 1);
+                                XYZ point = (foundationPileModel.AllFoundationModels[i].PileModels[j].Pile.Location as LocationPoint).Point;
+                                foundationPileModel.AllFoundationModels[i].PileModels[j].Pile.LookupParameter("XVector").Set(point.X);
+                                foundationPileModel.AllFoundationModels[i].PileModels[j].Pile.LookupParameter("YVector").Set(point.Y);
                             }
                         }
                     }
@@ -85,7 +89,7 @@ namespace R11_FoundationPile
                     a += 3;
                 }
             }
-            a += 3;
+            a += 4;
             for (int i = 0; i < foundationPileModel.AllFoundationModels.Count; i++)
             {
                 for (int j = 0; j < foundationPileModel.AllFoundationModels[i].PileModels.Count; j++)

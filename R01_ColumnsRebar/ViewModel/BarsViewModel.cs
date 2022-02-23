@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BarsViewModel:BaseViewModel
@@ -40,11 +41,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand SelectionBarChangedCommand { get; set; }
         public ICommand PreviewTextInputCommand { get; set; }
         #endregion
-        public BarsViewModel(Document doc,ColumnsModel columnsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public BarsViewModel(Document doc,ColumnsModel columnsModel, Languages languages)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
+            Languages = languages;
             SelectedRebarBarModel = ColumnsModel.AllBars[3];
             IsLock = true;
             #endregion

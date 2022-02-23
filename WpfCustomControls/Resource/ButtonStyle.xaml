@@ -41,5 +41,169 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+    <Style x:Key="ButtonApplyStyle" TargetType="{x:Type Button}">
+        <!--<Setter Property="Background" Value="Lavender" />-->
+        <Setter Property="Background" Value="#85aff2" />
+        <!--<Setter Property="Foreground" Value="White" />-->
+        <Setter Property="FontSize" Value="14" />
+        <!--<Setter Property="SnapsToDevicePixels" Value="True" />-->
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Width" Value="42"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ContentPresenter  Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center" 
+                                               Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightPink" />
+                            <Setter Property="Foreground" Value="DarkBlue" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#8cc63e" />
+                            <Setter Property="Foreground" Value="DarkRed" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gainsboro" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Content" Value="{Binding DataContext.Languages.GeneralLanguage.Apply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+   
+    <Style x:Key="ButtonModifyStyle" TargetType="{x:Type Button}">
+        <!--<Setter Property="Background" Value="Lavender" />-->
+        <Setter Property="Background" Value="#85aff2" />
+        <!--<Setter Property="Foreground" Value="White" />-->
+        <Setter Property="FontSize" Value="14" />
+        <!--<Setter Property="SnapsToDevicePixels" Value="True" />-->
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Width" Value="42"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ContentPresenter  Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center" 
+                                               Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightPink" />
+                            <Setter Property="Foreground" Value="DarkBlue" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#8cc63e" />
+                            <Setter Property="Foreground" Value="DarkRed" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gainsboro" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Content" Value="{Binding DataContext.Languages.GeneralLanguage.Modify,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="ButtonAddLayerStyle" TargetType="{x:Type Button}">
+        <!--<Setter Property="Background" Value="Lavender" />-->
+        <Setter Property="Background" Value="#85aff2" />
+        <!--<Setter Property="Foreground" Value="White" />-->
+        <Setter Property="FontSize" Value="14" />
+        <!--<Setter Property="SnapsToDevicePixels" Value="True" />-->
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Width" Value="42"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ContentPresenter  Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center" 
+                                               Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightPink" />
+                            <Setter Property="Foreground" Value="DarkBlue" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#8cc63e" />
+                            <Setter Property="Foreground" Value="DarkRed" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gainsboro" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Content" Value="{Binding DataContext.Languages.GeneralLanguage.AddLayer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
+    <Style x:Key="ButtonDeleteLayerStyle" TargetType="{x:Type Button}">
+        <!--<Setter Property="Background" Value="Lavender" />-->
+        <Setter Property="Background" Value="#85aff2" />
+        <!--<Setter Property="Foreground" Value="White" />-->
+        <Setter Property="FontSize" Value="14" />
+        <!--<Setter Property="SnapsToDevicePixels" Value="True" />-->
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Width" Value="42"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ContentPresenter  Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center" 
+                                               Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightPink" />
+                            <Setter Property="Foreground" Value="DarkBlue" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#8cc63e" />
+                            <Setter Property="Foreground" Value="DarkRed" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gainsboro" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Content" Value="{Binding DataContext.Languages.GeneralLanguage.DeleteLayer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+    </Style>
 </ResourceDictionary>

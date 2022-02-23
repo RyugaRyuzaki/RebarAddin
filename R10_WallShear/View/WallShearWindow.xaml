@@ -28,7 +28,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
                 <ResourceDictionary>
                     <DataTemplate x:Name="settingViewModel" DataType="{x:Type viewModel:SettingViewModel}">
                         <view:SettingView></view:SettingView>

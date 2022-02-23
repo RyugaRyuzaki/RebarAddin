@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class BarsMainViewModel:BaseViewModel
@@ -55,11 +56,13 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand BottomExaTextChangedCommand { get; set; }
         public ICommand BottomExbTextChangedCommand { get; set; }
         #endregion
-        public BarsMainViewModel(Document document,BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public BarsMainViewModel(Document document,BeamsModel beamsModel, Languages languages)
         {
             #region Get Property
             Doc = document;
-            BeamsModel = beamsModel;
+            BeamsModel = beamsModel; Languages = languages;
             #endregion
             #region
             AllStyleTopBar = new List<string>();

@@ -25,7 +25,7 @@
                     <RowDefinition Height="360"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!--#region Bars Property-->
-                <GroupBox Grid.Row="0" Header="Bars Property" Margin="5">
+                <GroupBox Grid.Row="0" Header="{Binding Languages.R01_Language.BarsLanguage.BarsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.6*"></ColumnDefinition>
@@ -46,7 +46,7 @@
                         <!--<DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" LastChildFill="False">
                            
                         </DockPanel>-->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Column No"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.ColumnsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"   Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding ColumnsModel.BarMainModels}" DisplayMemberPath="NumberColumn"
                                   SelectedItem="{Binding SelectedColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -86,7 +86,7 @@
                                   SelectedItem="{Binding SelectedColumn.nd,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                         </ComboBox>
-                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="Bar">
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                         </TextBlock>
                         <ComboBox Grid.Row="2" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding ColumnsModel.AllBars}" DisplayMemberPath="Type"
@@ -99,15 +99,15 @@
                         <TextBlock Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedColumn.Bar.Diameter}"></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Split Overlap"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R01_Language.BarsLanguage.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding SplitOverlap}" 
                                   SelectedItem="{Binding SelectedColumn.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                         </ComboBox>
-                        <TextBlock Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="%*Area Reinforcement"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.BarsLanguage.AreaReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="Overlap"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R01_Language.BarsLanguage.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <TextBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedColumn.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                  x:Name="OverlapTextBox">
@@ -118,17 +118,17 @@
                             </i:Interaction.Triggers>
                         </TextBox>
                         <TextBlock Grid.Row="4" Grid.Column="4"  Style="{StaticResource DataGridTextBlockStyle}" Text="*Ø"></TextBlock>
-                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="Apply" Width="80"
+                        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.GeneralLanguage.Apply,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="80"
                                 Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="Modify"    Width="80"
+                        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.GeneralLanguage.Modify,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"    Width="80"
                                  Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
                         
                     </Grid>
                     
                 </GroupBox>
                 <!--#endregion-->
-                
-                <GroupBox Grid.Row="1" Header="Bars information" Margin="5">
+
+                <GroupBox Grid.Row="1" Header="{Binding Languages.R01_Language.BarsLanguage.BarsInformation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <ListView  ItemsSource="{Binding SelectedColumn.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

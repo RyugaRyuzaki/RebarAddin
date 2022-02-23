@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class StirrupsViewModel:BaseViewModel
@@ -57,12 +57,15 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand AntiSaTextChangedCommand { get; set; }
         public ICommand AntiClickCommand { get; set; }
         #endregion
-        public StirrupsViewModel(Document document,BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public StirrupsViewModel(Document document,BeamsModel beamsModel, Languages languages)
         {
             #region Get Property
             Doc = document;
             AddAllNa();
             BeamsModel = beamsModel;
+            Languages = languages;
             GetScale1();
             #endregion
             #region Load

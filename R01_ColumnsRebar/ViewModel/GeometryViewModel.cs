@@ -7,6 +7,7 @@ using System.Windows.Input;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class GeometryViewModel:BaseViewModel
@@ -23,13 +24,13 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand LoadGeometryViewCommand { get; set; }
         public ICommand SelectionColumnChangedCommand { get; set; }
         #endregion
-        private TaskBarViewModel _TaskBarViewModel;
-        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        public GeometryViewModel(ColumnsModel columnsModel,TaskBarViewModel taskBarViewModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public GeometryViewModel(ColumnsModel columnsModel, Languages languages)
         {
             #region property
             ColumnsModel = columnsModel;
-            TaskBarViewModel = taskBarViewModel;
+            Languages = languages;
             #endregion
             #region loadwindow
             LoadGeometryViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

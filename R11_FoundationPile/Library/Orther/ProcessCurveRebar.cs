@@ -1672,8 +1672,8 @@ namespace R11_FoundationPile
         }
 
         #endregion
-        #region Image3
-        private static ObservableCollection<Curve> GetCurvesMainItem0(SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel BarModel, UnitProject Unit, bool bottom, bool addHorizontal, bool addVertical, double dMainBottom, double dSide, double CoverTop, double CoverBottom, double CoverSide, out List<double> Distance)
+        #region Image0
+        public static ObservableCollection<Curve> GetCurvesMainItem0(SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel BarModel, UnitProject Unit, bool bottom, bool addHorizontal, bool addVertical, double dMainBottom, double dSide, double CoverTop, double CoverBottom, double CoverSide, out List<double> Distance)
         {
 
             Distance = new List<double>();

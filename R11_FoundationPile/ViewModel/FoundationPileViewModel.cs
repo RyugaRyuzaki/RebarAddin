@@ -12,7 +12,7 @@ using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
 using WpfCustomControls.Model;
 using DSP;
-using System.Windows.Controls;
+using Application = Autodesk.Revit.ApplicationServices.Application;
 #endregion
 
 namespace R11_FoundationPile
@@ -20,7 +20,7 @@ namespace R11_FoundationPile
     public class FoundationPileViewModel : BaseViewModel
     {
         #region property
-        public UIApplication Uiapp;
+        public Application App;
         public UIDocument UiDoc;
         public Document Doc;
         private UnitProject _Unit;
@@ -65,10 +65,10 @@ namespace R11_FoundationPile
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         #endregion
-        public FoundationPileViewModel(UIApplication uiapp,UIDocument uiDoc, Document doc, List<Element> columns)
+        public FoundationPileViewModel(Application app,UIDocument uiDoc, Document doc, List<Element> columns)
         {
             #region
-            Uiapp = uiapp;
+            App = app;
             UiDoc = uiDoc;
             Doc = doc;
             Columns = columns;
@@ -133,7 +133,9 @@ namespace R11_FoundationPile
                     }
                    
                 }
-               
+                DeleteWallTemp();
+
+
 
 
             });
@@ -240,6 +242,7 @@ namespace R11_FoundationPile
             if (TransactionGroup.HasStarted())
             {
                 CreateFoundationAndPiles.Create(p, FoundationPileModel, Doc, Unit);
+                AddSharedParams.ShareParameterPile(Doc, App,((FoundationPileModel.SettingModel.SelectedCategoyryPile.Equals("Structural Columns"))?(BuiltInCategory.OST_StructuralColumns):(BuiltInCategory.OST_StructuralFoundation)));
                 TransactionGroup.Commit();
 
                 //p.DialogResult = true;
@@ -261,6 +264,16 @@ namespace R11_FoundationPile
             if (TransactionGroup.HasStarted())
             {
                 CreateRebar.Create(p, FoundationPileModel, Doc, Unit);
+                TransactionGroup.Commit();
+                //p.DialogResult = true;
+            }
+        }
+        private void DeleteWallTemp()
+        {
+            TransactionGroup.Start("Action");
+            if (TransactionGroup.HasStarted())
+            {
+                DeleteWall.Delete(FoundationPileModel, Doc);
                 TransactionGroup.Commit();
                 //p.DialogResult = true;
             }

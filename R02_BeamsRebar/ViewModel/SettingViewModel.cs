@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class SettingViewModel:BaseViewModel
@@ -20,9 +21,12 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand LoadSettingViewCommand { get; set; }
         public ICommand TextChangedCommand { get; set; }
         #endregion
-        public SettingViewModel(BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public SettingViewModel(BeamsModel beamsModel, Languages languages)
         {
             BeamsModel = beamsModel;
+            Languages = languages;
             #region LoadCommand
             LoadSettingViewCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
             {

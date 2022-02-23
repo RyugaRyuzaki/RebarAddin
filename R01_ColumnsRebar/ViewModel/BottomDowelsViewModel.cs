@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BottomDowelsViewModel:BaseViewModel
@@ -40,11 +41,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand BottomDowelsLcTextChangedCommand { get; set; }
         public ICommand FixedBottomBarDowelsCommand { get; set; }
         #endregion
-        public BottomDowelsViewModel(Document doc, ColumnsModel columnsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public BottomDowelsViewModel(Document doc, ColumnsModel columnsModel, Languages languages)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
+            Languages = languages;
             #endregion
             #region Load
             LoadBottomDowelsViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

@@ -51,7 +51,7 @@ namespace R11_FoundationPile
                 {
                     transGr.Start("RAPI00TransGr");
 
-                    FoundationPileViewModel viewModel = new FoundationPileViewModel(uiapp,uidoc, doc, columns);
+                    FoundationPileViewModel viewModel = new FoundationPileViewModel(app, uidoc, doc, columns);
                     FoundationPileWindow window = new FoundationPileWindow(viewModel);
 
                     //window.Show();

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
+using WpfCustomControls.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BarsDivisionViewModel : BaseViewModel
@@ -28,12 +29,14 @@ namespace R01_ColumnsRebar.ViewModel
         public ICommand ApplyCommand { get; set; }
         public ICommand ModifyCommand { get; set; }
         #endregion
-        public BarsDivisionViewModel(Document doc, ColumnsModel columnsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public BarsDivisionViewModel(Document doc, ColumnsModel columnsModel, Languages languages)
         {
             #region property
             Doc = doc;
             ColumnsModel = columnsModel;
-
+            Languages = languages;
             #endregion
             #region load
             LoadBarsDivisionViewCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>

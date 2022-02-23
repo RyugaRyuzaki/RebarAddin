@@ -19,6 +19,8 @@ namespace R11_FoundationPile
         public string Type = "@FoundationPlan";
         public const string NamePile = "Piles Plan";
         public const string NameSpotCoordinate = "Piles Spot Coordinate";
+        public ElementId Schedule { get; set; }
+        public ViewSchedule ViewSchedule { get; set; }
         public FoundationPileDetail(Document document)
         {
         }
@@ -90,7 +92,51 @@ namespace R11_FoundationPile
             PileSpotCoordinateView.Name = NameSpotCoordinate;
         }
         #region schedule
+        public void CreateSchedule(Document document, SettingModel settingModel)
+        {
+           BuiltInCategory pile= (settingModel.SelectedCategoyryPile.Equals("Structural Columns")) ? (BuiltInCategory.OST_StructuralColumns) : (BuiltInCategory.OST_StructuralFoundation) ;
+                Schedule = new FilteredElementCollector(document).OfCategory(pile).FirstElementId();
+            if (Schedule != null && Schedule != ElementId.InvalidElementId)
+            {
 
+                ViewSchedule = ViewSchedule.CreateSchedule(document, new ElementId(BuiltInCategory.OST_DetailComponents));
+                document.Regenerate();
+                ViewSchedule.Name = "SpotCoordinate Pile";
+                ScheduleDefinition definition = ViewSchedule.Definition;
+                SchedulableField schedulableFieldImage = definition.GetSchedulableFields().FirstOrDefault(sf => sf.GetName(document).Equals("Comments"));
+                if (schedulableFieldImage != null)
+                {
+                    // Add the found field
+                    definition.AddField(schedulableFieldImage);
+                }
+                SchedulableField schedulableFieldElementHost = definition.GetSchedulableFields().FirstOrDefault(sf => sf.GetName(document).Equals("XVector"));
+                if (schedulableFieldElementHost != null)
+                {
+                    // Add the found field
+                    definition.AddField(schedulableFieldElementHost);
+                }
+                SchedulableField schedulableFieldLength = definition.GetSchedulableFields().FirstOrDefault(sf => sf.GetName(document).Equals("YVector"));
+                if (schedulableFieldLength != null)
+                {
+                    // Add the found field
+                    definition.AddField(schedulableFieldLength);
+                }
+            }
+        }
+        public ScheduleField FindField(ScheduleDefinition definition, SchedulableField sort)
+        {
+            ScheduleField foundField = null;
+            foreach (ScheduleFieldId fieldId in definition.GetFieldOrder())
+            {
+                foundField = definition.GetField(fieldId);
+                if (foundField.ParameterId == sort.ParameterId)
+                {
+                    return foundField;
+                }
+            }
+
+            return null;
+        }
         #endregion
     }
 }

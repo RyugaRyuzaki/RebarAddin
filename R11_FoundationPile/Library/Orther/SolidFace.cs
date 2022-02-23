@@ -8,6 +8,21 @@ namespace R11_FoundationPile
 {
     public class SolidFace
     {
+        public static Reference GetReference(Element element,XYZ a)
+        {
+            Solid solid = GetSolidOneElement(element);
+            FaceArray faces = solid.Faces;
+            PlanarFace planar = null;
+            foreach (Face f in faces)
+            {
+                PlanarFace pf = f as PlanarFace;
+                if (PointModel.AreEqual(pf.FaceNormal.AngleTo(a),0))
+                {
+                    planar = pf;
+                }
+            }
+            return planar.Reference;
+        }
         public static PlanarFace GetTopFace(Solid solid)
         {
             PlanarFace topFace = null;

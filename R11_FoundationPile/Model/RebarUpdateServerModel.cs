@@ -6,6 +6,8 @@ using Autodesk.Revit.DB.Structure;
 using DSP;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace R11_FoundationPile
 {
     /// <summary>
@@ -45,9 +47,9 @@ namespace R11_FoundationPile
     /// </summary>
     class RebarUpdateServerModel : IRebarUpdateServer
     {
+        public SettingModel SettingModel { get; set; }
         public FoundationModel FoundationModel { get; set; }
         public FoundationBarModel FoundationBarModel { get; set; }
-        public SettingModel SettingModel { get; set; }
         public string Name { get; set; }
         public UnitProject Unit { get; set; }
         public double CoverBottom { get; set; }
@@ -237,21 +239,48 @@ namespace R11_FoundationPile
 
         public bool GenerateCurves(RebarCurvesData data)
         {
-            RebarLayoutRule layout = data.GetRebarUpdateCurvesData().GetLayoutRule();
+           
             Rebar Bar = GetCurrentRebar(data.GetRebarUpdateCurvesData());
-            List<Curve> curves = GetCurves(layout, Bar);
+            List<double> Distance = new List<double>();
+            ObservableCollection<Curve> curves = ProcessCurveRebar.GetCurvesMainItem0(SettingModel, FoundationModel, FoundationBarModel, FoundationBarModel.BarModels[0], Unit, true, false, false, FoundationBarModel.BarModels[0].Bar.Diameter, FoundationBarModel.BarModels[0].Bar.Diameter, CoverTop, CoverBottom, CoverSide, out Distance);
+            List<Curve> curves1 = new List<Curve>();
+            RebarLayoutRule layout = data.GetRebarUpdateCurvesData().GetLayoutRule();
+            switch (layout)
+            {
+                case RebarLayoutRule.Single:// first bar creation: intersect first face with second face to get a curve
+                    curves.Add(curves[0]);
+                    break;
+                case RebarLayoutRule.FixedNumber:
+                case RebarLayoutRule.NumberWithSpacing:
+                case RebarLayoutRule.MaximumSpacing:
+                case RebarLayoutRule.MinimumClearSpacing:
+                    foreach (var item in curves)
+                    {
+                        curves1.Add(item);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            List<XYZ> xYZs = new List<XYZ>();
+            for (int i = 0; i < curves1.Count; i++)
+            {
+                xYZs.Add(curves1[i].GetEndPoint(0));
+            }
+            HermiteSpline hermiteSpline = HermiteSpline.Create(xYZs, false);
             List<Curve> distribPath = new List<Curve>();
-            for (int ii = 0; ii < curves.Count - 1; ii++)
-                distribPath.Add(Line.CreateBound(curves[ii].Evaluate(0.5, true), curves[ii + 1].Evaluate(0.5, true)));
+            distribPath.Add(hermiteSpline);
+            //for (int ii = 0; ii < curves.Count - 1; ii++)
+            //    distribPath.Add(Line.CreateBound(curves[ii].Evaluate(0.5, true), curves[ii + 1].Evaluate(0.5, true)));
             // set distribution path if we have a path created
             if (distribPath.Count > 0)
                 data.SetDistributionPath(distribPath);
 
             // add each curve as separate bar in the set.
-            for (int ii = 0; ii < curves.Count; ii++)
+            for (int ii = 0; ii < curves1.Count; ii++)
             {
                 List<Curve> barCurve = new List<Curve>();
-                barCurve.Add(curves[ii]);
+                barCurve.Add(curves1[ii]);
                 data.AddBarGeometry(barCurve);
 
                 // set the hook normals for each bar added
@@ -393,52 +422,52 @@ namespace R11_FoundationPile
             //            data.GetRebarUpdateCurvesData().SetHookPlaneNormalForBarIdx(i, ii, normal);
             //    }
             //}
-            return true;
+            return false;
         }
         #endregion
         #region GetCurves
-        private List<Curve> GetCurves(RebarLayoutRule layout,Rebar Bar)
-        {
-            List<Curve> curve = new List<Curve>();
-            switch (FoundationModel.Image)
-            {
-                case 0:
-                    return GetCurvesItem0(layout, Bar);
-                    break;
-                case 1:
+        //private List<Curve> GetCurves(RebarLayoutRule layout,Rebar Bar)
+        //{
+        //    List<Curve> curve = new List<Curve>();
+        //    switch (FoundationModel.Image)
+        //    {
+        //        case 0:
+        //            return GetCurvesItem0(layout, Bar);
+        //            break;
+        //        case 1:
 
-                    break;
-                case 2:
+        //            break;
+        //        case 2:
 
-                    break;
-                case 3:
+        //            break;
+        //        case 3:
 
-                    break;
-                case 4:
+        //            break;
+        //        case 4:
 
-                    break;
-                default:
-                    break;
-            }
-            return curve;
-        }
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return curve;
+        //}
 
-        private List<Curve> GetCurvesItem0(RebarLayoutRule layout, Rebar Bar)
-        {
-            switch (Name)
-            {
-                case "MainBottom":
-                    return ProcessRebarUpdateServer.GetCurvesMainBottomItem(FoundationModel, FoundationBarModel, layout, Bar, Unit, CoverTop, CoverBottom, CoverSide);
-                case "MainTop":
-                    return GetCurvesMainTopItem();
-                case "SecondaryBottom":
-                    return GetCurvesSecondaryBottomItem();
-                case "SecondaryTop":
-                    return GetCurvesSecondaryTopItem();
-                default:
-                    return ProcessRebarUpdateServer.GetCurvesMainBottomItem(FoundationModel, FoundationBarModel, layout, Bar, Unit, CoverTop, CoverBottom, CoverSide);
-            }
-        }
+        //private List<Curve> GetCurvesItem0(RebarLayoutRule layout, Rebar Bar)
+        //{
+        //    switch (Name)
+        //    {
+        //        case "MainBottom":
+        //            return ProcessCurveRebar.GetCurvesMainItem0(settingModel, FoundationModel, FoundationBarModel, BarModel, Unit, true, false, false, dMainBottom, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
+        //        case "MainTop":
+        //            return GetCurvesMainTopItem();
+        //        case "SecondaryBottom":
+        //            return GetCurvesSecondaryBottomItem();
+        //        case "SecondaryTop":
+        //            return GetCurvesSecondaryTopItem();
+        //        default:
+        //            return ProcessRebarUpdateServer.GetCurvesMainBottomItem(FoundationModel, FoundationBarModel, layout, Bar, Unit, CoverTop, CoverBottom, CoverSide);
+        //    }
+        //}
        
         private List<Curve> GetCurvesMainTopItem()
         {

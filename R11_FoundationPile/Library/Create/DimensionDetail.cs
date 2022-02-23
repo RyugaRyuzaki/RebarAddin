@@ -12,8 +12,7 @@ namespace R11_FoundationPile
     {
         public ViewFamilyType Detail { get; set; }
         public BoundingBoxXYZ SectionBoxX { get; set; }
-        public ElementId Schedule { get; set; }
-        public ViewSchedule ViewSchedule { get; set; }
+        
         private ObservableCollection<Grid> _AllGrid;
         public ObservableCollection<Grid> AllGrid { get => _AllGrid; set { _AllGrid = value; OnPropertyChanged(); } }
         private ObservableCollection<Grid> _GridX;
@@ -75,21 +74,7 @@ namespace R11_FoundationPile
                 RefGridYStart.Append(new Reference(GridY[0]));
                 RefGridYStart.Append(new Reference(GridY[GridY.Count - 1]));
             }
-            //if (GridX.Count == 0 && GridY.Count == 0)
-            //{
-            //    List<Grid> grids = new List<Grid>();
-            //    for (int i = 0; i < AllGrid.Count; i++)
-            //    {
-            //        Line a = AllGrid[i].Curve as Line;
-            //        bool x = ((a.Direction.AngleTo(XYZ.BasisY) > 0 && (a.Direction.AngleTo(XYZ.BasisY) < Math.PI * 0.5)) || (a.Direction.AngleTo(XYZ.BasisY) > Math.PI * 0.5 && (a.Direction.AngleTo(XYZ.BasisY) < Math.PI)));
-            //        if (x) grids.Add(AllGrid[i]);
-            //    }
-            //    if ()
-            //    {
-
-            //    }
-            //}
-           // có 200k, gồm 3 to tiền 5k, 3k, 2k.
+           
         }
         #region Fopundation
         private Line GetLineGridX(ViewPlan viewPlan, Document document, UnitProject unit, double offset0)

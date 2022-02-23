@@ -88,7 +88,7 @@ namespace R11_FoundationPile
         public string FoundationNamePrefix { get => _FoundationNamePrefix; set { _FoundationNamePrefix = value; OnPropertyChanged(); } }
         private bool _IsCreateFormWork;    // Overlap pile to foundation
         public bool IsCreateFormWork { get => _IsCreateFormWork; set { _IsCreateFormWork = value; OnPropertyChanged(); } }
-
+        public WallType WallType { get; set; }
 
 
         public List<RebarCoverType> RebarCoverTypes { get; set; }
@@ -191,6 +191,7 @@ namespace R11_FoundationPile
             RebarHookTypes = new FilteredElementCollector(document).WhereElementIsElementType().OfClass(typeof(RebarHookType)).Cast<RebarHookType>().Where(x=>x.Name.Contains("Stirrup")).ToList();
             RebarHookTypes.Sort((x, y) => x.Name.CompareTo(y.Name));
             SelectedHook = RebarHookTypes[0];
+            WallType  = new FilteredElementCollector(document).OfClass(typeof(WallType)).Cast<WallType>().Where(w => w.FamilyName.Equals("Basic Wall")).FirstOrDefault();
         }
         
         public void GetFoundationViewType(Document document)
@@ -327,6 +328,7 @@ namespace R11_FoundationPile
             CompoundStructure compound = floorType.GetCompoundStructure();
             return double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, compound.GetWidth(), false));
         }
+      
         #endregion
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using WpfCustomControls;
-using DSP;
 namespace R11_FoundationPile
 {
     public class CreateRebar
@@ -50,6 +49,10 @@ namespace R11_FoundationPile
                         {
                             FoundationPileModel.AllBars[i].RebarBarType.SetAutoCalcHookLengths(rebarHookTypes[j].Id, false);
                             FoundationPileModel.AllBars[i].RebarBarType.SetHookLength(rebarHookTypes[j].Id, Math.Abs(unit.Convert(hookLength[j])));
+                            FoundationPileModel.AllBars[i].RebarBarType.StandardBendDiameter = FoundationPileModel.AllBars[i].RebarBarType.BarDiameter * 5;
+                            FoundationPileModel.AllBars[i].RebarBarType.StandardHookBendDiameter = FoundationPileModel.AllBars[i].RebarBarType.BarDiameter * 5;
+                            FoundationPileModel.AllBars[i].RebarBarType.StirrupTieBendDiameter = FoundationPileModel.AllBars[i].RebarBarType.BarDiameter * 2;
+                            FoundationPileModel.AllBars[i].RebarBarType.MaximumBendRadius = 1000;
                         }
                     }
                     transaction.Commit();
@@ -85,17 +88,18 @@ namespace R11_FoundationPile
                     double dMainBottom = FoundationPileModel.FoundationBarModels[i].BarModels.Where(x => x.Name.Equals("MainBottom")).FirstOrDefault().Bar.Diameter;
                     double dMainTop = FoundationPileModel.FoundationBarModels[i].BarModels.Where(x => x.Name.Equals("MainTop")).FirstOrDefault().Bar.Diameter;
                     double dSide = FoundationPileModel.FoundationBarModels[i].BarModels.Where(x => x.Name.Equals("Side")).FirstOrDefault().Bar.Diameter;
+                   
                     for (int j = 0; j < FoundationPileModel.FoundationBarModels[i].BarModels.Count; j++)
                     {
-                        
-                       
-                        FoundationPileModel.FoundationBarModels[i].BarModels[j].Bar.CreateRebar(document,FoundationPileModel.SettingModel, foundationModel, FoundationPileModel.FoundationBarModels[i], FoundationPileModel.FoundationBarModels[i].BarModels[j],unit,dMainBottom,dMainTop,dSide,coverTop,coverBottom,coverSide);
-                        //FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
-                        //option.SetFailuresPreprocessor(new DeleteWarningSuper());
-                        //transaction.SetFailureHandlingOptions(option);
+                        FoundationPileModel.FoundationBarModels[i].BarModels[j].Bar.CreateRebar(document, FoundationPileModel.SettingModel, foundationModel, FoundationPileModel.FoundationBarModels[i], FoundationPileModel.FoundationBarModels[i].BarModels[j], unit, dMainBottom, dMainTop, dSide, coverTop, coverBottom, coverSide);
+                        FailureHandlingOptions option = transaction.GetFailureHandlingOptions();
+                        option.SetFailuresPreprocessor(new DeleteWarningSuper());
+                        transaction.SetFailureHandlingOptions(option);
                         FoundationPileModel.ProgressModel.SetValue(uc, 1);
                     }
+                    //foundationModel.DeleteWall(document);
 
+                    
                 }
                 transaction.Commit();
             }

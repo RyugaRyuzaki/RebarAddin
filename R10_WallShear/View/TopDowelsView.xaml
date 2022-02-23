@@ -15,7 +15,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
-        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

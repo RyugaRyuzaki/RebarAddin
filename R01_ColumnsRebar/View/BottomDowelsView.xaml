@@ -25,7 +25,7 @@
                     <RowDefinition Height="205" ></RowDefinition>
                     <RowDefinition Height="360"></RowDefinition>
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Margin="5" Header="Column Property">
+                <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.R01_Language.GeometryLanguage.ColumnsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Grid  Height="40">
@@ -35,7 +35,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Column No"></TextBlock>
+                                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.ColumnsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                                 <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
                           ItemsSource="{Binding ColumnsModel.BarMainModels}" DisplayMemberPath="NumberColumn"
                           SelectedItem="{Binding SelectedColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -46,7 +46,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
-                                <Button Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Width="120" Content="Apply All Bar"
+                                <Button Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.R01_Language.TopDowelsLanguage.ApplyAllBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             Command="{Binding ApplyAllBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                             ></Button>
                             </Grid>
@@ -61,8 +61,8 @@
                                     </i:Interaction.Triggers>
                                     <ListView.View>
                                         <GridView  >
-                                            <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
-                                            <GridViewColumn Width="50" Header="Bottom" DisplayMemberBinding="{Binding IsBottomDowels}" ></GridViewColumn>
+                                            <GridViewColumn  Width="50" Header="{Binding Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                            <GridViewColumn Width="50" Header="{Binding Languages.R01_Language.BottomDowelsLanguage.Bottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsBottomDowels}" ></GridViewColumn>
                                             <GridViewColumn Width="50" Header="Type" DisplayMemberBinding="{Binding BottomDowels}"></GridViewColumn>
                                             <GridViewColumn Width="50" Header="La" DisplayMemberBinding="{Binding LaBottomDowels}" ></GridViewColumn>
                                             <GridViewColumn Width="50" Header="Lb" DisplayMemberBinding="{Binding LbBottomDowels}" ></GridViewColumn>
@@ -75,7 +75,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </GroupBox>
-                <GroupBox Grid.Row="1" Margin="5" Header="Bottom Dowels Property">
+                <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.R01_Language.BottomDowelsLanguage.BottomDowelsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -92,7 +92,7 @@
                         </Grid.RowDefinitions>
 
                         <!--<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Content="Fixed To Top" Width="100" x:Name="FixedUpButton" Visibility="Collapsed"></Button>-->
-                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Bottom Dowels" x:Name="BottomDowelsCheckbox"
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.R01_Language.BottomDowelsLanguage.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="BottomDowelsCheckbox"
                           IsEnabled="{Binding IsEnabledBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedBar.IsBottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            Command="{Binding CheckBottomDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
@@ -147,7 +147,7 @@
                                 <Canvas Width="140" Height="90" x:Name="BottomDowelsTypeCanvas1"></Canvas>
                             </ComboBoxItem>
                         </ComboBox>
-                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Fixed to Down Column"
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R01_Language.BottomDowelsLanguage.FixedtoDownColumn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            x:Name="FixedDown"  
                            Visibility="Collapsed" 
                           Command="{Binding FixedBottomBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"

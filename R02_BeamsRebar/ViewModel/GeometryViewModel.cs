@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using R02_BeamsRebar.View;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using WpfCustomControls.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class GeometryViewModel:BaseViewModel
@@ -22,11 +23,13 @@ namespace R02_BeamsRebar.ViewModel
         public ICommand BeamNameTextChangedCommand { get; set; }
         public ICommand PrefixSectionTextChangedCommand { get; set; }
         #endregion
-        public GeometryViewModel(Document document,BeamsModel beamsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public GeometryViewModel(Document document,BeamsModel beamsModel, Languages languages)
         {
             #region Get Property
             Doc = document;
-            BeamsModel = beamsModel;
+            BeamsModel = beamsModel; Languages = languages;
             #endregion
             #region LoadCommand
             LoadGeometryViewCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>

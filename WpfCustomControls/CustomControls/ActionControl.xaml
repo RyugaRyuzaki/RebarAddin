@@ -35,7 +35,7 @@
                    Visibility="{Binding Path=CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   ></CheckBox>
          <!--#endregion-->
-        <!--#region R11-->
+        <!--#region R01-->
         <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R01_CreateDetailViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDetailView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
