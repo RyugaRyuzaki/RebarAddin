@@ -41,9 +41,9 @@ namespace R11_FoundationPile
             Diameter = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, RebarBarType.get_Parameter(BuiltInParameter.REBAR_BAR_DIAMETER).AsDouble(), false));
 
         }
-       
+
         #region RebarServerUpdate
-        private void GetXY(FoundationModel FoundationModel,out XYZ x, out XYZ y)
+        private void GetXY(FoundationModel FoundationModel, out XYZ x, out XYZ y)
         {
             if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
             {
@@ -56,7 +56,7 @@ namespace R11_FoundationPile
                 y = XYZ.BasisY;
             }
         }
-        private void GetAllReference(FoundationModel FoundationModel, XYZ x, XYZ y,out List<Reference> refHostTop, out List<Reference> refHostBottom, out List<Reference> refStartH, out List<Reference> refEndH, out List<Reference> refStartV, out List<Reference> refEndV,bool image23)
+        private void GetAllReference(FoundationModel FoundationModel, XYZ x, XYZ y, out List<Reference> refHostTop, out List<Reference> refHostBottom, out List<Reference> refStartH, out List<Reference> refEndH, out List<Reference> refStartV, out List<Reference> refEndV, bool image23)
         {
             refHostTop = new List<Reference>();
             refHostBottom = new List<Reference>();
@@ -73,7 +73,7 @@ namespace R11_FoundationPile
         }
         private double GetOffsetSide(UnitProject Unit, double dMainBottom, double dSide, double deltaZ0, double CoverSide, bool bottom, bool imgae23)
         {
-            
+
             if (imgae23)
             {
                 return (bottom) ? (-Unit.Convert(CoverSide)) : (-Unit.Convert(CoverSide + dMainBottom + dSide));
@@ -82,7 +82,7 @@ namespace R11_FoundationPile
             {
                 return (bottom) ? (0.0) : (-Unit.Convert(dMainBottom + dSide));
             }
-            
+            //return (bottom) ? (0.0) : (-Unit.Convert(dMainBottom + dSide));
         }
         private double GetOffsetTopBottom(double dMainBottom, double dMainTop, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
         {
@@ -122,7 +122,7 @@ namespace R11_FoundationPile
         {
             var bar = Rebar.CreateFreeForm(document, new Guid("88e37c6b-3ad6-4de3-a610-fcadcbb3021c"), RebarBarType, FoundationModel.Foundation);
             bar.LookupParameter("Layout Rule").Set((int)RebarLayoutRule.MaximumSpacing);
-            bar.LookupParameter("Spacing").Set(Unit.Convert(barModel.Distance));
+           
             if (!horizontal)
             {
                 if (barModel.HookLength != 0)
@@ -145,9 +145,10 @@ namespace R11_FoundationPile
                 }
 
             }
+            bar.LookupParameter("Spacing").Set(Unit.Convert(barModel.Distance));
             return bar;
         }
-        private void GetHandleConstraint(List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, Rebar bar, double offsetTopBottom, double offsetSide, double dMainBottom, double dSide, double CoverSide, bool bottom, bool image23)
+        private void GetHandleConstraint(List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, Rebar bar, double offsetTopBottom, double offsetSide)
         {
             RebarConstraintsManager rManager = bar.GetRebarConstraintsManager();
             IList<RebarConstrainedHandle> handles = rManager.GetAllHandles();
@@ -187,21 +188,21 @@ namespace R11_FoundationPile
             Rebar bar = GetRebarServerGUID(document, settingModel, FoundationModel, Unit, barModel, horizontal);
             double offsetTopBottom = GetOffsetTopBottom(dMainBottom, dMainTop, deltaZ0, bottom, secondaty, horizontal);
             double offsetSide = GetOffsetSide(Unit, dMainBottom, dSide, deltaZ0, CoverSide, bottom, false);
-            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide, dMainBottom, dSide, CoverSide, bottom, false);
-           
+            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide);
+
             Rebars.Add(bar);
             SetPartitionRebar(FoundationModel);
         }
         private void CreateStartEnd2(Document document, SettingModel settingModel, FoundationModel FoundationModel, List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, BarModel barModel, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
         {
             Rebar bar = GetRebarServerGUID(document, settingModel, FoundationModel, Unit, barModel, horizontal);
-            
-            bar.IncludeFirstBar = false;
-            bar.IncludeLastBar = false;
+
+            //bar.IncludeFirstBar = false;
+            //bar.IncludeLastBar = false;
             double offsetTopBottom = GetOffsetTopBottom(dMainBottom, dMainTop, deltaZ0, bottom, secondaty, horizontal);
             double offsetSide = GetOffsetSide(Unit, dMainBottom, dSide, deltaZ0, CoverSide, bottom, true);
-            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide, dMainBottom, dSide, CoverSide, bottom, true);
-           
+            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide);
+
             Rebars.Add(bar);
             SetPartitionRebar(FoundationModel);
         }
@@ -219,9 +220,10 @@ namespace R11_FoundationPile
         }
         private void CreateRebarSide(Document document, SettingModel settingModel, FoundationModel FoundationModel, BarModel barModel, UnitProject Unit, double CoverTop, double CoverBottom, double CoverSide)
         {
+            var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, Curves, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
             try
             {
-                var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, Curves, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
+               
                 if (settingModel.SelectedHook.Name.Contains("Stirrup"))
                 {
                     bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
@@ -237,62 +239,66 @@ namespace R11_FoundationPile
                     rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer, s, true, true, true);
                 }
 
-                Rebars.Add(bar);
-                SetPartitionRebar(FoundationModel);
+                
             }
             catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show(e.Message);
             }
-            
+            Rebars.Add(bar);
+            SetPartitionRebar(FoundationModel);
         }
-       
+        private void CreateRebarSide2(Document document, SettingModel settingModel, FoundationModel FoundationModel, BarModel barModel, UnitProject Unit, double CoverTop, double CoverBottom, double CoverSide)
+        {
+            var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, Curves, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
+            try
+            {
+
+                if (settingModel.SelectedHook.Name.Contains("Stirrup"))
+                {
+                    bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
+                    bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
+                    bar.SetHookRotationAngle(0, 0);
+                    bar.SetHookRotationAngle(0, 1);
+                }
+
+                if (barModel.Layer > 1)
+                {
+                    RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
+                    double s = Unit.Convert((settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1));
+                    rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer, s, true, true, true);
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+            }
+            Rebars.Add(bar);
+            SetPartitionRebar(FoundationModel);
+        }
         private void CreateRebarImage0(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
         {
             List<double> Distance = new List<double>();
             double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
             Curves = ProcessCurveRebar.GetCurvesImage0A(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-            XYZ x=XYZ.BasisX ,y= XYZ.BasisY; GetXY(FoundationModel,out x, out y);
+            XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel, out x, out y);
             Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
             List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
-            GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV,false);
+            GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV, false);
+            bool horizontal = FoundationBarModel.SpanOrientation.Equals("Horizontal");
             if (barModel.IsModel)
             {
                 switch (barModel.Name)
                 {
-                    case "MainBottom":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                        }
-                        break;
-                    case "MainTop":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                        }
-                        break;
+                    case "MainBottom":CreateStartEnd(document, settingModel, FoundationModel, refHostBottom,(horizontal)? refStartH:refStartV, (horizontal) ? refEndH:refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);break;
+                    case "MainTop": CreateStartEnd(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);break;
                     case "MainAddHorizontal":
                         for (int i = 0; i < barModel.Layer; i++)
                         {
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
-                            else
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
+                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                         }
-
                         break;
                     case "MainAddVertical":
                         if (Curves.Count != 0)
@@ -328,37 +334,12 @@ namespace R11_FoundationPile
                             SetPartitionRebar(FoundationModel);
                         }
                         break;
-                    case "SecondaryBottom":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                        }
-                        break;
-                    case "SecondaryTop":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                        }
-                        break;
+                    case "SecondaryBottom": CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV: refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false); break;
+                    case "SecondaryTop":CreateStartEnd(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);break;
                     case "SecondaryAddHorizontal":
                         for (int i = 0; i < barModel.Layer; i++)
                         {
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
-                            else
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
+                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                         }
                         break;
                     case "SecondaryAddVertical":
@@ -406,47 +387,22 @@ namespace R11_FoundationPile
             List<double> Distance = new List<double>();
             Curves = ProcessCurveRebar.GetCurvesImage1(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
             double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
-            XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel,out x, out y);
+            XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel, out x, out y);
             Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
             List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
             GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV, false);
+            bool horizontal = FoundationBarModel.SpanOrientation.Equals("Horizontal");
             if (barModel.IsModel)
             {
                 switch (barModel.Name)
                 {
-                    case "MainBottom":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                        }
-                        break;
-                    case "MainTop":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                        }
-                        break;
+                    case "MainBottom":CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false); break;
+                    case "MainTop": CreateStartEnd(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false); break;
                     case "MainAddHorizontal":
                         for (int i = 0; i < barModel.Layer; i++)
                         {
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
-                            else
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
+                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                         }
-
                         break;
                     case "MainAddVertical":
                         if (Curves.Count != 0)
@@ -481,37 +437,12 @@ namespace R11_FoundationPile
                             SetPartitionRebar(FoundationModel);
                         }
                         break;
-                    case "SecondaryBottom":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                        }
-                        break;
-                    case "SecondaryTop":
-                        if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                        }
-                        else
-                        {
-                            CreateStartEnd(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                        }
-                        break;
+                    case "SecondaryBottom": CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false); break;
+                    case "SecondaryTop": CreateStartEnd(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false); break;
                     case "SecondaryAddHorizontal":
                         for (int i = 0; i < barModel.Layer; i++)
                         {
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
-                            else
-                            {
-                                CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                            }
+                            CreateStartEnd(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                         }
                         break;
                     case "SecondaryAddVertical":
@@ -547,9 +478,7 @@ namespace R11_FoundationPile
                             SetPartitionRebar(FoundationModel);
                         }
                         break;
-                    case "Side":
-                        CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
-                        break;
+                    case "Side": CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);break;
                     default: break;
                 }
             }
@@ -726,73 +655,22 @@ namespace R11_FoundationPile
             {
                 List<double> Distance = new List<double>();
                 Curves = ProcessCurveRebar.GetCurvesImage2(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-                XYZ x = null;
-                XYZ y = null;
-                if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-                {
-                    x = FoundationModel.ColumnModel.East.FaceNormal;
-                    y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-                }
-                else
-                {
-                    x = XYZ.BasisX;
-                    y = XYZ.BasisY;
-                }
-                Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
-                List<Reference> refHostTop = new List<Reference>();
-                refHostTop.Add(HostTop);
-                Reference HostBottom = SolidFace.GetReference(FoundationModel.Foundation, -XYZ.BasisZ);
-                List<Reference> refHostBottom = new List<Reference>();
-                refHostBottom.Add(HostBottom);
-
-                List<Reference> refStartH = new List<Reference>();
-                List<Reference> refEndH = new List<Reference>();
-                List<Reference> refStartV = new List<Reference>();
-                List<Reference> refEndV = new List<Reference>();
-                Reference StartH = SolidFace.GetReference(FoundationModel.WallLeft, x);
-                Reference EndH = SolidFace.GetReference(FoundationModel.WallRight, -x);
-                Reference StartV = SolidFace.GetReference(FoundationModel.WallTop, -y);
-                Reference EndV = SolidFace.GetReference(FoundationModel.WallBottom, y);
-                refStartH.Add(StartH);
-                refEndH.Add(EndH);
-                refStartV.Add(StartV);
-                refEndV.Add(EndV);
                 double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
+                XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel, out x, out y);
+                Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
+                List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
+                GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV, true);
+                bool horizontal = FoundationBarModel.SpanOrientation.Equals("Horizontal");
                 if (barModel.IsModel)
                 {
                     switch (barModel.Name)
                     {
-                        case "MainBottom":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                            }
-                            break;
-                        case "MainTop":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                            }
-                            break;
+                        case "MainBottom":CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);break;
+                        case "MainTop": CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);break;
                         case "MainAddHorizontal":
                             for (int i = 0; i < barModel.Layer; i++)
                             {
-                                if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
-                                else
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
+                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                             }
                             break;
                         case "MainAddVertical":
@@ -828,37 +706,12 @@ namespace R11_FoundationPile
                                 SetPartitionRebar(FoundationModel);
                             }
                             break;
-                        case "SecondaryBottom":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                            }
-                            break;
-                        case "SecondaryTop":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                            }
-                            break;
+                        case "SecondaryBottom":CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);break;
+                        case "SecondaryTop": CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);break;
                         case "SecondaryAddHorizontal":
                             for (int i = 0; i < barModel.Layer; i++)
                             {
-                                if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
-                                else
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
+                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                             }
                             break;
                         case "SecondaryAddVertical":
@@ -1078,73 +931,22 @@ namespace R11_FoundationPile
             {
                 List<double> Distance = new List<double>();
                 Curves = ProcessCurveRebar.GetCurvesImage3(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-                XYZ x = null;
-                XYZ y = null;
-                if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-                {
-                    x = FoundationModel.ColumnModel.East.FaceNormal;
-                    y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-                }
-                else
-                {
-                    x = XYZ.BasisX;
-                    y = XYZ.BasisY;
-                }
-                Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
-                List<Reference> refHostTop = new List<Reference>();
-                refHostTop.Add(HostTop);
-                Reference HostBottom = SolidFace.GetReference(FoundationModel.Foundation, -XYZ.BasisZ);
-                List<Reference> refHostBottom = new List<Reference>();
-                refHostBottom.Add(HostBottom);
-
-                List<Reference> refStartH = new List<Reference>();
-                List<Reference> refEndH = new List<Reference>();
-                List<Reference> refStartV = new List<Reference>();
-                List<Reference> refEndV = new List<Reference>();
-                Reference StartH = SolidFace.GetReference(FoundationModel.WallLeft, x);
-                Reference EndH = SolidFace.GetReference(FoundationModel.WallRight, -x);
-                Reference StartV = SolidFace.GetReference(FoundationModel.WallTop, -y);
-                Reference EndV = SolidFace.GetReference(FoundationModel.WallBottom, y);
-                refStartH.Add(StartH);
-                refEndH.Add(EndH);
-                refStartV.Add(StartV);
-                refEndV.Add(EndV);
                 double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
+                XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel, out x, out y);
+                Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
+                List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
+                GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV, true);
+                bool horizontal = FoundationBarModel.SpanOrientation.Equals("Horizontal");
                 if (barModel.IsModel)
                 {
                     switch (barModel.Name)
                     {
-                        case "MainBottom":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false);
-                            }
-                            break;
-                        case "MainTop":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false);
-                            }
-                            break;
+                        case "MainBottom": CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, false, false); break;
+                        case "MainTop": CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, false, false); break;
                         case "MainAddHorizontal":
                             for (int i = 0; i < barModel.Layer; i++)
                             {
-                                if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
-                                else
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
+                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartH : refStartV, (horizontal) ? refEndH : refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                             }
                             break;
                         case "MainAddVertical":
@@ -1180,37 +982,12 @@ namespace R11_FoundationPile
                                 SetPartitionRebar(FoundationModel);
                             }
                             break;
-                        case "SecondaryBottom":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false);
-                            }
-                            break;
-                        case "SecondaryTop":
-                            if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                            }
-                            else
-                            {
-                                CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false);
-                            }
-                            break;
+                        case "SecondaryBottom": CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, true, true, false); break;
+                        case "SecondaryTop": CreateStartEnd2(document, settingModel, FoundationModel, refHostTop, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta, false, true, false); break;
                         case "SecondaryAddHorizontal":
                             for (int i = 0; i < barModel.Layer; i++)
                             {
-                                if (FoundationBarModel.SpanOrientation.Equals("Horizontal"))
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartV, refEndV, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
-                                else
-                                {
-                                    CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, refStartH, refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
-                                }
+                                CreateStartEnd2(document, settingModel, FoundationModel, refHostBottom, (horizontal) ? refStartV : refStartH, (horizontal) ? refEndV : refEndH, Unit, barModel, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, delta * (i + 1), false, false, true);
                             }
                             break;
                         case "SecondaryAddVertical":

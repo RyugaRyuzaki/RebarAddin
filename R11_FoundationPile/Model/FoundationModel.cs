@@ -112,8 +112,8 @@ namespace R11_FoundationPile
             }
             double y1 = BoundingLocation.Min(b => b.Y);
             double y2 = BoundingLocation.Max(b => b.Y);
-            XYZ p1 = ColumnModel.PointPosition + unit.Convert(x0 + ((x0 > 0) ? 1 : -1) * offset) * x + unit.Convert(y1) * y;
-            XYZ p2 = ColumnModel.PointPosition + unit.Convert(x0 + ((x0 > 0) ? 1 : -1) * offset) * x + unit.Convert(y2) * y;
+            XYZ p1 = ColumnModel.PointPosition + unit.Convert(0.9*x0) * x + unit.Convert(y1) * y;
+            XYZ p2 = ColumnModel.PointPosition + unit.Convert(0.9 * x0) * x + unit.Convert(y2) * y;
             curve = Line.CreateBound(p1, p2);
             return curve;
         }
@@ -134,8 +134,8 @@ namespace R11_FoundationPile
             }
             double x1 = BoundingLocation.Min(b => b.X);
             double x2 = BoundingLocation.Max(b => b.X);
-            XYZ p1 = ColumnModel.PointPosition + unit.Convert(x1) * x + unit.Convert(y0 + ((y0 > 0) ? 1 : -1) * offset) * y;
-            XYZ p2 = ColumnModel.PointPosition + unit.Convert(x2) * x + unit.Convert(y0 + ((y0 > 0) ? 1 : -1) * offset) * y;
+            XYZ p1 = ColumnModel.PointPosition + unit.Convert(x1) * x + unit.Convert(0.9 * y0) * y;
+            XYZ p2 = ColumnModel.PointPosition + unit.Convert(x2) * x + unit.Convert(0.9 * y0) * y;
             curve = Line.CreateBound(p1, p2);
             return curve;
         }

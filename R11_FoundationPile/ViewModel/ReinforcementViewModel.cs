@@ -175,7 +175,8 @@ namespace R11_FoundationPile.ViewModel
                     for (int j = 0; j < FoundationPileModel.FoundationBarModels[i].BarModels.Count; j++)
                     {
                         FoundationPileModel.FoundationBarModels[i].BarModels[j].IsModel = SelectedFoundationBarModel.BarModels[j].IsModel;
-                        if (FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("Top")|| FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("bottom"))
+                        FoundationPileModel.FoundationBarModels[i].BarModels[j].Bar = SelectedFoundationBarModel.BarModels[j].Bar;
+                        if (FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("Top") || FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("Bottom"))
                         {
                             FoundationPileModel.FoundationBarModels[i].BarModels[j].HookLength = SelectedFoundationBarModel.BarModels[j].HookLength;
                         }

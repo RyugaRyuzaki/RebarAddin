@@ -26,7 +26,9 @@ namespace DSP
                     else if (s == FailureSeverity.Error)
                     {
                         failuresAccessor.ResolveFailure(failure);
+                        
                     }
+                    
                 }
 
                 return FailureProcessingResult.ProceedWithRollBack;
