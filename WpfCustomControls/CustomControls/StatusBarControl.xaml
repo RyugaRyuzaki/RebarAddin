@@ -27,6 +27,12 @@
                      Visibility="{Binding Path=IsDetailItemColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
         <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.ColumnsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                      Visibility="{Binding Path=IsRebarColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding DataContext.WallsModel.IsDetailItem, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsDetailItemWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.WallsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     Visibility="{Binding Path=IsRebarWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
+        
         <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding DataContext.BeamsModel.IsDetailItem, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                      Visibility="{Binding Path=IsDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></RadioButton>
         <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding DataContext.BeamsModel.IsRebar, RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

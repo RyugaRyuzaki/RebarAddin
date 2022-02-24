@@ -7,13 +7,8 @@ namespace WpfCustomControls.ViewModel
     {
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
-        private Visibility _CreateGrounpFoundation;
-        public Visibility CreateGrounpFoundation { get => _CreateGrounpFoundation; set { _CreateGrounpFoundation = value; OnPropertyChanged(); } }
-        private Visibility _CreatePileDetail;
-        public Visibility CreatePileDetail { get => _CreatePileDetail; set { _CreatePileDetail = value; OnPropertyChanged(); } }
-        private Visibility _CreateReinforcement;
-        public Visibility CreateReinforcement { get => _CreateReinforcement; set { _CreateReinforcement = value; OnPropertyChanged(); } }
-
+      
+        #region R01
         private Visibility _CreateStirrupBarsColumns;
         public Visibility CreateStirrupBarsColumns { get => _CreateStirrupBarsColumns; set { _CreateStirrupBarsColumns = value; OnPropertyChanged(); } }
         private Visibility _CreateMainBarsColumns;
@@ -30,7 +25,8 @@ namespace WpfCustomControls.ViewModel
         public Visibility CreateDimensionSectionColumns { get => _CreateDimensionSectionColumns; set { _CreateDimensionSectionColumns = value; OnPropertyChanged(); } }
         private Visibility _CreateDetailShopColumns;
         public Visibility CreateDetailShopColumns { get => _CreateDetailShopColumns; set { _CreateDetailShopColumns = value; OnPropertyChanged(); } }
-
+        #endregion
+        #region  R02
         private Visibility _CreateRebarBeams;
         public Visibility CreateRebarBeams { get => _CreateRebarBeams; set { _CreateRebarBeams = value; OnPropertyChanged(); } }
         private Visibility _CreateViewDimensionBeams;
@@ -39,7 +35,34 @@ namespace WpfCustomControls.ViewModel
         public Visibility CreateDetailShopBeams { get => _CreateDetailShopBeams; set { _CreateDetailShopBeams = value; OnPropertyChanged(); } }
         private Visibility _CreateRebarDetailItemBeams;
         public Visibility CreateRebarDetailItemBeams { get => _CreateRebarDetailItemBeams; set { _CreateRebarDetailItemBeams = value; OnPropertyChanged(); } }
+        #endregion
+        #region R10
+        private Visibility _CreateStirrupBarsWallsShear;
+        public Visibility CreateStirrupBarsWallsShear { get => _CreateStirrupBarsWallsShear; set { _CreateStirrupBarsWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateMainBarsWallsShear;
+        public Visibility CreateMainBarsWallsShear { get => _CreateMainBarsWallsShear; set { _CreateMainBarsWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateTagBarsWallsShear;
+        public Visibility CreateTagBarsWallsShear { get => _CreateTagBarsWallsShear; set { _CreateTagBarsWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateDetailViewWallsShear;
+        public Visibility CreateDetailViewWallsShear { get => _CreateDetailViewWallsShear; set { _CreateDetailViewWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateSectionViewWallsShear;
+        public Visibility CreateSectionViewWallsShear { get => _CreateSectionViewWallsShear; set { _CreateSectionViewWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateDimensionViewWallsShear;
+        public Visibility CreateDimensionViewWallsShear { get => _CreateDimensionViewWallsShear; set { _CreateDimensionViewWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateDimensionSectionWallsShear;
+        public Visibility CreateDimensionSectionWallsShear { get => _CreateDimensionSectionWallsShear; set { _CreateDimensionSectionWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _CreateDetailShopWallsShear;
+        public Visibility CreateDetailShopWallsShear { get => _CreateDetailShopWallsShear; set { _CreateDetailShopWallsShear = value; OnPropertyChanged(); } }
+        #endregion
+        #region R11
+        private Visibility _CreateGrounpFoundation;
+        public Visibility CreateGrounpFoundation { get => _CreateGrounpFoundation; set { _CreateGrounpFoundation = value; OnPropertyChanged(); } }
+        private Visibility _CreatePileDetail;
+        public Visibility CreatePileDetail { get => _CreatePileDetail; set { _CreatePileDetail = value; OnPropertyChanged(); } }
+        private Visibility _CreateReinforcement;
+        public Visibility CreateReinforcement { get => _CreateReinforcement; set { _CreateReinforcement = value; OnPropertyChanged(); } }
 
+        #endregion
         public ActionViewModel(Languages languages)
         {
             Languages = languages;
@@ -47,9 +70,7 @@ namespace WpfCustomControls.ViewModel
         }
         private void HideAllStatus()
         {
-            HasCreateGrounpFoundation(false);
-            HasCreatePileDetail(false);
-            HasCreateReinforcement(false);
+           
 
             HasCreateStirrupBarsColumns(false);
             HasCreateMainBarsColumns(false);
@@ -60,18 +81,26 @@ namespace WpfCustomControls.ViewModel
             HasCreateDimensionSectionColumns(false);
             HasCreateDetailShopColumns(false);
 
+
             HasCreateRebarBeams(false);
             HasCreateViewDimensionBeams(false);
             HasCreateDetailShopBeams(false);
             HasCreateRebarDetailItemBeams(false);
-        }
-        public void SetStatusBarFoundationPile()
-        {
-            HasCreateGrounpFoundation(true);
-            HasCreatePileDetail(true);
-            HasCreateReinforcement(true);
 
+            HasCreateStirrupBarsWallsShear(false);
+            HasCreateMainBarsWallsShear(false);
+            HasCreateTagBarsWallsShear(false);
+            HasCreateDetailViewWallsShear(false);
+            HasCreateSectionViewWallsShear(false);
+            HasCreateDimensionViewWallsShear(false);
+            HasCreateDimensionSectionWallsShear(false);
+            HasCreateDetailShopWallsShear(false);
+
+            HasCreateGrounpFoundation(false);
+            HasCreatePileDetail(false);
+            HasCreateReinforcement(false);
         }
+       
         public void SetStatusBarColumns()
         {
             HasCreateStirrupBarsColumns(true);
@@ -90,19 +119,26 @@ namespace WpfCustomControls.ViewModel
             HasCreateDetailShopBeams(true);
             HasCreateRebarDetailItemBeams(true);
         }
-        private void HasCreateGrounpFoundation(bool isCreate)
+        public void SetStatusBarWallsShear()
         {
-            CreateGrounpFoundation = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
-        }
-        private void HasCreatePileDetail(bool isCreate)
-        {
-            CreatePileDetail = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
-        }
-        private void HasCreateReinforcement(bool isCreate)
-        {
-            CreateReinforcement = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+            HasCreateStirrupBarsWallsShear(true);
+            HasCreateMainBarsWallsShear(true);
+            HasCreateTagBarsWallsShear(true);
+            HasCreateDetailViewWallsShear(true);
+            HasCreateSectionViewWallsShear(true);
+            HasCreateDimensionViewWallsShear(true);
+            HasCreateDimensionSectionWallsShear(true);
+            HasCreateDetailShopWallsShear(true);
         }
 
+        public void SetStatusBarFoundationPile()
+        {
+            HasCreateGrounpFoundation(true);
+            HasCreatePileDetail(true);
+            HasCreateReinforcement(true);
+
+        }
+        #region   R01
         private void HasCreateStirrupBarsColumns(bool isCreate)
         {
             CreateStirrupBarsColumns = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
@@ -135,7 +171,8 @@ namespace WpfCustomControls.ViewModel
         {
             CreateDetailShopColumns = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
-
+        #endregion
+        #region   R02
         private void HasCreateRebarBeams(bool isCreate)
         {
             CreateRebarBeams = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
@@ -152,5 +189,54 @@ namespace WpfCustomControls.ViewModel
         {
             CreateRebarDetailItemBeams = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
+        #endregion
+        #region   R10
+        private void HasCreateStirrupBarsWallsShear(bool isCreate)
+        {
+            CreateStirrupBarsWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateMainBarsWallsShear(bool isCreate)
+        {
+            CreateMainBarsWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateTagBarsWallsShear(bool isCreate)
+        {
+            CreateTagBarsWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateDetailViewWallsShear(bool isCreate)
+        {
+            CreateDetailViewWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateSectionViewWallsShear(bool isCreate)
+        {
+            CreateSectionViewWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateDimensionViewWallsShear(bool isCreate)
+        {
+            CreateDimensionViewWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateDimensionSectionWallsShear(bool isCreate)
+        {
+            CreateDimensionSectionWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateDetailShopWallsShear(bool isCreate)
+        {
+            CreateDetailShopWallsShear = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        #endregion
+        #region R11
+        private void HasCreateGrounpFoundation(bool isCreate)
+        {
+            CreateGrounpFoundation = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreatePileDetail(bool isCreate)
+        {
+            CreatePileDetail = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasCreateReinforcement(bool isCreate)
+        {
+            CreateReinforcement = (isCreate) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        #endregion
     }
 }

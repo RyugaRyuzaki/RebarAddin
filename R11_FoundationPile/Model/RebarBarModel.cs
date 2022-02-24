@@ -43,35 +43,49 @@ namespace R11_FoundationPile
         }
        
         #region RebarServerUpdate
-        private void CreateStartEnd(Document document, SettingModel settingModel, FoundationModel FoundationModel, List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, BarModel barModel, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
+        private void GetXY(FoundationModel FoundationModel,out XYZ x, out XYZ y)
         {
-            var bar = Rebar.CreateFreeForm(document, new Guid("88e37c6b-3ad6-4de3-a610-fcadcbb3021c"), RebarBarType, FoundationModel.Foundation);
-            bar.LookupParameter("Layout Rule").Set((int)RebarLayoutRule.MaximumSpacing);
-            bar.LookupParameter("Spacing").Set(Unit.Convert(barModel.Distance));
-            if (!horizontal)
+            if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
             {
-                if (barModel.HookLength != 0)
-                {
-                    bar.LookupParameter("Hook At Start").Set(barModel.Hook.Id);
-                    bar.LookupParameter("Hook At End").Set(barModel.Hook.Id);
-                    bar.SetHookRotationAngle(0, 0);
-                    bar.SetHookRotationAngle(0, 1);
-                }
+                x = FoundationModel.ColumnModel.East.FaceNormal;
+                y = FoundationModel.ColumnModel.Nouth.FaceNormal;
             }
             else
             {
-                bar.LookupParameter("Style").Set(1);
-                if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-                {
-                    bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-                    bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-                    bar.SetHookRotationAngle(0, 0);
-                    bar.SetHookRotationAngle(0, 1);
-                }
-
+                x = XYZ.BasisX;
+                y = XYZ.BasisY;
             }
-            RebarConstraintsManager rManager = bar.GetRebarConstraintsManager();
-            IList<RebarConstrainedHandle> handles = rManager.GetAllHandles();
+        }
+        private void GetAllReference(FoundationModel FoundationModel, XYZ x, XYZ y,out List<Reference> refHostTop, out List<Reference> refHostBottom, out List<Reference> refStartH, out List<Reference> refEndH, out List<Reference> refStartV, out List<Reference> refEndV,bool image23)
+        {
+            refHostTop = new List<Reference>();
+            refHostBottom = new List<Reference>();
+            refStartH = new List<Reference>();
+            refEndH = new List<Reference>();
+            refStartV = new List<Reference>();
+            refEndV = new List<Reference>();
+            refHostTop.Add(SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ));
+            refHostBottom.Add(SolidFace.GetReference(FoundationModel.Foundation, -XYZ.BasisZ));
+            refStartH.Add((image23) ? SolidFace.GetReference(FoundationModel.WallLeft, x) : SolidFace.GetReference(FoundationModel.Foundation, y));
+            refEndH.Add((image23) ? SolidFace.GetReference(FoundationModel.WallRight, -x) : SolidFace.GetReference(FoundationModel.Foundation, -y));
+            refStartV.Add((image23) ? SolidFace.GetReference(FoundationModel.WallTop, -y) : SolidFace.GetReference(FoundationModel.Foundation, x));
+            refEndV.Add((image23) ? SolidFace.GetReference(FoundationModel.WallBottom, y) : SolidFace.GetReference(FoundationModel.Foundation, -x));
+        }
+        private double GetOffsetSide(UnitProject Unit, double dMainBottom, double dSide, double deltaZ0, double CoverSide, bool bottom, bool imgae23)
+        {
+            
+            if (imgae23)
+            {
+                return (bottom) ? (-Unit.Convert(CoverSide)) : (-Unit.Convert(CoverSide + dMainBottom + dSide));
+            }
+            else
+            {
+                return (bottom) ? (0.0) : (-Unit.Convert(dMainBottom + dSide));
+            }
+            
+        }
+        private double GetOffsetTopBottom(double dMainBottom, double dMainTop, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
+        {
             double offet = 0;
             if (horizontal)
             {
@@ -102,6 +116,41 @@ namespace R11_FoundationPile
                     }
                 }
             }
+            return offet;
+        }
+        private Rebar GetRebarServerGUID(Document document, SettingModel settingModel, FoundationModel FoundationModel, UnitProject Unit, BarModel barModel, bool horizontal)
+        {
+            var bar = Rebar.CreateFreeForm(document, new Guid("88e37c6b-3ad6-4de3-a610-fcadcbb3021c"), RebarBarType, FoundationModel.Foundation);
+            bar.LookupParameter("Layout Rule").Set((int)RebarLayoutRule.MaximumSpacing);
+            bar.LookupParameter("Spacing").Set(Unit.Convert(barModel.Distance));
+            if (!horizontal)
+            {
+                if (barModel.HookLength != 0)
+                {
+                    bar.LookupParameter("Hook At Start").Set(barModel.Hook.Id);
+                    bar.LookupParameter("Hook At End").Set(barModel.Hook.Id);
+                    bar.SetHookRotationAngle(0, 0);
+                    bar.SetHookRotationAngle(0, 1);
+                }
+            }
+            else
+            {
+                bar.LookupParameter("Style").Set(1);
+                if (settingModel.SelectedHook.Name.Contains("Stirrup"))
+                {
+                    bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
+                    bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
+                    bar.SetHookRotationAngle(0, 0);
+                    bar.SetHookRotationAngle(0, 1);
+                }
+
+            }
+            return bar;
+        }
+        private void GetHandleConstraint(List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, Rebar bar, double offsetTopBottom, double offsetSide, double dMainBottom, double dSide, double CoverSide, bool bottom, bool image23)
+        {
+            RebarConstraintsManager rManager = bar.GetRebarConstraintsManager();
+            IList<RebarConstrainedHandle> handles = rManager.GetAllHandles();
             foreach (RebarConstrainedHandle handle in handles)
             {
                 if (handle.GetHandleType() != RebarHandleType.StartOfBar ||
@@ -111,17 +160,17 @@ namespace R11_FoundationPile
                     {
                         if (handle.GetHandleName().Equals("Host Surface"))
                         {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refHost, true, -Unit.Convert(offet));
+                            RebarConstraint constraint = RebarConstraint.Create(handle, refHost, true, -Unit.Convert(offsetTopBottom));
                             rManager.SetPreferredConstraintForHandle(handle, constraint);
                         }
                         if (handle.GetHandleName().Equals("Start Surface"))
                         {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refStart, true, (bottom) ? (0.0) : (-Unit.Convert(dMainBottom + dSide)));
+                            RebarConstraint constraint = RebarConstraint.Create(handle, refStart, true, offsetSide);
                             rManager.SetPreferredConstraintForHandle(handle, constraint);
                         }
                         if (handle.GetHandleName().Equals("End Surface"))
                         {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refEnd, true, (bottom) ? (0.0) : (-Unit.Convert(dMainBottom + dSide)));
+                            RebarConstraint constraint = RebarConstraint.Create(handle, refEnd, true, offsetSide);
                             rManager.SetPreferredConstraintForHandle(handle, constraint);
                         }
                     }
@@ -132,100 +181,27 @@ namespace R11_FoundationPile
                 }
 
             }
+        }
+        private void CreateStartEnd(Document document, SettingModel settingModel, FoundationModel FoundationModel, List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, BarModel barModel, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
+        {
+            Rebar bar = GetRebarServerGUID(document, settingModel, FoundationModel, Unit, barModel, horizontal);
+            double offsetTopBottom = GetOffsetTopBottom(dMainBottom, dMainTop, deltaZ0, bottom, secondaty, horizontal);
+            double offsetSide = GetOffsetSide(Unit, dMainBottom, dSide, deltaZ0, CoverSide, bottom, false);
+            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide, dMainBottom, dSide, CoverSide, bottom, false);
+           
             Rebars.Add(bar);
             SetPartitionRebar(FoundationModel);
         }
         private void CreateStartEnd2(Document document, SettingModel settingModel, FoundationModel FoundationModel, List<Reference> refHost, List<Reference> refStart, List<Reference> refEnd, UnitProject Unit, BarModel barModel, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide, double deltaZ0, bool bottom, bool secondaty, bool horizontal)
         {
-            var bar = Rebar.CreateFreeForm(document, new Guid("88e37c6b-3ad6-4de3-a610-fcadcbb3021c"), RebarBarType, FoundationModel.Foundation);
-            bar.LookupParameter("Layout Rule").Set((int)RebarLayoutRule.MaximumSpacing);
-            bar.LookupParameter("Spacing").Set(Unit.Convert(barModel.Distance));
-            if (!horizontal)
-            {
-                if (barModel.HookLength != 0)
-                {
-                    bar.LookupParameter("Hook At Start").Set(barModel.Hook.Id);
-                    bar.LookupParameter("Hook At End").Set(barModel.Hook.Id);
-                    bar.SetHookRotationAngle(0, 0);
-                    bar.SetHookRotationAngle(0, 1);
-                }
-            }
-            else
-            {
-                bar.LookupParameter("Style").Set(1);
-                if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-                {
-                    bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-                    bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-                    bar.SetHookRotationAngle(0, 0);
-                    bar.SetHookRotationAngle(0, 1);
-                }
-
-            }
+            Rebar bar = GetRebarServerGUID(document, settingModel, FoundationModel, Unit, barModel, horizontal);
+            
             bar.IncludeFirstBar = false;
             bar.IncludeLastBar = false;
-            RebarConstraintsManager rManager = bar.GetRebarConstraintsManager();
-            IList<RebarConstrainedHandle> handles = rManager.GetAllHandles();
-            double offet = 0;
-            if (horizontal)
-            {
-                offet = deltaZ0;
-            }
-            else
-            {
-                if (bottom)
-                {
-                    if (secondaty)
-                    {
-                        offet = dMainBottom;
-                    }
-                    else
-                    {
-                        offet = 0.0;
-                    }
-                }
-                else
-                {
-                    if (secondaty)
-                    {
-                        offet = dMainTop;
-                    }
-                    else
-                    {
-                        offet = 0.0;
-                    }
-                }
-            }
-            foreach (RebarConstrainedHandle handle in handles)
-            {
-                if (handle.GetHandleType() != RebarHandleType.StartOfBar ||
-                   handle.GetHandleType() != RebarHandleType.EndOfBar)
-                {
-                    try
-                    {
-                        if (handle.GetHandleName().Equals("Host Surface"))
-                        {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refHost, true, -Unit.Convert(offet));
-                            rManager.SetPreferredConstraintForHandle(handle, constraint);
-                        }
-                        if (handle.GetHandleName().Equals("Start Surface"))
-                        {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refStart, true, (bottom) ? (-Unit.Convert(CoverSide)) : (-Unit.Convert(CoverSide+dMainBottom + dSide)));
-                            rManager.SetPreferredConstraintForHandle(handle, constraint);
-                        }
-                        if (handle.GetHandleName().Equals("End Surface"))
-                        {
-                            RebarConstraint constraint = RebarConstraint.Create(handle, refEnd, true, (bottom) ? (-Unit.Convert(CoverSide)) : (-Unit.Convert(CoverSide+dMainBottom + dSide)));
-                            rManager.SetPreferredConstraintForHandle(handle, constraint);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        System.Windows.Forms.MessageBox.Show(e.Message);
-                    }
-                }
-
-            }
+            double offsetTopBottom = GetOffsetTopBottom(dMainBottom, dMainTop, deltaZ0, bottom, secondaty, horizontal);
+            double offsetSide = GetOffsetSide(Unit, dMainBottom, dSide, deltaZ0, CoverSide, bottom, true);
+            GetHandleConstraint(refHost, refStart, refEnd, Unit, bar, offsetTopBottom, offsetSide, dMainBottom, dSide, CoverSide, bottom, true);
+           
             Rebars.Add(bar);
             SetPartitionRebar(FoundationModel);
         }
@@ -262,273 +238,24 @@ namespace R11_FoundationPile
                 }
 
                 Rebars.Add(bar);
+                SetPartitionRebar(FoundationModel);
             }
             catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show(e.Message);
             }
-            SetPartitionRebar(FoundationModel);
+            
         }
-        private void CreateRebarSide2(Document document, SettingModel settingModel, FoundationModel FoundationModel, BarModel barModel, UnitProject Unit, double CoverTop, double CoverBottom, double CoverSide)
-        {
-            try
-            {
-                var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, Curves, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
-                if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-                {
-                    bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-                    bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-                    bar.SetHookRotationAngle(0, 0);
-                    bar.SetHookRotationAngle(Math.PI, 1);
-                }
-
-                if (barModel.Layer > 1)
-                {
-                    RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
-                    double s = Unit.Convert((settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1));
-                    rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer, s, true, true, true);
-                }
-
-                Rebars.Add(bar);
-            }
-            catch (Exception e)
-            {
-                System.Windows.Forms.MessageBox.Show(e.Message);
-            }
-            SetPartitionRebar(FoundationModel);
-        }
-        #region Exam
-        //private void CreateRebarImage0(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
-        //{
-        //    List<double> Distance = new List<double>();
-        //    Curves = ProcessCurveRebar.GetCurvesImage0A(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-        //    switch (barModel.Name)
-        //    {
-        //        case "MainBottom":
-
-
-        //            break;
-        //        case "MainTop":
-
-        //            break;
-        //        case "MainAddHorizontal":
-
-        //            break;
-        //        case "MainAddVertical":
-
-        //            break;
-        //        case "SecondaryBottom":
-
-        //            break;
-        //        case "SecondaryTop":
-
-        //            break;
-        //        case "SecondaryAddHorizontal":
-
-        //            break;
-        //        case "SecondaryAddVertical":
-
-        //            break;
-        //        case "Side":
-        //            CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
-        //            break;
-        //        default: break;
-        //    }
-
-        //    if (Curves.Count != 0)
-        //    {
-        //        if ((barModel.Name.Contains("Bottom") || barModel.Name.Contains("Top")))
-        //        {
-        //            for (int i = 0; i < Curves.Count; i++)
-        //            {
-        //                List<Curve> curves1 = new List<Curve>();
-        //                curves1.Add(Curves[i]);
-        //                CurveLoop curveL = CurveLoop.Create(curves1);
-        //                List<CurveLoop> curveLs = new List<CurveLoop>();
-        //                curveLs.Add(curveL);
-        //                try
-        //                {
-
-        //                    var bar = Rebar.CreateFreeForm(document, RebarBarType, FoundationModel.Foundation, curveLs, out RebarFreeFormValidationResult a);
-        //                    if (barModel.HookLength != 0)
-        //                    {
-        //                        bar.LookupParameter("Hook At Start").Set(barModel.Hook.Id);
-        //                        bar.LookupParameter("Hook At End").Set(barModel.Hook.Id);
-        //                        bar.SetHookRotationAngle((barModel.Name.Contains("Bottom") ? (Math.PI * 1.5) : (Math.PI * 0.5)), 0);
-        //                        bar.SetHookRotationAngle((barModel.Name.Contains("Bottom") ? (Math.PI * 1.5) : (Math.PI * 0.5)), 1);
-        //                    }
-        //                    Rebars.Add(bar);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    System.Windows.Forms.MessageBox.Show(e.Message);
-        //                }
-        //            }
-        //            SetPartitionRebar(FoundationModel);
-        //        }
-        //        if ((barModel.Name.Contains("Horizontal")))
-        //        {
-        //            for (int i = 0; i < Curves.Count; i++)
-        //            {
-        //                List<Curve> curves1 = new List<Curve>();
-        //                curves1.Add(Curves[i]);
-        //                try
-        //                {
-
-        //                    var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, XYZ.BasisZ, curves1, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
-        //                    if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-        //                    {
-        //                        bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-        //                        bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-        //                        bar.SetHookRotationAngle((Math.PI * 0.5), 0);
-        //                        bar.SetHookRotationAngle((Math.PI * 1.5), 1);
-        //                    }
-        //                    if (barModel.Layer > 1)
-        //                    {
-        //                        RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
-        //                        double s = Unit.Convert((settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1));
-        //                        rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer, s, true, true, true);
-        //                    }
-
-        //                    Rebars.Add(bar);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    System.Windows.Forms.MessageBox.Show(e.Message);
-        //                }
-        //            }
-        //            SetPartitionRebar(FoundationModel);
-        //        }
-        //        if ((barModel.Name.Contains("Vertical")) && (barModel.Name.Contains("Main")))
-        //        {
-        //            XYZ x = null;
-        //            XYZ y = null;
-        //            if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-        //            {
-        //                x = FoundationModel.ColumnModel.East.FaceNormal;
-        //                y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-        //            }
-        //            else
-        //            {
-        //                x = XYZ.BasisX;
-        //                y = XYZ.BasisY;
-        //            }
-        //            XYZ normal = (FoundationBarModel.SpanOrientation.Equals("Horizontal")) ? x : y;
-        //            for (int i = 0; i < Curves.Count; i++)
-        //            {
-        //                List<Curve> curves1 = new List<Curve>();
-        //                curves1.Add(Curves[i]);
-        //                try
-        //                {
-
-        //                    var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, normal, curves1, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
-        //                    if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-        //                    {
-        //                        bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-        //                        bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-        //                        bar.SetHookRotationAngle((Math.PI * 0.5), 0);
-        //                        bar.SetHookRotationAngle((Math.PI * 1.5), 1);
-        //                    }
-        //                    RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
-        //                    double s = Unit.Convert(Distance[i]);
-        //                    rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer + 2, s, true, false, false);
-
-        //                    Rebars.Add(bar);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    System.Windows.Forms.MessageBox.Show(e.Message);
-        //                }
-        //            }
-        //            SetPartitionRebar(FoundationModel);
-        //        }
-        //        if ((barModel.Name.Contains("Vertical")) && (barModel.Name.Contains("Secondary")))
-        //        {
-        //            XYZ x = null;
-        //            XYZ y = null;
-        //            if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-        //            {
-        //                x = FoundationModel.ColumnModel.East.FaceNormal;
-        //                y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-        //            }
-        //            else
-        //            {
-        //                x = XYZ.BasisX;
-        //                y = XYZ.BasisY;
-        //            }
-        //            XYZ normal = (FoundationBarModel.SpanOrientation.Equals("Horizontal")) ? y : x;
-        //            for (int i = 0; i < Curves.Count; i++)
-        //            {
-        //                List<Curve> curves1 = new List<Curve>();
-        //                curves1.Add(Curves[i]);
-        //                try
-        //                {
-
-        //                    var bar = Rebar.CreateFromCurves(document, RebarStyle.StirrupTie, RebarBarType, null, null, FoundationModel.Foundation, normal, curves1, RebarHookOrientation.Left, RebarHookOrientation.Right, false, true);
-        //                    if (settingModel.SelectedHook.Name.Contains("Stirrup"))
-        //                    {
-        //                        bar.LookupParameter("Hook At Start").Set(settingModel.SelectedHook.Id);
-        //                        bar.LookupParameter("Hook At End").Set(settingModel.SelectedHook.Id);
-        //                        bar.SetHookRotationAngle((Math.PI * 0.5), 0);
-        //                        bar.SetHookRotationAngle((Math.PI * 1.5), 1);
-        //                    }
-
-        //                    RebarShapeDrivenAccessor rebarShape1 = bar.GetShapeDrivenAccessor();
-        //                    double s = Unit.Convert(Distance[i]);
-        //                    rebarShape1.SetLayoutAsNumberWithSpacing(barModel.Layer + 2, s, true, false, false);
-        //                    Rebars.Add(bar);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    System.Windows.Forms.MessageBox.Show(e.Message);
-        //                }
-        //            }
-        //            SetPartitionRebar(FoundationModel);
-        //        }
-        //        if (barModel.Name.Equals("Side"))
-        //        {
-        //            CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
-        //        }
-
-        //    }
-        //}
-        #endregion
+       
         private void CreateRebarImage0(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
         {
             List<double> Distance = new List<double>();
-            Curves = ProcessCurveRebar.GetCurvesImage0A(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-            XYZ x = null;
-            XYZ y = null;
-            if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-            {
-                x = FoundationModel.ColumnModel.East.FaceNormal;
-                y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-            }
-            else
-            {
-                x = XYZ.BasisX;
-                y = XYZ.BasisY;
-            }
-
-            Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
-            List<Reference> refHostTop = new List<Reference>();
-            refHostTop.Add(HostTop);
-            Reference HostBottom = SolidFace.GetReference(FoundationModel.Foundation, -XYZ.BasisZ);
-            List<Reference> refHostBottom = new List<Reference>();
-            refHostBottom.Add(HostBottom);
-            List<Reference> refStartH = new List<Reference>();
-            List<Reference> refEndH = new List<Reference>();
-            List<Reference> refStartV = new List<Reference>();
-            List<Reference> refEndV = new List<Reference>();
-            Reference StartH = SolidFace.GetReference(FoundationModel.Foundation, y);
-            Reference EndH = SolidFace.GetReference(FoundationModel.Foundation, -y);
-            Reference StartV = SolidFace.GetReference(FoundationModel.Foundation, x);
-            Reference EndV = SolidFace.GetReference(FoundationModel.Foundation, -x);
-            refStartH.Add(StartH);
-            refEndH.Add(EndH);
-            refStartV.Add(StartV);
-            refEndV.Add(EndV);
             double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
+            Curves = ProcessCurveRebar.GetCurvesImage0A(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
+            XYZ x=XYZ.BasisX ,y= XYZ.BasisY; GetXY(FoundationModel,out x, out y);
+            Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
+            List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
+            GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV,false);
             if (barModel.IsModel)
             {
                 switch (barModel.Name)
@@ -678,38 +405,11 @@ namespace R11_FoundationPile
         {
             List<double> Distance = new List<double>();
             Curves = ProcessCurveRebar.GetCurvesImage1(settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide, out Distance);
-            XYZ x = null;
-            XYZ y = null;
-            if (FoundationModel.ColumnModel.Style.Equals("RECTANGLE"))
-            {
-                x = FoundationModel.ColumnModel.East.FaceNormal;
-                y = FoundationModel.ColumnModel.Nouth.FaceNormal;
-            }
-            else
-            {
-                x = XYZ.BasisX;
-                y = XYZ.BasisY;
-            }
-
-            Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
-            List<Reference> refHostTop = new List<Reference>();
-            refHostTop.Add(HostTop);
-            Reference HostBottom = SolidFace.GetReference(FoundationModel.Foundation, -XYZ.BasisZ);
-            List<Reference> refHostBottom = new List<Reference>();
-            refHostBottom.Add(HostBottom);
-            List<Reference> refStartH = new List<Reference>();
-            List<Reference> refEndH = new List<Reference>();
-            List<Reference> refStartV = new List<Reference>();
-            List<Reference> refEndV = new List<Reference>();
-            Reference StartH = SolidFace.GetReference(FoundationModel.Foundation, y);
-            Reference EndH = SolidFace.GetReference(FoundationModel.Foundation, -y);
-            Reference StartV = SolidFace.GetReference(FoundationModel.Foundation, x);
-            Reference EndV = SolidFace.GetReference(FoundationModel.Foundation, -x);
-            refStartH.Add(StartH);
-            refEndH.Add(EndH);
-            refStartV.Add(StartV);
-            refEndV.Add(EndV);
             double delta = (settingModel.HeightFoundation - CoverBottom - CoverTop) / (barModel.Layer + 1);
+            XYZ x = XYZ.BasisX, y = XYZ.BasisY; GetXY(FoundationModel,out x, out y);
+            Reference HostTop = SolidFace.GetReference(FoundationModel.Foundation, XYZ.BasisZ);
+            List<Reference> refHostTop, refHostBottom, refStartH, refEndH, refStartV, refEndV;
+            GetAllReference(FoundationModel, x, y, out refHostTop, out refHostBottom, out refStartH, out refEndH, out refStartV, out refEndV, false);
             if (barModel.IsModel)
             {
                 switch (barModel.Name)
@@ -1011,15 +711,13 @@ namespace R11_FoundationPile
                 }
                 if (barModel.Name.Equals("Side"))
                 {
-                    CreateRebarSide2(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
+                    CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
                 }
 
             }
         }
         private void CreateRebarImage2(Document document, SettingModel settingModel, FoundationModel FoundationModel, FoundationBarModel FoundationBarModel, BarModel barModel, UnitProject Unit, double dMainBottom, double dMainTop, double dSide, double CoverTop, double CoverBottom, double CoverSide)
         {
-
-           
             if (settingModel.WallType == null)
             {
                 CreateRebarImage2WallNull(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide);
@@ -1199,7 +897,7 @@ namespace R11_FoundationPile
                         case "Side":
                             if (Curves.Count != 0)
                             {
-                                CreateRebarSide2(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
+                                CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
                             }
                             break;
                         default: break;
@@ -1365,7 +1063,7 @@ namespace R11_FoundationPile
                 }
                 if (barModel.Name.Equals("Side"))
                 {
-                    CreateRebarSide2(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
+                    CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
                 }
 
             }
@@ -1551,7 +1249,7 @@ namespace R11_FoundationPile
                         case "Side":
                             if (Curves.Count != 0)
                             {
-                                CreateRebarSide2(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
+                                CreateRebarSide(document, settingModel, FoundationModel, barModel, Unit, CoverTop, CoverBottom, CoverSide);
                             }
                             break;
                         default: break;
@@ -1566,17 +1264,12 @@ namespace R11_FoundationPile
             switch (FoundationBarModel.Image)
             {
                 case 0: CreateRebarImage0(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
-
-                case 1:
-                    CreateRebarImage1(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
+                case 1: CreateRebarImage1(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
                 case 2: CreateRebarImage2(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
                 case 3: CreateRebarImage3(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
                 default: CreateRebarImage0(document, settingModel, FoundationModel, FoundationBarModel, barModel, Unit, dMainBottom, dMainTop, dSide, CoverTop, CoverBottom, CoverSide); break;
             }
         }
-
-
-
         //#region Tag
         ////private XYZ GetXYZOriginTagDetail(UnitProject unit, InfoModel infoModel0, PlanarFace planarFace0)
         ////{

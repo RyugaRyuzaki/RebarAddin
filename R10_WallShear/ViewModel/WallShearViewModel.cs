@@ -12,9 +12,14 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using WpfCustomControls;
+using WpfCustomControls.ViewModel;
+using WpfCustomControls.LanguageModel;
 using R10_WallShear.ViewModel;
 #endregion
 using DSP;
+using System.Windows;
+
 namespace R10_WallShear
 {
     public class WallShearViewModel : BaseViewModel
@@ -34,7 +39,7 @@ namespace R10_WallShear
         public ICommand SelectionMenuCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand OKCommand { get; set; }
-        public ICommand PreviewTextInputCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -56,6 +61,14 @@ namespace R10_WallShear
         private BarsDivisionViewModel _BarsDivisionViewModel;
         public BarsDivisionViewModel BarsDivisionViewModel { get => _BarsDivisionViewModel; set { _BarsDivisionViewModel = value; OnPropertyChanged(); } }
         #endregion
+        private TaskBarViewModel _TaskBarViewModel;
+        public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
+        private StatusBarViewModel _StatusBarViewModel;
+        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
+        private ActionViewModel _ActionViewModel;
+        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public WallShearViewModel(UIDocument uiDoc, Document doc,List<Element> walls)
         {
             #region Property
@@ -64,6 +77,12 @@ namespace R10_WallShear
             Walls = walls;
             Unit = GetUnitProject();
             WallsModel = new WallsModel(Walls,Doc,Unit);
+            Languages = new Languages("EN");
+            TaskBarViewModel = new TaskBarViewModel(Languages);
+            StatusBarViewModel = new StatusBarViewModel(WallsModel.ProgressModel, Languages);
+            StatusBarViewModel.SetStatusBarWallsShear();
+            ActionViewModel = new ActionViewModel(Languages);
+            ActionViewModel.SetStatusBarWallsShear();
             #endregion
 
             #region SelectedViewModel
@@ -125,6 +144,16 @@ namespace R10_WallShear
             {
                 p.DialogResult = false;
                
+            });
+            CloseWindowCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
+            {
+                p.DialogResult = true;
+                if (TransactionGroup.HasStarted())
+                {
+                    TransactionGroup.RollBack();
+                    System.Windows.MessageBox.Show("Progress is Cancel!", "Stop Progress",
+                        MessageBoxButton.OK, MessageBoxImage.Stop);
+                }
             });
             #endregion
         }

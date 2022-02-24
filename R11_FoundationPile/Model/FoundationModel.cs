@@ -2239,15 +2239,44 @@ namespace R11_FoundationPile
             SectionBoxVertical.Max = max;
             SectionBoxVertical.Min = min;
         }
-        public void CreateFoundationSectionHorizontal(Document document, UnitProject unit, SettingModel settingModel, int image)
+        public void CreateFoundationSectionHorizontal(Document document, UnitProject unit, SettingModel settingModel, int image, int type)
         {
             GetBoundingBoxHorizontal(unit, settingModel, image);
             Horizontal = ViewSection.CreateSection(document, settingModel.FoundationSectionType.Id, SectionBoxHorizontal);
+            if (Horizontal != null)
+            {
+                Horizontal.ViewTemplateId = settingModel.SelectedFoundationSectionTemplate.Id;
+                try
+                {
+                    Horizontal.Name = settingModel.FoundationNamePrefix + type.ToString() + " " + LocationName + "MC" +" 1-1 ";
+                }
+                catch (Exception)
+                {
+
+                    Horizontal.Name += "Copy";
+                }
+            }
+            Horizontal.get_Parameter(BuiltInParameter.VIEWER_CROP_REGION_VISIBLE).Set(0);
         }
-        public void CreateFoundationSectionVertical(Document document, UnitProject unit, SettingModel settingModel, int image)
+        public void CreateFoundationSectionVertical(Document document, UnitProject unit, SettingModel settingModel, int image, int type)
         {
             GetBoundingBoxVertical(unit, settingModel, image);
             Vertical = ViewSection.CreateSection(document, settingModel.FoundationSectionType.Id, SectionBoxVertical);
+            Vertical = ViewSection.CreateSection(document, settingModel.FoundationSectionType.Id, SectionBoxHorizontal);
+            if (Vertical != null)
+            {
+                Vertical.ViewTemplateId = settingModel.SelectedFoundationSectionTemplate.Id;
+                try
+                {
+                    Vertical.Name = settingModel.FoundationNamePrefix + type.ToString() + " " + LocationName + "MC" + " 2-2 ";
+                }
+                catch (Exception)
+                {
+
+                    Vertical.Name += "Copy";
+                }
+            }
+            Vertical.get_Parameter(BuiltInParameter.VIEWER_CROP_REGION_VISIBLE).Set(0);
         }
         #endregion
     }

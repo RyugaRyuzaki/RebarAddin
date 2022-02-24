@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 #endregion
-
+using DSP;
 namespace R05_AutoJoint
 {
     public class AutoJointViewModel : BaseViewModel
@@ -56,8 +56,8 @@ namespace R05_AutoJoint
 
             CancelCommand = new RelayCommand<AutoJointWindow>((p) => { return true; }, (p) =>
             {
-                //DrawWallShear(p.Bitmap);
-                //ConvertCanvasToBitmap(p.Bitmap, "D:\\WallShear.png");
+                DrawPileCap(p.Bitmap);
+                ConvertCanvasToBitmap(p.Bitmap, "D:\\PileCap.png");
                 p.DialogResult = false;
                 if (TransactionGroup.HasStarted())
                 {
@@ -620,6 +620,10 @@ namespace R05_AutoJoint
         private void DrawWallShear(System.Windows.Controls.Canvas canvas)
         {
             DrawImage.DrawWallShear(canvas);
+        }
+        private void DrawPileCap(System.Windows.Controls.Canvas canvas)
+        {
+            DrawImage.DrawPileCap(canvas);
         }
         private void DrawAutoJoint(System.Windows.Controls.Canvas canvas)
         {

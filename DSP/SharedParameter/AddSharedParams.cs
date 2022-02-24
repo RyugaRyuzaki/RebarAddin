@@ -42,7 +42,7 @@ namespace DSP
                 DefinitionFile parafile = app.OpenSharedParameterFile();
                 DefinitionGroup apiGroup = parafile.Groups.Create("PileParamGroup");
                 ExternalDefinitionCreationOptions ExtDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType);
-                ExtDefinitionCreationOptions.HideWhenNoValue = true;
+                ExtDefinitionCreationOptions.HideWhenNoValue = false;
                 ExtDefinitionCreationOptions.UserModifiable = userModifiable;
                 Definition pileSharedParamDef = apiGroup.Definitions.Create(ExtDefinitionCreationOptions);
                 Category rebarCat = document.Settings.Categories.get_Item(categoryPile);

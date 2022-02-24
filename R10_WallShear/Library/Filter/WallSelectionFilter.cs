@@ -9,14 +9,15 @@ namespace R10_WallShear
     {
         public bool AllowElement(Element elem)
         {
-            if (elem is Wall ==false)
+            if (elem is Wall == false)
             {
                 return false;
             }
             else
             {
                 int a = elem.get_Parameter(BuiltInParameter.WALL_STRUCTURAL_USAGE_PARAM).AsInteger();
-                if (a!=2){
+                if (a != 2)
+                {
                     return false;
                 }
                 else
@@ -31,8 +32,9 @@ namespace R10_WallShear
                         return WallCompoundStructure(elem as Wall);
                     }
                 }
-                
+
             }
+
         }
 
         public bool AllowReference(Reference reference, XYZ position)

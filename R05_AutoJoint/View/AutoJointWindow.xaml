@@ -15,7 +15,7 @@
         
         >
     <Window.Resources>
-        <ResourceDictionary Source="./../Library/Resource/Styles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/WpfCustomControls;component/Resource/Styles.xaml"></ResourceDictionary>
     </Window.Resources>
 
     <StackPanel Margin="0">
@@ -24,9 +24,9 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Add Rule"
+            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Add Rule"    Width="80"
                     Command="{Binding AddRuleCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Delete Rule"
+            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Delete Rule" Width="80"
                     Command="{Binding DeleteRuleCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
         </Grid>
         <Grid Height="200" Background="White"  Margin="5">
@@ -70,13 +70,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Join"
+            <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Join" Width="80"
                     Command="{Binding JointCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="UnJoin"
+            <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="UnJoin" Width="80"
                     Command="{Binding UnJointCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Cancel"
+            <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Cancel" Width="80"
                     Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
         </Grid>
-        <Canvas x:Name="Bitmap" Width="50" Height="50"></Canvas>
+        <Canvas x:Name="Bitmap" Width="32" Height="32"></Canvas>
     </StackPanel>
 </Window>

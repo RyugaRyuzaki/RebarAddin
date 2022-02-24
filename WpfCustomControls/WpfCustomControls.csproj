@@ -70,6 +70,15 @@
     </Compile>
     <Compile Include="Draw\DrawIcon.cs" />
     <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\R10_Language.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\AdditionalStirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\BarsDivisionLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\BarsLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\BottomDowelsLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\StirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\R10_WallsShearRebar\TopDowelsLanguage.cs" />
     <Compile Include="LanguageModel\R02_BeamRebar\SectionAreaLanguage.cs" />
     <Compile Include="LanguageModel\R02_BeamRebar\SpeciaBarLanguage.cs" />
     <Compile Include="LanguageModel\R02_BeamRebar\StirrupLanguage.cs" />

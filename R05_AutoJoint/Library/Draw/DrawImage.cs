@@ -8,6 +8,51 @@ namespace R05_AutoJoint
 {
     public class DrawImage
     {
+        public static void DrawStirrup(Canvas canvas, double left, double top, double scale, double b, double h, double c, double ds, double d, SolidColorBrush solidColorBrush)
+        {
+
+            double r = (ds + d) / (2);
+            double t = (Math.Sqrt(2) / 2);
+            Line l1 = new Line() { X1 = left + (c + ds / 2) / scale, X2 = left + (c + ds / 2) / scale, Y1 = top + (c + r) / scale, Y2 = top + (h - c - r) / scale };
+            l1.Stroke = solidColorBrush;
+            l1.StrokeThickness = ds / scale;
+            Line l2 = new Line() { X1 = left + (b - c - ds / 2) / scale, X2 = left + (b - c - ds / 2) / scale, Y1 = top + (c + r) / scale, Y2 = top + (h - c - r) / scale };
+            l2.Stroke = solidColorBrush;
+            l2.StrokeThickness = ds / scale;
+            Line l3 = new Line() { X1 = left + (c + r) / scale, X2 = left + (b - c - r) / scale, Y1 = top + (c + ds / 2) / scale, Y2 = top + (c + ds / 2) / scale };
+            l3.Stroke = solidColorBrush;
+            l3.StrokeThickness = ds / scale;
+            Line l4 = new Line() { X1 = left + (c + r) / scale, X2 = left + (b - c - r) / scale, Y1 = top + (h - c - ds / 2) / scale, Y2 = top + (h - c - ds / 2) / scale };
+            l4.Stroke = solidColorBrush;
+            l4.StrokeThickness = ds / scale;
+            canvas.Children.Add(l1);
+            canvas.Children.Add(l2);
+            canvas.Children.Add(l3);
+            canvas.Children.Add(l4);
+            DrawQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 3, solidColorBrush);
+            DrawQualifyArc(canvas, left + (b - c - r - ds / 2) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 4, solidColorBrush);
+            DrawQualifyArc(canvas, left + (b - c - r - ds / 2) / scale, top + (h - c - r - ds / 2) / scale, scale, ds, d, 1, solidColorBrush);
+            DrawQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (h - c - r - ds / 2) / scale, scale, ds, d, 2, solidColorBrush);
+            DrawHaflQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (c + r) / scale, scale, ds, d, 4, solidColorBrush);
+            DrawHaflQualifyArc(canvas, left + (c + r) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 7, solidColorBrush);
+            Line l5 = new Line() { X1 = left + (c + r + ds / 2) / scale - t * r / scale, X2 = left + (c + r + ds / 2) / scale - t * r / scale + (d) / scale, Y1 = top + (c + r + ds / 2) / scale + t * r / scale, Y2 = top + (c + r + ds / 2) / scale + t * r / scale + (d) / scale };
+            l5.Stroke = solidColorBrush;
+            l5.StrokeThickness = ds / scale;
+            canvas.Children.Add(l5);
+            Line l6 = new Line() { X1 = left + (c + r + ds / 2) / scale + t * r / scale, X2 = left + (c + r + ds / 2) / scale + t * r / scale + (d) / scale, Y1 = top + (c + r + ds / 2) / scale - t * r / scale, Y2 = top + (c + r + ds / 2) / scale - t * r / scale + (d) / scale };
+            l6.Stroke = solidColorBrush;
+            l6.StrokeThickness = ds / scale;
+            canvas.Children.Add(l6);
+        }
+        public static void DrawSection(Canvas canvas, double scale, double left, double top, double b, double h)
+        {
+            Rectangle rec = new Rectangle() { Width = b / scale, Height = h / scale };
+            rec.Stroke = Brushes.Black;
+            rec.StrokeThickness = 1;
+            Canvas.SetTop(rec, top);
+            Canvas.SetLeft(rec, left);
+            canvas.Children.Add(rec);
+        }
         public static void DrawBeamsRebar(Canvas canvas)
         {
             DrawSection(canvas, 1, 33, 28, 15, 20);
@@ -459,7 +504,45 @@ namespace R05_AutoJoint
             }
            
         }
-
+        public static void DrawPileCap(Canvas canvas)
+        {
+            Rectangle r1 = new Rectangle() { Width = 28, Height = 28 };
+            r1.Stroke = Brushes.Black;
+            r1.StrokeThickness = 0.8;
+            Canvas.SetTop(r1, 2);
+            Canvas.SetLeft(r1, 2);
+            canvas.Children.Add(r1);
+            Ellipse e1 = new Ellipse() { Width = 8, Height = 8 };
+            e1.Stroke = Brushes.Black;
+            e1.StrokeThickness = 1;
+            Canvas.SetTop(e1, 5);
+            Canvas.SetLeft(e1, 5);
+            canvas.Children.Add(e1);
+            Ellipse e2 = new Ellipse() { Width = 8, Height = 8 };
+            e2.Stroke = Brushes.Black;
+            e2.StrokeThickness = 1;
+            Canvas.SetTop(e2, 5);
+            Canvas.SetLeft(e2, 19);
+            canvas.Children.Add(e2);
+            Ellipse e3 = new Ellipse() { Width = 8, Height = 8 };
+            e3.Stroke = Brushes.Black;
+            e3.StrokeThickness = 1;
+            Canvas.SetTop(e3, 19);
+            Canvas.SetLeft(e3, 5);
+            canvas.Children.Add(e3);
+            Ellipse e4 = new Ellipse() { Width = 8, Height = 8 };
+            e4.Stroke = Brushes.Black;
+            e4.StrokeThickness = 1;
+            Canvas.SetTop(e4, 19);
+            Canvas.SetLeft(e4, 19);
+            canvas.Children.Add(e4);
+            Rectangle r2 = new Rectangle() { Width = 8, Height = 8 };
+            r2.Stroke = Brushes.Black;
+            r2.Fill = Brushes.Red;
+            Canvas.SetTop(r2, 12);
+            Canvas.SetLeft(r2, 12);
+            canvas.Children.Add(r2);
+        }
         public static void DrawStirrupType1(Canvas canvas, double left, double top, double scale, double b, double h, double c)
         {
             Rectangle rec = new Rectangle() { Width = (b - 2 * c - 6) / scale, Height = (h - 2 * c - 6) / scale };
@@ -556,15 +639,7 @@ namespace R05_AutoJoint
             canvas.Children.Add(text);
 
         }
-        public static void DrawSection(Canvas canvas, double scale, double left, double top, double b, double h)
-        {
-            Rectangle rec = new Rectangle() { Width = b / scale, Height = h / scale };
-            rec.Stroke = Brushes.Black;
-            rec.StrokeThickness = 1;
-            Canvas.SetTop(rec, top);
-            Canvas.SetLeft(rec, left);
-            canvas.Children.Add(rec);
-        }
+      
         public static void DrawGeometryView(Canvas canvas)
         {
             canvas.Children.Clear();
@@ -1496,42 +1571,7 @@ namespace R05_AutoJoint
                 DrawOneBarSection(canvas, left + (c + r + ds / 2) / scale + i * a / scale, top + (h - c - r - ds / 2) / scale, scale, d, solidColorBrush);
             }
         }
-        public static void DrawStirrup(Canvas canvas, double left, double top, double scale, double b, double h, double c, double ds, double d, SolidColorBrush solidColorBrush)
-        {
-            
-            double r = (ds + d) / (2);
-            double t = (Math.Sqrt(2) / 2);
-            Line l1 = new Line() { X1 = left + (c + ds / 2) / scale, X2 = left + (c + ds / 2) / scale, Y1 = top + (c + r) / scale, Y2 = top + (h - c - r) / scale };
-            l1.Stroke = solidColorBrush;
-            l1.StrokeThickness = ds / scale;
-            Line l2 = new Line() { X1 = left + (b - c - ds / 2) / scale, X2 = left + (b - c - ds / 2) / scale, Y1 = top + (c + r) / scale, Y2 = top + (h - c - r) / scale };
-            l2.Stroke = solidColorBrush;
-            l2.StrokeThickness = ds / scale;
-            Line l3 = new Line() { X1 = left + (c + r) / scale, X2 = left + (b - c - r) / scale, Y1 = top + (c + ds / 2) / scale, Y2 = top + (c + ds / 2) / scale };
-            l3.Stroke = solidColorBrush;
-            l3.StrokeThickness = ds / scale;
-            Line l4 = new Line() { X1 = left + (c + r) / scale, X2 = left + (b - c - r) / scale, Y1 = top + (h - c - ds / 2) / scale, Y2 = top + (h - c - ds / 2) / scale };
-            l4.Stroke = solidColorBrush;
-            l4.StrokeThickness = ds / scale;
-            canvas.Children.Add(l1);
-            canvas.Children.Add(l2);
-            canvas.Children.Add(l3);
-            canvas.Children.Add(l4);
-            DrawQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 3, solidColorBrush);
-            DrawQualifyArc(canvas, left + (b - c - r - ds / 2) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 4, solidColorBrush);
-            DrawQualifyArc(canvas, left + (b - c - r - ds / 2) / scale, top + (h - c - r - ds / 2) / scale, scale, ds, d, 1, solidColorBrush);
-            DrawQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (h - c - r - ds / 2) / scale, scale, ds, d, 2, solidColorBrush);
-            DrawHaflQualifyArc(canvas, left + (c + r + ds / 2) / scale, top + (c + r) / scale, scale, ds, d, 4, solidColorBrush);
-            DrawHaflQualifyArc(canvas, left + (c + r) / scale, top + (c + r + ds / 2) / scale, scale, ds, d, 7, solidColorBrush);
-            Line l5 = new Line() { X1 = left + (c + r + ds / 2) / scale - t * r / scale, X2 = left + (c + r + ds / 2) / scale - t * r / scale + (d) / scale, Y1 = top + (c + r + ds / 2) / scale + t * r / scale, Y2 = top + (c + r + ds / 2) / scale + t * r / scale + (d) / scale };
-            l5.Stroke = solidColorBrush;
-            l5.StrokeThickness = ds / scale;
-            canvas.Children.Add(l5);
-            Line l6 = new Line() { X1 = left + (c + r + ds / 2) / scale + t * r / scale, X2 = left + (c + r + ds / 2) / scale + t * r / scale + (d) / scale, Y1 = top + (c + r + ds / 2) / scale - t * r / scale, Y2 = top + (c + r + ds / 2) / scale - t * r / scale + (d) / scale };
-            l6.Stroke = solidColorBrush;
-            l6.StrokeThickness = ds / scale;
-            canvas.Children.Add(l6);
-        }
+       
         public static void DrawHook(Canvas canvas, double left, double top, double scale, double b, double c, double ds, double d, double angle, SolidColorBrush solidColorBrush)
         {
             double r = (ds + d) / (2);

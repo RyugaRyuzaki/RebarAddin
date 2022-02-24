@@ -50,6 +50,7 @@ namespace R11_FoundationPile.ViewModel
         public ICommand DistanceTextChangedCommand { get; set; }
         public ICommand NumberBarTextChangedCommand { get; set; }
         public ICommand SelectionChangedBarCommand { get; set; }
+        public ICommand ApplyAllFoundationCommand { get; set; }
         #endregion
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
@@ -165,6 +166,25 @@ namespace R11_FoundationPile.ViewModel
             });
             SelectionChangedBarCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedBarModel.IsModel; }, (p) =>
             {
+                DrawMain(p);
+            });
+            ApplyAllFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return SelectedFoundationBarModel!=null&& FoundationPileModel.FoundationBarModels.Count!=1; }, (p) =>
+            {
+                for (int i = 0; i < FoundationPileModel.FoundationBarModels.Count; i++)
+                {
+                    for (int j = 0; j < FoundationPileModel.FoundationBarModels[i].BarModels.Count; j++)
+                    {
+                        FoundationPileModel.FoundationBarModels[i].BarModels[j].IsModel = SelectedFoundationBarModel.BarModels[j].IsModel;
+                        if (FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("Top")|| FoundationPileModel.FoundationBarModels[i].BarModels[j].Name.Contains("bottom"))
+                        {
+                            FoundationPileModel.FoundationBarModels[i].BarModels[j].HookLength = SelectedFoundationBarModel.BarModels[j].HookLength;
+                        }
+                        else
+                        {
+                            FoundationPileModel.FoundationBarModels[i].BarModels[j].Layer = SelectedFoundationBarModel.BarModels[j].Layer;
+                        }
+                    }
+                }
                 DrawMain(p);
             });
             #endregion

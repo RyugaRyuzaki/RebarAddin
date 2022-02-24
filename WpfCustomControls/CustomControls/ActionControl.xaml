@@ -77,6 +77,48 @@
                    Visibility="{Binding Path=CreateTagBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   ></CheckBox>
         <!--#endregion-->
+        <!--#region R10-->
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateDetailViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateDetailView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDetailViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateSectionViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateSectionView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateSectionViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateDimensionViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateDimensionView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDimensionViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateDimensionSectionWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateDimensionSection,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDimensionSectionWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateDetailShopWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateDetailShop,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateDetailShopWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateStirrupBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateStirrupBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateStirrupBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateMainBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateMainBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateMainBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+                  Content="{Binding Languages.WindowLanguage.R10_CreateTagBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  IsChecked="{Binding  DataContext.WallsModel.IsCreateTagBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Visibility="{Binding Path=CreateTagBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ></CheckBox>
+        <!--#endregion-->
         <!--#region R11-->
         <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R02_CreateRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 

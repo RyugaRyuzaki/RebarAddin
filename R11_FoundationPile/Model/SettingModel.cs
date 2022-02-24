@@ -258,6 +258,19 @@ namespace R11_FoundationPile
         {
             FamilyPiles = new ObservableCollection<Family>(new FilteredElementCollector(document).OfClass(typeof(Family)).Cast<Family>().Where(x => x.FamilyCategory.Name.Equals(SelectedCategoyryPile)).ToList());
         }
+        public void GetFamilySymBollTitleBlock(Document document)
+        {
+            List<Family> TitleBlockFamily = new FilteredElementCollector(document).OfClass(typeof(Family)).Cast<Family>().Where(x => x.FamilyCategory.Name.Equals("TitleBlocks")).ToList();
+            ObservableCollection<FamilySymbol> TitileBlocks = new ObservableCollection<FamilySymbol>();
+            foreach (var item in TitleBlockFamily)
+            {
+                foreach (ElementId familySymbolId in item.GetFamilySymbolIds())
+                {
+                    FamilySymbol familySymbol = item.Document.GetElement(familySymbolId) as FamilySymbol;
+                    TitileBlocks.Add(familySymbol);
+                }
+            }
+        }
         public void GetAllFamilySymbol()
         {
             FamilySymbolPiles = new ObservableCollection<FamilySymbol>();

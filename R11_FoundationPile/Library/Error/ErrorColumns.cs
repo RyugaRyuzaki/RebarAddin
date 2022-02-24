@@ -9,24 +9,24 @@ namespace R11_FoundationPile
     public class ErrorColumns
     {
        
-        public static int GetErrorColumns(Document document, List<Element> columns)
+        public static string GetErrorColumns(Document document, List<Element> columns)
         {
-            int error = 0;
-            if (!SameFamilyType(columns, document)) error = 1;
-            if (!IsnotVerticalColumns(document, columns)) error = 2;
-            if (!OneSolidColumns(columns)) error = 3;
-            if (!ContinueColumns(columns,document)) error = 4;
-            if (!CompareReactangleCylindical(columns,document)) error = 5;
-            if (!RotateColumns(columns,document)) error = 6;
-            if (!CompareProperty(columns,document)) error = 7;
-            if (!CompareOutSide(columns,document)) error = 8;
-            if (!CompareOverTopPlanarFaceBeam(columns,document)) error = 9;
-            if (!JoinBeamsToColumns(columns,document)) error = 10;
-            if (!JoinColumnsToFoundation(columns[0], document)) error = 11;
-            if (!JoinColumnsToFloorFoundation(columns[0], document)) error = 12;
-            if (!JoinColumnsToWallFoundation(columns[0], document)) error = 13;
-            if (!JoinColumnsToBeamFoundation(columns[0], document)) error = 14;
-            if (!CompareDecimal(document)) { error = 15; }
+            string error = "OK";
+            //if (!SameFamilyType(columns, document)) error = 1;
+            //if (!IsnotVerticalColumns(document, columns)) error = 2;
+            //if (!OneSolidColumns(columns)) error = 3;
+            //if (!ContinueColumns(columns,document)) error = 4;
+            //if (!CompareReactangleCylindical(columns,document)) error = 5;
+            //if (!RotateColumns(columns,document)) error = 6;
+            //if (!CompareProperty(columns,document)) error = 7;
+            //if (!CompareOutSide(columns,document)) error = 8;
+            //if (!CompareOverTopPlanarFaceBeam(columns,document)) error = 9;
+            //if (!JoinBeamsToColumns(columns,document)) error = 10;
+            //if (!JoinColumnsToFoundation(columns[0], document)) error = 11;
+            //if (!JoinColumnsToFloorFoundation(columns[0], document)) error = 12;
+            //if (!JoinColumnsToWallFoundation(columns[0], document)) error = 13;
+            //if (!JoinColumnsToBeamFoundation(columns[0], document)) error = 14;
+            if (!CompareDecimal(document)) { error = "Check Digit Decimal"; }
             return error;
         }
         #region
@@ -386,6 +386,13 @@ namespace R11_FoundationPile
             FormatOptions formatOptions = document.GetUnits().GetFormatOptions(SpecTypeId.Length);
             ForgeTypeId forgeTypeId = formatOptions.GetUnitTypeId();
             if (forgeTypeId == UnitTypeId.Meters)
+            {
+                if (formatOptions.Accuracy >= 1)
+                {
+                    return false;
+                }
+            }
+            if (forgeTypeId == UnitTypeId.Feet)
             {
                 if (formatOptions.Accuracy >= 1)
                 {

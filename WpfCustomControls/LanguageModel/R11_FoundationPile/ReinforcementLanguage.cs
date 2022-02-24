@@ -26,7 +26,8 @@ namespace WpfCustomControls.LanguageModel.R11_FoundationPile
         public string ListBar { get { return _ListBar; } set { _ListBar = value; OnPropertyChanged(); } }
         private string _IsModel;
         public string IsModel { get { return _IsModel; } set { _IsModel = value; OnPropertyChanged(); } }
-
+        private string _ApplyAll;
+        public string ApplyAll { get { return _ApplyAll; } set { _ApplyAll = value; OnPropertyChanged(); } }
         public ReinforcementLanguage(string language)
         {
             ChangedLanguage(language);
@@ -48,7 +49,8 @@ namespace WpfCustomControls.LanguageModel.R11_FoundationPile
             SpanOrientation = "Span Orientation";
             FixNumber = "Fix Number";
             ListBar = "List Bar";
-            IsModel = "IsModel"; 
+            IsModel = "IsModel";
+            ApplyAll = "Apply All"; 
         }
         private void GetLanguageVN()
         {
@@ -59,6 +61,7 @@ namespace WpfCustomControls.LanguageModel.R11_FoundationPile
             FixNumber = "Chẵn Thép";
             ListBar = "Danh Sách Thép";
             IsModel = "Thêm";
+            ApplyAll = "Áp dụng hết";
         }
     }
 }

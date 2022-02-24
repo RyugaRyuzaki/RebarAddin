@@ -88,6 +88,13 @@ namespace R00_Startup
                "Reactangle Beams Rebar", "",
                "Select Beams with None-Error", "",
                "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw");
+            PushButtonData pushButtonDataFoundationPile
+              = ribbonUtils.CreatePushButtonData("PileCap",
+              "PileCap", "R11_FoundationPile.dll",
+              "R11_FoundationPile.FoundationPileCmd", "PileCap.png",
+              "Auto Generate PileCap", "",
+              "Select Columns with None-Error", "",
+              "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw");
             PushButtonData pushButtonDataFoundationRebar
               = ribbonUtils.CreatePushButtonData("Footing",
               "Footing", "R03_FoundationRebar.dll",
@@ -132,6 +139,7 @@ namespace R00_Startup
           "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw");
             panelRebar.AddItem(pushButtonDataColumnsRebar);
             panelRebar.AddItem(pushButtonDataBeamsRebar);
+            panelRebar.AddItem(pushButtonDataFoundationPile);
             panelRebar.AddItem(pushButtonDataFoundationRebar);
             panelRebar.AddItem(pushButtonDataContinueFoundationRebar);
             panelRebar.AddItem(pushButtonDataSlabsRebar);

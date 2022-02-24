@@ -9,24 +9,36 @@ namespace WpfCustomControls.ViewModel
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         private ProgressModel _ProgressModel;
         public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
-        private Visibility _IsDetailItemColumns;
-        public Visibility IsDetailItemColumns { get => _IsDetailItemColumns; set { _IsDetailItemColumns = value; OnPropertyChanged(); } }
-        private Visibility _IsRebarColumns;
-        public Visibility IsRebarColumns { get => _IsRebarColumns; set { _IsRebarColumns = value; OnPropertyChanged(); } }
-        private Visibility _IsDetailItemBeams;
-        public Visibility IsDetailItemBeams { get => _IsDetailItemBeams; set { _IsDetailItemBeams = value; OnPropertyChanged(); } }
-        private Visibility _IsRebarBeams;
-        public Visibility IsRebarBeams { get => _IsRebarBeams; set { _IsRebarBeams = value; OnPropertyChanged(); } }
         private Visibility _Cancel;
         public Visibility Cancel { get => _Cancel; set { _Cancel = value; OnPropertyChanged(); } }
         private Visibility _OK;
         public Visibility OK { get => _OK; set { _OK = value; OnPropertyChanged(); } }
+        #region R01
+        private Visibility _IsDetailItemColumns;
+        public Visibility IsDetailItemColumns { get => _IsDetailItemColumns; set { _IsDetailItemColumns = value; OnPropertyChanged(); } }
+        private Visibility _IsRebarColumns;
+        public Visibility IsRebarColumns { get => _IsRebarColumns; set { _IsRebarColumns = value; OnPropertyChanged(); } }
+        #endregion
+        #region R02
+        private Visibility _IsDetailItemBeams;
+        public Visibility IsDetailItemBeams { get => _IsDetailItemBeams; set { _IsDetailItemBeams = value; OnPropertyChanged(); } }
+        private Visibility _IsRebarBeams;
+        public Visibility IsRebarBeams { get => _IsRebarBeams; set { _IsRebarBeams = value; OnPropertyChanged(); } }
+        #endregion
+        #region R10
+        private Visibility _IsDetailItemWallsShear;
+        public Visibility IsDetailItemWallsShear { get => _IsDetailItemWallsShear; set { _IsDetailItemWallsShear = value; OnPropertyChanged(); } }
+        private Visibility _IsRebarWallsShear;
+        public Visibility IsRebarWallsShear { get => _IsRebarWallsShear; set { _IsRebarWallsShear = value; OnPropertyChanged(); } }
+        #endregion
+        #region R11
         private Visibility _CreateReinforcement;
         public Visibility CreateReinforcement { get => _CreateReinforcement; set { _CreateReinforcement = value; OnPropertyChanged(); } }
         private Visibility _CreatePileDetail;
         public Visibility CreatePileDetail { get => _CreatePileDetail; set { _CreatePileDetail = value; OnPropertyChanged(); } }
         private Visibility _CreateFoundationPile;
         public Visibility CreateFoundationPile { get => _CreateFoundationPile; set { _CreateFoundationPile = value; OnPropertyChanged(); } }
+        #endregion
         public StatusBarViewModel(ProgressModel progressModel, Languages languages)
         {
             ProgressModel = progressModel;
@@ -35,21 +47,22 @@ namespace WpfCustomControls.ViewModel
         }
         private void HideAllStatusBar()
         {
+            HasCancel(false);
+            HasOK(false);
             HasDetailItemColumns(false);
             HasRebarColumns(false);
+
             HasDetailItemBeams(false);
             HasRebarBeams(false);
-            HasCancel(true);
-            HasOK(false);
+
+            HasDetailItemWallsShear(false);
+            HasRebarWallsShear(false);
+
             HasCreateReinforcement(false);
             HasCreatePileDetail(false);
             HasCreateFoundationPile(false);
         }
-        public void SetStatusBarFoundationPile()
-        {
-            HasCancel(true);
-            HasCreateFoundationPile(true);
-        }
+      
         public void SetStatusBarColumns()
         {
             HasDetailItemColumns(true);
@@ -64,6 +77,28 @@ namespace WpfCustomControls.ViewModel
             HasCancel(true);
             HasOK(true);
         }
+        public void SetStatusBarWallsShear()
+        {
+            HasDetailItemWallsShear(true);
+            HasRebarWallsShear(true);
+            HasCancel(true);
+            HasOK(true);
+        }
+        public void SetStatusBarFoundationPile()
+        {
+            HasCancel(true);
+            HasCreateFoundationPile(true);
+        }
+
+        private void HasCancel(bool cancel)
+        {
+            Cancel = (cancel) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+        private void HasOK(bool ok)
+        {
+            OK = (ok) ? (Visibility.Visible) : (Visibility.Collapsed);
+        }
+
         private void HasDetailItemColumns(bool detailItem)
         {
             IsDetailItemColumns = (detailItem) ? (Visibility.Visible) : (Visibility.Collapsed);
@@ -80,13 +115,14 @@ namespace WpfCustomControls.ViewModel
         {
             IsRebarBeams = (rebar) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
-        private void HasCancel(bool cancel)
+
+        private void HasDetailItemWallsShear(bool detailItem)
         {
-            Cancel = (cancel) ? (Visibility.Visible) : (Visibility.Collapsed);
+            IsDetailItemWallsShear = (detailItem) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
-        private void HasOK(bool ok)
+        private void HasRebarWallsShear(bool rebar)
         {
-            OK = (ok) ? (Visibility.Visible) : (Visibility.Collapsed);
+            IsRebarWallsShear = (rebar) ? (Visibility.Visible) : (Visibility.Collapsed);
         }
         public void HasCreateReinforcement(bool createReinforcement)
         {

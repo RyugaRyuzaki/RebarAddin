@@ -57,6 +57,9 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
+                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding Languages.R11_Language.ReinforcementLanguage.ApplyAll,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Command="{Binding ApplyAllFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
+                                    ></Button>
                         </DockPanel>
                     </StackPanel>
 

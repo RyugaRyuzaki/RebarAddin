@@ -7,8 +7,9 @@ using Autodesk.Revit.UI;
 using R11_FoundationPile.Library.Filter;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Windows;
+using System.Windows.Forms;
 using Application = Autodesk.Revit.ApplicationServices.Application;
    
 #endregion
@@ -43,24 +44,35 @@ namespace R11_FoundationPile
                 columns = columns.Where(x => ErrorColumns.GetSectionStyle(doc, x) != ErrorColumns.SectionStyle.ORTHER).ToList();
 
                 columns = columns.OrderBy(x => (x.Location as LocationPoint).Point.X).ThenBy(x => (x.Location as LocationPoint).Point.X).ToList();
-                FloorType family = new FilteredElementCollector(doc)
-                    .OfClass(typeof(FloorType))
-                    .Cast<FloorType>()
-                    .Where(x => x.IsFoundationSlab).FirstOrDefault();
-                using (TransactionGroup transGr = new TransactionGroup(doc))
+                string Error = ErrorColumns.GetErrorColumns(doc, columns);
+                if (!Error.Equals("OK"))
                 {
-                    transGr.Start("RAPI00TransGr");
-
-                    FoundationPileViewModel viewModel = new FoundationPileViewModel(app, uidoc, doc, columns);
-                    FoundationPileWindow window = new FoundationPileWindow(viewModel);
-
-                    //window.Show();
-                    if (window.ShowDialog() == false) return Result.Cancelled;
-
-                    transGr.Assimilate();
+                    string hyperlink = "Do you want to see on Youtube ?";
+                    string navigateUri = "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw";
+                    if (MessageBox.Show(Error + "\n" + hyperlink, "ERROR", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    {
+                        Process.Start(new ProcessStartInfo(navigateUri));
+                    }
+                    return Result.Cancelled;
                 }
+                else
+                {
+                    using (TransactionGroup transGr = new TransactionGroup(doc))
+                    {
+                        transGr.Start("RAPI00TransGr");
 
-                return Result.Succeeded;
+                        FoundationPileViewModel viewModel = new FoundationPileViewModel(app, uidoc, doc, columns);
+                        FoundationPileWindow window = new FoundationPileWindow(viewModel);
+
+                        //window.Show();
+                        if (window.ShowDialog() == false) return Result.Cancelled;
+
+                        transGr.Assimilate();
+                    }
+
+                    return Result.Succeeded;
+                }
+                
             }
             catch (Exception e)
             {

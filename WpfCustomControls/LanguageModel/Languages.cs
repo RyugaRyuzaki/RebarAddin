@@ -21,6 +21,8 @@ namespace WpfCustomControls.LanguageModel
         public R01_Language R01_Language { get { return _R01_Language; } set { _R01_Language = value; OnPropertyChanged(); } }
         private R02_Language _R02_Language;
         public R02_Language R02_Language { get { return _R02_Language; } set { _R02_Language = value; OnPropertyChanged(); } }
+        private R10_Language _R10_Language;
+        public R10_Language R10_Language { get { return _R10_Language; } set { _R10_Language = value; OnPropertyChanged(); } }
         private R11_Language _R11_Language;
         public R11_Language R11_Language { get { return _R11_Language; } set { _R11_Language = value; OnPropertyChanged(); } }
         public Languages(string language)
@@ -31,6 +33,7 @@ namespace WpfCustomControls.LanguageModel
             GeneralLanguage = new GeneralLanguage(language);
             R01_Language = new R01_Language(language);
             R02_Language = new R02_Language(language);
+            R10_Language = new R10_Language(language);
             R11_Language = new R11_Language(language);
         }
         public void ChangeLanguages(string language)
@@ -41,6 +44,7 @@ namespace WpfCustomControls.LanguageModel
             GeneralLanguage.ChangedLanguage(language);
             R01_Language.ChangeLanguage(language);
             R02_Language.ChangeLanguage(language);
+            R10_Language.ChangeLanguage(language);
             R11_Language.ChangeLanguage(language);
         }
     }

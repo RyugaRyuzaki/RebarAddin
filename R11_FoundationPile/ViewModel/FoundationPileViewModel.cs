@@ -10,7 +10,6 @@ using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls.LanguageModel;
-using WpfCustomControls.Model;
 using DSP;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 #endregion
@@ -73,19 +72,17 @@ namespace R11_FoundationPile
             Doc = doc;
             Columns = columns;
             Unit = GetUnitProject();
-            Languages = new Languages("EN");
-            TransactionGroup = new TransactionGroup(Doc);
-            TaskBarViewModel = new TaskBarViewModel(Languages);
             FoundationPileModel = new FoundationPileModel(columns, Doc, Unit);
-            SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, Languages);
-            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, Languages);
-
-           
+            TransactionGroup = new TransactionGroup(Doc);
+            Languages = new Languages("EN");
+            TaskBarViewModel = new TaskBarViewModel(Languages);
             StatusBarViewModel = new StatusBarViewModel(FoundationPileModel.ProgressModel, Languages);
             StatusBarViewModel.SetStatusBarFoundationPile();
             ActionViewModel = new ActionViewModel(Languages);
             ActionViewModel.SetStatusBarFoundationPile();
-
+            
+            SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, Languages);
+            GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, Languages);
             SelectedViewModel = SettingViewModel;
             #endregion
             #region Load
@@ -134,10 +131,6 @@ namespace R11_FoundationPile
                    
                 }
                 DeleteWallTemp();
-
-
-
-
             });
             CreateFoundationCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.ConditionCreateFoundation() && !FoundationPileModel.IsCreateGrounpFoundation; }, (p) =>
               {

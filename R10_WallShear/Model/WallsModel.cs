@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using DSP;
+using WpfCustomControls.Model;
 namespace R10_WallShear
 {
     public class WallsModel : BaseViewModel
@@ -62,6 +63,27 @@ namespace R10_WallShear
         public int Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
         private double _Percent;
         public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
+        #region Action
+
+        private ProgressModel _ProgressModel;
+        public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
+        private bool _IsCreateStirrupBars;
+        public bool IsCreateStirrupBars { get => _IsCreateStirrupBars; set { _IsCreateStirrupBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateMainBars;
+        public bool IsCreateMainBars { get => _IsCreateMainBars; set { _IsCreateMainBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateTagBars;
+        public bool IsCreateTagBars { get => _IsCreateTagBars; set { _IsCreateTagBars = value; OnPropertyChanged(); } }
+        private bool _IsCreateDetailView;
+        public bool IsCreateDetailView { get => _IsCreateDetailView; set { _IsCreateDetailView = value; OnPropertyChanged(); } }
+        private bool _IsCreateSectionView;
+        public bool IsCreateSectionView { get => _IsCreateSectionView; set { _IsCreateSectionView = value; OnPropertyChanged(); } }
+        private bool _IsCreateDimensionView;
+        public bool IsCreateDimensionView { get => _IsCreateDimensionView; set { _IsCreateDimensionView = value; OnPropertyChanged(); } }
+        private bool _IsCreateDimensionSection;
+        public bool IsCreateDimensionSection { get => _IsCreateDimensionSection; set { _IsCreateDimensionSection = value; OnPropertyChanged(); } }
+        private bool _IsCreateDetailShop;
+        public bool IsCreateDetailShop { get => _IsCreateDetailShop; set { _IsCreateDetailShop = value; OnPropertyChanged(); } }
+        #endregion
         #endregion
         public WallsModel(List<Element> walls, Document document, UnitProject unit)
         {
@@ -75,6 +97,7 @@ namespace R10_WallShear
             GetSettingModel(walls, document, unit);
             GetStirrupsModels();
             GetAllNumberBar();
+            ProgressModel = new ProgressModel(0, 0);
         }
         #region Property
         private void GetFamilyType(List<Element> walls, Document document)
