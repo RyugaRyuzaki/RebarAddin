@@ -75,13 +75,13 @@
          
         </Button>
         <ComboBox DockPanel.Dock="Right" Style="{StaticResource ComboBoxStyle}" Width="60"
-                  ItemsSource="{Binding AllLanguages}"
-                  SelectedItem="{Binding SelectedLanguage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  ItemsSource="{Binding DataContext.Languages.AllLanguages,RelativeSource={RelativeSource AncestorType=Window}}"
+                  SelectedItem="{Binding DataContext.Languages.SelectedLanguage,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   >
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectionLanguageChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <i:InvokeCommandAction Command="{Binding DataContext.SelectionLanguageChangedCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ComboBox>

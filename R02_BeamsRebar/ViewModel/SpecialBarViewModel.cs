@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
+using R02_BeamsRebar.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class SpecialBarViewModel:BaseViewModel

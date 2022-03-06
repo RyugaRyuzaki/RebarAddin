@@ -24,14 +24,14 @@
             <RowDefinition Height="360"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Margin="5" Header="Stirrups property">
+        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.StirrupsLanguage.StirrupsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Wall No" x:Name="WallNumberTextBlock"></TextBlock>
+                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.WallsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="WallNumberTextBlock"></TextBlock>
                 <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox"
                           ItemsSource="{Binding WallsModel.StirrupModels}" DisplayMemberPath="NumberWall"
                           SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -42,12 +42,12 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
-                <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Width="130" Content="Apply All Walls" x:Name="ApplyAllButton"
+                <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Width="130" Content="{Binding Languages.StirrupsLanguage.ApplyAllWalls,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="ApplyAllButton"
                         Command="{Binding ApplyAllWallsCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
             </Grid>
         </GroupBox>
         <!--#region Stirrup-->
-        <GroupBox Header="Stirrups Parameter" Margin="5" Grid.Row="1">
+        <GroupBox Header="{Binding Languages.StirrupsLanguage.StirrupsParameter,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*"></ColumnDefinition>
@@ -61,7 +61,7 @@
                     <RowDefinition Height="35"></RowDefinition>
                     <RowDefinition Height="35"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockBar}"></TextBlock>
                 <ComboBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
                           ItemsSource="{Binding WallsModel.AllBars}" DisplayMemberPath="Type"
                           SelectedItem="{Binding SelectedWall.BarS,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -93,7 +93,7 @@
         </GroupBox>
         <!--#endregion-->
         <!--#region Distribute-->
-        <GroupBox Header="Stirrups Distribute" Margin="5" Grid.Row="2">
+        <GroupBox Header="{Binding Languages.StirrupsLanguage.StirrupsDistribute,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5" Grid.Row="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*"></ColumnDefinition>
@@ -150,10 +150,10 @@
                 <TextBox IsEnabled="False" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.L,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
                 <TextBox IsEnabled="False" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.L1,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
                 <TextBox IsEnabled="False" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.L2,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Ties up to Beams"
+                <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.StirrupsLanguage.TiesUpToBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedWall.IsTiesUp,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding TiesUpCommand}" CommandParameter="{Binding ElementName=MainWindow}"></CheckBox>
-                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Distribute Type"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.StirrupsLanguage.DítributeType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="3" Style="{StaticResource ComboBoxStyle}"
                           ItemsSource="{Binding DistributeType}"
                           SelectedIndex="{Binding SelectedWall.TypeDis,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

@@ -23,7 +23,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="360"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.R01_Language.AdditionalStirrupsLanguage.AdditionalProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -45,7 +45,7 @@
                         Command="{Binding ApplyAllColumnCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>-->
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.R01_Language.AdditionalStirrupsLanguage.AdditionalHorizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalHorizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.R01_Language.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedStirrupModel.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding HorizontalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>
@@ -129,7 +129,7 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Margin="5" Header="{Binding Languages.R01_Language.AdditionalStirrupsLanguage.AdditionalVertical,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="2" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalVertical,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -145,7 +145,7 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.R01_Language.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedStirrupModel.AddV,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding VerticalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>

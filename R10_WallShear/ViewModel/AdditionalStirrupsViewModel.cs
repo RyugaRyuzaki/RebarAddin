@@ -3,7 +3,8 @@ using R10_WallShear.View;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-
+using WpfCustomControls;
+using R10_WallShear.LanguageModel;
 namespace R10_WallShear.ViewModel
 {
     public class AdditionalStirrupsViewModel : BaseViewModel
@@ -45,11 +46,13 @@ namespace R10_WallShear.ViewModel
         public ICommand VerticalaCornerTextChangedCommand { get; set; }
         public ICommand TypeVerticalCornerChangedCommand { get; set; }
         #endregion
-        public AdditionalStirrupsViewModel(Document document, WallsModel wallsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public AdditionalStirrupsViewModel(Document document, WallsModel wallsModel, Languages languages)
         {
             #region Property
             Doc = document;
-            WallsModel = wallsModel;
+            WallsModel = wallsModel; Languages = languages;
             #endregion
             #region Load
             LoadAdditionalStirrupViewCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
@@ -360,7 +363,7 @@ namespace R10_WallShear.ViewModel
         private void DrawInfo(WallShearWindow p)
         {
             p.MainCanvas.Children.Clear();
-            DrawMainCanvas.DrawInfoColumns(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
+            DrawMainCanvas.DrawInfoWall(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
             DrawMainCanvas.DrawStirrup(p.MainCanvas, WallsModel, SelectedWall.NumberWall - 1);
             double top = WallsModel.DrawModel.Top - (WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall].TopPosition) / (WallsModel.DrawModel.Scale);
             p.scrollViewer.ScrollToBottom();

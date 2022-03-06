@@ -59,12 +59,7 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
-                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
-                        <custom:StatusBarControl></custom:StatusBarControl>
-                    </DataTemplate>
-                    <DataTemplate x:Name="actionViewModel" DataType="{x:Type customViewModel:ActionViewModel}">
-                        <custom:ActionControl></custom:ActionControl>
-                    </DataTemplate>
+                   
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -101,55 +96,54 @@
                                 <ListViewItem >
                                     <DockPanel>
                                         <Canvas x:Name="SettingCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.Setting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
                                 <ListViewItem>
                                     <DockPanel>
                                         <Canvas x:Name="GeometryCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.Geometry,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
-
-
+                               
                                 <ListViewItem>
                                     <DockPanel>
                                         <Canvas x:Name="BarsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Bars,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.Bars,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
-                                <ListViewItem>
+                                <ListViewItem Visibility="{Binding Path=WallsModel.AllApplyBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                     <DockPanel>
                                         <Canvas x:Name="TopDowelsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
-                                <ListViewItem>
-                                    <DockPanel>
+                                <ListViewItem Visibility="{Binding Path=WallsModel.AllApplyBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                    <DockPanel >
                                         <Canvas x:Name="BottomDowelsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.BottomDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
-                                <ListViewItem>
+                                <ListViewItem Visibility="{Binding Path=WallsModel.AllApplyBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                     <DockPanel>
                                         <Canvas x:Name="StirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.Stirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.Stirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
-                                </ListViewItem>
-                                <ListViewItem x:Name="AdditionalListViewItem" >
+                                </ListViewItem >
+                                <ListViewItem x:Name="AdditionalListViewItem" Visibility="{Binding Path=WallsModel.AllApplyBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                                     <DockPanel>
                                         <Canvas x:Name="AdditionalStirrupsCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.AdditionalStirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.AdditionalStirrups,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
-                                <ListViewItem>
+                                <ListViewItem Visibility="{Binding Path=WallsModel.AllApplyBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                     <DockPanel>
                                         <Canvas x:Name="BarsDivisionCanvas" Style="{StaticResource canvasMenu}"></Canvas>
-                                        <TextBlock Text="{Binding TaskBarViewModel.Languages.MenuLanguage.BarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
+                                        <TextBlock Text="{Binding Languages.MenuLanguage.BarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="13"></TextBlock>
                                     </DockPanel>
                                 </ListViewItem>
                             </ListView>
-                            <ContentControl Margin="0 5 0 0" Content="{Binding ActionViewModel}"></ContentControl>
+                           
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -161,43 +155,45 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="260"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" x:Name="scrollViewer">
-                        <GroupBox Header="Wall Property">
+
+                    <GroupBox Header="{Binding Languages.WindowLanguage.WallsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  x:Name="scrollViewer">
                             <Canvas x:Name="MainCanvas" Background="White">
                                 <!--<Rectangle Height="560"></Rectangle>-->
                             </Canvas>
-                        </GroupBox>
-                    </ScrollViewer>
-                    <GroupBox Header="Wall Section" Grid.Row="1">
+                        </ScrollViewer>
+                    </GroupBox>
+
+                    <GroupBox Header="{Binding Languages.WindowLanguage.WallsSection,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="1">
                         <Canvas x:Name="CanvasSection" Background="White">
                             <!--<Rectangle Width="640" Height="240"></Rectangle>-->
                         </Canvas>
                     </GroupBox>
                 </Grid>
                 <!--#region Action-->
-                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
-                    <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
-                    <!--<Grid Background="White" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                            <ColumnDefinition Width="1.5*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="2">
-                            <ProgressBar Background="Transparent" x:Name="ProgressWindow" Style="{StaticResource ProgressBarStyle}"></ProgressBar>
-                            <TextBlock Text="{Binding WallsModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0" Background="White">
+                    <DockPanel Margin="0" LastChildFill="true">
+                        
+                        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding WallsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     ></RadioButton>
+                        <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding WallsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                     ></RadioButton>
+
+                       
+                        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
+                 Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                        <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Style="{StaticResource ButtonStyle}" Width="80"  
+                        Command="{Binding  OKCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                       
+                        <Grid DockPanel.Dock="Right" >
+
+                            <ProgressBar Background="Transparent" x:Name="Progress" Style="{StaticResource ProgressBarStyle}" ></ProgressBar>
+                            <TextBlock Text="{Binding WallsModel.ProgressModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                         </Grid>
-                        <TextBlock Grid.Column="3" Text="{Binding WallsModel.SelectedAction,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}" Margin="10 0 0 0" FontStyle="Italic" FontSize="11" FontWeight="Bold" ></TextBlock>
-                        <RadioButton IsEnabled="{Binding UseDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" IsChecked="{Binding WallsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Detail Item" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-                        <RadioButton Grid.Column="1" IsChecked="{Binding WallsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Content="Rebar" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-                        <Button Grid.Column="4" Content="OK" Style="{StaticResource ButtonStyle}" Width="80"
-                        Command="{Binding OKCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                        <Button Grid.Column="5" Content="Cancel" Style="{StaticResource ButtonStyle}"   Width="80"
-                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                    </Grid>-->
+
+                    </DockPanel>
                 </Border>
                 <!--#endregion-->
             </Grid>

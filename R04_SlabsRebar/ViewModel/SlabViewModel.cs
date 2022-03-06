@@ -14,7 +14,6 @@ using Autodesk.Revit.UI.Selection;
 using WpfCustomControls;
 using WpfCustomControls.CustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
 using System.Windows.Input;
 #endregion
 
@@ -27,15 +26,14 @@ namespace R04_SlabsRebar
         #region ICommand
         public ICommand SelectionMenuCommand { get; set; }
         #endregion
-        private Languages _Languages;
-        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+       
 
      
         public SlabViewModel(UIDocument uiDoc, Document doc)
         {
             UiDoc = uiDoc;
             Doc = doc;
-            Languages = new Languages("EN");
+          
            
         }
 

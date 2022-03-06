@@ -56,8 +56,8 @@ namespace R05_AutoJoint
 
             CancelCommand = new RelayCommand<AutoJointWindow>((p) => { return true; }, (p) =>
             {
-                DrawPileCap(p.Bitmap);
-                ConvertCanvasToBitmap(p.Bitmap, "D:\\PileCap.png");
+                //DrawPileCap(p.Bitmap);
+                //ConvertCanvasToBitmap(p.Bitmap, "D:\\PileCap.png");
                 p.DialogResult = false;
                 if (TransactionGroup.HasStarted())
                 {

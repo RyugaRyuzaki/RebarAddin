@@ -25,7 +25,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.R01_Language.BarsDivisionLanguage.DivisionProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.BarsDivisionLanguage.DivisionProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"></ColumnDefinition>
@@ -52,7 +52,7 @@
                 
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.R01_Language.GeometryLanguage.ColumnsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.GeometryLanguage.ColumnsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid Height="35">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -73,22 +73,22 @@
                 
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Margin="5" Header="{Binding Languages.R01_Language.BarsDivisionLanguage.MainBarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="2" Margin="5" Header="{Binding Languages.BarsDivisionLanguage.MainBarsDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DataGrid Style="{StaticResource DataGridStyle}" x:Name="BarDataGrid"></DataGrid>
             </ScrollViewer>
         </GroupBox>
-        <GroupBox Grid.Row="3" Margin="5" Header="{Binding Languages.R01_Language.BarsDivisionLanguage.StirrupDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="3" Margin="5" Header="{Binding Languages.BarsDivisionLanguage.StirrupDivision,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DataGrid Style="{StaticResource DataGridStyle}" x:Name="StirrupDataGrid"></DataGrid>
             </ScrollViewer>
         </GroupBox>
-        <GroupBox Grid.Row="4" Margin="5" Header="{Binding Languages.R01_Language.BarsDivisionLanguage.AddHorizontalStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="4" Margin="5" Header="{Binding Languages.BarsDivisionLanguage.AddHorizontalStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DataGrid Style="{StaticResource DataGridStyle}" x:Name="AddHDataGrid"></DataGrid>
             </ScrollViewer>
         </GroupBox>
-        <GroupBox Grid.Row="5" Margin="5" Header="{Binding Languages.R01_Language.BarsDivisionLanguage.AddVerticalStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+        <GroupBox Grid.Row="5" Margin="5" Header="{Binding Languages.BarsDivisionLanguage.AddVerticalStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DataGrid Style="{StaticResource DataGridStyle}" x:Name="AddVDataGrid"></DataGrid>
             </ScrollViewer>

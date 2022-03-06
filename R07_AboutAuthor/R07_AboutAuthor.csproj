@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\AboutCmd.cs" />
+    <Compile Include="Model\AuthorLanguage.cs" />
+    <Compile Include="Model\Languages.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
@@ -82,7 +84,6 @@
   <ItemGroup>
     <Folder Include="Icons\" />
     <Folder Include="Library\" />
-    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

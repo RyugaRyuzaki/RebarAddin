@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WpfCustomControls;
+using R10_WallShear.LanguageModel;
 
 namespace R10_WallShear.ViewModel 
 {
@@ -39,11 +41,13 @@ namespace R10_WallShear.ViewModel
         public ICommand TiesUpCommand { get; set; }
         public ICommand SelectionDistributeChangedCommand { get; set; }
         #endregion
-        public StirrupsViewModel(Document doc, WallsModel wallsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public StirrupsViewModel(Document doc, WallsModel wallsModel, Languages languages)
         {
             #region property
             Doc = doc;
-            WallsModel = wallsModel;
+            WallsModel = wallsModel; Languages= languages;
             #endregion
             #region
             LoadStirrupsViewCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
@@ -51,7 +55,7 @@ namespace R10_WallShear.ViewModel
                 p.MainCanvas.Height = WallsModel.DrawModel.Height;
                 p.MainCanvas.Width = WallsModel.DrawModel.Width;
                 StirrupsView uc = ProccessInfoWalls.FindChild<StirrupsView>(p, "StirrupsUC");
-                ShowWallNumberComboBox(uc);
+                //ShowWallNumberComboBox(uc);
                 SetDistributeType(uc);
                 DrawInfo(p);
                 DrawSection(p);
@@ -238,7 +242,7 @@ namespace R10_WallShear.ViewModel
         private void DrawInfo(WallShearWindow p)
         {
             p.MainCanvas.Children.Clear();
-            DrawMainCanvas.DrawInfoColumns(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
+            DrawMainCanvas.DrawInfoWall(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
             DrawMainCanvas.DrawStirrup(p.MainCanvas, WallsModel, SelectedWall.NumberWall - 1);
             double top = WallsModel.DrawModel.Top - (WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall].TopPosition) / (WallsModel.DrawModel.Scale);
             if (SelectedWall.NumberWall == WallsModel.InfoModels[WallsModel.InfoModels.Count - 1].NumberWall) top -= WallsModel.AllBars[WallsModel.AllBars.Count - 1].Diameter * 20;

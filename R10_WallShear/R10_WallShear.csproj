@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2020\Revit.exe</StartProgram>
+    <NoWarn>CS0162</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,10 +60,17 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,6 +90,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\WallShearCmd.cs" />
+    <Compile Include="LanguageModel\AdditionalStirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\BarsDivisionLanguage.cs" />
+    <Compile Include="LanguageModel\BarsLanguage.cs" />
+    <Compile Include="LanguageModel\BottomDowelsLanguage.cs" />
+    <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\Languages.cs" />
+    <Compile Include="LanguageModel\MenuLanguage.cs" />
+    <Compile Include="LanguageModel\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\StirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\TopDowelsLanguage.cs" />
+    <Compile Include="LanguageModel\WindowLanguage.cs" />
     <Compile Include="Library\Category\WallBoundBox.cs" />
     <Compile Include="Library\Compare\DistictPlanarFace.cs" />
     <Compile Include="Library\Compare\DistictPlanarFaceID.cs" />
@@ -108,7 +128,6 @@
     <Compile Include="ViewModel\AdditionalStirrupsViewModel.cs" />
     <Compile Include="ViewModel\BarsDivisionViewModel.cs" />
     <Compile Include="ViewModel\BarsViewModel.cs" />
-    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BottomDowelsViewModel.cs" />
     <Compile Include="ViewModel\GeometryViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
@@ -181,9 +200,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Icons\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\Orther\ProccessInfoWalls.cs" />

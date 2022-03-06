@@ -47,12 +47,8 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
-                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
-                        <custom:StatusBarControl></custom:StatusBarControl>
-                    </DataTemplate>
-                    <DataTemplate x:Name="actionViewModel" DataType="{x:Type customViewModel:ActionViewModel}">
-                        <custom:ActionControl></custom:ActionControl>
-                    </DataTemplate>
+                   
+                   
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -112,7 +108,7 @@
                                 </DockPanel>
                             </ListViewItem>
                         </ListView>
-                        <ContentControl Margin="0 5 0 0" Content="{Binding ActionViewModel}"></ContentControl>
+                        
                     </StackPanel>
                 </Grid>
             </Border>
@@ -138,7 +134,7 @@
             <!--#endregion-->
             <!--#region Action-->
             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0">
-                <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
+                <!--<ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>-->
                 <!--<DockPanel Background="White" LastChildFill="true">
                     
                     
@@ -161,6 +157,27 @@
                    
 
                 </DockPanel>-->
+                <DockPanel Margin="0" LastChildFill="true">
+                    
+                    <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
+                 Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                   
+                    <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                 Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  CreateReinforcementCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreatePileDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  CreatePileDetailCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                  Style="{StaticResource ButtonStyle}" Width="150"  
+                        Command="{Binding  CreateFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                    <Grid DockPanel.Dock="Right" >
+                        <ProgressBar Background="Transparent" x:Name="Progress" Style="{StaticResource ProgressBarStyle}" ></ProgressBar>
+                        <TextBlock Text="{Binding FoundationPileModel.ProgressModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                    </Grid>
+
+                </DockPanel>
             </Border>
             <!--#endregion-->
         </Grid>

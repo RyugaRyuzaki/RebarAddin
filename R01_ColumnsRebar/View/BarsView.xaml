@@ -25,7 +25,7 @@
                     <RowDefinition Height="360"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!--#region Bars Property-->
-                <GroupBox Grid.Row="0" Header="{Binding Languages.R01_Language.BarsLanguage.BarsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                <GroupBox Grid.Row="0" Header="{Binding Languages.BarsLanguage.BarsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.6*"></ColumnDefinition>
@@ -99,15 +99,15 @@
                         <TextBlock Grid.Row="2" Grid.Column="4"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedColumn.Bar.Diameter}"></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource TextBlockUnit}"></TextBlock>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R01_Language.BarsLanguage.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.BarsLanguage.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding SplitOverlap}" 
                                   SelectedItem="{Binding SelectedColumn.SplitOverlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                         </ComboBox>
-                        <TextBlock Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.BarsLanguage.AreaReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.BarsLanguage.AreaReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R01_Language.BarsLanguage.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.BarsLanguage.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <TextBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedColumn.Overlap,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                  IsEnabled="{Binding IsLock,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                  x:Name="OverlapTextBox">
@@ -128,7 +128,7 @@
                 </GroupBox>
                 <!--#endregion-->
 
-                <GroupBox Grid.Row="1" Header="{Binding Languages.R01_Language.BarsLanguage.BarsInformation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                <GroupBox Grid.Row="1" Header="{Binding Languages.BarsLanguage.BarsInformation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <ListView  ItemsSource="{Binding SelectedColumn.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

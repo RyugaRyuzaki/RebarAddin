@@ -95,6 +95,12 @@ namespace R11_FoundationPile
             if (WallBottom != null) { ICollection<ElementId> d = document.Delete(WallBottom.Id); }
 
         }
+        private double GetWidthWallType(Document document, SettingModel settingModel)
+        {
+            CompoundStructure compound = settingModel.WallType.GetCompoundStructure();
+            //CompoundStructureLayer compoundStructureLayer = compound.GetLayers()[0] ;
+            return double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, compound.GetWidth(), false));
+        }
         public Curve GetCurvesHorizontal(double x0, UnitProject unit, double offset)
         {
             XYZ x = null;
@@ -112,8 +118,8 @@ namespace R11_FoundationPile
             }
             double y1 = BoundingLocation.Min(b => b.Y);
             double y2 = BoundingLocation.Max(b => b.Y);
-            XYZ p1 = ColumnModel.PointPosition + unit.Convert(0.9*x0) * x + unit.Convert(y1) * y;
-            XYZ p2 = ColumnModel.PointPosition + unit.Convert(0.9 * x0) * x + unit.Convert(y2) * y;
+            XYZ p1 = ColumnModel.PointPosition + unit.Convert(0.9*x0 + ((x0 > 0) ? 1 : -1) * offset) * x + unit.Convert(y1) * y;
+            XYZ p2 = ColumnModel.PointPosition + unit.Convert(0.9 * x0 + ((x0 > 0) ? 1 : -1) * offset) * x + unit.Convert(y2) * y;
             curve = Line.CreateBound(p1, p2);
             return curve;
         }
@@ -134,8 +140,8 @@ namespace R11_FoundationPile
             }
             double x1 = BoundingLocation.Min(b => b.X);
             double x2 = BoundingLocation.Max(b => b.X);
-            XYZ p1 = ColumnModel.PointPosition + unit.Convert(x1) * x + unit.Convert(0.9 * y0) * y;
-            XYZ p2 = ColumnModel.PointPosition + unit.Convert(x2) * x + unit.Convert(0.9 * y0) * y;
+            XYZ p1 = ColumnModel.PointPosition + unit.Convert(x1) * x + unit.Convert(0.9 * y0+((y0>0)?1:-1)*offset) * y;
+            XYZ p2 = ColumnModel.PointPosition + unit.Convert(x2) * x + unit.Convert(0.9 * y0 + ((y0 > 0) ? 1 : -1) * offset) * y;
             curve = Line.CreateBound(p1, p2);
             return curve;
         }
@@ -1509,16 +1515,15 @@ namespace R11_FoundationPile
                     if (comments != null) comments.Set(settingModel.FoundationNamePrefix + Type);
                     if ((Image == 2 || Image == 3) && settingModel.WallType != null && IsRepresentative)
                     {
-                        double coverSide = double.Parse(UnitFormatUtils.Format(document.GetUnits(), SpecTypeId.Length, settingModel.SelectedSideCover.CoverDistance, false));
-
+                        double offset = GetWidthWallType(document, settingModel);
                         double xLeft = BoundingLocation.Min(x => x.X);
                         double xRight = BoundingLocation.Max(x => x.X);
                         double yTop = BoundingLocation.Max(x => x.Y);
                         double yBottom = BoundingLocation.Min(x => x.Y);
-                        Curve curveLeft = GetCurvesHorizontal(xLeft, unit, coverSide);
-                        Curve curveRight = GetCurvesHorizontal(xRight, unit, coverSide);
-                        Curve curveTop = GetCurvesVertical(yTop, unit, coverSide);
-                        Curve curveBottom = GetCurvesVertical(yBottom, unit, coverSide);
+                        Curve curveLeft = GetCurvesHorizontal(xLeft, unit, offset);
+                        Curve curveRight = GetCurvesHorizontal(xRight, unit, offset);
+                        Curve curveTop = GetCurvesVertical(yTop, unit, offset);
+                        Curve curveBottom = GetCurvesVertical(yBottom, unit, offset);
                         WallLeft = Wall.Create(document, curveLeft, settingModel.WallType.Id, ColumnModel.BottomLevel.Id, unit.Convert(2 * settingModel.HeightFoundation), -unit.Convert(settingModel.HeightFoundation), true, true);
                         WallRight = Wall.Create(document, curveRight, settingModel.WallType.Id, ColumnModel.BottomLevel.Id, unit.Convert(2 * settingModel.HeightFoundation), -unit.Convert(settingModel.HeightFoundation), true, true);
                         WallTop = Wall.Create(document, curveTop, settingModel.WallType.Id, ColumnModel.BottomLevel.Id, unit.Convert(2 * settingModel.HeightFoundation), -unit.Convert(settingModel.HeightFoundation), true, true);

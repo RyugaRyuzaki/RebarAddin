@@ -33,13 +33,13 @@
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="5 0 5 5">
-                    <GroupBox Header="{Binding Languages.R02_Language.StirrupLanguage.StirrupSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    <GroupBox Header="{Binding Languages.StirrupLanguage.StirrupSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
                             <ListView ItemsSource="{Binding BeamsModel.InfoModels}" 
                                   SelectedIndex="{Binding BeamsModel.SelectedIndexModel.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                 <ListView.View>
                                     <GridView >
-                                        <GridViewColumn Width="30" Header="{Binding Languages.R02_Language.StirrupLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding NumberSpan}"></GridViewColumn>
+                                        <GridViewColumn Width="30" Header="{Binding Languages.StirrupLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding NumberSpan}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -91,7 +91,7 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid Margin="5 5 5 0" Grid.Column="0">
-                        <GroupBox FontSize="13" Header="{Binding Languages.R02_Language.StirrupLanguage.DistributeStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                        <GroupBox FontSize="13" Header="{Binding Languages.StirrupLanguage.DistributeStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.3*" ></ColumnDefinition>
@@ -109,8 +109,8 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="{Binding Languages.R02_Language.StirrupLanguage.DistributeMain,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
-                                <TextBlock Text="{Binding Languages.R02_Language.StirrupLanguage.DistributeType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="6"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                                <TextBlock Text="{Binding Languages.StirrupLanguage.DistributeMain,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                                <TextBlock Text="{Binding Languages.StirrupLanguage.DistributeType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="6"  Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                                 <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"  x:Name="DisType"></Canvas>
                                 <ComboBox x:Name="SelectDisType" Grid.Column="6" Grid.Row="1"  Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedDistribute.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                     <i:Interaction.Triggers>
@@ -170,7 +170,7 @@
                     <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="5 0 5 0">
-                    <GroupBox FontSize="13" Header="{Binding Languages.R02_Language.StirrupLanguage.DetailStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Grid.Column="0">
+                    <GroupBox FontSize="13" Header="{Binding Languages.StirrupLanguage.DetailStirrup,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Grid.Column="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.8*"></ColumnDefinition>
@@ -194,7 +194,7 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition Height="0.5*" ></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Languages.R02_Language.StirrupLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Languages.StirrupLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                             <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Span}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
 
                             <TextBlock Grid.Column="0" Grid.Row="1"  Style="{StaticResource TextBlockBar}"></TextBlock>
@@ -227,7 +227,7 @@
                                 </i:Interaction.Triggers>
                             </TextBox>
                             <TextBlock Grid.Column="2" Grid.Row="5"   Style="{StaticResource TextBlockUnit}"></TextBlock>
-                            <CheckBox x:Name="chxAnti" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}"  Content="{Binding Languages.R02_Language.StirrupLanguage.AntiShikage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                            <CheckBox x:Name="chxAnti" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}"  Content="{Binding Languages.StirrupLanguage.AntiShikage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                                       IsChecked="{Binding SelectedStirrupModel.Anti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                       Command="{Binding AntiClickCommand }" CommandParameter="{Binding ElementName=MainWindow}"
                                       >

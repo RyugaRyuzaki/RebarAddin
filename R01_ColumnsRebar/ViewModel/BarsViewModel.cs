@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using R01_ColumnsRebar.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BarsViewModel:BaseViewModel

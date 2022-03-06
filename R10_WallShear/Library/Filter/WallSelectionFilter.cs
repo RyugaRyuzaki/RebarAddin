@@ -23,6 +23,7 @@ namespace R10_WallShear
                 else
                 {
                     int i = elem.get_Parameter(BuiltInParameter.WALL_STRUCTURAL_SIGNIFICANT).AsInteger();
+                    //return i == 1;
                     if (i != 1)
                     {
                         return false;
@@ -45,8 +46,8 @@ namespace R10_WallShear
         {
             WallType wallType = wall.WallType;
             CompoundStructure compound = wallType.GetCompoundStructure();
-            //CompoundStructureLayer compoundStructureLayer = compound.GetLayers()[0] ;
-            return (compound.GetWidth() == compound.GetLayerWidth(compound.GetLastCoreLayerIndex()));
+            CompoundStructureLayer compoundStructureLayer = compound.GetLayers()[0];
+            return PointModel.AreEqual(compound.GetWidth() ,compoundStructureLayer.Width);
         }
     }
 }

@@ -189,8 +189,8 @@ namespace R10_WallShear
                         if (stirrupModel.aVCorner > 0 && stirrupModel.aVCorner < infoModel.T - 2 * Cover)
                         {
                             double delta = infoModel.T / 2 - stirrupModel.aVCorner / 2;
-                            DrawImage.DrawStirrup(canvas, left, top + delta / drawModelSection.Scale, drawModelSection.Scale, infoModel.T, stirrupModel.aVCorner, Cover, stirrupModel.BarVCorner.Diameter, d, drawModelSection.ColorMainBarChoose);
-                            DrawImage.DrawStirrup(canvas, left + (infoModel.L1 + infoModel.L2) / drawModelSection.Scale, top + delta / drawModelSection.Scale, drawModelSection.Scale, infoModel.T, stirrupModel.aVCorner, Cover, stirrupModel.BarVCorner.Diameter, d, drawModelSection.ColorMainBarChoose);
+                            DrawImage.DrawStirrup(canvas, left, top + delta / drawModelSection.Scale, drawModelSection.Scale, infoModel.L1, stirrupModel.aVCorner, Cover, stirrupModel.BarVCorner.Diameter, d, drawModelSection.ColorMainBarChoose);
+                            DrawImage.DrawStirrup(canvas, left + (infoModel.L1 + infoModel.L2) / drawModelSection.Scale, top + delta / drawModelSection.Scale, drawModelSection.Scale, infoModel.L1, stirrupModel.aVCorner, Cover, stirrupModel.BarVCorner.Diameter, d, drawModelSection.ColorMainBarChoose);
                         }
                     }
                     else
@@ -323,7 +323,7 @@ namespace R10_WallShear
                     }
                     else
                     {
-                        solidColorBrush = Brushes.Aqua;
+                        solidColorBrush = drawModelSection.ColorMainBar;
                     }
                     double left1 = drawModelSection.Left + barMainModel.BarModels[i].X0 / drawModelSection.Scale;
                     double top1 = drawModelSection.Top - barMainModel.BarModels[i].Y0 / drawModelSection.Scale;
@@ -331,8 +331,8 @@ namespace R10_WallShear
                     double x0 = 0;
                     double y0 = 0;
 
-                    Getx0y0Bar(i, barMainModel, out x0, out y0);
-                    DrawImage.DrawTextOneBarSection(canvas, left1 + x0, top1 + y0, barMainModel.BarModels[i].BarNumber, drawModelSection.ColorMainBar);
+                    //Getx0y0Bar(i, barMainModel, out x0, out y0);
+                    //DrawImage.DrawTextOneBarSection(canvas, left1 + x0, top1 + y0, barMainModel.BarModels[i].BarNumber, drawModelSection.ColorMainBar);
                 }
             }
             if (barMainModel.BarCornerModels.Count != 0)
@@ -354,8 +354,8 @@ namespace R10_WallShear
                     double x0 = 0;
                     double y0 = 0;
 
-                    Getx0y0BarCorner(i, barMainModel, out x0, out y0);
-                    DrawImage.DrawTextOneBarSection(canvas, left1 + x0, top1 + y0, barMainModel.BarCornerModels[i].BarNumber, drawModelSection.ColorMainBar);
+                    //Getx0y0BarCorner(i, barMainModel, out x0, out y0);
+                    //DrawImage.DrawTextOneBarSection(canvas, left1 + x0, top1 + y0, barMainModel.BarCornerModels[i].BarNumber, drawModelSection.ColorMainBar);
                 }
             }
         }
@@ -383,7 +383,7 @@ namespace R10_WallShear
                     }
                     else
                     {
-                        solidColorBrush = Brushes.Aqua;
+                        solidColorBrush = drawModelSection.ColorMainBar;
                     }
                     //double left1 = drawModelSection.Left + barMainModel.BarModels[i].X0 / drawModelSection.Scale;
                     //double top1 = drawModelSection.Top - barMainModel.BarModels[i].Y0 / drawModelSection.Scale;
@@ -426,10 +426,76 @@ namespace R10_WallShear
             }
            
         }
+        public static void DrawSectionBottomDowels(Canvas canvas, InfoModel infoModel, StirrupModel stirrupModel, BarMainModel barMainModel, DrawModel drawModelSection, double Cover, int chooseBar, int chooseBarCorner, InfoModel infoModelup = null, StirrupModel stirrupModelUp = null, BarMainModel barMainModelUp = null)
+        {
+            double left = drawModelSection.Left + infoModel.WestPosition / (drawModelSection.Scale);
+            double top = drawModelSection.Top - infoModel.NouthPosition / (drawModelSection.Scale);
+            DrawImage.DrawAxis(canvas, false);
+            DrawImage.DrawSection(canvas, drawModelSection.Scale, left, top, infoModel.L, infoModel.T);
+            DrawImage.DrawStirrup(canvas, left, top, drawModelSection.Scale, infoModel.L, infoModel.T, Cover, stirrupModel.BarS.Diameter, barMainModel.Bar.Diameter, drawModelSection.ColorStirrup);
+            if (infoModel.IsCorner)
+            {
+                DrawImage.DrawStirrup(canvas, left, top, drawModelSection.Scale, infoModel.L1, infoModel.T, Cover, stirrupModel.BarSCorner.Diameter, barMainModel.BarCorner.Diameter, drawModelSection.ColorStirrup);
+                DrawImage.DrawStirrup(canvas, left + (infoModel.L1 + infoModel.L2) / drawModelSection.Scale, top, drawModelSection.Scale, infoModel.L1, infoModel.T, Cover, stirrupModel.BarSCorner.Diameter, barMainModel.BarCorner.Diameter, drawModelSection.ColorStirrup);
+                DrawLineCorner(canvas, infoModel, drawModelSection);
+            }
+            if (barMainModel.BarModels.Count != 0)
+            {
+                SolidColorBrush solidColorBrush = drawModelSection.ColorMainBar;
+                for (int i = 0; i < barMainModel.BarModels.Count; i++)
+                {
+                    if (i == chooseBar)
+                    {
+                        solidColorBrush = drawModelSection.ColorMainBarChoose;
+                    }
+                    else
+                    {
+                        solidColorBrush = drawModelSection.ColorMainBar;
+                    }
+                    //double left1 = drawModelSection.Left + barMainModel.BarModels[i].X0 / drawModelSection.Scale;
+                    //double top1 = drawModelSection.Top - barMainModel.BarModels[i].Y0 / drawModelSection.Scale;
+                    //DrawImage.DrawOneBarSection(canvas, left1, top1, drawModelSection.Scale, barMainModel.Bar.Diameter, solidColorBrush);
+                    DrawSectionBarBottomDowelsItem(canvas, drawModelSection, barMainModel.BarModels[i], solidColorBrush);
+                }
+                //DrawSectionBarTopDowels(canvas, drawModelSection, barMainModel, chooseBar);
+            }
+            if (barMainModel.BarCornerModels.Count != 0)
+            {
+                SolidColorBrush solidColorBrush = drawModelSection.ColorMainBar;
+                for (int i = 0; i < barMainModel.BarCornerModels.Count; i++)
+                {
+                    if (i == chooseBarCorner)
+                    {
+                        solidColorBrush = drawModelSection.ColorMainBarChoose;
+                    }
+                    else
+                    {
+                        solidColorBrush = Brushes.Orange;
+                    }
+                    //double left1 = drawModelSection.Left + barMainModel.BarCornerModels[i].X0 / drawModelSection.Scale;
+                    //double top1 = drawModelSection.Top - barMainModel.BarCornerModels[i].Y0 / drawModelSection.Scale;
+                    //DrawImage.DrawOneBarSection(canvas, left1, top1, drawModelSection.Scale, barMainModel.BarCorner.Diameter, solidColorBrush);
+                    DrawSectionBarBottomDowelsItem(canvas, drawModelSection, barMainModel.BarCornerModels[i], solidColorBrush);
+                }
+                //DrawSectionBarCornerTopDowels(canvas, drawModelSection, barMainModel, chooseBarCorner);
+            }
+            //if (infoModelup != null)
+            //{
+            //    double leftUp = drawModelSection.Left + infoModelup.WestPosition / (drawModelSection.Scale);
+            //    double topUp = drawModelSection.Top - infoModelup.NouthPosition / (drawModelSection.Scale);
+            //    DrawImage.DrawSection(canvas, drawModelSection.Scale, leftUp, topUp, infoModelup.L, infoModelup.T);
+            //    DrawImage.DrawStirrup(canvas, leftUp, topUp, drawModelSection.Scale, infoModelup.L, infoModelup.T, Cover, stirrupModelUp.BarS.Diameter, barMainModelUp.Bar.Diameter, drawModelSection.ColorStirrup);
+            //    if (infoModelup.IsCorner)
+            //    {
+            //        DrawImage.DrawStirrup(canvas, leftUp, topUp, drawModelSection.Scale, infoModelup.L1, infoModelup.T, Cover, stirrupModelUp.BarSCorner.Diameter, barMainModelUp.BarCorner.Diameter, drawModelSection.ColorStirrup);
+            //        DrawImage.DrawStirrup(canvas, leftUp + (infoModelup.L1 + infoModelup.L2) / drawModelSection.Scale, topUp, drawModelSection.Scale, infoModelup.L1, infoModelup.T, Cover, stirrupModelUp.BarSCorner.Diameter, barMainModelUp.BarCorner.Diameter, drawModelSection.ColorStirrup);
+            //    }
+            //}
 
+        }
         #endregion
         #region main
-        public static void DrawInfoColumns(Canvas canvas, WallsModel wallsModel, int choose)
+        public static void DrawInfoWall(Canvas canvas, WallsModel wallsModel, int choose)
         {
             double p30 = wallsModel.InfoModels[0].BottomPosition;
             for (int i = 0; i < wallsModel.InfoModels.Count; i++)
@@ -708,7 +774,7 @@ namespace R10_WallShear
 
         }
 
-        #endregion
+        #endregion   
         #region Dowels
 
         private static void DrawSectionBarTopDowels(Canvas canvas, DrawModel drawModelSection, BarMainModel barMainModel, int choose)
@@ -777,6 +843,41 @@ namespace R10_WallShear
 
                     }
                     DrawSectionBarTopDowelsItem(canvas, drawModelSection, barMainModel.BarCornerModels[i], solidColorBrush);
+                }
+            }
+
+        }
+        private static void DrawSectionBarBottomDowels(Canvas canvas, DrawModel drawModelSection, BarMainModel barMainModel, int choose)
+        {
+            SolidColorBrush solidColorBrush = drawModelSection.ColorMainBar;
+            for (int i = 0; i < barMainModel.BarModels.Count; i++)
+            {
+                if (barMainModel.BarModels[i].IsBottomDowels)
+                {
+                    if (i == choose)
+                    {
+                        solidColorBrush = drawModelSection.ColorMainBarChoose;
+                    }
+                    else
+                    {
+                        if (barMainModel.BarModels[i].TopDowels == 0)
+                        {
+                            if (barMainModel.BarModels[i].BarNumber % 2 == 0)
+                            {
+                                solidColorBrush = Brushes.Aqua;
+                            }
+                            else
+                            {
+                                solidColorBrush = Brushes.Orange;
+                            }
+                        }
+                        else
+                        {
+                            solidColorBrush = drawModelSection.ColorMainBar;
+                        }
+
+                    }
+                    DrawSectionBarTopDowelsItem(canvas, drawModelSection, barMainModel.BarModels[i], solidColorBrush);
                 }
             }
 
@@ -871,21 +972,21 @@ namespace R10_WallShear
         //        }
         //    }
         //}
-        //private static void DrawBarBottomDowelsItem(Canvas canvas, DrawModel drawModelDowels, BarModel barModel, SolidColorBrush solidColorBrush)
-        //{
-        //    if (barModel.BottomDowels == 0)
-        //    {
-        //        DrawImage.DrawOneBarSection(canvas, drawModelDowels.Left + barModel.Location[0].X / drawModelDowels.Scale, drawModelDowels.Top - barModel.Location[0].Y / drawModelDowels.Scale, drawModelDowels.Scale, barModel.Bar.Diameter, Brushes.Black);
-        //    }
-        //    else
-        //    {
-        //        if (barModel.LaBottomDowels != 0)
-        //        {
-        //            DrawImage.DrawLineItemDowels(canvas, drawModelDowels.Left, drawModelDowels.Top, drawModelDowels.Scale, barModel.Location[0], barModel.Location[1], solidColorBrush, false, barModel.Bar.Diameter);
-        //        }
-        //        DrawImage.DrawOneBarSection(canvas, drawModelDowels.Left + barModel.Location[1].X / drawModelDowels.Scale, drawModelDowels.Top - barModel.Location[1].Y / drawModelDowels.Scale, drawModelDowels.Scale, barModel.Bar.Diameter, Brushes.Black);
-        //    }
-        //}
+        private static void DrawSectionBarBottomDowelsItem(Canvas canvas, DrawModel drawModelDowels, BarModel barModel, SolidColorBrush solidColorBrush)
+        {
+            if (barModel.BottomDowels == 0)
+            {
+                DrawImage.DrawOneBarSection(canvas, drawModelDowels.Left + barModel.Location[0].X / drawModelDowels.Scale, drawModelDowels.Top - barModel.Location[0].Y / drawModelDowels.Scale, drawModelDowels.Scale, barModel.Bar.Diameter, solidColorBrush);
+            }
+            else
+            {
+                if (barModel.LaBottomDowels != 0)
+                {
+                    DrawImage.DrawLineItemDowels(canvas, drawModelDowels.Left, drawModelDowels.Top, drawModelDowels.Scale, barModel.Location[0], barModel.Location[1], solidColorBrush, false, barModel.Bar.Diameter);
+                }
+                DrawImage.DrawOneBarSection(canvas, drawModelDowels.Left + barModel.Location[1].X / drawModelDowels.Scale, drawModelDowels.Top - barModel.Location[1].Y / drawModelDowels.Scale, drawModelDowels.Scale, barModel.Bar.Diameter, solidColorBrush);
+            }
+        }
         #endregion
         #region Item
         private static void DrawLineCorner(Canvas canvas, InfoModel infoModel, DrawModel drawModelSection)
@@ -963,7 +1064,7 @@ namespace R10_WallShear
             }
             if (i > barMainModel.nxCorner + barMainModel.nyCorner - 2 && i <= barMainModel.nxCorner + barMainModel.nyCorner - 2 + barMainModel.nxCorner - 1)
             {
-                y0 = 15;
+                y0 = -15;
                 if (i == barMainModel.nxCorner + barMainModel.nyCorner - 2 + barMainModel.nxCorner - 1)
                 {
                     x0 = 11;

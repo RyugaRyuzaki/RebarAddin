@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB.Structure;
 using System.Collections.Generic;
 using System.Linq;
-
+using WpfCustomControls;
 namespace R10_WallShear
 {
     public class SettingModel:BaseViewModel
@@ -167,6 +167,71 @@ namespace R10_WallShear
         public void GetSectionViewName()
         {
             SectionViewName = PrefixSection + " - ";
+        }
+
+        private List<Element> GetAllElement(Document document)
+        {
+            return new FilteredElementCollector(document).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().Where(x => IsNotNullPara(document, x)).ToList();
+
+        }
+        private bool IsNotNullPara(Document document, Element element)
+        {
+            ElementType elementType = document.GetElement(element.GetTypeId()) as ElementType;
+            return elementType.LookupParameter("h") != null;
+        }
+        private List<List<Element>> GetAllListElement(Document document)
+        {
+            List<List<Element>> AllListElement = new List<List<Element>>();
+            List<Element> AllElements = GetAllElement(document);
+            if (AllElements.Count != 0)
+            {
+
+                // tạo 1 listtamj bằng với AllElement để cho dữ liệu khỏi bị mất
+                List<Element> listTemp = AllElements;
+                //lấy 1 biến tổng của các element cần lọc tức là AllElement(listTemp)
+                int i = listTemp.Count;
+                //bắt đầu chạy ngược nếu mà i==0 thì dừng
+                while (i > 0)
+                {
+                    //tạo list đầu tiên.
+                    List<Element> list = new List<Element>();
+                    //lấy 1 e0 là Element đầu tiên  của list tạm
+                    Element e0 = listTemp[0];
+                    //khai báo biến double a0 = e0.LookupParameter("W").AsDouble();
+                    ElementType elementTypea = document.GetElement(e0.GetTypeId()) as ElementType;
+                    double a0 = elementTypea.LookupParameter("h").AsDouble();
+                    //Bắt đầu chạy 1 vòng lập tìm ra các element nào có b0=a0 bo khai báo trong vòng lập vì không thể so sánh 1 parameter với 1 parameter dc
+                    for (int j = 0; j < listTemp.Count; j++)
+                    {
+                        //khai báo biến double b0 = listTemp[j].LookupParameter("W").AsDouble();
+                        ElementType elementTypeb = document.GetElement(listTemp[j].GetTypeId()) as ElementType;
+                        double b0 = elementTypeb.LookupParameter("h").AsDouble();
+                        //nếu a0=b0 thì mình add list
+                        if (AreEqual(b0, a0))
+                        {
+                            list.Add(listTemp[j]);
+
+                        }
+                    }
+                    // Remove các element trong listemp từ list
+                    for (int k = 0; k < list.Count; k++)
+                    {
+                        listTemp.Remove(list[k]);
+                    }
+                    // Add list và AllListElement
+                    AllListElement.Add(list);
+                    //gán ngược lại biến i vì lúc này số lượng element trong listTemp đã bị thay đổi do đã trừ bớt ra.
+                    i = listTemp.Count;
+                    // đến khi không còn element nào trong listTemp này tức là i==0 thì vòng white sẽ dừng lại
+
+                }
+
+            }
+            return AllListElement;
+        }
+        public static bool AreEqual(double firstValue, double secondValue, double tolerance = 1.0e-9)
+        {
+            return (secondValue - tolerance < firstValue && firstValue < secondValue + tolerance);
         }
     }
 }

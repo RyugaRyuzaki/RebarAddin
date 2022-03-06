@@ -12,7 +12,6 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
 #endregion
 
 namespace R06_StairRebar
@@ -25,8 +24,7 @@ namespace R06_StairRebar
         #region ICommand
         public ICommand SelectionMenuCommand { get; set; }
         #endregion
-        private Languages _Languages;
-        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+    
         public StairViewModel(UIDocument uiDoc, Document doc)
         {
             UiDoc = uiDoc;

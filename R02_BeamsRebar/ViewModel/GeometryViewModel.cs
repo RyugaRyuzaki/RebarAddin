@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using R02_BeamsRebar.View;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using WpfCustomControls.LanguageModel;
+using R02_BeamsRebar.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class GeometryViewModel:BaseViewModel

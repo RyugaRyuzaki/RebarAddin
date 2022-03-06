@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using WpfCustomControls.ViewModel;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using System.Windows;
 #endregion
 
 namespace R07_AboutAuthor
@@ -30,10 +30,11 @@ namespace R07_AboutAuthor
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public ICommand YoutubeCommand { get; set; }
+        public ICommand SelectionLanguageChangedCommand { get; set; }
         public AboutViewModel()
         {
             Languages = new Languages("EN");
-            TaskBarViewModel = new TaskBarViewModel(Languages);
+            TaskBarViewModel = new TaskBarViewModel();
             Version = "Demo";
             Support = "https://www.youtube.com/channel/UCQSwGw2vUjad7kUhEOXbqaw";
             ContactUs = "ryuzaki2005@gmail.com";
@@ -43,6 +44,10 @@ namespace R07_AboutAuthor
             YoutubeCommand = new RelayCommand<AboutWindow>((p) => { return true; }, (p) => {
                 Process.Start(new ProcessStartInfo(Support));
                 p.Close();
+            });
+            SelectionLanguageChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Languages.ChangeLanguages();
             });
         }
 

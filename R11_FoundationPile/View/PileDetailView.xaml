@@ -24,7 +24,7 @@
             <RowDefinition Height="360"></RowDefinition>
         </Grid.RowDefinitions>
         <!--#region Rule -->
-        <GroupBox Grid.Row="0" Header="{Binding Languages.R11_Language.PileDetailLanguage.RuleDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+        <GroupBox Grid.Row="0" Header="{Binding Languages.PileDetailLanguage.RuleDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -35,8 +35,8 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.PileDetailLanguage.FoundationRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.PileDetailLanguage.PileRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.PileDetailLanguage.FoundationRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.PileDetailLanguage.PileRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="0" Style="{StaticResource ComboBoxStyle}" MaxDropDownHeight="Auto" IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           SelectedIndex="{Binding FoundationPileModel.RuleFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ComboBoxItem>
@@ -92,14 +92,14 @@
                         <Canvas x:Name="PileRuleCanvas7" Height="120" Width="120" SnapsToDevicePixels="True" ></Canvas>
                     </ComboBoxItem>
                 </ComboBox>
-                <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.PileDetailLanguage.ApplyRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="120"
+                <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.PileDetailLanguage.ApplyRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="120"
                         Command="{Binding ApplyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
-                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.PileDetailLanguage.ModifyRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="120"
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.PileDetailLanguage.ModifyRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="120"
                         Command="{Binding ModifyCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>
             </Grid>
         </GroupBox>
         <!--#endregion-->
-        <GroupBox Grid.Row="1" Header="{Binding Languages.R11_Language.PileDetailLanguage.AllFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+        <GroupBox Grid.Row="1" Header="{Binding Languages.PileDetailLanguage.AllFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
             
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
@@ -150,9 +150,9 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Languages.R11_Language.PileDetailLanguage.TestingPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="0" Text="{Binding Languages.PileDetailLanguage.TestingPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Column="1" Text="{Binding SelectedPileModel.PileNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockCenter}" Foreground="Red" FontWeight="Bold"></TextBlock>
-                        <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R11_Language.PileDetailLanguage.ApplyPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="80"
+                        <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.PileDetailLanguage.ApplyPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="80"
                                 Command="{Binding ApplyTestPileCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                     </Grid>

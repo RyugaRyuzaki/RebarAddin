@@ -25,14 +25,14 @@
             <RowDefinition Height="230"></RowDefinition>
             <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Margin="5" Header="Additional property">
+        <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Wall No"></TextBlock>
+                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.WallsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" 
                           ItemsSource="{Binding WallsModel.StirrupModels}" DisplayMemberPath="NumberWall"
                           SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -47,7 +47,7 @@
                         Command="{Binding ApplyAllColumnCommand}" CommandParameter="{Binding ElementName=MainWindow}"></Button>-->
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Margin="5" Header="Additional Main">
+        <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalHorizontalMain,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -63,11 +63,11 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Horizontal"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.AdditionalStirrupsLanguage.Horizontal,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedWall.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding HorizontalCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlockBar}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
                           IsEnabled="{Binding SelectedWall.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           ItemsSource="{Binding WallsModel.AllBars}" DisplayMemberPath="Type"
@@ -98,7 +98,7 @@
                 <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="aHTextBlockUnit"></TextBlock>
 
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Distance" x:Name="DistanceTextBlock"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextBlockDistance}" x:Name="DistanceTextBlock"></TextBlock>
                 <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" x:Name="DistanceTextBox"
                           IsEnabled="{Binding SelectedWall.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                          Text="{Binding SelectedWall.DistanceH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -110,7 +110,7 @@
                     </i:Interaction.Triggers>
                 </TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="DistanceTextBlockUnit"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Type"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="5"  Style="{StaticResource ComboBoxStyle}" 
                           IsEnabled="{Binding SelectedWall.AddH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           SelectedIndex="{Binding SelectedWall.TypeH,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -133,12 +133,12 @@
                         <Canvas Width="140" Height="140" x:Name="HoCanvas3"></Canvas>
                     </ComboBoxItem>
                 </ComboBox>
-                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="120" Content="Fixed To Main Bar" x:Name="FixedMainBar" Visibility="Visible"
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.AdditionalStirrupsLanguage.FixToMainBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="FixedMainBar" Visibility="Visible"
                         Command="{Binding FixedMainBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                         ></Button>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Margin="5" Header="Corner Additional Horizontal" x:Name="CornerHorizontalGrid">
+        <GroupBox Grid.Row="2" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalHorizontalCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="CornerHorizontalGrid">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -154,11 +154,11 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Horizontal"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.AdditionalStirrupsLanguage.HorizontalCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedWall.AddHCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding HorizontalCornerCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlockBar}" ></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
                           IsEnabled="{Binding SelectedWall.AddHCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           ItemsSource="{Binding WallsModel.AllBars}" DisplayMemberPath="Type"
@@ -174,7 +174,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedWall.BarHCorner.Diameter}"></TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="No Bar" x:Name="nHCornerTextBlock"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextBlockNumberBar}" x:Name="nHCornerTextBlock"></TextBlock>
                 <ComboBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" x:Name="nHCornerComboBox"
                           IsEnabled="{Binding SelectedWall.AddHCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           ItemsSource="{Binding NumberAdditional}" 
@@ -199,7 +199,7 @@
                 </TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="aHCornerTextBlockUnit"></TextBlock>
 
-                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Type"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="5"  Style="{StaticResource ComboBoxStyle}" 
                           IsEnabled="{Binding SelectedWall.AddHCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           SelectedIndex="{Binding SelectedWall.TypeHCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -224,7 +224,7 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="3" Margin="5" Header="Corner Additional Vertical" x:Name="CornerVerticalGrid">
+        <GroupBox Grid.Row="3" Margin="5" Header="{Binding Languages.AdditionalStirrupsLanguage.AdditionalVerticalCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="CornerVerticalGrid">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"></RowDefinition>
@@ -240,11 +240,11 @@
                     <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="Vertical"
+                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.AdditionalStirrupsLanguage.VerticalCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedWall.AddVCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding VerticalCornerCheckedCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></CheckBox>
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Bar"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlockBar}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}"
                           IsEnabled="{Binding SelectedWall.AddVCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           ItemsSource="{Binding WallsModel.AllBars}" DisplayMemberPath="Type"
@@ -259,7 +259,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Ø = "></TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding SelectedWall.BarVCorner.Diameter}"></TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="No Bar" x:Name="nVCornerTextBlock"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextBlockNumberBar}"  x:Name="nVCornerTextBlock"></TextBlock>
                 <ComboBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" x:Name="nVCornerComboBox"
                           IsEnabled="{Binding SelectedWall.AddVCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           ItemsSource="{Binding NumberAdditional}" 
@@ -283,7 +283,7 @@
                     </i:Interaction.Triggers>
                 </TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="aVCornerTextBlockUnit"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Type"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="5"  Style="{StaticResource ComboBoxStyle}" 
                           IsEnabled="{Binding SelectedWall.AddVCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           SelectedIndex="{Binding SelectedWall.TypeVCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"

@@ -14,11 +14,10 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using R01_ColumnsRebar.ViewModel;
-using System.Text.RegularExpressions;
 using System.Windows;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
+using R01_ColumnsRebar.LanguageModel;
 using DSP;
 #endregion
 
@@ -49,7 +48,7 @@ namespace R01_ColumnsRebar
         public ICommand OKCommand { get; set; }
         public ICommand PreviewTextInputCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
-
+        public ICommand SelectionLanguageChangedCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -75,13 +74,10 @@ namespace R01_ColumnsRebar
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        private StatusBarViewModel _StatusBarViewModel;
-        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-        private ActionViewModel _ActionViewModel;
-        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+     
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
-
+       
 
         public ColumnsViewModel(UIDocument uiDoc, Document doc,List<Element> columns)
         {
@@ -94,7 +90,7 @@ namespace R01_ColumnsRebar
             Languages = new Languages("EN");
             TransactionGroup = new TransactionGroup(Doc);
             UseDetailItem = ColumnsModel.ConditionUseDetailItem(Doc);
-            TaskBarViewModel = new TaskBarViewModel(Languages);
+            TaskBarViewModel = new TaskBarViewModel();
             
             #endregion
             #region SelectedViewModel
@@ -103,14 +99,10 @@ namespace R01_ColumnsRebar
             StirrupsViewModel = new StirrupsViewModel(Doc, ColumnsModel, Languages);
             AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, ColumnsModel, Languages);
             BarsViewModel = new BarsViewModel(Doc, ColumnsModel, Languages);
-            //DowelsViewModel = new DowelsViewModel(Doc, ColumnsModel);
+           
             TopDowelsViewModel = new TopDowelsViewModel(Doc, ColumnsModel, Languages);
             BottomDowelsViewModel = new BottomDowelsViewModel(Doc, ColumnsModel, Languages);
             BarsDivisionViewModel = new BarsDivisionViewModel(Doc, ColumnsModel, Languages);
-            StatusBarViewModel = new StatusBarViewModel(ColumnsModel.ProgressModel, Languages);
-            StatusBarViewModel.SetStatusBarColumns();
-            ActionViewModel = new ActionViewModel(Languages);
-            ActionViewModel.SetStatusBarColumns();
             SelectedViewModel = SettingViewModel;
            
             SelectionMenuCommand = new RelayCommand<ColumnsWindow>((p) => { return true; }, (p) =>
@@ -156,6 +148,10 @@ namespace R01_ColumnsRebar
                 DrawMenu(p);
                 DrawInfo(p);
             });
+            SelectionLanguageChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Languages.ChangeLanguages();
+            });
             #endregion
             #region Action Command
             OKCommand = new RelayCommand<ColumnsWindow>((p) => { return ColumnsModel.ConditionButtonOK(); }, (p) =>
@@ -178,8 +174,10 @@ namespace R01_ColumnsRebar
             });
             #endregion
         }
+
+       
         #region Get Property Method
-        
+
         private UnitProject GetUnitProject()
         {
             UnitProject a = new UnitProject(1, "ft");

@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
             <!--#region Add Bottom San-->
             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                <GroupBox Header="{Binding Languages.R02_Language.AddBottomBarLanguage.AdditionalBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                <GroupBox Header="{Binding Languages.AddBottomBarLanguage.AdditionalBottomBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -43,7 +43,7 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition Width="4*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Languages.R02_Language.AddBottomBarLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="0" Text="{Binding Languages.AddBottomBarLanguage.Span,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <ComboBox Grid.Column="1" Height="30" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding BeamsModel.SelectedBottomModels}" DisplayMemberPath="Span"
                                   SelectedItem="{Binding BottomModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -54,10 +54,10 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
-                        <TextBlock Grid.Column="3" Text="{Binding Languages.R02_Language.AddBottomBarLanguage.Lenght,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Column="3" Text="{Binding Languages.AddBottomBarLanguage.Lenght,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <TextBlock Grid.Column="4" Text="{Binding BottomModels.Length}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <DockPanel Grid.Column="5" LastChildFill="False">
-                            <Button DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.R02_Language.AddBottomBarLanguage.FixedSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <Button DockPanel.Dock="Right" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.AddBottomBarLanguage.FixedSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Command="{Binding FixedToSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                     ></Button>
                         </DockPanel>
@@ -67,7 +67,7 @@
             <!--#endregion-->
             <!--#region Start Card-->
             <Grid Grid.Column="0" Grid.Row="1" Margin="0 5 5 0">
-                <GroupBox x:Name="GStart" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.Start,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GStart" Header="{Binding Languages.AddBottomBarLanguage.Start,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Start">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -172,7 +172,7 @@
             <!--#endregion-->
             <!--#region Mid Card-->
             <Grid Grid.Column="1" Grid.Row="1" Margin="5 5 5 0">
-                <GroupBox x:Name="GMid" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.Middle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GMid" Header="{Binding Languages.AddBottomBarLanguage.Middle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Mid">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -274,7 +274,7 @@
             <!--#endregion-->
             <!--#region Start Card-->
             <Grid Grid.Column="2" Grid.Row="1" Margin="0 5 0 0">
-                <GroupBox x:Name="GEnd" Header="{Binding Languages.R02_Language.AddBottomBarLanguage.End,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GEnd" Header="{Binding Languages.AddBottomBarLanguage.End,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="End">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>

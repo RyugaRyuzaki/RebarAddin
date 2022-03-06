@@ -4,7 +4,7 @@ using R02_BeamsRebar.View;
 using System;
 using System.Windows.Input;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using R02_BeamsRebar.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class AddBottomBarViewModel:BaseViewModel

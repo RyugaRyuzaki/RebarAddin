@@ -12,7 +12,7 @@ using System.Windows.Threading;
 #endregion
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
+using R02_BeamsRebar.LanguageModel;
 using DSP;
 namespace R02_BeamsRebar
 {
@@ -60,15 +60,12 @@ namespace R02_BeamsRebar
         public ICommand OKCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
-        //public ICommand DetailItemCommand { get; set; }
+        public ICommand SelectionLanguageChangedCommand { get; set; }
 
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        private StatusBarViewModel _StatusBarViewModel;
-        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-        private ActionViewModel _ActionViewModel;
-        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+       
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public BeamsViewModel(UIDocument uiDoc, Document doc, List<Element> beams)
@@ -80,14 +77,11 @@ namespace R02_BeamsRebar
             Unit = GetUnitProject();
             Languages = new Languages("EN");
             BeamsModel = new BeamsModel(Doc, Beams);
-            TaskBarViewModel = new TaskBarViewModel(Languages);
+            TaskBarViewModel = new TaskBarViewModel();
             UseDetailItem = BeamsModel.ConditionUseDetailItem(Doc);
             SelectedIndexViewModel();
             TransactionGroup = new TransactionGroup(Doc);
-            StatusBarViewModel = new StatusBarViewModel(BeamsModel.ProgressModel, Languages);
-            StatusBarViewModel.SetStatusBarBeams();
-            ActionViewModel = new ActionViewModel(Languages);
-            ActionViewModel.SetStatusBarBeams();
+           
             #endregion
             #region Command
             LoadWindowCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
@@ -97,6 +91,10 @@ namespace R02_BeamsRebar
                 BeamsModel.DrawInfo(p);
                 DrawMenu(p);
                
+            });
+            SelectionLanguageChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Languages.ChangeLanguages();
             });
             SelectionMenuCommand = new RelayCommand<BeamsWindow>((p) => { return true; }, (p) =>
             {

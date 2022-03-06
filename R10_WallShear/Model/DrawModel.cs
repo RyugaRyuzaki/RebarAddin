@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using DSP;
+using WpfCustomControls;
 namespace R10_WallShear
 {
     public class DrawModel : BaseViewModel

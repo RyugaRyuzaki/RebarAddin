@@ -7,7 +7,7 @@ using System.Windows.Input;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
+using R01_ColumnsRebar.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class GeometryViewModel:BaseViewModel

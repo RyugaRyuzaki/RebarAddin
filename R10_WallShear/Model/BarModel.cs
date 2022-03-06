@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-
+using WpfCustomControls;
 namespace R10_WallShear
 {
     public class BarModel : BaseViewModel
@@ -43,8 +43,7 @@ namespace R10_WallShear
         public bool EvenTop { get => _EvenTop; set { _EvenTop = value; OnPropertyChanged(); } }
         private bool _EvenBottom;
         public bool EvenBottom { get => _EvenBottom; set { _EvenBottom = value; OnPropertyChanged(); } }
-        private string _PushTop;
-        public string PushTop { get => _PushTop; set { _PushTop = value; OnPropertyChanged(); } }
+      
         #endregion
         public BarModel(int barNumber, RebarBarModel bar, double spliOverlap, double overlap, bool Corner)
         {
@@ -58,7 +57,7 @@ namespace R10_WallShear
             L3 = 0;
             EvenTop = false;
             EvenBottom = false;
-            PushTop = GetPushTop(Corner); 
+           
         }
         public BarModel(int barNumber, RebarBarModel bar, double spliOverlap, double overlap, double l1, double l2, double l3, bool Corner)
         {
@@ -78,31 +77,7 @@ namespace R10_WallShear
         {
 
         }
-        public string GetPushTop(bool Corner)
-        {
-            if (IsTopDowels)
-            {
-                if (TopDowels != 0)
-                {
-                    return "NONE";
-                }
-                else
-                {
-                    if (Corner)
-                    {
-                        return "Corner";
-                    }
-                    else
-                    {
-                        return "Main";
-                    }
-                }
-            }
-            else
-            {
-                return "NONE";
-            }
-        }
+       
         public void GetX0Y0(double x0, double y0)
         {
             X0 = x0; Y0 = y0;

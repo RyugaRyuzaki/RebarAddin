@@ -17,9 +17,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel Margin="0">
-        <TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="Action" FontSize="13"></TextBlock>
+        <!--<TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="Action" FontSize="13"></TextBlock>-->
         <!--#region R11-->
-        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+        <!--<CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R11_CreateFoundationPile,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding DataContext.FoundationPileModel.IsCreateGrounpFoundation,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   Visibility="{Binding Path=CreateGrounpFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -33,10 +33,19 @@
                   Content="{Binding Languages.WindowLanguage.R11_CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.FoundationPileModel.IsCreateReinforcement,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateReinforcement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                  ></CheckBox>
+                  ></CheckBox>-->
          <!--#endregion-->
         <!--#region R01-->
-        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+        <ListView ItemsSource="{Binding DataContext.ActionModels,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" Content="{Binding DataContext.ActionModels.Name,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                               IsChecked="{Binding  DataContext.ActionModels.IsChecked,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                              ></CheckBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R01_CreateDetailViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.ColumnsModel.IsCreateDetailView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateDetailViewColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -75,10 +84,10 @@
                   Content="{Binding Languages.WindowLanguage.R01_CreateTagBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.ColumnsModel.IsCreateTagBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateTagBarsColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                  ></CheckBox>
+                  ></CheckBox>-->
         <!--#endregion-->
         <!--#region R10-->
-        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+        <!--<CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R10_CreateDetailViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.WallsModel.IsCreateDetailView,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateDetailViewWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -117,10 +126,10 @@
                   Content="{Binding Languages.WindowLanguage.R10_CreateTagBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.WallsModel.IsCreateTagBars,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateTagBarsWallsShear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                  ></CheckBox>
+                  ></CheckBox>-->
         <!--#endregion-->
         <!--#region R11-->
-        <CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
+        <!--<CheckBox IsEnabled="False" Style="{StaticResource CheckBoxStyle}" 
                   Content="{Binding Languages.WindowLanguage.R02_CreateRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.BeamsModel.IsCreateRebar,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateRebarBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -139,7 +148,7 @@
                   Content="{Binding Languages.WindowLanguage.R02_CreateRebarDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   IsChecked="{Binding  DataContext.BeamsModel.IsCreateRebarDetailItem,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    Visibility="{Binding Path=CreateRebarDetailItemBeams,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                  ></CheckBox>
+                  ></CheckBox>-->
         <!--#endregion-->
     </StackPanel>
 </UserControl>

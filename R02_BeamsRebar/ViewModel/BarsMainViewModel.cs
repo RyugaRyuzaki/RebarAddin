@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using R02_BeamsRebar.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class BarsMainViewModel:BaseViewModel

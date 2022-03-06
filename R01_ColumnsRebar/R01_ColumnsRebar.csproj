@@ -82,6 +82,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\ColumnsRebarCmd.cs" />
+    <Compile Include="LanguageModel\AdditionalStirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\BarsDivisionLanguage.cs" />
+    <Compile Include="LanguageModel\BarsLanguage.cs" />
+    <Compile Include="LanguageModel\BottomDowelsLanguage.cs" />
+    <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\Languages.cs" />
+    <Compile Include="LanguageModel\MenuLanguage.cs" />
+    <Compile Include="LanguageModel\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\StirrupsLanguage.cs" />
+    <Compile Include="LanguageModel\TopDowelsLanguage.cs" />
+    <Compile Include="LanguageModel\WindowLanguage.cs" />
     <Compile Include="Library\Category\ColumnsBoundBox.cs" />
     <Compile Include="Library\Compare\DistictPlanarFaceID.cs" />
     <Compile Include="Library\Compare\DistictPlanarFace.cs" />

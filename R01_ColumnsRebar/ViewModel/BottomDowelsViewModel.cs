@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.DB;
 using R01_ColumnsRebar.View;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using VisualTreeHelper = WpfCustomControls.VisualTreeHelper;
+using R01_ColumnsRebar.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BottomDowelsViewModel:BaseViewModel
@@ -56,7 +56,7 @@ namespace R01_ColumnsRebar.ViewModel
                 if (SelectedColumn.BarModels.Count != 0) ColumnsModel.SelectedIndexModel.SelectedMainBar = 0;
                 IsEnabledBottomDowels = (SelectedColumn.BarModels.Count != 0) && (SelectedBar != null);
                 IsEnabledBottomTypeDowels = (SelectedBar == null) ? false : (SelectedBar.IsBottomDowels);
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 DrawBottomDowelsComboBox(uc);
                 ShowLaBottomDowels(uc);
                 DrawMain(p);
@@ -66,16 +66,15 @@ namespace R01_ColumnsRebar.ViewModel
             CheckBottomDowelsCommand = new RelayCommand<ColumnsWindow>((p) => { return (SelectedBar != null); }, (p) =>
             {
                 IsEnabledBottomTypeDowels = (SelectedBar.IsBottomDowels);
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 ShowLaBottomDowels(uc);
                 ShowFixedBottom(uc);
-                
                 DrawMain(p);
                 DrawSection(uc);
             });
             SelectionBottomTypeDowelsChangedCommand = new RelayCommand<ColumnsWindow>((p) => { return IsEnabledBottomTypeDowels; }, (p) =>
             {
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 ShowLaBottomDowels(uc);
                 ShowFixedBottom(uc);
                 
@@ -84,7 +83,7 @@ namespace R01_ColumnsRebar.ViewModel
             });
             ApplyAllBarCommand = new RelayCommand<ColumnsWindow>((p) => { return (SelectedBar != null) && SelectedColumn.BarModels.Count != 0; }, (p) =>
             {
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 for (int i = 0; i < SelectedColumn.BarModels.Count; i++)
                 {
                     SelectedColumn.BarModels[i].BottomDowels = SelectedBar.BottomDowels;
@@ -102,7 +101,7 @@ namespace R01_ColumnsRebar.ViewModel
                 if (SelectedColumn.BarModels.Count != 0) ColumnsModel.SelectedIndexModel.SelectedMainBar = 0;
                 IsEnabledBottomDowels = (SelectedBar != null);
                 IsEnabledBottomTypeDowels = (SelectedBar == null) ? false : (SelectedBar.IsBottomDowels);
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 ShowLaBottomDowels(uc);
                 ShowFixedBottom(uc);
                 DrawMain(p);
@@ -112,14 +111,14 @@ namespace R01_ColumnsRebar.ViewModel
             {
                 IsEnabledBottomDowels = (SelectedBar != null);
                 IsEnabledBottomTypeDowels = (SelectedBar == null) ? false : (SelectedBar.IsBottomDowels);
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 ShowLaBottomDowels(uc);
                 DrawMain(p);
                 DrawSection(uc);
             });
             BottomDowelsLaTextChangedCommand = new RelayCommand<ColumnsWindow>((p) => { return (SelectedBar != null); }, (p) =>
             {
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 if (double.TryParse(uc.BottomDowelsLaTextBox.Text.ToString(), out double S))
                 {
                     DrawMain(p);
@@ -128,7 +127,7 @@ namespace R01_ColumnsRebar.ViewModel
             });
             BottomDowelsLbTextChangedCommand = new RelayCommand<ColumnsWindow>((p) => { return (SelectedBar != null); }, (p) =>
             {
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 if (double.TryParse(uc.BottomDowelsLbTextBox.Text.ToString(), out double S))
                 {
                     DrawMain(p);
@@ -137,7 +136,7 @@ namespace R01_ColumnsRebar.ViewModel
             });
             BottomDowelsLcTextChangedCommand = new RelayCommand<ColumnsWindow>((p) => { return (SelectedBar != null); }, (p) =>
             {
-                BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                 if (double.TryParse(uc.BottomDowelsLcTextBox.Text.ToString(), out double S))
                 {
                     DrawMain(p);
@@ -151,7 +150,7 @@ namespace R01_ColumnsRebar.ViewModel
                 {
                     if (barMainModelDown.FixedTop)
                     {
-                        BottomDowelsView uc = ProccessInfoClumns.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
+                        BottomDowelsView uc = VisualTreeHelper.FindChild<BottomDowelsView>(p, "BottomDowelsUC");
                         if (barMainModelDown.AddBarModels.Count==0)
                         {
                            

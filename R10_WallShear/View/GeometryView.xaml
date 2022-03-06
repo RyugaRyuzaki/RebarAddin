@@ -27,7 +27,7 @@
                     <RowDefinition  ></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <GroupBox Header="Identification" BorderBrush="Black">
+                    <GroupBox Header="{Binding Languages.GeometryLanguage.Identification,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"></ColumnDefinition>
@@ -37,16 +37,16 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Family Name"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.GeometryLanguage.Identification,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding WallsModel.FamilyType}"></TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="Type Name"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.GeometryLanguage.Identification,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding WallsModel.AllType}"></TextBlock>
                             
                         </Grid>
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Row="1" >
-                    <GroupBox Header="Walls Dimension" BorderBrush="Black">
+                    <GroupBox Header="{Binding Languages.GeometryLanguage.WallsDimention,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.7*"></ColumnDefinition>
@@ -64,8 +64,8 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Wall No" Style="{StaticResource DataGridTextBlockCenter}" x:Name="WallNumberTextBlock"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox"
+                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Languages.GeneralLanguage.WallsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" x:Name="WallNumberTextBlock"></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox"
                                       ItemsSource="{Binding WallsModel.InfoModels}" DisplayMemberPath="NumberWall"
                                       SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                       SelectedIndex="{Binding WallsModel.SelectedIndexModel.SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
@@ -76,11 +76,11 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Thickness" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Languages.GeneralLanguage.Thickness,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                             <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SelectedWall.T}" ></TextBox>
                             <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockUnit}" ></TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="3" Text="Length" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Languages.GeneralLanguage.Length,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                             <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="4" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedWall.L}" ></TextBox>
                             <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource TextBlockUnit}" ></TextBlock>
 
@@ -120,7 +120,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <GroupBox Grid.Row="2" Header="Corner Property">
+                <GroupBox Grid.Row="2" Header="{Binding Languages.GeometryLanguage.CornerProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.7*"></ColumnDefinition>
@@ -134,11 +134,11 @@
                             <RowDefinition Height="40"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Corner" Style="{StaticResource CheckBoxStyle}"
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Languages.GeometryLanguage.Iscorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"
                                   IsChecked="{Binding SelectedWall.IsCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   Command="{Binding CheckCornerCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                   ></CheckBox>
-                        <Button Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="120" Content="Apply All Walls"
+                        <Button Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.GeometryLanguage.ApplyAllWalls,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                 Command="{Binding ApplyAllWallsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="L1"></TextBlock>
@@ -164,7 +164,7 @@
                     </Grid>
                 </GroupBox>
                 <Grid Grid.Row="3">
-                    <GroupBox Header="Wall Property" BorderBrush="Black">
+                    <GroupBox Header="{Binding Languages.GeometryLanguage.WallsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" BorderBrush="Black">
                         <Grid>
                             
                             <Canvas Grid.Row="1" x:Name="canvasProperty"></Canvas>

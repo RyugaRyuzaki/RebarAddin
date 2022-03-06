@@ -28,7 +28,7 @@
                     <RowDefinition Height="430"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!--#region Property-->
-                <GroupBox Grid.Row="0" Header="{Binding Languages.R01_Language.SettingLanguage.RebarShapeHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                <GroupBox Grid.Row="0" Header="{Binding Languages.SettingLanguage.RebarShapeHook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120"></ColumnDefinition>
@@ -40,9 +40,9 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="2*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.StirrupShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.AntiShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.Hook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.StirrupShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.AntiShape,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.Hook,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
                                    ItemsSource="{Binding ColumnsModel.SettingModel.RebarShapes}"
                                    DisplayMemberPath="Name"
@@ -67,7 +67,7 @@
                         <Canvas Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="canvas4"></Canvas>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="1" Header="{Binding Languages.R01_Language.SettingLanguage.ViewProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                <GroupBox Grid.Row="1" Header="{Binding Languages.SettingLanguage.ViewProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120"></ColumnDefinition>
@@ -83,18 +83,18 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.DetailTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.SectionTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.DetailShopTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.ParameterColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.ColumnsName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R01_Language.SettingLanguage.DetailViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
-                        <CheckBox Grid.Row="6" Grid.Column="0" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.R01_Language.SettingLanguage.PrefixLevel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="PrefixLevel"
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.DetailTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.SectionTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.DetailShopTemplate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.ParameterColumns,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.ColumnsName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.SettingLanguage.DetailViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                        <CheckBox Grid.Row="6" Grid.Column="0" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.SettingLanguage.PrefixLevel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" x:Name="PrefixLevel"
                                   IsChecked="{Binding ColumnsModel.SettingModel.IsPrefixDetail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   Command="{Binding PrefixLevelCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                   ></CheckBox>
                         <DockPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2">
-                            <TextBlock Text="{Binding Languages.R01_Language.SettingLanguage.PrefixSection,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                            <TextBlock Text="{Binding Languages.SettingLanguage.PrefixSection,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                             <TextBox  Width="100" HorizontalAlignment="Left" Style="{StaticResource TextBoxStyle}" Text="{Binding ColumnsModel.SettingModel.PrefixSection,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
@@ -103,7 +103,7 @@
                                 </i:Interaction.Triggers>
                             </TextBox>
                         </DockPanel>
-                        <TextBlock Grid.Row="7" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.SectionViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.SectionViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
                                    ItemsSource="{Binding ColumnsModel.SettingModel.ViewTemplate}"
                                    DisplayMemberPath="Name"
@@ -135,7 +135,7 @@
                         <TextBlock Grid.Row="7" Grid.Column="1" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding ColumnsModel.SettingModel.SectionViewName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="2" Header="{Binding Languages.R01_Language.SettingLanguage.AnotationProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
+                <GroupBox Grid.Row="2" Header="{Binding Languages.SettingLanguage.AnotationProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120"></ColumnDefinition>
@@ -151,52 +151,52 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.DimentionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.DimentionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllDimensionType}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedDimensionType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.DimDiameterType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.DimDiameterType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllDimensionType}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedDimensionDiameterType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
-                        <TextBlock Grid.Row="2" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.MainRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.MainRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="2" Grid.Column="1" IsEnabled="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllRebarTag}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedRebarTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
-                        <TextBlock Grid.Row="3" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.MultiRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.MultiRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="3" Grid.Column="1" IsEnabled="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}"
                                ItemsSource="{Binding ColumnsModel.SettingModel.MultiReferenceAnnotationType}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedMultiType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.StirrupsRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.StirrupsRebarTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="4" Grid.Column="1" IsEnabled="{Binding ColumnsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllRebarTag}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedStirrupTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.DetailItemTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.DetailItemTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="5" Grid.Column="1" IsEnabled="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllDetailItemTag}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedDetailItemTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
-                        <TextBlock Grid.Row="6" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.DetailDistanceTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.DetailDistanceTags,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="6" Grid.Column="1" IsEnabled="{Binding ColumnsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.AllDetailItemTag}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding ColumnsModel.SettingModel.SelectedDetailDistanceTag,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                               ></ComboBox>
-                        <TextBlock Grid.Row="7" Grid.Column="0"  Text="{Binding Languages.R01_Language.SettingLanguage.TextNote,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="0"  Text="{Binding Languages.SettingLanguage.TextNote,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockStyle}"></TextBlock>
                         <ComboBox Grid.Row="7" Grid.Column="1"  Style="{StaticResource ComboBoxStyle}" 
                                ItemsSource="{Binding ColumnsModel.SettingModel.TextNotes}"
                               DisplayMemberPath="Name"
@@ -206,7 +206,7 @@
                 </GroupBox>
                 <!--#endregion-->
                 <!--#region basic-->
-                <GroupBox Margin="5" Header="Reinforcement Structural" Grid.Row="3">
+                <GroupBox Margin="5" Header="{Binding Languages.SettingLanguage.ReinforcementStructural,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="3">
                     <Grid  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -239,7 +239,7 @@
                         </Grid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Margin="5" Header="Section Setting" Grid.Row="4">
+                <GroupBox Margin="5" Header="{Binding Languages.SettingLanguage.SectionSetting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="4">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -271,7 +271,7 @@
                         </Grid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Margin="5" Header="Detail Setting" Grid.Row="5">
+                <GroupBox Margin="5" Header="{Binding Languages.SettingLanguage.DetailSetting,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="5">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>

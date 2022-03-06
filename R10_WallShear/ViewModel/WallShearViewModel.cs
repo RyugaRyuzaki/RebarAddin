@@ -14,12 +14,11 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
+using R10_WallShear.LanguageModel;
 using R10_WallShear.ViewModel;
 #endregion
 using DSP;
 using System.Windows;
-
 namespace R10_WallShear
 {
     public class WallShearViewModel : BaseViewModel
@@ -40,6 +39,7 @@ namespace R10_WallShear
         public ICommand CancelCommand { get; set; }
         public ICommand OKCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand SelectionLanguageChangedCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -63,10 +63,7 @@ namespace R10_WallShear
         #endregion
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        private StatusBarViewModel _StatusBarViewModel;
-        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-        private ActionViewModel _ActionViewModel;
-        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+      
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
         public WallShearViewModel(UIDocument uiDoc, Document doc,List<Element> walls)
@@ -78,22 +75,19 @@ namespace R10_WallShear
             Unit = GetUnitProject();
             WallsModel = new WallsModel(Walls,Doc,Unit);
             Languages = new Languages("EN");
-            TaskBarViewModel = new TaskBarViewModel(Languages);
-            StatusBarViewModel = new StatusBarViewModel(WallsModel.ProgressModel, Languages);
-            StatusBarViewModel.SetStatusBarWallsShear();
-            ActionViewModel = new ActionViewModel(Languages);
-            ActionViewModel.SetStatusBarWallsShear();
+            TaskBarViewModel = new TaskBarViewModel();
+           
             #endregion
 
             #region SelectedViewModel
-            SettingViewModel = new SettingViewModel(Doc,WallsModel);
-            GeometryViewModel = new GeometryViewModel(WallsModel);
-            StirrupsViewModel = new StirrupsViewModel(Doc,WallsModel);
-            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, WallsModel);
-            BarsViewModel = new BarsViewModel(Doc, WallsModel);   
-            TopDowelsViewModel = new TopDowelsViewModel(Doc, WallsModel);
-            BottomDowelsViewModel = new BottomDowelsViewModel(Doc, WallsModel);
-            BarsDivisionViewModel = new BarsDivisionViewModel();
+            SettingViewModel = new SettingViewModel(Doc,WallsModel, Languages);
+            GeometryViewModel = new GeometryViewModel(WallsModel, Languages);
+            StirrupsViewModel = new StirrupsViewModel(Doc,WallsModel, Languages);
+            AdditionalStirrupsViewModel = new AdditionalStirrupsViewModel(Doc, WallsModel, Languages);
+            BarsViewModel = new BarsViewModel(Doc, WallsModel, Languages);   
+            TopDowelsViewModel = new TopDowelsViewModel(Doc, WallsModel, Languages);
+            BottomDowelsViewModel = new BottomDowelsViewModel(Doc, WallsModel, Languages);
+            BarsDivisionViewModel = new BarsDivisionViewModel(Doc, WallsModel, Languages);
             SelectedViewModel = SettingViewModel;
             SelectionMenuCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
             {
@@ -105,6 +99,7 @@ namespace R10_WallShear
                     case 1:
                         SelectedViewModel = GeometryViewModel;
                         break;
+                
                     case 2:
                         SelectedViewModel = BarsViewModel;
                         break;
@@ -134,7 +129,10 @@ namespace R10_WallShear
                 DrawMenu(p);
 
             });
-
+            SelectionLanguageChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Languages.ChangeLanguages();
+            });
             #endregion
             #region Action Command
             OKCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
@@ -222,7 +220,7 @@ namespace R10_WallShear
         //private void DrawInfo(WallShearWindow p)
         //{
         //    p.MainCanvas.Children.Clear();
-        //    DrawMainCanvas.DrawInfoColumns(p.MainCanvas, ColumnsModel, ColumnsModel.SelectedIndexModel.SelectedColumn);
+        //    DrawMainCanvas.DrawInfoWall(p.MainCanvas, ColumnsModel, ColumnsModel.SelectedIndexModel.SelectedColumn);
         //}
         #endregion
 

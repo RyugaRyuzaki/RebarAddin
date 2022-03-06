@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static R01_ColumnsRebar.ErrorColumns;
 using WpfCustomControls;
-using WpfCustomControls.LanguageModel;
+using R01_ColumnsRebar.LanguageModel;
 namespace R01_ColumnsRebar.ViewModel
 {
     public class BarsDivisionViewModel : BaseViewModel

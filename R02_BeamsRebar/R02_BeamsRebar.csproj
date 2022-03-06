@@ -82,6 +82,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\BeamsRebarCmd.cs" />
+    <Compile Include="LanguageModel\AddBottomBarLanguage.cs" />
+    <Compile Include="LanguageModel\AddTopBarLanguage.cs" />
+    <Compile Include="LanguageModel\BarsDivisionLanguage.cs" />
+    <Compile Include="LanguageModel\BarsMainLanguage.cs" />
+    <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\Languages.cs" />
+    <Compile Include="LanguageModel\MenuLanguage.cs" />
+    <Compile Include="LanguageModel\SectionAreaLanguage.cs" />
+    <Compile Include="LanguageModel\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\SpeciaBarLanguage.cs" />
+    <Compile Include="LanguageModel\StirrupLanguage.cs" />
+    <Compile Include="LanguageModel\WindowLanguage.cs" />
     <Compile Include="Library\Category\BeamsBoundBox.cs" />
     <Compile Include="Library\Compare\DistictPlanarFace.cs" />
     <Compile Include="Library\Compare\DistinctID.cs" />

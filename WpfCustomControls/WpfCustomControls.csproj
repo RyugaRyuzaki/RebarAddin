@@ -62,62 +62,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomControls\ActionControl.xaml.cs">
-      <DependentUpon>ActionControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomControls\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Draw\DrawIcon.cs" />
-    <Compile Include="LanguageModel\GeneralLanguage.cs" />
-    <Compile Include="LanguageModel\R10_Language.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\AdditionalStirrupsLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\BarsDivisionLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\BarsLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\BottomDowelsLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\GeometryLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\SettingLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\StirrupsLanguage.cs" />
-    <Compile Include="LanguageModel\R10_WallsShearRebar\TopDowelsLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\SectionAreaLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\SpeciaBarLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\StirrupLanguage.cs" />
-    <Compile Include="LanguageModel\R02_Language.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\BarsDivisionLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\BarsMainLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\AddBottomBarLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\GeometryLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\SettingLanguage.cs" />
-    <Compile Include="LanguageModel\R02_BeamRebar\AddTopBarLanguage.cs" />
-    <Compile Include="LanguageModel\WindowLanguage.cs" />
-    <Compile Include="LanguageModel\MenuLanguage.cs" />
-    <Compile Include="LanguageModel\AuthorLanguage.cs" />
-    <Compile Include="LanguageModel\Languages.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\BarsDivisionLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\GeometryLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\BottomDowelsLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\TopDowelsLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\BarsLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\AdditionalStirrupsLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\StirrupsLanguage.cs" />
-    <Compile Include="LanguageModel\R01_ColumnRebar\SettingLanguage.cs" />
-    <Compile Include="LanguageModel\R11_FoundationPile\ReinforcementLanguage.cs" />
-    <Compile Include="LanguageModel\R11_FoundationPile\PileDetailLanguage.cs" />
-    <Compile Include="LanguageModel\R11_FoundationPile\GeometryLanguage.cs" />
-    <Compile Include="LanguageModel\R11_FoundationPile\SettingLanguage.cs" />
-    <Compile Include="LanguageModel\R01_Language.cs" />
-    <Compile Include="LanguageModel\R11_Language.cs" />
     <Compile Include="Model\ProgressModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
-    <Compile Include="ViewModel\ActionViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\StatusBarViewModel.cs" />
     <Compile Include="ViewModel\TaskBarViewModel.cs" />
     <Compile Include="VisualTreeHelper.cs" />
-    <Page Include="CustomControls\ActionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CustomControls\StatusBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

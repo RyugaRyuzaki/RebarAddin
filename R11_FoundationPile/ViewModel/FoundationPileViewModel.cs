@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
-using WpfCustomControls.LanguageModel;
+using R11_FoundationPile.LanguageModel;
 using DSP;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 #endregion
@@ -41,6 +41,7 @@ namespace R11_FoundationPile
         public ICommand CreatePileDetailCommand { get; set; }
         public ICommand CreateReinforcementCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand SelectionLanguageChangedCommand { get; set; }
         #endregion
         #region Menu ViewModel
         private BaseViewModel _selectedViewModel;
@@ -56,10 +57,7 @@ namespace R11_FoundationPile
 
         private TaskBarViewModel _TaskBarViewModel;
         public TaskBarViewModel TaskBarViewModel { get { return _TaskBarViewModel; } set { _TaskBarViewModel = value; OnPropertyChanged(); } }
-        private StatusBarViewModel _StatusBarViewModel;
-        public StatusBarViewModel StatusBarViewModel { get { return _StatusBarViewModel; } set { _StatusBarViewModel = value; OnPropertyChanged(); } }
-        private ActionViewModel _ActionViewModel;
-        public ActionViewModel ActionViewModel { get { return _ActionViewModel; } set { _ActionViewModel = value; OnPropertyChanged(); } }
+       
 
         private Languages _Languages;
         public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
@@ -75,12 +73,8 @@ namespace R11_FoundationPile
             FoundationPileModel = new FoundationPileModel(columns, Doc, Unit);
             TransactionGroup = new TransactionGroup(Doc);
             Languages = new Languages("EN");
-            TaskBarViewModel = new TaskBarViewModel(Languages);
-            StatusBarViewModel = new StatusBarViewModel(FoundationPileModel.ProgressModel, Languages);
-            StatusBarViewModel.SetStatusBarFoundationPile();
-            ActionViewModel = new ActionViewModel(Languages);
-            ActionViewModel.SetStatusBarFoundationPile();
-            
+            TaskBarViewModel = new TaskBarViewModel();
+         
             SettingViewModel = new SettingViewModel(Doc, FoundationPileModel, Languages);
             GeometryViewModel = new GeometryViewModel(Doc, FoundationPileModel, Unit, Languages);
             SelectedViewModel = SettingViewModel;
@@ -91,6 +85,10 @@ namespace R11_FoundationPile
                 DrawMenu(p);
                 p.ReinforcementListViewItem.Visibility = System.Windows.Visibility.Collapsed;
                 p.PileDetailListViewItem.Visibility = System.Windows.Visibility.Collapsed;
+            });
+            SelectionLanguageChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Languages.ChangeLanguages();
             });
             SelectionMenuCommand = new RelayCommand<FoundationPileWindow>((p) => { return true; }, (p) =>
             {
@@ -136,8 +134,7 @@ namespace R11_FoundationPile
               {
                   CreateFoundation(p);
                   ShowPileDetailAndReinforcement(p);
-                  StatusBarViewModel.HasCreateReinforcement(true);
-                  StatusBarViewModel.HasCreatePileDetail(true);
+                 
               });
             CreatePileDetailCommand = new RelayCommand<FoundationPileWindow>((p) => { return FoundationPileModel.IsCreateGrounpFoundation && FoundationPileModel.IsApplyRule && !FoundationPileModel.IsCreatePileDetail; }, (p) =>
                {

@@ -354,313 +354,323 @@ namespace R11_FoundationPile
         private static void DrawMainSpanBounding(Canvas canvas, DrawModel drawModel, FoundationModel foundationModel, SettingModel settingModel, int Image, string orientation, double p1, double p2, out List<double> p)
         {
             p = new List<double>();
-            switch (Image)
+            bool a = orientation.Equals("Horizontal");
+            for (int i = 0; i < foundationModel.PileModels.Count; i++)
             {
-                case 0:
-
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                            p.Add(foundationModel.PileModels[1].Location.X);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                        }
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                            p.Add(foundationModel.PileModels[1].Location.Y);
-                        }
-                    }
-
-                    break;
-                case 1:
-                    if (orientation.Equals("Horizontal"))
-                    {
-                        for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                        {
-                            p.Add(foundationModel.PileModels[i].Location.X);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                        {
-                            p.Add(foundationModel.PileModels[i].Location.Y);
-                        }
-                    }
-
-                    break;
-                case 2:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                    }
-                    break;
-                case 3:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                            p.Add(foundationModel.PileModels[1].Location.X);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                        }
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                            p.Add(foundationModel.PileModels[1].Location.Y);
-                        }
-                    }
-                    break;
+                p.Add((a) ? (foundationModel.PileModels[i].Location.X) : (foundationModel.PileModels[i].Location.Y));
             }
+            //switch (Image)
+            //{
+            //    case 0:
+
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //                p.Add(foundationModel.PileModels[1].Location.X);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //                p.Add(foundationModel.PileModels[1].Location.Y);
+            //            }
+            //        }
+
+            //        break;
+            //    case 1:
+            //        if (orientation.Equals("Horizontal"))
+            //        {
+            //            for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //            {
+            //                p.Add(foundationModel.PileModels[i].Location.X);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //            {
+            //                p.Add(foundationModel.PileModels[i].Location.Y);
+            //            }
+            //        }
+
+            //        break;
+            //    case 2:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //        }
+            //        break;
+            //    case 3:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //        }
+            //        break;
+            //    default:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //                p.Add(foundationModel.PileModels[1].Location.X);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //                p.Add(foundationModel.PileModels[1].Location.Y);
+            //            }
+            //        }
+            //        break;
+            //}
             DrawBoundingItem(canvas, drawModel, settingModel, true, p1, p2);
         }
         private static void DrawSecondarySpanBounding(Canvas canvas, DrawModel drawModel, FoundationModel foundationModel, SettingModel settingModel, int Image, string orientation, double p3, double p4, out List<double> p)
         {
             p = new List<double>();
-            switch (Image)
+            bool a = orientation.Equals("Horizontal");
+            for (int i = 0; i < foundationModel.PileModels.Count; i++)
             {
-                case 0:
-
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                            p.Add(foundationModel.PileModels[1].Location.X);
-                        }
-
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                            p.Add(foundationModel.PileModels[1].Location.Y);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                        }
-                    }
-
-                    break;
-                case 1:
-                    if (orientation.Equals("Horizontal"))
-                    {
-                        for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                        {
-                            p.Add(foundationModel.PileModels[i].Location.Y);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                        {
-                            p.Add(foundationModel.PileModels[i].Location.X);
-                        }
-                    }
-                    break;
-                case 2:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                    }
-                    break;
-                case 3:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.Y);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < foundationModel.PileModels.Count; i++)
-                            {
-                                p.Add(foundationModel.PileModels[i].Location.X);
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                            p.Add(foundationModel.PileModels[1].Location.X);
-                        }
-
-                    }
-                    else
-                    {
-                        if (orientation.Equals("Horizontal"))
-                        {
-                            p.Add(foundationModel.PileModels[0].Location.Y);
-                            p.Add(foundationModel.PileModels[1].Location.Y);
-                        }
-                        else
-                        {
-                            p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
-                            p.Add(foundationModel.PileModels[0].Location.X);
-                        }
-                    }
-                    break;
+                p.Add((a) ? (foundationModel.PileModels[i].Location.Y) : (foundationModel.PileModels[i].Location.X));
             }
+            //switch (Image)
+            //{
+            //    case 0:
+
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //                p.Add(foundationModel.PileModels[1].Location.X);
+            //            }
+
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //                p.Add(foundationModel.PileModels[1].Location.Y);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //            }
+            //        }
+
+            //        break;
+            //    case 1:
+            //        if (orientation.Equals("Horizontal"))
+            //        {
+            //            for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //            {
+            //                p.Add(foundationModel.PileModels[i].Location.Y);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //            {
+            //                p.Add(foundationModel.PileModels[i].Location.X);
+            //            }
+            //        }
+            //        break;
+            //    case 2:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //        }
+            //        break;
+            //    case 3:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.Y);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                for (int i = 0; i < foundationModel.PileModels.Count; i++)
+            //                {
+            //                    p.Add(foundationModel.PileModels[i].Location.X);
+            //                }
+            //            }
+            //        }
+            //        break;
+            //    default:
+            //        if (foundationModel.ColumnModel.Style.Equals("RECTANGLE") && foundationModel.ColumnModel.b > foundationModel.ColumnModel.h)
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.Y);
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //                p.Add(foundationModel.PileModels[1].Location.X);
+            //            }
+
+            //        }
+            //        else
+            //        {
+            //            if (orientation.Equals("Horizontal"))
+            //            {
+            //                p.Add(foundationModel.PileModels[0].Location.Y);
+            //                p.Add(foundationModel.PileModels[1].Location.Y);
+            //            }
+            //            else
+            //            {
+            //                p.Add(foundationModel.PileModels[foundationModel.PileModels.Count - 1].Location.X);
+            //                p.Add(foundationModel.PileModels[0].Location.X);
+            //            }
+            //        }
+            //        break;
+            //}
             DrawBoundingItem(canvas, drawModel, settingModel, false, p3, p4);
         }
         private static void DrawMainBarBottomItem(Canvas canvas, DrawModel drawModel, BarModel barModel, SettingModel settingModel, double p1, double p2, double coverTop, double coverBottom, double coverSide, SolidColorBrush solidColorBrush)

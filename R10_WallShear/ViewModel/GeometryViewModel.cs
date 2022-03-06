@@ -3,7 +3,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-
+using WpfCustomControls;
+using R10_WallShear.LanguageModel;
 namespace R10_WallShear.ViewModel
 {
     public class GeometryViewModel : BaseViewModel
@@ -24,10 +25,12 @@ namespace R10_WallShear.ViewModel
         public ICommand L2TextChangedCommand { get; set; }
         public ICommand ApplyAllWallsCommand { get; set; }
         #endregion
-        public GeometryViewModel(WallsModel wallsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public GeometryViewModel(WallsModel wallsModel, Languages languages)
         {
             #region property
-            WallsModel = wallsModel;
+            WallsModel = wallsModel;  Languages = languages;
             #endregion
             #region loadwindow
             LoadGeometryViewCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
@@ -52,6 +55,7 @@ namespace R10_WallShear.ViewModel
                 WallsModel.BarMainModels[WallsModel.SelectedIndexModel.SelectedWall].IsCorner = SelectedWall.IsCorner;
                 WallsModel.BarMainModels[WallsModel.SelectedIndexModel.SelectedWall].BarModels.Clear();
                 WallsModel.BarMainModels[WallsModel.SelectedIndexModel.SelectedWall].BarCornerModels.Clear();
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawSection(p);
                  
             });
@@ -83,6 +87,7 @@ namespace R10_WallShear.ViewModel
                     }
                    
                 }
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawInfo(p);
                 DrawSection(p);
             });
@@ -105,7 +110,7 @@ namespace R10_WallShear.ViewModel
         private void DrawInfo(WallShearWindow p)
         {
             p.MainCanvas.Children.Clear();
-            DrawMainCanvas.DrawInfoColumns(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
+            DrawMainCanvas.DrawInfoWall(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
             double top = WallsModel.DrawModel.Top - (WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall].TopPosition) / (WallsModel.DrawModel.Scale);
             if (SelectedWall.NumberWall == WallsModel.InfoModels[WallsModel.InfoModels.Count - 1].NumberWall) top -= WallsModel.AllBars[WallsModel.AllBars.Count - 1].Diameter * 20;
             p.scrollViewer.ScrollToBottom();

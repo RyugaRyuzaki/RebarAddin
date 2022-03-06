@@ -1749,7 +1749,7 @@ namespace R10_WallShear
             l1.StrokeThickness = 0.5;
             l1.StrokeDashArray = new DoubleCollection() { 10, 4 };
             canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 0, X2 = 640, Y1 = 200, Y2 = 200 };
+            Line l2 = new Line() { X1 = 0, X2 = 640, Y1 = 120, Y2 = 120 };
             l2.Stroke = Brushes.Black;
             l2.StrokeThickness = 0.5;
             l2.StrokeDashArray = new DoubleCollection() { 10, 4 };
@@ -1761,8 +1761,8 @@ namespace R10_WallShear
             textX.FontFamily = new FontFamily("Tahoma");
             textX.Measure(new Size(System.Double.PositiveInfinity, System.Double.PositiveInfinity));
             textX.Arrange(new Rect(textX.DesiredSize));
-            Canvas.SetTop(textX, 620);
-            Canvas.SetLeft(textX, 200);
+            Canvas.SetTop(textX, 120);
+            Canvas.SetLeft(textX, 620);
             canvas.Children.Add(textX);
             TextBlock textY = new TextBlock();
             textY.Text = "Y";
@@ -1771,7 +1771,7 @@ namespace R10_WallShear
             textY.FontFamily = new FontFamily("Tahoma");
             textY.Measure(new Size(System.Double.PositiveInfinity, System.Double.PositiveInfinity));
             textY.Arrange(new Rect(textY.DesiredSize));
-            Canvas.SetTop(textY, 10);
+            Canvas.SetTop(textY, 0);
             Canvas.SetLeft(textY, 102);
             canvas.Children.Add(textY);
 

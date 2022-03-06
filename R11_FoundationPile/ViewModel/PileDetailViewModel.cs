@@ -4,7 +4,7 @@ using System.Windows.Input;
 using WpfCustomControls;
 using WpfCustomControls.ViewModel;
 using DSP;
-using WpfCustomControls.LanguageModel;
+using R11_FoundationPile.LanguageModel;
 namespace R11_FoundationPile.ViewModel
 {
     public class PileDetailViewModel : BaseViewModel

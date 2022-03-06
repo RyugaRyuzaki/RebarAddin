@@ -33,9 +33,9 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                <GroupBox Header="{Binding Languages.R02_Language.AddTopBarLanguage.AdditionalTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox Header="{Binding Languages.AddTopBarLanguage.AdditionalTopBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <DockPanel LastChildFill="False">
-                        <Button DockPanel.Dock="Right" Width="120" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.R02_Language.AddTopBarLanguage.FixedSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                        <Button DockPanel.Dock="Right" Width="120" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.AddTopBarLanguage.FixedSpan,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                 Command="{Binding FixedToSpanCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                                 ></Button>
                     </DockPanel>
@@ -43,7 +43,7 @@
             </Grid>
             <!--#region Start Card-->
             <Grid Grid.Row="1" Grid.Column="0" Margin="5 0 5 0">
-                <GroupBox x:Name="GStart" Header="{Binding Languages.R02_Language.AddTopBarLanguage.Start,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GStart" Header="{Binding Languages.AddTopBarLanguage.Start,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Start">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -155,7 +155,7 @@
             <!--#endregion-->
             <!--#region Middle Card-->
             <Grid Grid.Row="1" Grid.Column="1" Margin="5 0 5 0">
-                <GroupBox x:Name="GMiddle" Header="{Binding Languages.R02_Language.AddTopBarLanguage.Middle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GMiddle" Header="{Binding Languages.AddTopBarLanguage.Middle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="Middle">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1.05*"></RowDefinition>
@@ -176,7 +176,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource TextBlockLayerBar}"></TextBlock>
                         <TextBlock Text="{Binding SelectedLayerMid.Layer, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="18" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
-                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Languages.R02_Language.AddTopBarLanguage.Node,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Languages.AddTopBarLanguage.Node,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}"></TextBlock>
                         <ComboBox x:Name="ComboNodeMid" Grid.Row="0" Grid.Column="4" Style="{StaticResource ComboBoxStyle}" Height="30"
                                    ItemsSource="{Binding AllNode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                    SelectedItem="{Binding SelectedNode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -270,7 +270,7 @@
             <!--#endregion-->
             <!--#region End Card-->
             <Grid Grid.Row="1" Grid.Column="2" Margin="5 0 0 0">
-                <GroupBox x:Name="GEnd" Header="{Binding Languages.R02_Language.AddTopBarLanguage.End,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox x:Name="GEnd" Header="{Binding Languages.AddTopBarLanguage.End,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid x:Name="End">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>

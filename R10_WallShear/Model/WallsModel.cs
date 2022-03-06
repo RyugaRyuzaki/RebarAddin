@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using DSP;
 using WpfCustomControls.Model;
+using WpfCustomControls;
+using Visibility = System.Windows.Visibility;
 namespace R10_WallShear
 {
     public class WallsModel : BaseViewModel
@@ -33,6 +35,8 @@ namespace R10_WallShear
         public SettingModel SettingModel { get => _SettingModel; set { _SettingModel = value; OnPropertyChanged(); } }
         private ObservableCollection<InfoModel> _InfoModels;
         public ObservableCollection<InfoModel> InfoModels { get { if (_InfoModels == null) _InfoModels = new ObservableCollection<InfoModel>(); return _InfoModels; } set { _InfoModels = value; OnPropertyChanged(); } }
+
+       
         #endregion
         #region Bars
         private ObservableCollection<StirrupModel> _StirrupModels;
@@ -63,7 +67,7 @@ namespace R10_WallShear
         public int Value { get => _Value; set { _Value = value; OnPropertyChanged(); } }
         private double _Percent;
         public double Percent { get => _Percent; set { _Percent = value; OnPropertyChanged(); } }
-        #region Action
+       
 
         private ProgressModel _ProgressModel;
         public ProgressModel ProgressModel { get => _ProgressModel; set { _ProgressModel = value; OnPropertyChanged(); } }
@@ -83,8 +87,10 @@ namespace R10_WallShear
         public bool IsCreateDimensionSection { get => _IsCreateDimensionSection; set { _IsCreateDimensionSection = value; OnPropertyChanged(); } }
         private bool _IsCreateDetailShop;
         public bool IsCreateDetailShop { get => _IsCreateDetailShop; set { _IsCreateDetailShop = value; OnPropertyChanged(); } }
+
         #endregion
-        #endregion
+        private Visibility _AllApplyBar;
+        public Visibility AllApplyBar { get => _AllApplyBar; set { _AllApplyBar = value; OnPropertyChanged(); } }
         public WallsModel(List<Element> walls, Document document, UnitProject unit)
         {
             IsRebar = true;
@@ -95,9 +101,40 @@ namespace R10_WallShear
             GetInfoModels(walls, document);
             GetPlanarFace(walls, document);
             GetSettingModel(walls, document, unit);
-            GetStirrupsModels();
+           
             GetAllNumberBar();
             ProgressModel = new ProgressModel(0, 0);
+            GetStirrupsModels();
+            GetVisibilityAllApplyBar();
+        }
+        private bool IsAllApplyBar()
+        {
+            for (int i = 0; i < BarMainModels.Count; i++)
+            {
+                if (BarMainModels[i].IsCorner)
+                {
+                    if (BarMainModels[i].BarModels.Count == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if (BarMainModels[i].BarCornerModels.Count==0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (BarMainModels[i].BarModels.Count == 0) return false;
+                }
+            }
+            return true;
+        }
+        public void GetVisibilityAllApplyBar()
+        {
+            AllApplyBar = (IsAllApplyBar()) ? Visibility.Visible : Visibility.Collapsed;
         }
         #region Property
         private void GetFamilyType(List<Element> walls, Document document)
@@ -132,8 +169,8 @@ namespace R10_WallShear
         }
         private void GetAllNumberBar()
         {
-            int nx = (int) (GetLengthMax() / (2 * AllBars[AllBars.Count - 1].Diameter));
-            int ny = (int) (GetThicknessMax() / (2 * AllBars[AllBars.Count - 1].Diameter));
+            int nx = (int) (InfoModels.Max(x=>x.L) / (2 * AllBars[AllBars.Count - 1].Diameter));
+            int ny = (int) (InfoModels.Max(x => x.T) / (2 * AllBars[AllBars.Count - 1].Diameter));
             AllNumberBarX = new List<int>();   
             for (int i = 2; i <= nx; i++)
             {
@@ -147,25 +184,25 @@ namespace R10_WallShear
 
         }
 
-        private double GetThicknessMax()
-        {
-            double a = 0;
-            for (int i = 0; i < InfoModels.Count; i++)
-            {
-                if (a < InfoModels[i].T) a = InfoModels[i].T;
-            }
-            return a;
-        }
+        //private double GetThicknessMax()
+        //{
+        //    double a = 0;
+        //    for (int i = 0; i < InfoModels.Count; i++)
+        //    {
+        //        if (a < InfoModels[i].T) a = InfoModels[i].T;
+        //    }
+        //    return a;
+        //}
 
-        private double GetLengthMax()
-        {
-            double a = 0;
-            for (int i = 0; i < InfoModels.Count; i++)
-            {
-                if (a < InfoModels[i].L) a = InfoModels[i].L;
-            }
-            return a;
-        }
+        //private double GetLengthMax()
+        //{
+        //    double a = 0;
+        //    for (int i = 0; i < InfoModels.Count; i++)
+        //    {
+        //        if (a < InfoModels[i].L) a = InfoModels[i].L;
+        //    }
+        //    return a;
+        //}
 
         private void GetInfoModels(List<Element> walls, Document document)
         {
@@ -173,8 +210,10 @@ namespace R10_WallShear
         }
         private void GetSettingModel(List<Element> walls, Document document, UnitProject unit)
         {
-            DrawModelSection = new DrawModel(1, 100, 200, 8, 4);
+           
+            DrawModelSection = new DrawModel(1, 100, 120, 8, 4);
             DrawModelSection.Scale= DrawModelSection.GetScaleSection(InfoModels, unit);
+            DrawModelSection.Top = 120 + InfoModels.Max(x => x.T) * 0.5/DrawModelSection.Scale;
             DrawModel = new DrawModel(1, 100, 4720, 8, 4);
             DrawModel.GetScale(InfoModels, unit,AllBars[AllBars.Count-1]);
             SelectedIndexModel = new SelectedIndexModel(0, 0, 0);

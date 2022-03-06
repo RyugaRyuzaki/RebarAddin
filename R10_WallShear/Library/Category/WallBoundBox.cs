@@ -77,14 +77,16 @@ namespace R10_WallShear
         #region Foundation,floor and Wall
         public static Element GetFoundationBoudingBoxOneWall(Element wall, Document document)
         {
-            List<Level> levels = new FilteredElementCollector(document).OfClass(typeof(Level)).Cast<Level>().ToList();
-            levels.OrderBy(x => x.get_Parameter(BuiltInParameter.LEVEL_ELEV).AsDouble());
-            Level level0 = levels[0];
+            List<Level> levels = new FilteredElementCollector(document).OfClass(typeof(Level)).Cast<Level>().OrderBy(x => x.get_Parameter(BuiltInParameter.LEVEL_ELEV).AsDouble()).ToList();
+            //System.Windows.Forms.MessageBox.Show("Test"+ levels[0].Name);
+            //Level level0 = levels[0];
+     
             ElementId level = wall.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT).AsElementId();
-            if (!level.Equals(level0.Id))
+            if (!level.Equals(levels[0].Id))
             {
                 return null;
             }
+          
             ElementCategoryFilter categoryFilter
                        = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFoundation);
             BoundingBoxXYZ box = wall.get_BoundingBox(null);
@@ -94,7 +96,7 @@ namespace R10_WallShear
 
             LogicalAndFilter logicalAndFilter
                 = new LogicalAndFilter(bbFilter, categoryFilter);
-            Element element= new FilteredElementCollector(document).WherePasses(logicalAndFilter).Where(x => x.get_Parameter(BuiltInParameter.FAMILY_LEVEL_PARAM).AsElementId() == level).FirstOrDefault();
+            Element element= new FilteredElementCollector(document).WherePasses(logicalAndFilter).Where(x => x.get_Parameter(BuiltInParameter.LEVEL_PARAM).AsElementId() == level).FirstOrDefault();
             if (element==null)
             {
                 return null;
@@ -108,6 +110,7 @@ namespace R10_WallShear
                 }
                 else
                 {
+                    
                     FaceArray faceArray = solids[0].Faces;
                     List<PlanarFace> planarFaces = new List<PlanarFace>();
                     foreach (var item in faceArray)

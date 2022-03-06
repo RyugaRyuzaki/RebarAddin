@@ -6,6 +6,7 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfCustomControls;
+using R02_BeamsRebar.LanguageModel;
 namespace R02_BeamsRebar.ViewModel
 {
     public class SectionAreaViewModel : BaseViewModel

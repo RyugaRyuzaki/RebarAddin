@@ -4,11 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-
+using WpfCustomControls;
+using R10_WallShear.LanguageModel;
+using Visibility = System.Windows.Visibility;
 namespace R10_WallShear.ViewModel
 {
     public class BarsViewModel : BaseViewModel
     {
+        private   string path = @"E:\Book1.xlsx";
+       
         #region property
         public Document Doc;
         private WallsModel _WallsModel;
@@ -26,6 +30,10 @@ namespace R10_WallShear.ViewModel
         private List<double> _SplitOverlap;
         public List<double> SplitOverlap { get { if (_SplitOverlap == null) _SplitOverlap = new List<double>() { 50, 100 }; return _SplitOverlap; } set { _SplitOverlap = value; OnPropertyChanged(); } }
         #endregion
+
+        private Visibility _ShowCorner;
+        public Visibility ShowCorner { get { return _ShowCorner; } set { _ShowCorner = value; OnPropertyChanged(); } }
+
         private bool _IsLockBar;
         public bool IsLockBar { get => _IsLockBar; set { _IsLockBar = value; OnPropertyChanged(); } }
         private bool _IsLockNy;
@@ -44,17 +52,20 @@ namespace R10_WallShear.ViewModel
         public ICommand ApplyBarCornerCommand { get; set; }
         public ICommand ModifyBarCornerCommand { get; set; }
         #endregion
-        public BarsViewModel(Document document, WallsModel wallsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public BarsViewModel(Document document, WallsModel wallsModel, Languages languages)
         {
             #region Property
             Doc = document;
-            WallsModel = wallsModel;
+            WallsModel = wallsModel; Languages = languages;
+           
             #endregion
             #region Load
             LoadBarsViewCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
             {
                 BarsView uc = ProccessInfoWalls.FindChild<BarsView>(p, "BarsUC");
-                ShowWallNumberComboBox(uc);
+              
                 if (SelectedWall != null)
                 {
                     IsLockBar = SelectedWall.BarModels.Count == 0;
@@ -73,13 +84,14 @@ namespace R10_WallShear.ViewModel
 
                     
                 }
-                ShowCorner(uc);
+                ShowCorner = (SelectedWall != null && SelectedWall.IsCorner) ? Visibility.Visible : Visibility.Collapsed;
                 DrawInfo(p);
                 DrawSection(p);
             });
             SelectionWallsChangedCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
             {
                 BarsView uc = ProccessInfoWalls.FindChild<BarsView>(p, "BarsUC");
+                ShowCorner = (SelectedWall != null && SelectedWall.IsCorner) ? Visibility.Visible : Visibility.Collapsed;
                 if (SelectedWall != null)
                 {
                     IsLockBar = SelectedWall.BarModels.Count == 0;
@@ -89,7 +101,6 @@ namespace R10_WallShear.ViewModel
                         SelectedWall.ny = 2;
                         IsLockBarCorner = SelectedWall.BarCornerModels.Count == 0;
                     }
-                    ShowCorner(uc);
                     if (SelectedWall.BarModels.Count != 0)
                     {
                         //InfoModel infoModelUp = WallsModel.InfoModels.Where(x => x.NumberWall == SelectedWall.NumberWall + 1).FirstOrDefault();
@@ -112,37 +123,19 @@ namespace R10_WallShear.ViewModel
             ApplyBarCommand = new RelayCommand<WallShearWindow>((p) => { return ConditionApplyBar(); }, (p) =>
             {
                 BarsView uc = ProccessInfoWalls.FindChild<BarsView>(p, "BarsUC");
-                SelectedWall.GetBarModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarS.Diameter);
+               
                 InfoModel infoModelUp = WallsModel.InfoModels.Where(x => x.NumberWall == SelectedWall.NumberWall + 1).FirstOrDefault();
+                BarMainModel barMainModelUp = WallsModel.BarMainModels.Where(x => x.NumberWall == SelectedWall.NumberWall + 1).FirstOrDefault();
                 double ds = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarS.Diameter;
                 double dsUp = (infoModelUp==null) ? (WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarS.Diameter) : (WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall+1].BarS.Diameter);
-                double dsUpCorner = 0;
-                if (infoModelUp == null)
-                {
-                    if (SelectedWall.IsCorner)
-                    {
-                        dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarSCorner.Diameter;
-                    }
-                    else
-                    {
-                        dsUpCorner = ds;
-                    }
-                }
-                else
-                {
-                    if (infoModelUp.IsCorner)
-                    {
-                        dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarSCorner.Diameter;
-                    }
-                    else
-                    {
-                        dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarS.Diameter;
-                    }
-                }
-                SelectedWall.GetLocationBarModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover,ds,dsUp, infoModelUp);
+                double dsUpCorner = GetdsUpCorner(ds,infoModelUp);
+                SelectedWall.GetBarModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarS.Diameter);
+                SelectedWall.GetLocationBarModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover,ds,dsUp, dsUpCorner, infoModelUp);
+                if(SelectedWall.BarCornerModels.Count!=0) SelectedWall.RefreshLocationBarCornerModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, ds, dsUp, dsUpCorner, infoModelUp);
                 IsLockBar = false;
                 IsLockNy = false;
                 WallsModel.SelectedIndexModel.SelectedMainBar = 0;
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawInfo(p);
                 DrawSection(p);
             });
@@ -154,6 +147,7 @@ namespace R10_WallShear.ViewModel
                 IsLockBar = true;
                 IsLockBarCorner = true;
                 IsLockNy = !SelectedWall.IsCorner && IsLockBar;
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawInfo(p);
                 DrawSection(p);
             });
@@ -172,11 +166,13 @@ namespace R10_WallShear.ViewModel
                 InfoModel infoModelUp = WallsModel.InfoModels.Where(x => x.NumberWall == SelectedWall.NumberWall + 1).FirstOrDefault();
                 double ds = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarSCorner.Diameter;
                 double dsUp = (infoModelUp == null) ? (WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarSCorner.Diameter) : ((infoModelUp.IsCorner) ? (WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarSCorner.Diameter) : (WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarSCorner.Diameter));
+                double dsUpCorner = GetdsUpCorner(ds,infoModelUp);
                 SelectedWall.GetBarCornerModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover,ds);
-               
-                SelectedWall.GetLocationBarCornerModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, ds,dsUp, infoModelUp);
+                SelectedWall.GetLocationBarCornerModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, ds,dsUp,dsUpCorner, infoModelUp);
+                SelectedWall.RefreshLocationBarModels(WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall], WallsModel.Cover, ds, dsUp, dsUpCorner, infoModelUp);
                 IsLockBarCorner = false;
                 WallsModel.SelectedIndexModel.SelectedCornerMainBar = 0;
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawInfo(p);
                 DrawSection(p);
                 
@@ -186,40 +182,67 @@ namespace R10_WallShear.ViewModel
                 SelectedWall.BarCornerModels.Clear();
                 BarsView uc = ProccessInfoWalls.FindChild<BarsView>(p, "BarsUC");
                 IsLockBarCorner = true;
+                WallsModel.GetVisibilityAllApplyBar();
                 DrawInfo(p);
                 DrawSection(p);
             });
             #endregion
         }
-        #region   Method
-        private void ShowWallNumberComboBox(BarsView uc)
+
+        private double GetdsUpCorner(double ds,InfoModel infoModelUp=null)
         {
-            if (WallsModel.InfoModels.Count == 1)
+            double dsUpCorner = 0;
+            if (infoModelUp == null)
             {
-                uc.WallNumberTextBlock.Visibility = System.Windows.Visibility.Hidden;
-                uc.WallNumberComboBox.Visibility = System.Windows.Visibility.Hidden;
-            }
-        }
-        private void ShowCorner(BarsView p)
-        {
-            if (SelectedWall != null && SelectedWall.IsCorner)
-            {
-                p.CornerGrid.Visibility = System.Windows.Visibility.Visible;
-                p.BarGrid.Visibility = System.Windows.Visibility.Visible;
+                if (SelectedWall.IsCorner)
+                {
+                    dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall].BarSCorner.Diameter;
+                }
+                else
+                {
+                    dsUpCorner = ds;
+                }
             }
             else
             {
-                p.CornerGrid.Visibility = System.Windows.Visibility.Hidden;
-                p.BarGrid.Visibility = System.Windows.Visibility.Hidden;
+                if (infoModelUp.IsCorner)
+                {
+                    dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarSCorner.Diameter;
+                }
+                else
+                {
+                    dsUpCorner = WallsModel.StirrupModels[WallsModel.SelectedIndexModel.SelectedWall + 1].BarS.Diameter;
+                }
             }
+            return dsUpCorner;
         }
-        
+        #region   Method
+        //public List<string> ReadXLS()
+        //{
+
+        //    FileInfo existingFile = new FileInfo(path);
+
+        //    List<string> list = new List<string>();
+        //    using (ExcelPackage package = new ExcelPackage(existingFile))
+        //    {
+        //        //get the first worksheet in the workbook
+        //        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+        //        int colCount = worksheet.Dimension.End.Column;  //get Column Count
+        //        int rowCount = worksheet.Dimension.End.Row;     //get row count
+
+        //        for (int row = 1; row <= rowCount; row++)
+        //        {
+        //            list.Add(worksheet.Cells[row, 1].Value.ToString().Trim());
+        //        }
+        //    }
+        //    return list;
+       
         #endregion
         #region Draw
         private void DrawInfo(WallShearWindow p)
         {
             p.MainCanvas.Children.Clear();
-            DrawMainCanvas.DrawInfoColumns(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
+            DrawMainCanvas.DrawInfoWall(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
             DrawMainCanvas.DrawBarMains(p.MainCanvas, WallsModel.DrawModel, SelectedWall, (SelectedBar == null) ? 1000 : SelectedBar.BarNumber,(SelectedBarCorner==null)?1000:SelectedBarCorner.BarNumber);
             double top = WallsModel.DrawModel.Top - (WallsModel.InfoModels[WallsModel.SelectedIndexModel.SelectedWall].TopPosition) / (WallsModel.DrawModel.Scale);
             if (SelectedWall.NumberWall == WallsModel.InfoModels[WallsModel.InfoModels.Count - 1].NumberWall) top -= WallsModel.AllBars[WallsModel.AllBars.Count - 1].Diameter * 20;
@@ -266,7 +289,13 @@ namespace R10_WallShear.ViewModel
             if (tx < tmin) return false;
             if (ty < tmin) return false;
             return true;
+           
         }
         #endregion
     }
+    class BuildInParaID {
+
+        public static readonly BuiltInParameter MarkPara = (BuiltInParameter)(-1001203);
+    }
+
 }

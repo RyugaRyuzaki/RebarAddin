@@ -60,12 +60,8 @@
                     <DataTemplate x:Name="taskBarViewModel" DataType="{x:Type customViewModel:TaskBarViewModel}">
                         <custom:TaskBarControl></custom:TaskBarControl>
                     </DataTemplate>
-                    <DataTemplate x:Name="statusBarViewModel" DataType="{x:Type customViewModel:StatusBarViewModel}">
-                        <custom:StatusBarControl></custom:StatusBarControl>
-                    </DataTemplate>
-                    <DataTemplate x:Name="actionViewModel" DataType="{x:Type customViewModel:ActionViewModel}">
-                        <custom:ActionControl></custom:ActionControl>
-                    </DataTemplate>
+                   
+                   
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -144,7 +140,7 @@
                             </DockPanel>
                         </ListViewItem>
                     </ListView>
-                    <ContentControl Margin="0 5 0 0" Content="{Binding ActionViewModel}"></ContentControl>
+                    
                 </StackPanel>
             </Border>
             <!--#endregion-->
@@ -169,7 +165,26 @@
         <!--#endregion-->
       <!--#region Button-->
         <Grid Height="40"  Background="White">
-            <ContentControl Content="{Binding StatusBarViewModel}"></ContentControl>
+            <DockPanel Margin="0" LastChildFill="true">
+              
+                <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="DetailItem" IsChecked="{Binding BeamsModel.IsDetailItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                    ></RadioButton>
+                <RadioButton DockPanel.Dock="Left" Style="{StaticResource RadioButtonStyle}" Content="Rebar"  IsChecked="{Binding BeamsModel.IsRebar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                    ></RadioButton>
+                <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.Cancel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Width="80"
+                   Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                <Button  DockPanel.Dock="Right" Content="{Binding Languages.WindowLanguage.OK,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   Style="{StaticResource ButtonStyle}" Width="80"  
+                        Command="{Binding  OKCommand}" CommandParameter="{Binding ElementName=MainWindow}" ></Button>
+                
+                <Grid DockPanel.Dock="Right" >
+
+                    <ProgressBar Background="Transparent" x:Name="Progress" Style="{StaticResource ProgressBarStyle}" ></ProgressBar>
+                    <TextBlock Text="{Binding BeamsModel.ProgressModel.Percent,StringFormat={}{0:0}%,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                </Grid>
+
+            </DockPanel>
         </Grid>
         <!--#endregion-->
     </StackPanel>

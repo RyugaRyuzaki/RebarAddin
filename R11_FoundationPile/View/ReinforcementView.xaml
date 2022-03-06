@@ -27,10 +27,10 @@
                     <RowDefinition Height="210"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.R11_Language.ReinforcementLanguage.ListFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.ReinforcementLanguage.ListFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <StackPanel>
                         <DockPanel LastChildFill="False" Height="35">
-                            <TextBlock Text="{Binding Languages.R11_Language.ReinforcementLanguage.GroupFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBlock Text="{Binding Languages.ReinforcementLanguage.GroupFoundation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                             <ComboBox  Width="100" Style="{StaticResource ComboBoxStyle}"
                                   ItemsSource="{Binding FoundationPileModel.FoundationBarModels}"  DisplayMemberPath="Type"
                                   SelectedItem="{Binding SelectedFoundationBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -42,11 +42,11 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
-                            <!--<TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.R11_Language.ReinforcementLanguage.Representative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>-->
+                            <!--<TextBlock Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.ReinforcementLanguage.Representative,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>-->
                             <TextBlock  Style="{StaticResource DataGridTextBlockCenter}" Margin="10 0 0 0" Foreground="Red" FontWeight="Bold" FontSize="15" Text="{Binding SelectedFoundationBarModel.LocationName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                         </DockPanel>
                         <DockPanel LastChildFill="False" Height="35">
-                            <TextBlock Text="{Binding Languages.R11_Language.ReinforcementLanguage.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
+                            <TextBlock Text="{Binding Languages.ReinforcementLanguage.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="100" Style="{StaticResource DataGridTextBlockCenter}" ></TextBlock>
                             <ComboBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="100" Style="{StaticResource ComboBoxStyle}" x:Name="OrientationComboBox"
                                   ItemsSource="{Binding AllSpans}"  
                                   SelectedItem="{Binding SelectedFoundationBarModel.SpanOrientation,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -57,14 +57,14 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
-                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding Languages.R11_Language.ReinforcementLanguage.ApplyAll,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding Languages.ReinforcementLanguage.ApplyAll,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Command="{Binding ApplyAllFoundationCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
                                     ></Button>
                         </DockPanel>
                     </StackPanel>
 
                 </GroupBox>
-                <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.R11_Language.ReinforcementLanguage.ListBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.ReinforcementLanguage.ListBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <StackPanel>
                         <Grid Height="200">
                             <ListView  ItemsSource="{Binding SelectedFoundationBarModel.BarModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -82,7 +82,7 @@
                                         <GridViewColumn Width="40" Header="{Binding Languages.GeneralLanguage.Bar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Bar.Type}"></GridViewColumn>
                                         <GridViewColumn Width="45" Header="{Binding Languages.GeneralLanguage.Distance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Distance}" ></GridViewColumn>
                                         <GridViewColumn Width="35" Header="{Binding Languages.GeneralLanguage.NumberBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding Number}" ></GridViewColumn>
-                                        <GridViewColumn Width="45" Header="{Binding Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
+                                        <GridViewColumn Width="45" Header="{Binding Languages.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsModel}" ></GridViewColumn>
                                         
                                     </GridView>
                                 </ListView.View>
@@ -102,7 +102,7 @@
                                 <ColumnDefinition Width="65"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.R11_Language.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding SelectedBarModel.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.ReinforcementLanguage.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsChecked="{Binding SelectedBarModel.IsModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" IsEnabled="{Binding IsEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                          Command="{Binding CheckModelCommand}"  CommandParameter="{Binding ElementName=MainWindow}"
                                       >
                             </CheckBox>
@@ -142,7 +142,7 @@
                             <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="DistanceTextBlockUnit"></TextBlock>
                             
                             
-                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding Languages.R11_Language.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <Button Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"  Style="{StaticResource ButtonStyle}" Width="100" Content="{Binding Languages.ReinforcementLanguage.FixNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Command="{Binding FixedNumberBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"   x:Name="FixNumberButton"
                                     ></Button>
 

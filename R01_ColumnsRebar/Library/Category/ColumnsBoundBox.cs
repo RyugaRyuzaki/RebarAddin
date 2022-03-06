@@ -80,7 +80,7 @@ namespace R01_ColumnsRebar
         public static Element GetFoundationBoudingBoxOneColumn(Element column, Document document)
         {
             List<Level> levels = new FilteredElementCollector(document).OfClass(typeof(Level)).Cast<Level>().ToList();
-            levels.OrderBy(x => x.get_Parameter(BuiltInParameter.LEVEL_ELEV).AsDouble());
+            levels=levels.OrderBy(x => x.get_Parameter(BuiltInParameter.LEVEL_ELEV).AsDouble()).ToList();
             Level level0 = levels[0];
             ElementId level = column.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM).AsElementId();
             if (!level.Equals(level0.Id))

@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using WpfCustomControls;
+using R10_WallShear.LanguageModel;
 namespace R10_WallShear.ViewModel
 {
     public class SettingViewModel :BaseViewModel
@@ -23,11 +24,14 @@ namespace R10_WallShear.ViewModel
         public ICommand PrefixSectionChangedCommand { get; set; }
         public ICommand SelectionHookChangedCommand { get; set; }
         #endregion
-        public SettingViewModel(Document doc, WallsModel wallsModel)
+        private Languages _Languages;
+        public Languages Languages { get { return _Languages; } set { _Languages = value; OnPropertyChanged(); } }
+        public SettingViewModel(Document doc, WallsModel wallsModel, Languages languages)
         {
             #region property
             Doc = doc;
             WallsModel = wallsModel;
+            Languages = languages;
             #endregion
             #region Load
             LoadSettingViewCommand = new RelayCommand<WallShearWindow>((p) => { return true; }, (p) =>
@@ -50,7 +54,7 @@ namespace R10_WallShear.ViewModel
         private void DrawInfo(WallShearWindow p)
         {
             p.MainCanvas.Children.Clear();
-            DrawMainCanvas.DrawInfoColumns(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
+            DrawMainCanvas.DrawInfoWall(p.MainCanvas, WallsModel, WallsModel.SelectedIndexModel.SelectedWall);
         }
         private void DrawSection(WallShearWindow p)
         {

@@ -86,6 +86,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\FoundationPileCmd.cs" />
+    <Compile Include="LanguageModel\GeneralLanguage.cs" />
+    <Compile Include="LanguageModel\GeometryLanguage.cs" />
+    <Compile Include="LanguageModel\Languages.cs" />
+    <Compile Include="LanguageModel\MenuLanguage.cs" />
+    <Compile Include="LanguageModel\PileDetailLanguage.cs" />
+    <Compile Include="LanguageModel\ReinforcementLanguage.cs" />
+    <Compile Include="LanguageModel\SettingLanguage.cs" />
+    <Compile Include="LanguageModel\WindowLanguage.cs" />
     <Compile Include="Library\Category\ColumnsBoundBox.cs" />
     <Compile Include="Library\Compare\CompareColumnModel.cs" />
     <Compile Include="Library\Compare\DistinctCompare.cs" />
@@ -162,6 +170,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

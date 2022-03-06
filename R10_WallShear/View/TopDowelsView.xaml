@@ -21,13 +21,13 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="270"></RowDefinition>
-                    <RowDefinition Height="205"></RowDefinition>
-                    <RowDefinition Height="200"></RowDefinition>
-                    <RowDefinition Height="205"></RowDefinition>
+                    <RowDefinition Height="290"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="250"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Margin="5" Header="Wall Property">
+                <GroupBox Grid.Row="0" Margin="5" Header="{Binding Languages.TopDowelsLanguage.WallsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Grid  Height="40">
@@ -37,7 +37,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="Wall No"  x:Name="WallNumberTextBlock"></TextBlock>
+                                <TextBlock Grid.Column="0" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.GeneralLanguage.WallsNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  x:Name="WallNumberTextBlock"></TextBlock>
                                 <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}" x:Name="WallNumberComboBox"
                           ItemsSource="{Binding WallsModel.BarMainModels}" DisplayMemberPath="NumberWall"
                           SelectedItem="{Binding SelectedWall,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -48,7 +48,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
-                                <Button Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Width="120" Content="Apply All Bar"
+                                <Button Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Width="120" Content="{Binding Languages.TopDowelsLanguage.ApplyAllBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             Command="{Binding ApplyAllBarCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                             ></Button>
                             </Grid>
@@ -63,12 +63,12 @@
                                     </i:Interaction.Triggers>
                                     <ListView.View>
                                         <GridView  >
-                                            <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
-                                            <GridViewColumn Width="40" Header="Top" DisplayMemberBinding="{Binding IsTopDowels}"></GridViewColumn>
-                                            <GridViewColumn Width="50" Header="Type" DisplayMemberBinding="{Binding TopDowels}"></GridViewColumn>
-                                            <GridViewColumn Width="50" Header="La" DisplayMemberBinding="{Binding LaTopDowels}"></GridViewColumn>
-                                            <GridViewColumn Width="50" Header="Lb" DisplayMemberBinding="{Binding LbTopDowels}"></GridViewColumn>
-                                            <GridViewColumn Width="60" Header="PushTop" DisplayMemberBinding="{Binding PushTop}"></GridViewColumn>
+                                            <GridViewColumn  Width="60" Header="{Binding Languages.GeneralLanguage.BarNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                            <GridViewColumn Width="60" Header="{Binding Languages.GeneralLanguage.Top,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsTopDowels}"></GridViewColumn>
+                                            <GridViewColumn Width="60" Header="{Binding Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding TopDowels}"></GridViewColumn>
+                                            <GridViewColumn Width="60" Header="La" DisplayMemberBinding="{Binding LaTopDowels}"></GridViewColumn>
+                                            <GridViewColumn Width="60" Header="Lb" DisplayMemberBinding="{Binding LbTopDowels}"></GridViewColumn>
+                                            
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
@@ -79,7 +79,7 @@
 
 
                 </GroupBox>
-                <GroupBox Grid.Row="1" Margin="5" Header="Top Dowels Property">
+                <GroupBox Grid.Row="1" Margin="5" Header="{Binding Languages.TopDowelsLanguage.TopDowelsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -92,11 +92,10 @@
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
 
                         </Grid.RowDefinitions>
 
-                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource CheckBoxStyle}" Content="Top Dowels"
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.TopDowelsLanguage.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            IsEnabled="{Binding IsEnabledTopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedBar.IsTopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding CheckTopDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
@@ -120,7 +119,7 @@
                         </TextBox>
                         <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="TopDowelsLbTextBlockUnit" ></TextBlock>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Top Type" ></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.TopDowelsLanguage.TopType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
                         <ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Style="{StaticResource ComboBoxStyle}" 
                                           IsEnabled="{Binding IsEnabledTopTypeDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                           SelectedIndex="{Binding SelectedBar.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
@@ -136,19 +135,14 @@
                                 <Canvas Width="140" Height="90" x:Name="TopDowelsTypeCanvas1"></Canvas>
                             </ComboBoxItem>
                         </ComboBox>
-                        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Fixed to Up Wall" Visibility="Collapsed"
-                           x:Name="FixedTop" Command="{Binding FixedTopBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  Width="150" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.TopDowelsLanguage.FixedToUp,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Visibility="{Binding ShowFixedToTop,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Command="{Binding FixedTopBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></Button>
-                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Push to Main Up Wall" Visibility="Collapsed"
-                           x:Name="PushMainTop" Command="{Binding PushMainTopBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                          ></Button>
-                        <Button Grid.Row="4" Grid.Column="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Push to Corner Up Wall"  Visibility="Collapsed"
-                           x:Name="PushCornerTop" Command="{Binding PushCornerTopBarDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                          ></Button>
+                       
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Grid.Row="2" Margin="5"   Header="Corner Bar Property" x:Name="CornerDowelsGrid" >
+                <GroupBox Grid.Row="2" Margin="5"   Header="{Binding Languages.TopDowelsLanguage.WallsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Visibility="{Binding Path=ShowCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <Grid  >
                             <ListView  ItemsSource="{Binding SelectedWall.BarCornerModels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -161,12 +155,11 @@
                                 </i:Interaction.Triggers>
                                 <ListView.View>
                                     <GridView  >
-                                        <GridViewColumn  Width="50" Header="Bar No" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
-                                        <GridViewColumn Width="50" Header="Top" DisplayMemberBinding="{Binding IsTopDowels}"></GridViewColumn>
-                                        <GridViewColumn Width="50" Header="Type" DisplayMemberBinding="{Binding TopDowels}"></GridViewColumn>
-                                        <GridViewColumn Width="50" Header="La" DisplayMemberBinding="{Binding LaTopDowels}"></GridViewColumn>
-                                        <GridViewColumn Width="50" Header="Lb" DisplayMemberBinding="{Binding LbTopDowels}"></GridViewColumn>
-                                        <GridViewColumn Width="60" Header="PushTop" DisplayMemberBinding="{Binding PushTop}"></GridViewColumn>
+                                        <GridViewColumn  Width="60" Header="{Binding Languages.GeneralLanguage.BarNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding BarNumber}"></GridViewColumn>
+                                        <GridViewColumn Width="60" Header="{Binding Languages.GeneralLanguage.Top,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding IsTopDowels}"></GridViewColumn>
+                                        <GridViewColumn Width="60" Header="{Binding Languages.GeneralLanguage.Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" DisplayMemberBinding="{Binding TopDowels}"></GridViewColumn>
+                                        <GridViewColumn Width="60" Header="La" DisplayMemberBinding="{Binding LaTopDowels}"></GridViewColumn>
+                                        <GridViewColumn Width="60" Header="Lb" DisplayMemberBinding="{Binding LbTopDowels}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -175,7 +168,7 @@
                     </ScrollViewer>
 
                 </GroupBox>
-                <GroupBox Grid.Row="3" Margin="5" Header="Corner Top Dowels Property" x:Name="CornerTopDowelsGrid">
+                <GroupBox Grid.Row="3" Margin="5" Header="{Binding Languages.TopDowelsLanguage.CornerTopDowelsProperty,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Visibility="{Binding Path=ShowCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -188,9 +181,8 @@
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource CheckBoxStyle}" Content="Corner Top Dowels"
+                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource CheckBoxStyle}" Content="{Binding Languages.TopDowelsLanguage.CornerTopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                            IsEnabled="{Binding IsEnabledTopDowelsCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           IsChecked="{Binding SelectedBarCorner.IsTopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                           Command="{Binding CheckTopDowelsCornerCommand}" CommandParameter="{Binding ElementName=MainWindow}"
@@ -214,7 +206,7 @@
                             </i:Interaction.Triggers>
                         </TextBox>
                         <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TextBlockUnit}" x:Name="TopDowelsCornerLbTextBlockUnit" ></TextBlock>
-                        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="Top Type" ></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockCenter}" Text="{Binding Languages.TopDowelsLanguage.TopType,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ></TextBlock>
                         <ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Style="{StaticResource ComboBoxStyle}" 
                                           IsEnabled="{Binding IsEnabledTopTypeDowelsCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                           SelectedIndex="{Binding SelectedBarCorner.TopDowels,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
@@ -230,13 +222,9 @@
                                 <Canvas Width="140" Height="90" x:Name="TopDowelsCornerTypeCanvas1"></Canvas>
                             </ComboBoxItem>
                         </ComboBox>
-                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Push to Main Up Wall" Visibility="Collapsed"
-                           x:Name="PushMainTopCorner" Command="{Binding PushMainTopBarCornerDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
+                        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  Width="150" Style="{StaticResource ButtonStyle}" Content="{Binding Languages.TopDowelsLanguage.FixedToUp,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Visibility="{Binding ShowFixedToTopCorner,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Command="{Binding FixedTopBarDowelsCornerCommand}" CommandParameter="{Binding ElementName=MainWindow}"
                           ></Button>
-                        <Button Grid.Row="4" Grid.Column="3" Width="150" Style="{StaticResource ButtonStyle}" Content="Push to Corner Up Wall"  Visibility="Collapsed"
-                           x:Name="PushCornerTopCorner" Command="{Binding PushCornerTopBarCornerDowelsCommand}" CommandParameter="{Binding ElementName=MainWindow}"
-                          ></Button>
-                        
                     </Grid>
                 </GroupBox>
             </Grid>

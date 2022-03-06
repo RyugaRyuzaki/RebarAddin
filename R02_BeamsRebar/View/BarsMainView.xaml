@@ -31,10 +31,10 @@
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Margin="5 0 5 5" Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.TopLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox Header="{Binding Languages.BarsMainLanguage.TopLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <StackPanel>
                         <DockPanel LastChildFill="False">
-                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.R02_Language.BarsMainLanguage.StyleBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                            <TextBlock Style="{StaticResource DataGridTextBlockStyle}" Text="{Binding Languages.BarsMainLanguage.StyleBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                             <ComboBox IsEnabled="{Binding IsStyleMainTop}" x:Name="ComboStyleMainTopBar" Style="{StaticResource ComboBoxStyle}" Width="150" DockPanel.Dock="Left" 
                                       ItemsSource="{Binding AllStyleTopBar}" 
                                       SelectedIndex="{Binding BeamsModel.SelectedIndexModel.StyleMainTop,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
@@ -120,7 +120,7 @@
             </Grid>
 
             <Grid Margin="5 5 5 0" Grid.Column="0" Grid.Row="1">
-                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.TopDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox Header="{Binding Languages.BarsMainLanguage.TopDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition ></ColumnDefinition>
@@ -252,7 +252,7 @@
             </Grid>
             <!--#region Bottom-->
             <Grid Margin="5 0 0 5" Grid.Column="1" Grid.Row="0">
-                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.BottomLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox Header="{Binding Languages.BarsMainLanguage.BottomLongBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <ListView  x:Name="ListViewBottomBar" ItemsSource="{Binding BeamsModel.MainBottomBarModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                                   SelectedItem="{Binding SelectedMainBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                   SelectedIndex="{Binding BeamsModel.SelectedIndexModel.BarBottom,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
@@ -278,7 +278,7 @@
                 </GroupBox>
             </Grid>
             <Grid Margin="5 5 0 0" Grid.Column="1" Grid.Row="1">
-                <GroupBox Header="{Binding Languages.R02_Language.BarsMainLanguage.BottomDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+                <GroupBox Header="{Binding Languages.BarsMainLanguage.BottomDetailBar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition ></ColumnDefinition>
